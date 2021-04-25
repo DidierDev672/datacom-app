@@ -2,11 +2,11 @@
   "name": "datacom-app",
   "version": "0.0.1",
   "description": "Sistema de Información Datacom",
-  "productName": "Quasar App",
+  "productName": "Datacom",
   "author": "Edinson Narváez",
   "private": true,
   "scripts": {
-    "lint": "eslint --ext .js,.vue ./",
+    "lint": "eslint --ext .js, ./",
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
