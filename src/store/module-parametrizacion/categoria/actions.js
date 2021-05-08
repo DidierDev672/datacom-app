@@ -1,5 +1,7 @@
 import axios from 'axios'
 import { URL_API } from '../../../utils/config'
+import { Dialog } from 'quasar'
+
 // Acciones para la lista
 export function cargarListaCategoriasAction ({ commit }) {
   commit('inicializarAccion')
@@ -40,33 +42,55 @@ export function unsetListaCategoriasAction ({ commit }) {
 //   });
 // }
 
-// export function registrarCategoriaAction({commit}, payload){
+export function registrarCategoriaAction ({ commit }, payload) {
+  commit('inicializarAccion')
+  const urlService = 'categoria'
+  return new Promise((resolve, reject) => {
+    axios.post(`${URL_API}/${urlService}/`, payload)
+      .then(({ data }) => {
+        // Dialog.create({
+        //   title: 'Alert',
+        //   message: 'Ha guardado la categoria'
+        //  })
+        commit('agregarCategoriaState', data)
+        commit('setCategoriaSuccess', data)
+        resolve(data)
+      })
+      .catch(error => {
+        // Dialog.create({
+        //   title: 'Alert',
+        //   message: 'Ha ocurrido un error al grabar la categoria' + error
+        //  })
+        // console.log(error.response)
+        // commit('setActionFail', error.response)
+        reject(error)
+      })
+  })
+}
 
-//   commit('inicializarAccion');
-
-//   const url_service = 'company';
-
-//   return new Promise((resolve, reject) => {
-//     axios.post(`${URL_API}/${url_service}/${payload.companies_id}/autoevaluacion`, payload)
-//       .then( ({data}) => {
-//         commit('agregarAutoevaluacionState', data);
-//         commit('setAutoevaluacionSuccess', data);
-//         resolve(data);
-//       })
-//       .catch( error => {
-//         console.log(error.response);
-//         commit('setActionFail', error.response);
-//         reject(error.response);
-//       });
-//   });
-
-// }
+export function actualizarCategoriaAction ({ commit }, payload) {
+  commit('inicializarAccion')
+  const urlService = 'categoria'
+  return new Promise((resolve, reject) => {
+    axios.put(`${URL_API}/${urlService}/${payload.id}`, payload)
+      .then(({ data }) => {
+        // commit('agregarCategoriaState', data)
+        commit('setCategoriaSuccess', data)
+        resolve(data)
+      })
+      .catch(error => {
+        console.log(error.response)
+        commit('setActionFail', error.response)
+        reject(error.response)
+      })
+  })
+}
 
 // export function actualizarCategoriaAction({commit}, payload){
 
-//   // commit('inicializarAccion');
+// commit('inicializarAccion');
 
-//   const url_service = 'autoevaluacion';
+// const url_service = 'autoevaluacion';
 
 //   return new Promise((resolve, reject) => {
 //     axios.put(`${URL_API}/${url_service}/${payload.id}`, payload)

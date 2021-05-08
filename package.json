@@ -6,6 +6,7 @@
   "author": "Edinson Narváez",
   "private": true,
   "scripts": {
+    "icons": "icongenie g -i app-icon.png --skip-trim --theme-color 212121",
     "lint": "eslint --ext .js, ./",
     "test": "echo \"No test specified\" && exit 0"
   },
@@ -13,6 +14,7 @@
     "@quasar/extras": "^1.0.0",
     "axios": "^0.18.1",
     "core-js": "^3.6.5",
+    "idb": "^6.0.0",
     "quasar": "^1.0.0"
   },
   "devDependencies": {
@@ -25,7 +27,8 @@
     "eslint-plugin-node": "^11.0.0",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
-    "eslint-plugin-vue": "^6.1.2"
+    "eslint-plugin-vue": "^6.1.2",
+    "workbox-webpack-plugin": "^5.1.4"
   },
   "browserslist": [
     "last 10 Chrome versions",

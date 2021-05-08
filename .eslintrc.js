@@ -2,7 +2,7 @@ module.exports = {
   // https://eslint.org/docs/user-guide/configuring#configuration-cascading-and-hierarchy
   // This option interrupts the configuration hierarchy at this file
   // Remove this if you have an higher level ESLint config file (it usually happens into a monorepos)
-  root: false,
+  root: true,
 
   parserOptions: {
     parser: 'babel-eslint',
@@ -63,7 +63,12 @@ module.exports = {
     'import/extensions': 'off',
     'import/no-unresolved': 'off',
     'import/no-extraneous-dependencies': 'off',
+    'import/no-duplicates': 'off',
     'prefer-promise-reject-errors': 'off',
+    'indent': 'off',    
+
+    "no-unused-vars": false,
+    //"quotes": false,
 
 
     // allow debugger during development only

@@ -17,6 +17,11 @@ const routes = [
         path: 'categoria/:id',
         name: 'categoria',
         component: () => import('pages/parametrizacion/categorias/PageCategoria.vue')
+      },
+      {
+        path: 'categoria',
+        name: 'nueva-categoria',
+        component: () => import('pages/parametrizacion/categorias/PageCategoria.vue')
       }
     ]
   },

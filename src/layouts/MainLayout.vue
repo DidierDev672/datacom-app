@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header>
+    <q-header class="fondo-nav">
       <q-toolbar class="constrain">
         <q-btn
         class="large-screen-only q-mr-sm"
@@ -39,11 +39,43 @@
       </q-list>
     </q-drawer>
     <q-footer
-      class="bg-white small-screen-only"
+      class="bg-white"
       bordered
       >
+      <div
+      v-if="showAppInstallBanner"
+        class="banner-container bg-primary">
+        <transition
+          appear
+          enter-active-class="animated fadeIn"
+          leave-active-class="animated fadeOut"
+        >
+          <div class="constrain">
+            <q-banner inline-actions class="bg-primary text-white q-mb-sm" dense>
+              <template v-slot:avatar>
+                <q-icon name="ti-instagram" color="white" />
+              </template>
+              <b>¿Desea instalar Datacom?</b>
+              <template v-slot:action>
+                <q-btn
+                  dense
+                  @click="installApp"
+                  flat
+                  label="Si"
+                  class="q-mr-sm" />
+                <q-btn
+                  dense
+                  @click="neverShowAppInstallBanner"
+                  flat
+                  label="No" />
+              </template>
+            </q-banner>
+          </div>
+        </transition>
+      </div>
       <q-tabs
-        class="text-grey-10"
+        dense
+        class="text-dark small-screen-only"
         active-color="primary"
         indicator-color="transparent">
         <q-route-tab
@@ -77,6 +109,8 @@
 
 <script>
 import EssentialLink from 'components/EssentialLink'
+// Initialize deferredPrompt for use later to show browser install prompt.
+let deferredPrompt
 export default {
   name: 'MainLayout',
 
@@ -86,6 +120,7 @@ export default {
 
   data () {
     return {
+      showAppInstallBanner: false,
       leftDrawerOpen: false,
       essentialLinks: [
         {
@@ -126,6 +161,38 @@ export default {
         }
       ]
     }
+  },
+  methods: {
+    installApp () {
+      this.showAppInstallBanner = false
+      deferredPrompt.prompt()
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('User acepted install')
+          this.neverShowAppInstallBanner()
+        } else {
+          console.log('User dismissed install')
+        }
+      })
+    },
+    neverShowAppInstallBanner () {
+      this.showAppInstallBanner = false
+      this.$q.localStorage.set('neverShowInstallBanner', true)
+    }
+  },
+  mounted () {
+    const neverShowAppInstallBanner = this.$q.localStorage.getItem('neverShowInstallBanner')
+    if (!neverShowAppInstallBanner) {
+      window.addEventListener('beforeinstallprompt', (e) => {
+        console.log('Ingresa al windows')
+        // Prevent the mini-infobar from appearing on mobile
+        e.preventDefault()
+        // Stash the event so it can be triggered later.
+        deferredPrompt = e
+        // Update UI notify the user they can install the PWA
+        this.showAppInstallBanner = true
+      })
+    }
   }
 }
 </script>
@@ -140,4 +207,8 @@ export default {
   .q-footer
     .q-tab__icon
       font-size: 30px
+  .fondo-nav
+    background: rgb(175,202,11)
+    background: linear-gradient(90deg, rgba(175,202,11,1) 0%, rgba(100,194,200, 1) 100%)
+    background: --prefix-linear-gradient(90deg, rgba(175,202,11,1) 0%, rgba(100,194,200, 1) 100%)
 </style>
