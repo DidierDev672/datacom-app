@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { URL_API } from '../../../utils/config'
-import { Dialog } from 'quasar'
 
 // Acciones para la lista
 export function cargarListaCategoriasAction ({ commit }) {
@@ -8,8 +7,7 @@ export function cargarListaCategoriasAction ({ commit }) {
   const urlService = 'categoria'
   return new Promise((resolve, reject) => {
     axios.get(`${URL_API}/${urlService}/`)
-      .then(({ data }) => {
-        console.log('Data: ', data)
+      .then(({ data }) => {        
         commit('setListaCategoriasSuccess', data)
         resolve(data)
       }).catch(error => {

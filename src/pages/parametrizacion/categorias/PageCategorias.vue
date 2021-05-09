@@ -13,10 +13,16 @@
       <q-btn icon="ti-plus" color="primary" label="Nuevo" :to="{name: 'nueva-categoria'}" />
     </template>
 
+    <q-td slot="body-cell-descripcion" slot-scope="props" :props="props">
+      {{ props.row.descripcion }}
+      <q-badge v-if="props.row.offline" color="orange" label="OffLine" />
+    </q-td>
+
     <q-td slot="body-cell-estado" slot-scope="props" :props="props">
       <q-badge v-if="props.row.estado" color="green" label="Activo" />
       <q-badge v-else color="red" label="Inactivo" />
     </q-td>
+
     </q-table>
   </q-page>
 </template>
@@ -38,13 +44,16 @@ export default {
       ]
     }
   },
-  created () {
+  activated () {
     this.cargarListaCategoriasAction().then(data => {
-      this.lstCategorias = data
+      this.lstCategorias = [ ...data ]
       if (!navigator.onLine) {
         this.getOfflineCategorias()
       }
     })
+  },
+  created () {
+    this.listenForOfflineCategoriasUploaded()
   },
   methods: {
     ...mapActions('categoria', ['cargarListaCategoriasAction']),
@@ -53,41 +62,64 @@ export default {
       this.setCategoriaSuccess(row)
       this.$router.push({ name: 'categoria', params: { id: row.id } })
     },
-    getOfflineCategorias () {
+    getOfflineCategorias() {
       let db = openDB('workbox-background-sync').then(db => {
         db.getAll('requests').then(failedRequests => {
           failedRequests.forEach(failedRequest => {
-            console.log('failedRequest: ', failedRequest);
             if (failedRequest.queueName == 'createCategoryQueue') {
-              let request = new Request(failedRequest.requestData.url, failedRequest.requestData)
-              request.formData().then(formData => {
-                console.log('formData: ', formData);
-                // let offlineCategoria = {}
-                // offlineCategoria.id = formData.get('id')
-                // offlineCategoria.codigo = formData.get('caption')
-                // offlineCategoria.descripcion = formData.get('location')
-                // offlineCategoria.fechaCreacion = '2021-05-06'
-                // offlineCategoria.estado = true
-                // offlineCategoria.usuarioCreacion = 'arlumebe'
-                // offlineCategoria.offline = true
-                // console.log('offlineCategoria: ', offlineCategoria);
-
-                // this.lstCategorias.unshift(offlineCategoria)
-                
+              let request = new Request(failedRequest.requestData.url, failedRequest.requestData)              
+              request.json().then(categoria => {
+                let offlineCategoria = {
+                  ...categoria,
+                  fechaCreacion: '2021-05-06',
+                  usuarioCreacion: 'arlumebe',
+                  offline: true
+                }
+                this.lstCategorias.unshift(offlineCategoria)                
               })
+            }else{
+              console.log('No es createCategoryQueue')
             }
           })
         }).catch(error => {
           console.log('Error openDB: ', error);
         })
       })
+    },
+    listenForOfflineCategoriasUploaded() {
+      if (this.serviceWorkerSupported) {
+        const channel = new BroadcastChannel('sw-messages');
+        channel.addEventListener('message', event => {
+          // console.log('Received', event.data);
+          if (event.data.msg == 'offline-categoria-uploaded') {
+            let offlineCategoriaCount = this.lstCategorias.filter(categoria => categoria.offline == true).length
+            this.lstCategorias[offlineCategoriaCount - 1].offline = false
+            this.$q.notify({
+                message: 'La Categoria se sincronizó correctamente.',
+                icon: 'ti-check',
+                textColor: 'white',
+                color: 'positive',
+                position: 'bottom-right'
+              })
+          }
+        });
+      }
     }
   },
   computed: {
     ...mapGetters('categoria', ['getCategoriaState']),
     categorias () {
       return this.getCategoriaState.lstCategorias
+    },
+    serviceWorkerSupported() {
+      if ('serviceWorker' in navigator) return true
+      return false
     }
   }
 }
 </script>
+<style lang="sass">
+.categoria-creada-offline 
+  tbody tr    
+    background-color: #c1f4cd
+</style>

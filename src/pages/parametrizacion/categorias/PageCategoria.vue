@@ -43,7 +43,6 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import axios from 'axios'
 export default {
   name: 'PageCategoria',
   data () {
@@ -71,8 +70,7 @@ export default {
   methods: {
     ...mapActions('categoria', ['registrarCategoriaAction', 'actualizarCategoriaAction']),
     onSubmit () {
-      if (this.objCategoria.id > 0) {
-        console.log('Ingresa al if')
+      if (this.objCategoria.id > 0) {        
         this.actualizarCategoriaAction(this.objCategoria).then(data => {
           this.$q.notify({
             message: 'Registro actualizado correctamente.',
@@ -82,16 +80,7 @@ export default {
             position: 'bottom-right'
           })
         })
-      } else {
-        // let URL_API = 'http://localhost:28181'
-        // axios.post(`${URL_API}/categoria/`, this.objCategoria)
-        //   .then(response => {
-        //     console.log('Response: ', response)
-        //   })
-        //   .catch(error => {
-        //     console.log('Error: ', error)
-        //   })
-        console.log('Ingresa al else')
+      } else {        
         this.registrarCategoriaAction(this.objCategoria)
           .then(data => {
             this.$q.notify({
@@ -105,8 +94,14 @@ export default {
           })
           .catch(error => {
             if (!navigator.onLine && this.backgroundSyncSupported) {
-              //redirigir al listado de categorias
-              this.$q.notify('Categoria registrada offLine')
+              //redirigir al listado de categorias              
+              this.$q.notify({
+                message: 'Categoria registrada offLine.',
+                icon: 'ti-check',
+                textColor: 'white',
+                color: 'dark',
+                position: 'bottom-right'
+              })
               this.$router.push({name: 'categorias'})
             }
             else {
