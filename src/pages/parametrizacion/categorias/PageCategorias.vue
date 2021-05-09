@@ -7,11 +7,11 @@
       row-key="name"
       @row-click="seleccionar"
     >
-    <template v-slot:top>
+    <!-- <template v-slot:top>
       <div class="col-2 q-table__title">Categorias</div>
       <q-space />
       <q-btn icon="ti-plus" color="primary" label="Nuevo" :to="{name: 'nueva-categoria'}" />
-    </template>
+    </template> -->
 
     <q-td slot="body-cell-descripcion" slot-scope="props" :props="props">
       {{ props.row.descripcion }}
@@ -24,6 +24,13 @@
     </q-td>
 
     </q-table>
+    <q-page-sticky position="bottom-right" :offset="[18, 18]">
+      <q-btn fab icon="add" color="primary" :to="{name: 'nueva-categoria'}" >
+        <q-tooltip>
+          Agregar categoria
+        </q-tooltip>
+      </q-btn>
+    </q-page-sticky>
   </q-page>
 </template>
 
