@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 
 // import example from './module-example'
 import categoria from './module-parametrizacion/categoria'
+import fichaVivienda from './module-vivienda'
+import municipios from './module-municipios'
 
 Vue.use(Vuex)
 
@@ -19,7 +21,9 @@ export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
       // example
-      categoria
+      categoria,
+      fichaVivienda,
+      municipios
     },
 
     // enable strict mode (adds overhead!)

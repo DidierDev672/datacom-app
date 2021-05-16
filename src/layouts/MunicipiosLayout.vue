@@ -3,7 +3,6 @@
     <q-header class="fondo-nav">
       <q-toolbar class="constrain">
         <q-btn
-        class="large-screen-only q-mr-sm"
           flat
           dense
           round
@@ -18,7 +17,6 @@
     </q-header>
 
     <q-drawer
-    class="large-screen-only"
       v-model="leftDrawerOpen"
       show-if-above
       bordered
@@ -29,7 +27,7 @@
           header
           class="text-grey-8"
         >
-          Essential Links
+          Opciones
         </q-item-label>
         <EssentialLink
           v-for="link in essentialLinks"
@@ -73,32 +71,6 @@
           </div>
         </transition>
       </div>
-      <q-tabs
-        dense
-        class="text-dark small-screen-only"
-        active-color="primary"
-        indicator-color="transparent">
-        <q-route-tab
-          to="/"
-          name="home"
-          icon="ti-home"
-          label="Inicio" />
-        <q-route-tab
-          to="/encuestas"
-          name="ecuestas"
-          icon="ti-view-list"
-          label="Encuestas" />
-        <!-- <q-route-tab
-          to="/reportes"
-          name="reportes"
-          icon="ti-export"
-          label="Reportes" /> -->
-        <q-route-tab
-          to="/parametrizacion"
-          name="parametrizacion"
-          icon="ti-settings"
-          label="Parametros" />
-      </q-tabs>
     </q-footer>
 
     <q-page-container>
@@ -110,6 +82,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import EssentialLink from 'components/EssentialLink'
 // Initialize deferredPrompt for use later to show browser install prompt.
 let deferredPrompt
@@ -126,74 +99,109 @@ export default {
       leftDrawerOpen: false,
       essentialLinks: [
         {
-          title: 'Docs',
-          caption: 'quasar.dev',
-          icon: 'school',
-          link: 'https://quasar.dev'
+          title: 'Regresar',
+          icon: 'ti-arrow-left',
+          link: '/municipios'
         },
         {
-          title: 'Github',
-          caption: 'github.com/quasarframework',
-          icon: 'code',
-          link: 'https://github.com/quasarframework'
+          title: 'Información general',
+          icon: 'ti-angle-right',
+          link: '/municipio'
         },
         {
-          title: 'Discord Chat Channel',
-          caption: 'chat.quasar.dev',
-          icon: 'chat',
-          link: 'https://chat.quasar.dev'
+          title: 'Población',
+          icon: 'ti-angle-right',
+          link: '/municipio/5/poblacion'
         },
         {
-          title: 'Forum',
-          caption: 'forum.quasar.dev',
-          icon: 'record_voice_over',
-          link: 'https://forum.quasar.dev'
+          title: 'Calidad de vida',
+          icon: 'ti-angle-right',
+          link: '/municipio/5/calidad-vida'
         },
         {
-          title: 'Twitter',
-          caption: '@quasarframework',
-          icon: 'rss_feed',
-          link: 'https://twitter.quasar.dev'
+          title: 'Educación',
+          icon: 'ti-angle-right',
+          link: '/municipio/5/calidad-vida'
         },
         {
-          title: 'Facebook',
-          caption: '@QuasarFramework',
-          icoQuasarn: 'public',
-          link: 'https://facebook.quasar.dev'
-        }
+          title: 'Viviendas',
+          icon: 'ti-angle-right',
+          link: '/municipio/5/calidad-vida'
+        },
+        {
+          title: 'Cobertura en servicios',
+          icon: 'ti-angle-right',
+          link: '/municipio/5/calidad-vida'
+        },
+        {
+          title: 'Seguridad',
+          icon: 'ti-angle-right',
+          link: '/municipio/5/calidad-vida'
+        },
+        {
+          title: 'Secretarias de gobierno',
+          icon: 'ti-angle-right',
+          link: '/municipio/5/calidad-vida'
+        },
+        {
+          title: 'Políticas públicas',
+          icon: 'ti-angle-right',
+          link: '/municipio/5/calidad-vida'
+        },
+        {
+          title: 'Organizaciones',
+          icon: 'ti-angle-right',
+          link: '/municipio/5/calidad-vida'
+        },
+        {
+          title: 'Infraestructura pública',
+          icon: 'ti-angle-right',
+          link: '/municipio/5/calidad-vida'
+        },
+        {
+          title: 'Finanzas',
+          icon: 'ti-angle-right',
+          link: '/municipio/5/calidad-vida'
+        },
+        {
+          title: 'Indicadores de Gestión',
+          icon: 'ti-angle-right',
+          link: '/municipio/5/calidad-vida'
+        },
+        {
+          title: 'Territorio',
+          icon: 'ti-angle-right',
+          link: '/municipio/5/calidad-vida'
+        },
+        {
+          title: 'Participación',
+          icon: 'ti-angle-right',
+          link: '/municipio/5/calidad-vida'
+        },
+        {
+          title: 'Medios de Comunicación',
+          icon: 'ti-angle-right',
+          link: '/municipio/5/calidad-vida'
+        },
+        {
+          title: 'Productos',
+          icon: 'ti-angle-right',
+          link: '/municipio/5/calidad-vida'
+        },
+        {
+          title: 'Otra información',
+          icon: 'ti-angle-right',
+          link: '/municipio/5/calidad-vida'
+        },
       ]
     }
   },
   methods: {
-    installApp () {
-      this.showAppInstallBanner = false
-      deferredPrompt.prompt()
-      deferredPrompt.userChoice.then((choiceResult) => {
-        if (choiceResult.outcome === 'accepted') {
-          console.log('User acepted install')
-          this.neverShowAppInstallBanner()
-        } else {
-          console.log('User dismissed install')
-        }
-      })
-    },
-    neverShowAppInstallBanner () {
-      this.showAppInstallBanner = false
-      this.$q.localStorage.set('neverShowInstallBanner', true)
-    }
+    ...mapActions('municipios', ['buscarMunicipioAction']),
   },
-  mounted () {
-    const neverShowAppInstallBanner = this.$q.localStorage.getItem('neverShowInstallBanner')
-    if (!neverShowAppInstallBanner) {
-      window.addEventListener('beforeinstallprompt', (e) => {        
-        // Prevent the mini-infobar from appearing on mobile
-        e.preventDefault()
-        // Stash the event so it can be triggered later.
-        deferredPrompt = e
-        // Update UI notify the user they can install the PWA
-        this.showAppInstallBanner = true
-      })
-    }
+  created () {
+    let municipioID = this.$route.params.id
+    this.buscarMunicipioAction(municipioID)
   }
 }
 </script>

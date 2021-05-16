@@ -22,7 +22,43 @@ const routes = [
         path: 'categoria',
         name: 'nueva-categoria',
         component: () => import('pages/parametrizacion/categorias/PageCategoria.vue')
+      },
+      {
+        path: '/ficha-vivienda',
+        name: 'nueva-ficha-vivienda',
+        component: () => import('pages/mod-viviendas/NuevaVivienda.vue'),
+        children: [
+          { path: 'localizacion', name: 'localizacion-vivienda', component: () => import('pages/mod-viviendas/LocalizacionVivienda.vue') },
+          { path: 'estado', name: 'estado-vivienda', component: () => import('pages/mod-viviendas/EstadoVivienda.vue') },
+          { path: 'servicios-publicos', name: 'servicios-vivienda', component: () => import('pages/mod-viviendas/ServiciosVivienda.vue') },
+          { path: 'productos', name: 'productos-vivienda', component: () => import('pages/mod-viviendas/ProductosVivienda.vue') },
+          { path: 'personas', name: 'personas-vivienda', component: () => import('pages/mod-viviendas/PersonasVivienda.vue') },
+          { path: 'control-ficha', name: 'control-vivienda', component: () => import('pages/mod-viviendas/ControlVivienda.vue') },
+          
+        ]
+      },
+      {
+        path: '/municipios',
+        name: 'municipios',
+        component: () => import('pages/mod-municipios/ListaMunicipios.vue'),
       }
+    ]
+  },
+  {
+    path: '/municipio/:id',
+    name: 'municipio',
+    component: () => import('layouts/MunicipiosLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: 'info-general',
+        component: () => import('pages/mod-municipios/municipio/InfoGeneral.vue'),
+      },
+      {
+        path: 'calidad-vida',
+        name: 'calidad-vida',
+        component: () => import('pages/mod-municipios/municipio/CalidadVida.vue'),
+      },
     ]
   },
   {

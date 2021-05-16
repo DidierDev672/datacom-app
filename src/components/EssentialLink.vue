@@ -2,14 +2,15 @@
   <q-item
     clickable
     tag="a"
-    target="_blank"
-    :href="link"
+    target="_self"
+    :to="link"
+    exact
   >
     <q-item-section
       v-if="icon"
       avatar
     >
-      <q-icon :name="icon" />
+      <q-icon size="14px" :name="icon" />
     </q-item-section>
 
     <q-item-section>
