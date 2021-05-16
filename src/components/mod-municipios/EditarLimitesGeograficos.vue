@@ -6,7 +6,7 @@
     v-model="show">
       <q-card>
         <q-card-section>
-          <div class="text-h6">Ubicacion del municipio</div>
+          <div class="text-h6">Límites geográficos del municipio</div>
         </q-card-section>
 
         <q-separator />
@@ -19,17 +19,29 @@
 
             <q-input
               filled
-              v-model="ubicacion.region"
-              label="Ingresar una región"
+              v-model="limites.limiteNorte"
+              label="Límite Norte"
             />
 
             <q-input
               filled
-              v-model="ubicacion.extension"
-              label="Ingresar la extensión territorial"
-            />    
+              v-model="limites.limiteSur"
+              label="Límite Sur"
+            />     
 
-          </q-form>      
+            <q-input
+              filled
+              v-model="limites.limiteOriente"
+              label="Límite Oriente"
+            />
+
+            <q-input
+              filled
+              v-model="limites.limiteOccidente"
+              label="Límite Occidente"
+            />   
+
+          </q-form>    
           
         </q-card-section>
 
@@ -63,7 +75,7 @@ export default {
   data(){
     return {
       show: true,
-      ubicacion: {}
+      limites: {}
     }
   },
 
@@ -72,8 +84,10 @@ export default {
     actualizar(){
       let infoGeneral = {
         ...this.getMunicipioState.municipio.informacionGeneral,
-        region: this.ubicacion.region,
-        extension: this.ubicacion.extension,
+        limiteNorte: this.limites.limiteNorte,
+        limiteSur: this.limites.limiteSur,
+        limiteOriente: this.limites.limiteOriente,
+        limiteOccidente: this.limites.limiteOccidente,
         municipio: {
           id: this.municipio.id
         }
@@ -96,15 +110,19 @@ export default {
     }
   },
   created(){
-    this.ubicacion = {
+    this.limites = {
       id: 0,
-      region: '',
-      extension: ''
+      limiteNorte: '',
+      limiteSur: '',
+      limiteOriente: '',
+      limiteOccidente: ''
     }
     if(this.getMunicipioState.municipio.informacionGeneral != null && Object.keys(this.getMunicipioState.municipio.informacionGeneral).length > 0){
-      this.ubicacion.id = this.getMunicipioState.municipio.informacionGeneral.id;
-      this.ubicacion.region = this.getMunicipioState.municipio.informacionGeneral.region;
-      this.ubicacion.extension = this.getMunicipioState.municipio.informacionGeneral.extension;
+      this.limites.id = this.getMunicipioState.municipio.informacionGeneral.id;
+      this.limites.limiteNorte = this.getMunicipioState.municipio.informacionGeneral.limiteNorte;
+      this.limites.limiteSur = this.getMunicipioState.municipio.informacionGeneral.limiteSur;
+      this.limites.limiteOriente = this.getMunicipioState.municipio.informacionGeneral.limiteOriente;
+      this.limites.limiteOccidente = this.getMunicipioState.municipio.informacionGeneral.limiteOccidente;
     }
   },
   computed: {

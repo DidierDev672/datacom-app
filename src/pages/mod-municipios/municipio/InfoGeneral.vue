@@ -61,50 +61,50 @@
           <q-item-label header>Límites geográficos</q-item-label>
 
           <q-item>
-            <q-item-section top>
+            <q-item-section style="cursor: pointer" top @click="modalEditarLimitesGeograficos = true">
               <q-item-label caption lines="1">
                 Límite Norte
               </q-item-label>
               <q-item-label lines="1">
-                <span class="text-weight-medium">Santa Sofía</span>
+                <span class="text-weight-medium">{{ infoGeneral != null ? (infoGeneral.limiteNorte ? infoGeneral.limiteNorte : 'Agregue límite norte') : 'Agregue límite norte'}}</span>
               </q-item-label>
             </q-item-section>
             <q-item-section top side>
               <div class="text-grey-8 q-gutter-xs">
-                <q-btn class="gt-xs" size="12px" flat dense round icon="edit" />
+                <q-btn class="gt-xs" size="12px" flat dense round icon="edit" @click="modalEditarLimitesGeograficos = true" />
               </div>
             </q-item-section>
           </q-item>
 
           <q-item>
-            <q-item-section top>
+            <q-item-section style="cursor: pointer" top @click="modalEditarLimitesGeograficos = true">
               <q-item-label caption lines="1">
                 Límite Sur
               </q-item-label>
               <q-item-label lines="1">
-                <span class="text-weight-medium">Tinjacá</span>
+                <span class="text-weight-medium">{{ infoGeneral != null ? (infoGeneral.limiteSur ? infoGeneral.limiteSur : 'Agregue límite sur') : 'Agregue límite sur'}}</span>
               </q-item-label>
             </q-item-section>
           </q-item>
 
           <q-item>
-            <q-item-section top>
+            <q-item-section style="cursor: pointer" top @click="modalEditarLimitesGeograficos = true">
               <q-item-label caption lines="1">
                 Límite Oriente
               </q-item-label>
               <q-item-label lines="1">
-                <span class="text-weight-medium">Villa de Leyva y Sáchica</span>
+                <span class="text-weight-medium">{{ infoGeneral != null ? (infoGeneral.limiteOriente ? infoGeneral.limiteOriente : 'Agregue límite oriente') : 'Agregue límite oriente'}}</span>
               </q-item-label>
             </q-item-section>
           </q-item>
 
           <q-item>
-            <q-item-section top>
+            <q-item-section style="cursor: pointer" top @click="modalEditarLimitesGeograficos = true">
               <q-item-label caption lines="1">
                 Límite Occidente
               </q-item-label>
               <q-item-label lines="1">
-                <span class="text-weight-medium">Saboyá</span>
+                <span class="text-weight-medium">{{ infoGeneral != null ? (infoGeneral.limiteOccidente ? infoGeneral.limiteOccidente : 'Agregue límite occidente') : 'Agregue límite occidente'}}</span>
               </q-item-label>
             </q-item-section>
           </q-item>
@@ -114,79 +114,81 @@
           <q-item-label header>Otros datos</q-item-label>
 
           <q-item>
-            <q-item-section top>
+            <q-item-section style="cursor: pointer" top @click="modalEditarOtrosDatos = true">
               <q-item-label caption lines="1">
                 Composición
               </q-item-label>
               <q-item-label lines="1">
-                <span class="text-weight-medium">Nueve (9) veredas</span>
+                <span class="text-weight-medium">{{ infoGeneral != null ? (infoGeneral.composicion ? infoGeneral.composicion : 'Agregue la composicion') : 'Agregue la composicion'}}</span>
               </q-item-label>
             </q-item-section>
             <q-item-section top side>
               <div class="text-grey-8 q-gutter-xs">
-                <q-btn class="gt-xs" size="12px" flat dense round icon="edit" />
+                <q-btn class="gt-xs" size="12px" flat dense round icon="edit" @click="modalEditarOtrosDatos = true"/>
               </div>
             </q-item-section>
           </q-item>
 
           <q-item>
-            <q-item-section top>
+            <q-item-section style="cursor: pointer" top @click="modalEditarOtrosDatos = true">
               <q-item-label caption lines="1">
                 Altitud
               </q-item-label>
               <q-item-label lines="1">
-                <span class="text-weight-medium">1.800 msnm</span>
+                <span class="text-weight-medium">{{ infoGeneral != null ? (infoGeneral.altitud ? infoGeneral.altitud : 'Agregue la altitud') : 'Agregue la altitud'}} msnm</span>
               </q-item-label>
             </q-item-section>
           </q-item>
 
           <q-item>
-            <q-item-section top>
+            <q-item-section style="cursor: pointer" top @click="modalEditarOtrosDatos = true">
               <q-item-label caption lines="1">
                 gentilicio
               </q-item-label>
               <q-item-label lines="1">
-                <span class="text-weight-medium">Sutamarchense</span>
+                <span class="text-weight-medium">{{ infoGeneral != null ? (infoGeneral.gentilicio ? infoGeneral.gentilicio : 'Agregue el gentilicio') : 'Agregue el gentilicio'}}</span>
               </q-item-label>
             </q-item-section>
           </q-item>
 
           <q-item>
-            <q-item-section top>
+            <q-item-section style="cursor: pointer" top @click="modalEditarOtrosDatos = true">
               <q-item-label caption lines="1">
                 Fecha de fundación
               </q-item-label>
               <q-item-label lines="1">
-                <span class="text-weight-medium">14 de diciembre de 1556</span>
-              </q-item-label>
-            </q-item-section>
-          </q-item>
-
-          <q-item to="#">
-            <q-item-section top>
-              <q-item-label caption lines="1">
-                Emblema del municipio
-              </q-item-label>
-              <q-item-label lines="1">
-                <span class="text-weight-medium">Agregar emblema del municipio</span>
+                <span class="text-weight-medium">{{ infoGeneral != null ? (infoGeneral.fechaFundacion ? infoGeneral.fechaFundacion : 'Agregue la fecha de fundación') : 'Agregue la fecha de fundación'}}</span>
               </q-item-label>
             </q-item-section>
           </q-item>
 
           <q-item>
-            <q-item-section top>
+            <q-item-section style="cursor: pointer" top @click="modalEditarOtrosDatos = true">
+              <q-item-label caption lines="1">
+                Emblema del municipio
+              </q-item-label>
+              <q-item-label lines="1">
+                <span class="text-weight-medium">{{ infoGeneral != null ? (infoGeneral.emblema ? infoGeneral.emblema : 'Agregue emblema') : 'Agregue emblema'}}</span>
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item>
+            <q-item-section style="cursor: pointer" top @click="modalEditarOtrosDatos = true">
               <q-item-label caption lines="1">
                 personaje representativo
               </q-item-label>
               <q-item-label lines="1">
-                <span class="text-weight-medium">Pedro González (Don Jediondo)</span>
+                <span class="text-weight-medium">{{ infoGeneral != null ? (infoGeneral.personajeRepresentativo ? infoGeneral.personajeRepresentativo : 'Agregue personajes representativos del municipio') : 'Agregue personajes representativos del municipio'}}</span>
               </q-item-label>
             </q-item-section>
           </q-item>
 
         </q-list>
 
-        <EditarUbicacion @close="closeModalEditarUbicacion" v-if="modalEditarUbicacion"></EditarUbicacion>       
+        <EditarUbicacion @close="closeModalEditarUbicacion" v-if="modalEditarUbicacion"></EditarUbicacion>
+        <EditarLimitesGeograficos @close="closeModalEditarLimitesGeograficos" v-if="modalEditarLimitesGeograficos"></EditarLimitesGeograficos>
+        <EditarOtrosDatos @close="closeModalEditarOtrosDatos" v-if="modalEditarOtrosDatos"></EditarOtrosDatos>         
   
       </div>
     </div>
@@ -196,15 +198,16 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import EditarUbicacion from 'components/mod-municipios/EditarUbicación'
+import EditarLimitesGeograficos from 'components/mod-municipios/EditarLimitesGeograficos'
+import EditarOtrosDatos from 'components/mod-municipios/EditarOtrosDatos'
 export default {
-  components: { EditarUbicacion },
+  components: { EditarUbicacion, EditarLimitesGeograficos, EditarOtrosDatos },
   data () {
     return {
       basic: false,
       modalEditarUbicacion: false,
-      name: '',
-      age: 21,
-      accept: true,
+      modalEditarLimitesGeograficos: false, 
+      modalEditarOtrosDatos: false     
     }
   },
   methods: {
@@ -216,6 +219,12 @@ export default {
     },
     closeModalEditarUbicacion(){
       this.modalEditarUbicacion = false
+    },
+    closeModalEditarLimitesGeograficos(){
+      this.modalEditarLimitesGeograficos = false
+    },
+    closeModalEditarOtrosDatos(){
+      this.modalEditarOtrosDatos = false
     }
   },
   mounted () {

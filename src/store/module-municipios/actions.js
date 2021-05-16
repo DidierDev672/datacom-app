@@ -48,13 +48,34 @@ export function actualizarInformacionGeneralAction({commit}, payload){
 
   const urlService = 'informacion_general';
   return new Promise((resolve, reject) => {
-    axios.put(`${URL_API}/${urlService}/${payload.id}`, payload).then( ({data}) => {      
+    axios.put(`${URL_API}/${urlService}/${payload.id}`, payload).then( ({data}) => {     
+      commit('setInformacionGeneralSuccess', {
+        ...payload,
+        id: data
+      });
+      resolve(data);         
+    }).catch( error => {
+      console.log('Error al actualizar: ', error);
+      commit('setActionFail', error.response);
+      reject(error.response);
+    });
+  });
+}
+
+export function guardarInformacionGeneralAction({commit}, payload){
+
+  commit('inicializarAccion');
+
+  const urlService = 'informacion_general';
+  return new Promise((resolve, reject) => {
+    axios.post(`${URL_API}/${urlService}/`, payload).then( ({data}) => {      
       commit('setInformacionGeneralSuccess', {
         ...payload,
         id: data
       });
       resolve(data);
     }).catch( error => {
+      console.log('Error al guardar: ', error);
       commit('setActionFail', error.response);
       reject(error.response);
     });

@@ -85,5 +85,7 @@ export function inicializarAccion (state) {
 
   export function setInformacionGeneralSuccess(state, payload){
     state.municipios.municipio.informacionGeneral = payload
+    state.municipios.loading = false
+    state.municipios.loaded = false
   }
   

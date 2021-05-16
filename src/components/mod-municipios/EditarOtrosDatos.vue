@@ -4,32 +4,58 @@
     transition-show="scale" 
     transition-hide="scale"
     v-model="show">
-      <q-card>
+      <q-card style="width: 700px; max-width: 80vw;">
         <q-card-section>
-          <div class="text-h6">Ubicacion del municipio</div>
+          <div class="text-h6">otros datos del municipio</div>
         </q-card-section>
 
         <q-separator />
 
         <q-card-section style="max-height: 50vh" class="scroll">
-
           <q-form
             class="q-gutter-md"
           >
 
             <q-input
               filled
-              v-model="ubicacion.region"
-              label="Ingresar una región"
+              v-model="otrosDatos.composicion"
+              label="Composición"
             />
 
             <q-input
               filled
-              v-model="ubicacion.extension"
-              label="Ingresar la extensión territorial"
+              v-model="otrosDatos.altitud"
+              label="Altitud sobre el nivel del mar"
+            />     
+
+            <q-input
+              filled
+              v-model="otrosDatos.gentilicio"
+              label="Gentilicio"
+            />
+
+            <q-input
+              filled
+              type="date"
+              v-model="otrosDatos.fechaFundacion"
+              hint="Fecha de Fundación"
             />    
 
-          </q-form>      
+            <q-input
+              filled
+              type="textarea"
+              v-model="otrosDatos.emblema"
+              label="Emblema"
+            />     
+
+            <q-input
+              filled
+              type="textarea"
+              v-model="otrosDatos.personajeRepresentativo"
+              label="Personajes representativos"
+            /> 
+
+          </q-form>
           
         </q-card-section>
 
@@ -63,7 +89,7 @@ export default {
   data(){
     return {
       show: true,
-      ubicacion: {}
+      otrosDatos: {}
     }
   },
 
@@ -72,8 +98,12 @@ export default {
     actualizar(){
       let infoGeneral = {
         ...this.getMunicipioState.municipio.informacionGeneral,
-        region: this.ubicacion.region,
-        extension: this.ubicacion.extension,
+        composicion: this.otrosDatos.composicion,
+        altitud: this.otrosDatos.altitud,
+        gentilicio: this.otrosDatos.gentilicio,
+        fechaFundacion: this.otrosDatos.fechaFundacion,
+        emblema: this.otrosDatos.emblema,
+        personajeRepresentativo: this.otrosDatos.personajeRepresentativo,
         municipio: {
           id: this.municipio.id
         }
@@ -96,15 +126,23 @@ export default {
     }
   },
   created(){
-    this.ubicacion = {
+    this.otrosDatos = {
       id: 0,
-      region: '',
-      extension: ''
+      composicion: '',
+      altitud: '',
+      gentilicio: '',
+      fechaFundacion: '',
+      emblema: '',
+      personajeRepresentativo: ''
     }
     if(this.getMunicipioState.municipio.informacionGeneral != null && Object.keys(this.getMunicipioState.municipio.informacionGeneral).length > 0){
-      this.ubicacion.id = this.getMunicipioState.municipio.informacionGeneral.id;
-      this.ubicacion.region = this.getMunicipioState.municipio.informacionGeneral.region;
-      this.ubicacion.extension = this.getMunicipioState.municipio.informacionGeneral.extension;
+      this.otrosDatos.id = this.getMunicipioState.municipio.informacionGeneral.id;
+      this.otrosDatos.composicion = this.getMunicipioState.municipio.informacionGeneral.composicion;
+      this.otrosDatos.altitud = this.getMunicipioState.municipio.informacionGeneral.altitud;
+      this.otrosDatos.gentilicio = this.getMunicipioState.municipio.informacionGeneral.gentilicio;
+      this.otrosDatos.fechaFundacion = this.getMunicipioState.municipio.informacionGeneral.fechaFundacion;
+      this.otrosDatos.emblema = this.getMunicipioState.municipio.informacionGeneral.emblema;
+      this.otrosDatos.personajeRepresentativo = this.getMunicipioState.municipio.informacionGeneral.personajeRepresentativo;
     }
   },
   computed: {
