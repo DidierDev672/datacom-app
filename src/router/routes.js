@@ -4,7 +4,7 @@ const routes = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/PageHome.vue') },
+      // { path: '', component: () => import('pages/PageHome.vue') },
       { path: 'encuestas', component: () => import('pages/menu-encuestas/PageMenuEncuestas.vue') },
       { path: 'parametrizacion', component: () => import('pages/parametrizacion/PageMenuParametrizacion.vue') },
       { path: 'reportes', component: () => import('pages/reportes/PageMenuReportes.vue') },
@@ -41,7 +41,8 @@ const routes = [
         path: '/municipios',
         name: 'municipios',
         component: () => import('pages/mod-municipios/ListaMunicipios.vue'),
-      }
+      },
+      { path: '', redirect: 'encuestas' },
     ]
   },
   {
