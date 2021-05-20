@@ -56,6 +56,11 @@ const routes = [
         component: () => import('pages/mod-municipios/municipio/InfoGeneral.vue'),
       },
       {
+        path: 'poblacion',
+        name: 'poblacion',
+        component: () => import('pages/mod-municipios/municipio/Poblacion.vue'),
+      },
+      {
         path: 'calidad-vida',
         name: 'calidad-vida',
         component: () => import('pages/mod-municipios/municipio/CalidadVida.vue'),

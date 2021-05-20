@@ -29,11 +29,76 @@
         >
           Opciones
         </q-item-label>
-        <EssentialLink
+
+        <q-item
+          clickable
+          :to="{name: 'municipios'}"
+          exact
+        >
+          <q-item-section
+            avatar
+          >
+            <q-icon size="14px" name="ti-arrow-left" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Regresar</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-item
+          clickable
+          :to="{name: 'info-general', params: {id: municipioID}}"
+          exact
+        >
+          <q-item-section
+            avatar
+          >
+            <q-icon size="14px" name="ti-angle-right" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>información General</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-item
+          clickable
+          :to="{name: 'poblacion', params: {id: municipioID}}"
+          exact
+        >
+          <q-item-section
+            avatar
+          >
+            <q-icon size="14px" name="ti-angle-right" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Población</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-item
+          clickable
+          :to="{name: 'calidad-vida', params: {id: municipioID}}"
+          exact
+        >
+          <q-item-section
+            avatar
+          >
+            <q-icon size="14px" name="ti-angle-right" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Calidad de Vida</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <!-- <EssentialLink
           v-for="link in essentialLinks"
           :key="link.title"
           v-bind="link"
-        />
+        /> -->
       </q-list>
     </q-drawer>
     <q-footer
@@ -84,10 +149,9 @@
 <script>
 import { mapActions } from 'vuex'
 import EssentialLink from 'components/EssentialLink'
-// Initialize deferredPrompt for use later to show browser install prompt.
-let deferredPrompt
+
 export default {
-  name: 'MainLayout',
+  name: 'MunicipioLayout',
 
   components: {
     EssentialLink
@@ -96,6 +160,7 @@ export default {
   data () {
     return {
       showAppInstallBanner: false,
+      municipioID: 0,
       leftDrawerOpen: false,
       essentialLinks: [
         {
@@ -111,7 +176,7 @@ export default {
         {
           title: 'Población',
           icon: 'ti-angle-right',
-          link: '/municipio/5/poblacion'
+          link: `{name: 'calidad-vida', params: {id: municipioID}}`
         },
         {
           title: 'Calidad de vida',
@@ -200,9 +265,9 @@ export default {
     ...mapActions('municipios', ['buscarMunicipioAction']),
   },
   created () {
-    let municipioID = this.$route.params.id
-    this.buscarMunicipioAction(municipioID)
-  }
+    this.municipioID = this.$route.params.id
+    this.buscarMunicipioAction(this.municipioID)
+  },
 }
 </script>
 <style lang="sass">

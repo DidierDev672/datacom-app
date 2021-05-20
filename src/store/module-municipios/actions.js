@@ -81,3 +81,22 @@ export function guardarInformacionGeneralAction({commit}, payload){
     });
   });
 }
+
+export function guardarPoblacion({commit}, payload){
+  commit('inicializarAccion');
+
+  const urlService = 'poblacion';
+  return new Promise((resolve, reject) => {
+    axios.post(`${URL_API}/${urlService}/`, payload).then( ({data}) => {      
+      commit('setPoblacionSuccess', {
+        ...payload,
+        id: data
+      });
+      resolve(data);
+    }).catch( error => {
+      console.log('Error al guardar: ', error);
+      commit('setActionFail', error.response);
+      reject(error.response);
+    });
+  });
+}

@@ -88,4 +88,10 @@ export function inicializarAccion (state) {
     state.municipios.loading = false
     state.municipios.loaded = false
   }
+
+  export function setPoblacionSuccess(state, payload){
+    state.municipios.municipio.poblacionPorRangoDeEdads.unshift(payload)
+    state.municipios.loading = false
+    state.municipios.loaded = false
+  }
   

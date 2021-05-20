@@ -5,6 +5,8 @@ import Vuex from 'vuex'
 import categoria from './module-parametrizacion/categoria'
 import fichaVivienda from './module-vivienda'
 import municipios from './module-municipios'
+import poblacion from './module-municipios/poblacion'
+import calidadDeVida from './module-municipios/calidad-de-vida'
 
 Vue.use(Vuex)
 
@@ -23,7 +25,9 @@ export default function (/* { ssrContext } */) {
       // example
       categoria,
       fichaVivienda,
-      municipios
+      municipios,
+      poblacion,
+      calidadDeVida
     },
 
     // enable strict mode (adds overhead!)

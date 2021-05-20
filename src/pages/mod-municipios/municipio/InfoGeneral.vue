@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-xs-12 col-sm-8 offset-sm-2">
 
-        <q-list bordered class="rounded-borders">
+        <q-list bordered class="rounded-borders bg-white">
           <q-item-label header>Ubicación del municipio</q-item-label>
 
           <q-item >
@@ -197,7 +197,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import EditarUbicacion from 'components/mod-municipios/EditarUbicación'
+import EditarUbicacion from 'components/mod-municipios/EditarUbicacion'
 import EditarLimitesGeograficos from 'components/mod-municipios/EditarLimitesGeograficos'
 import EditarOtrosDatos from 'components/mod-municipios/EditarOtrosDatos'
 export default {
@@ -226,9 +226,6 @@ export default {
     closeModalEditarOtrosDatos(){
       this.modalEditarOtrosDatos = false
     }
-  },
-  mounted () {
-
   },
   computed: {
     ...mapGetters('municipios', ['getMunicipioState']),
