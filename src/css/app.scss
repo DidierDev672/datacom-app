@@ -1,16 +1,7 @@
 // app global css in SCSS form
 
-@font-face {
-  font-family: amplitudewide;
-  src: url(./fonts/AmplitudeWide-Regular_3564.ttf);
-}
-
-.amplitude-wide {
-  font-family: 'amplitudewide';
-}
-
 body{
-  font-family: 'amplitudewide', 'Montserrat', 'Robotos', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Montserrat', 'Robotos', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: $html-font-size !important;
   color: #464d69;
   font-weight: 500;

@@ -7,5 +7,6 @@
   "eslint.codeActionsOnSave.mode": "all",
   
   "vetur.experimental.templateInterpolationService": true,
-  "eslint.format.enable": true
+  "eslint.format.enable": true,
+  "files.encoding": "utf8bom"
 }

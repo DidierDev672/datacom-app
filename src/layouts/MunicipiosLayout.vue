@@ -74,7 +74,7 @@
           </q-item-section>
 
           <q-item-section>
-            <q-item-label>Población</q-item-label>
+            <q-item-label>Composición etaria</q-item-label>
           </q-item-section>
         </q-item>
 
@@ -91,6 +91,86 @@
 
           <q-item-section>
             <q-item-label>Calidad de Vida</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-item
+          clickable
+          :to="{name: 'educacion', params: {id: municipioID}}"
+          exact
+        >
+          <q-item-section
+            avatar
+          >
+            <q-icon size="14px" name="ti-angle-right" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Educación</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-item
+          clickable
+          :to="{name: 'viviendas-municipio', params: {id: municipioID}}"
+          exact
+        >
+          <q-item-section
+            avatar
+          >
+            <q-icon size="14px" name="ti-angle-right" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Viviendas</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-item
+          clickable
+          :to="{name: 'cobertura-servicio', params: {id: municipioID}}"
+          exact
+        >
+          <q-item-section
+            avatar
+          >
+            <q-icon size="14px" name="ti-angle-right" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Cobertura en servicios públicos</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-item
+          clickable
+          :to="{name: 'administracion', params: {id: municipioID}}"
+          exact
+        >
+          <q-item-section
+            avatar
+          >
+            <q-icon size="14px" name="ti-angle-right" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Administración Pública</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-item
+          clickable
+          :to="{name: 'secretarias', params: {id: municipioID}}"
+          exact
+        >
+          <q-item-section
+            avatar
+          >
+            <q-icon size="14px" name="ti-angle-right" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Secretarías de Despacho</q-item-label>
           </q-item-section>
         </q-item>
 
@@ -148,14 +228,14 @@
 
 <script>
 import { mapActions } from 'vuex'
-import EssentialLink from 'components/EssentialLink'
+// import EssentialLink from 'components/EssentialLink'
 
 export default {
   name: 'MunicipioLayout',
 
-  components: {
-    EssentialLink
-  },
+  // components: {
+  //   EssentialLink
+  // },
 
   data () {
     return {

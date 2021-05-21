@@ -61,6 +61,22 @@ export function actualizarCalidadDeVidaAction ({ commit }, payload) {
   })
 }
 
+export function eliminarCalidadDeVidaAction ({ commit }, payload) {
+  commit('inicializarAccion')
+  const urlService = 'calidad-de-vida'
+  return new Promise((resolve, reject) => {
+    axios.delete(`${URL_API}/${urlService}/${payload.id}`)
+      .then(({ data }) => {
+        commit('actualizarCalidadDeVidaSuccess', payload)
+        resolve(data)
+      })
+      .catch(error => {
+        console.log(error.response)
+        commit('setActionFail', error.response)
+        reject(error.response)
+      })
+  })
+}
 
 export function unsetCalidadDeVidaAction({commit}){
   commit('unsetCalidadDeVida')

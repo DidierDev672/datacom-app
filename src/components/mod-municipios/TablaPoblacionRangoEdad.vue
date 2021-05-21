@@ -1,3 +1,4 @@
+/* eslint-disable vue/no-parsing-error */
 <template>
   <div>
       <q-markup-table bordered wrap-cells separator="vertical">

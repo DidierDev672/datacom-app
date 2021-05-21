@@ -184,11 +184,115 @@
             </q-item-section>
           </q-item>
 
+          <q-separator spaced />
+
+          <q-item-label header>Demografía</q-item-label>
+
+          <q-item>
+            <q-item-section style="cursor: pointer" top @click="modalEditarDemografia = true">
+              <q-item-label caption lines="1">
+                Población Urbana
+              </q-item-label>
+              <q-item-label lines="1">
+                <span class="text-weight-medium">{{ infoGeneral != null ? (infoGeneral.poblacionUrbana ? infoGeneral.poblacionUrbana : 'Agregue población urbana') : 'Agregue población urbana'}}</span>
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item>
+            <q-item-section style="cursor: pointer" top @click="modalEditarDemografia = true">
+              <q-item-label caption lines="1">
+                Población Rural
+              </q-item-label>
+              <q-item-label lines="1">
+                <span class="text-weight-medium">{{ infoGeneral != null ? (infoGeneral.poblacionRural ? infoGeneral.poblacionRural : 'Agregue población rural') : 'Agregue población rural'}}</span>
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item>
+            <q-item-section style="cursor: pointer" top @click="modalEditarDemografia = true">
+              <q-item-label caption lines="1">
+                No. Hombres
+              </q-item-label>
+              <q-item-label lines="1">
+                <span class="text-weight-medium">{{ infoGeneral != null ? (infoGeneral.noHombres ? infoGeneral.noHombres : 'Agregue el número de hombres') : 'Agregue el número de hombres'}}</span>
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item>
+            <q-item-section style="cursor: pointer" top @click="modalEditarDemografia = true">
+              <q-item-label caption lines="1">
+                No. Mujeres
+              </q-item-label>
+              <q-item-label lines="1">
+                <span class="text-weight-medium">{{ infoGeneral != null ? (infoGeneral.noMujeres ? infoGeneral.noMujeres : 'Agregue el número de mujeres') : 'Agregue el número de mujeres'}}</span>
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item>
+            <q-item-section style="cursor: pointer" top @click="modalEditarDemografia = true">
+              <q-item-label caption lines="1">
+                Población Indígena
+              </q-item-label>
+              <q-item-label lines="1">
+                <span class="text-weight-medium">{{ infoGeneral != null ? (infoGeneral.noIndigenas ? infoGeneral.noIndigenas : 'Agregue población indígena') : 'Agregue población indígena'}}</span>
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item>
+            <q-item-section style="cursor: pointer" top @click="modalEditarDemografia = true">
+              <q-item-label caption lines="1">
+                Población Afro
+              </q-item-label>
+              <q-item-label lines="1">
+                <span class="text-weight-medium">{{ infoGeneral != null ? (infoGeneral.noAfro ? infoGeneral.noAfro : 'Agregue población afro') : 'Agregue población afro'}}</span>
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item>
+            <q-item-section style="cursor: pointer" top @click="modalEditarDemografia = true">
+              <q-item-label caption lines="1">
+                Tasa de fecundidad
+              </q-item-label>
+              <q-item-label lines="1">
+                <span class="text-weight-medium">{{ infoGeneral != null ? (infoGeneral.tasaFecundidad ? infoGeneral.tasaFecundidad : 'Agregue la tasa de fecundidad') : 'Agregue la tasa de fecundidad'}}</span>
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item>
+            <q-item-section style="cursor: pointer" top @click="modalEditarDemografia = true">
+              <q-item-label caption lines="1">
+                Tasa de Natalidad
+              </q-item-label>
+              <q-item-label lines="1">
+                <span class="text-weight-medium">{{ infoGeneral != null ? (infoGeneral.tasaNatalidad ? infoGeneral.tasaNatalidad : 'Agregue la tasa de natalidad') : 'Agregue la tasa de natalidad'}}</span>
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item>
+            <q-item-section style="cursor: pointer" top @click="modalEditarDemografia = true">
+              <q-item-label caption lines="1">
+                Densidad poblacional
+              </q-item-label>
+              <q-item-label lines="1">
+                <span class="text-weight-medium">{{ infoGeneral != null ? (infoGeneral.densidad ? infoGeneral.densidad : 'Agregue la densidad poblacional') : 'Agregue la densidad poblacional'}}</span>
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+
         </q-list>
 
         <EditarUbicacion @close="closeModalEditarUbicacion" v-if="modalEditarUbicacion"></EditarUbicacion>
         <EditarLimitesGeograficos @close="closeModalEditarLimitesGeograficos" v-if="modalEditarLimitesGeograficos"></EditarLimitesGeograficos>
         <EditarOtrosDatos @close="closeModalEditarOtrosDatos" v-if="modalEditarOtrosDatos"></EditarOtrosDatos>         
+        <EditarDemografia @close="closeModalEditarDemografia" v-if="modalEditarDemografia"></EditarDemografia>         
   
       </div>
     </div>
@@ -200,14 +304,17 @@ import { mapGetters, mapActions } from 'vuex'
 import EditarUbicacion from 'components/mod-municipios/EditarUbicacion'
 import EditarLimitesGeograficos from 'components/mod-municipios/EditarLimitesGeograficos'
 import EditarOtrosDatos from 'components/mod-municipios/EditarOtrosDatos'
+import EditarDemografia from 'components/mod-municipios/EditarDemografia'
 export default {
-  components: { EditarUbicacion, EditarLimitesGeograficos, EditarOtrosDatos },
+  components: { EditarUbicacion, EditarLimitesGeograficos, EditarOtrosDatos, EditarDemografia },
   data () {
     return {
       basic: false,
       modalEditarUbicacion: false,
       modalEditarLimitesGeograficos: false, 
-      modalEditarOtrosDatos: false     
+      modalEditarOtrosDatos: false,
+      modalEditarDemografia: false
+
     }
   },
   methods: {
@@ -217,15 +324,11 @@ export default {
     actualizarInfomacionGeneral(evt){
       console.log('Value: ', evt);
     },
-    closeModalEditarUbicacion(){
-      this.modalEditarUbicacion = false
-    },
-    closeModalEditarLimitesGeograficos(){
-      this.modalEditarLimitesGeograficos = false
-    },
-    closeModalEditarOtrosDatos(){
-      this.modalEditarOtrosDatos = false
-    }
+    closeModalEditarUbicacion(){ this.modalEditarUbicacion = false },
+    closeModalEditarLimitesGeograficos(){ this.modalEditarLimitesGeograficos = false },
+    closeModalEditarOtrosDatos(){ this.modalEditarOtrosDatos = false },
+    closeModalEditarDemografia(){ this.modalEditarDemografia = false }
+
   },
   computed: {
     ...mapGetters('municipios', ['getMunicipioState']),

@@ -65,6 +65,31 @@ const routes = [
         name: 'calidad-vida',
         component: () => import('pages/mod-municipios/municipio/CalidadVida.vue'),
       },
+      {
+        path: 'educacion',
+        name: 'educacion',
+        component: () => import('pages/mod-municipios/municipio/Educacion.vue'),
+      },
+      {
+        path: 'viviendas-municipio',
+        name: 'viviendas-municipio',
+        component: () => import('pages/mod-municipios/municipio/Viviendas.vue'),
+      },
+      {
+        path: 'cobertura-servicio',
+        name: 'cobertura-servicio',
+        component: () => import('pages/mod-municipios/municipio/CoberturaServicio.vue'),
+      },
+      {
+        path: 'administracion',
+        name: 'administracion',
+        component: () => import('pages/mod-municipios/municipio/AdministracionPublica.vue'),
+      },
+      {
+        path: 'secretarias',
+        name: 'secretarias',
+        component: () => import('pages/mod-municipios/municipio/Secretarias.vue'),
+      },
     ]
   },
   {
