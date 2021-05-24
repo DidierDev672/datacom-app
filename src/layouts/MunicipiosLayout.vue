@@ -48,7 +48,7 @@
 
         <q-item
           clickable
-          :to="{name: 'info-general', params: {id: municipioID}}"
+          :to="{name: 'info-general', params: {id: encuestaID}}"
           exact
         >
           <q-item-section
@@ -64,7 +64,7 @@
 
         <q-item
           clickable
-          :to="{name: 'poblacion', params: {id: municipioID}}"
+          :to="{name: 'poblacion', params: {id: encuestaID}}"
           exact
         >
           <q-item-section
@@ -80,7 +80,7 @@
 
         <q-item
           clickable
-          :to="{name: 'calidad-vida', params: {id: municipioID}}"
+          :to="{name: 'calidad-vida', params: {id: encuestaID}}"
           exact
         >
           <q-item-section
@@ -96,7 +96,7 @@
 
         <q-item
           clickable
-          :to="{name: 'educacion', params: {id: municipioID}}"
+          :to="{name: 'educacion', params: {id: encuestaID}}"
           exact
         >
           <q-item-section
@@ -112,7 +112,7 @@
 
         <q-item
           clickable
-          :to="{name: 'viviendas-municipio', params: {id: municipioID}}"
+          :to="{name: 'viviendas-municipio', params: {id: encuestaID}}"
           exact
         >
           <q-item-section
@@ -128,7 +128,7 @@
 
         <q-item
           clickable
-          :to="{name: 'cobertura-servicio', params: {id: municipioID}}"
+          :to="{name: 'cobertura-servicio', params: {id: encuestaID}}"
           exact
         >
           <q-item-section
@@ -144,7 +144,23 @@
 
         <q-item
           clickable
-          :to="{name: 'administracion', params: {id: municipioID}}"
+          :to="{name: 'seguridad', params: {id: encuestaID}}"
+          exact
+        >
+          <q-item-section
+            avatar
+          >
+            <q-icon size="14px" name="ti-angle-right" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Seguridad</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-item
+          clickable
+          :to="{name: 'administracion', params: {id: encuestaID}}"
           exact
         >
           <q-item-section
@@ -160,7 +176,7 @@
 
         <q-item
           clickable
-          :to="{name: 'secretarias', params: {id: municipioID}}"
+          :to="{name: 'secretarias', params: {id: encuestaID}}"
           exact
         >
           <q-item-section
@@ -171,6 +187,70 @@
 
           <q-item-section>
             <q-item-label>Secretarías de Despacho</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-item
+          clickable
+          :to="{name: 'politicas-publicas', params: {id: encuestaID}}"
+          exact
+        >
+          <q-item-section
+            avatar
+          >
+            <q-icon size="14px" name="ti-angle-right" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Políticas Públicas</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-item
+          clickable
+          :to="{name: 'organizaciones', params: {id: encuestaID}}"
+          exact
+        >
+          <q-item-section
+            avatar
+          >
+            <q-icon size="14px" name="ti-angle-right" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Organizaciones</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-item
+          clickable
+          :to="{name: 'infraestructura-publica', params: {id: encuestaID}}"
+          exact
+        >
+          <q-item-section
+            avatar
+          >
+            <q-icon size="14px" name="ti-angle-right" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Infraestructura Pública</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-item
+          clickable
+          :to="{name: 'finanza', params: {id: encuestaID}}"
+          exact
+        >
+          <q-item-section
+            avatar
+          >
+            <q-icon size="14px" name="ti-angle-right" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Finanzas Públicas</q-item-label>
           </q-item-section>
         </q-item>
 
@@ -240,7 +320,7 @@ export default {
   data () {
     return {
       showAppInstallBanner: false,
-      municipioID: 0,
+      encuestaID: 0,
       leftDrawerOpen: false,
       essentialLinks: [
         {
@@ -342,11 +422,11 @@ export default {
     }
   },
   methods: {
-    ...mapActions('municipios', ['buscarMunicipioAction']),
+    ...mapActions('encuesta', ['buscarEncuestaAction']),
   },
   created () {
-    this.municipioID = this.$route.params.id
-    this.buscarMunicipioAction(this.municipioID)
+    this.encuestaID = this.$route.params.id
+    this.buscarEncuestaAction(this.encuestaID)
   },
 }
 </script>

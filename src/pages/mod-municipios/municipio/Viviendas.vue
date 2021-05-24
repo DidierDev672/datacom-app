@@ -3,56 +3,140 @@
     <div class="row">
       <div class="col-xs-12 col-sm-8 offset-sm-2"> 
 
-        <vivienda-card
-          v-for="vivienda in getViviendaState.lista"
-          class="q-mb-sm"
-          :vivienda="vivienda"
-          @editar="editarInfo"
-          :key="vivienda.id"></vivienda-card>             
+        <q-form ref="ubicacionForm">          
+          <p class="text-h6 q-mt-md q-mb-sm">5. Vivienda</p>
+
+          <q-card
+            flat
+            bordered
+            class="my-card q-mb-md">
+            <q-card-section class="q-pb-none">
+                <div class="text-h6 q-mb-none">No. Viviendas Urbanas</div>
+            </q-card-section>
+
+            <q-card-section>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6">
+                        <q-input dense v-model="vivienda.numeroDeViviendasUrbanas" />
+                    </div>
+                </div>
+            </q-card-section>
+          </q-card>
+
+          <q-card flat bordered class="my-card q-mb-md">
+            <q-card-section class="q-pb-none">
+                <div class="text-h6 q-mb-none">No. Viviendas Rurales</div>
+            </q-card-section>
+
+            <q-card-section>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6">
+                        <q-input dense v-model="vivienda.numeroDeViviendasRurales" />
+                    </div>
+                </div>
+            </q-card-section>
+          </q-card>
+
+          <q-card flat bordered class="my-card q-mb-md">
+            <q-card-section class="q-pb-none">
+                <div class="text-h6 q-mb-none">No. Hogares Urbanos</div>
+            </q-card-section>
+
+            <q-card-section>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6">
+                        <q-input dense v-model="vivienda.numeroDeHogaresUrbanos" />
+                    </div>
+                </div>
+            </q-card-section>
+          </q-card>
+
+          <q-card flat bordered class="my-card q-mb-md">
+            <q-card-section class="q-pb-none">
+                <div class="text-h6 q-mb-none">No. Hogares Rurales</div>
+            </q-card-section>
+
+            <q-card-section>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6">
+                        <q-input dense v-model="vivienda.numeroDeHogaresRurales" />
+                    </div>
+                </div>
+            </q-card-section>
+          </q-card>
+
+          <q-card flat bordered class="my-card q-mb-md">
+            <q-card-section class="q-pb-none">
+                <div class="text-h6 q-mb-none">Déficit Cuantitativo</div>
+            </q-card-section>
+
+            <q-card-section>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6">
+                        <q-input dense v-model="vivienda.deficitCuantitativo" />
+                    </div>
+                </div>
+            </q-card-section>
+          </q-card>
+
+          <q-card flat bordered class="my-card q-mb-md">
+            <q-card-section class="q-pb-none">
+                <div class="text-h6 q-mb-none">Déficit Cualitativo</div>
+            </q-card-section>
+
+            <q-card-section>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6">
+                        <q-input dense v-model="vivienda.deficitCualitativo" />
+                    </div>
+                </div>
+            </q-card-section>
+          </q-card>
+
+        </q-form>  
+
+        <div class="flex justify-center">
+            <q-btn label="Guardar y continuar" no-caps color="primary" @click="onSubmit"/>
+        </div>
+          
   
       </div>
     </div>
-
-    <q-page-sticky position="bottom-right" :offset="[18, 18]">
-      <q-btn fab icon="add" color="primary" @click="showViviendaForm = true">
-          <q-tooltip>
-              Agregar nuevo registro
-          </q-tooltip>
-      </q-btn>
-    </q-page-sticky>
-
-    <vivienda-form v-if="showViviendaForm" @close="closeModal"></vivienda-form>
-
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters, mapMutations } from 'vuex'
-import ViviendaCard from 'src/components/mod-municipios/ViviendaCard.vue'
-import ViviendaForm from 'src/components/mod-municipios/ViviendaForm.vue'
+import { mapActions, mapGetters } from 'vuex'
 export default {
-  components: { ViviendaCard, ViviendaForm },
   data(){
     return {
-      municipioID: 0,
-      showViviendaForm: false
+      encuestaID: 0,
+      vivienda: {}
     }
   },
   created(){
-    this.municipioID = this.$route.params.id
-    if(this.municipioID > 0){
-        this.cargarListaViviendasAction(this.municipioID)
+    this.encuestaID = this.$route.params.id
+    this.vivienda = {
+      id: 0,
+      deficitCualitativo:0,
+      deficitCuantitativo:0,
+      numeroDeHogaresRurales:0,
+      numeroDeHogaresUrbanos:0,
+      numeroDeViviendasRurales:0,
+      numeroDeViviendasUrbanas:0
     }
   },
   methods: {
-    ...mapActions('viviendas', ['cargarListaViviendasAction']),
-    ...mapMutations('viviendas', ['setViviendaSuccess']),
-    closeModal(){
-        this.showViviendaForm = false
-    },
-    editarInfo(value){
-        this.setViviendaSuccess(value)
-        this.showViviendaForm = true
+    ...mapActions('viviendas', ['registrarViviendaAction']),
+    onSubmit(){
+        this.registrarViviendaAction({
+            ...this.vivienda,
+            encuesta: {
+                id: this.encuestaID
+            }
+        }).then(data => {
+            this.$router.push({name: 'cobertura-servicio', params: {id: this.encuestaID}})
+        })
     }
   },
   computed: {
@@ -65,4 +149,3 @@ export default {
 <style>
 
 </style>
-ViviendaCard

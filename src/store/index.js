@@ -2,6 +2,10 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 // import example from './module-example'
+import departamento from './module-departamento'
+import encuesta from './module-encuesta'
+import informacionGeneral from './module-municipios/informacion-general'
+import tipoEncuesta from './module-tipo-encuesta'
 import categoria from './module-parametrizacion/categoria'
 import parametros from './module-parametrizacion/parametros'
 import fichaVivienda from './module-vivienda'
@@ -12,6 +16,11 @@ import viviendas from './module-municipios/viviendas'
 import educacion from './module-municipios/educacion'
 import coberturaServicios from './module-municipios/cobertura-servicios'
 import secretarias from './module-municipios/secretarias'
+import seguridad from './module-municipios/seguridad'
+import politicasPublicas from './module-municipios/politicas-publicas'
+import organizacion from './module-municipios/organizaciones'
+import infraestructura from './module-municipios/infraestructura'
+import finanza from './module-municipios/finanzas'
 
 Vue.use(Vuex)
 
@@ -28,6 +37,10 @@ export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
       // example
+      departamento,
+      encuesta,
+      informacionGeneral,
+      tipoEncuesta,
       parametros,
       categoria,
       fichaVivienda,
@@ -37,7 +50,12 @@ export default function (/* { ssrContext } */) {
       viviendas,
       educacion,
       coberturaServicios,
-      secretarias
+      secretarias,
+      seguridad,
+      politicasPublicas,
+      organizacion,
+      infraestructura,
+      finanza
     },
 
     // enable strict mode (adds overhead!)

@@ -6,6 +6,8 @@ const routes = [
     children: [
       // { path: '', component: () => import('pages/PageHome.vue') },
       { path: 'encuestas', component: () => import('pages/menu-encuestas/PageMenuEncuestas.vue') },
+      { path: 'encuestas/lista', name:'listado-encuesta', component: () => import('pages/menu-encuestas/EncuestasList') },
+      { path: 'nueva-encuesta/:id', name:'nueva-encuesta', component: () => import('pages/menu-encuestas/PageNewEncuesta') },
       { path: 'parametrizacion', component: () => import('pages/parametrizacion/PageMenuParametrizacion.vue') },
       { path: 'reportes', component: () => import('pages/reportes/PageMenuReportes.vue') },
       {
@@ -81,6 +83,11 @@ const routes = [
         component: () => import('pages/mod-municipios/municipio/CoberturaServicio.vue'),
       },
       {
+        path: 'seguridad',
+        name: 'seguridad',
+        component: () => import('pages/mod-municipios/municipio/Seguridad.vue'),
+      },
+      {
         path: 'administracion',
         name: 'administracion',
         component: () => import('pages/mod-municipios/municipio/AdministracionPublica.vue'),
@@ -89,6 +96,26 @@ const routes = [
         path: 'secretarias',
         name: 'secretarias',
         component: () => import('pages/mod-municipios/municipio/Secretarias.vue'),
+      },
+      {
+        path: 'politicas-publicas',
+        name: 'politicas-publicas',
+        component: () => import('pages/mod-municipios/municipio/PoliticasPublicas.vue'),
+      },
+      {
+        path: 'organizaciones',
+        name: 'organizaciones',
+        component: () => import('pages/mod-municipios/municipio/Organizaciones.vue'),
+      },
+      {
+        path: 'infraestructura-publica',
+        name: 'infraestructura-publica',
+        component: () => import('pages/mod-municipios/municipio/InfraestructuraPublica.vue'),
+      },
+      {
+        path: 'finanza',
+        name: 'finanza',
+        component: () => import('pages/mod-municipios/municipio/Finanza.vue'),
       },
     ]
   },

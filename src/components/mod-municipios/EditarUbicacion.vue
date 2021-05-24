@@ -40,13 +40,13 @@
             flat
             label="Cancelar"
             color="primary"
-            :disable="getMunicipioState.loading"
+            :disable="getInformacionGeneralState.loading"
             @click="close" />
           <q-btn
             label="Guardar"
             color="primary"
-            :loading="getMunicipioState.loading"
-            :disable="getMunicipioState.loading"
+            :loading="getInformacionGeneralState.loading"
+            :disable="getInformacionGeneralState.loading"
             @click="actualizar">
             <template v-slot:loading>
               <q-spinner-facebook />
@@ -68,14 +68,14 @@ export default {
   },
 
   methods: {
-    ...mapActions('municipios', ['actualizarInformacionGeneralAction', 'guardarInformacionGeneralAction']),
+    ...mapActions('informacionGeneral', ['actualizarInformacionGeneralAction', 'guardarInformacionGeneralAction']),
     actualizar(){
       let infoGeneral = {
-        ...this.getMunicipioState.municipio.informacionGeneral,
+        ...this.getInformacionGeneralState.objInformacionGeneral,
         region: this.ubicacion.region,
         extension: this.ubicacion.extension,
-        municipio: {
-          id: this.municipio.id
+        encuesta: {
+          id: this.getEncuestaState.objEncuesta.id
         }
       }
 
@@ -101,17 +101,15 @@ export default {
       region: '',
       extension: ''
     }
-    if(this.getMunicipioState.municipio.informacionGeneral != null && Object.keys(this.getMunicipioState.municipio.informacionGeneral).length > 0){
-      this.ubicacion.id = this.getMunicipioState.municipio.informacionGeneral.id;
-      this.ubicacion.region = this.getMunicipioState.municipio.informacionGeneral.region;
-      this.ubicacion.extension = this.getMunicipioState.municipio.informacionGeneral.extension;
+    if(this.getInformacionGeneralState.objInformacionGeneral != null && Object.keys(this.getInformacionGeneralState.objInformacionGeneral).length > 0){
+      this.ubicacion.id = this.getInformacionGeneralState.objInformacionGeneral.id;
+      this.ubicacion.region = this.getInformacionGeneralState.objInformacionGeneral.region;
+      this.ubicacion.extension = this.getInformacionGeneralState.objInformacionGeneral.extension;
     }
   },
   computed: {
-    ...mapGetters('municipios', ['getMunicipioState']),
-    municipio(){
-      return this.getMunicipioState.municipio
-    }
+    ...mapGetters('informacionGeneral', ['getInformacionGeneralState']),
+    ...mapGetters('encuesta', ['getEncuestaState']),
   }
 
 }

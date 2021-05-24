@@ -18,6 +18,22 @@ export function cargarListaParametroAction ({ commit }) {
   })
 }
 
+export function cargarListaParametroPorCategoriaAction ({ commit }, payload) {
+  commit('inicializarAccion')
+  const urlService = 'parametro'
+  return new Promise((resolve, reject) => {
+    axios.get(`${URL_API}/${urlService}/categoria/${payload}`)
+      .then(({ data }) => {        
+        commit('setListaParametroSuccess', data)
+        resolve(data)
+      }).catch(error => {
+        console.log('Ocurrió un error al consultar las parametros: ', error.response)
+        commit('setActionFail', error.response)
+        reject(error.response)
+      })
+  })
+}
+
 export function unsetListaCategoriasAction ({ commit }) {
   commit('unsetListaCategorias')
 }

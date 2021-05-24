@@ -6,7 +6,7 @@
     v-model="show">
       <q-card style="width: 700px; max-width: 80vw;">
         <q-card-section>
-          <div class="text-h6">otros datos del municipio</div>
+          <div class="text-h6">Otros datos del municipio</div>
         </q-card-section>
 
         <q-separator />

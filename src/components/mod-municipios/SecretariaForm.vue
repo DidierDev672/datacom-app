@@ -86,12 +86,12 @@ export default {
     return {
       show: true,
       secretaria: {},
-      municipioID: 0,
+      encuestaID: 0,
       options: [],
     }
   },
   created(){
-    this.municipioID = this.$route.params.id
+    this.encuestaID = this.$route.params.id
     this.secretaria = {
       id: 0,
       telefono:'',
@@ -117,8 +117,8 @@ export default {
       
       let info = {
         ...this.secretaria,
-        administracionPublicaMunicipio: {
-          id: this.municipioID
+        encuesta: {
+          id: this.encuestaID
         }
       }
       console.log('Secretaria a guardar: ', info);      

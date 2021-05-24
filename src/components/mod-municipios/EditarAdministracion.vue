@@ -149,13 +149,13 @@ export default {
   },
 
   methods: {
-    ...mapActions("municipios", [
+    ...mapActions("informacionGeneral", [
       "actualizarInformacionGeneralAction",
       "guardarInformacionGeneralAction"
     ]),
     actualizar() {
       let infoGeneral = {
-        ...this.getMunicipioState.municipio.informacionGeneral,
+        ...this.getInformacionGeneralState.objInformacionGeneral,
         alcalde: this.administracion.alcalde,
         partidoPolitico: this.administracion.partidoPolitico,
         telefonoAlcalde: this.administracion.telefonoAlcalde,
@@ -166,8 +166,8 @@ export default {
         correo: this.administracion.correo,
         paginaDeFacebook: this.administracion.paginaDeFacebook,
         paginaWeb: this.administracion.paginaWeb,
-        municipio: {
-          id: this.municipio.id
+        encuesta: {
+          id: this.getEncuestaState.objEncuesta.id
         }
       };
 
@@ -205,27 +205,25 @@ export default {
     };
 
     if (
-      this.getMunicipioState.municipio.informacionGeneral != null &&
-      Object.keys(this.getMunicipioState.municipio.informacionGeneral).length > 0
+      this.getInformacionGeneralState.objInformacionGeneral != null &&
+      Object.keys(this.getInformacionGeneralState.objInformacionGeneral).length > 0
     ) {
-      this.administracion.id = this.getMunicipioState.municipio.informacionGeneral.id;
-      this.administracion.alcalde = this.getMunicipioState.municipio.informacionGeneral.alcalde;
-      this.administracion.partidoPolitico = this.getMunicipioState.municipio.informacionGeneral.partidoPolitico;
-      this.administracion.telefonoAlcalde = this.getMunicipioState.municipio.informacionGeneral.telefonoAlcalde;
-      this.administracion.correoAlcalde = this.getMunicipioState.municipio.informacionGeneral.correoAlcalde;
-      this.administracion.direccionAlcaldia = this.getMunicipioState.municipio.informacionGeneral.direccionAlcaldia;
-      this.administracion.telefono = this.getMunicipioState.municipio.informacionGeneral.telefono;
-      this.administracion.horarioDeAtencion = this.getMunicipioState.municipio.informacionGeneral.horarioDeAtencion;
-      this.administracion.correo = this.getMunicipioState.municipio.informacionGeneral.correo;
-      this.administracion.paginaDeFacebook = this.getMunicipioState.municipio.informacionGeneral.paginaDeFacebook;
-      this.administracion.paginaWeb = this.getMunicipioState.municipio.informacionGeneral.paginaWeb;
+      this.administracion.id = this.getInformacionGeneralState.objInformacionGeneral.id;
+      this.administracion.alcalde = this.getInformacionGeneralState.objInformacionGeneral.alcalde;
+      this.administracion.partidoPolitico = this.getInformacionGeneralState.objInformacionGeneral.partidoPolitico;
+      this.administracion.telefonoAlcalde = this.getInformacionGeneralState.objInformacionGeneral.telefonoAlcalde;
+      this.administracion.correoAlcalde = this.getInformacionGeneralState.objInformacionGeneral.correoAlcalde;
+      this.administracion.direccionAlcaldia = this.getInformacionGeneralState.objInformacionGeneral.direccionAlcaldia;
+      this.administracion.telefono = this.getInformacionGeneralState.objInformacionGeneral.telefono;
+      this.administracion.horarioDeAtencion = this.getInformacionGeneralState.objInformacionGeneral.horarioDeAtencion;
+      this.administracion.correo = this.getInformacionGeneralState.objInformacionGeneral.correo;
+      this.administracion.paginaDeFacebook = this.getInformacionGeneralState.objInformacionGeneral.paginaDeFacebook;
+      this.administracion.paginaWeb = this.getInformacionGeneralState.objInformacionGeneral.paginaWeb;
     }
   },
   computed: {
-    ...mapGetters("municipios", ["getMunicipioState"]),
-    municipio() {
-      return this.getMunicipioState.municipio;
-    }
+    ...mapGetters('informacionGeneral', ['getInformacionGeneralState']),
+    ...mapGetters('encuesta', ['getEncuestaState']),
   }
 };
 </script>
