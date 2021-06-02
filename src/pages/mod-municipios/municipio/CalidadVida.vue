@@ -2,8 +2,8 @@
   <div class="q-ma-sm">
       <div class="row">
           <div class="col-xs-12 col-sm-8 offset-sm-2">                
-              <q-form ref="ubicacionForm">          
-                    <p class="text-h6 q-mt-md q-mb-sm">Calidad de Vida</p>
+              <q-form ref="calidadForm">          
+                    <p class="text-h6 q-mt-md q-mb-sm">3. Calidad de Vida</p>
                     <q-card
                         flat
                         bordered
@@ -15,7 +15,9 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input dense v-model="calidad.ano" />
+                                    <q-input
+                                      dense
+                                      v-model="calidad.ano" />
                                 </div>
                             </div>
                         </q-card-section>
@@ -31,7 +33,15 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input dense v-model="calidad.ipmUrbana" />
+                                    <q-input
+                                      dense
+                                      v-model.number="calidad.ipmUrbana" 
+                                      type="number"
+                                        lazy-rules 
+                                        :rules="[
+                                            val => val !== null && val !== '' || 'Debe ingresar un valor ',
+                                            val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                                        ]"/>
                                 </div>
                             </div>
                         </q-card-section>
@@ -45,7 +55,15 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input dense v-model="calidad.ipmRural" />
+                                    <q-input
+                                      dense
+                                      v-model.number="calidad.ipmRural"
+                                      type="number"
+                                        lazy-rules 
+                                        :rules="[
+                                            val => val !== null && val !== '' || 'Debe ingresar un valor ',
+                                            val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                                        ]" />
                                 </div>
                             </div>
                         </q-card-section>
@@ -59,7 +77,15 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input dense v-model="calidad.ipmTotal" />
+                                    <q-input
+                                      dense
+                                      v-model.number="calidad.ipmTotal"
+                                      type="number"
+                                        lazy-rules 
+                                        :rules="[
+                                            val => val !== null && val !== '' || 'Debe ingresar un valor ',
+                                            val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                                        ]" />
                                 </div>
                             </div>
                         </q-card-section>
@@ -75,7 +101,15 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input dense v-model="calidad.nbi_urbano" />
+                                    <q-input
+                                      dense
+                                      v-model.number="calidad.nbi_urbano"
+                                      type="number"
+                                        lazy-rules 
+                                        :rules="[
+                                            val => val !== null && val !== '' || 'Debe ingresar un valor ',
+                                            val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                                        ]" />
                                 </div>
                             </div>
                         </q-card-section>
@@ -89,7 +123,15 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input dense v-model="calidad.nbi_rural" />
+                                    <q-input
+                                      dense
+                                      v-model.number="calidad.nbi_rural" 
+                                      type="number"
+                                        lazy-rules 
+                                        :rules="[
+                                            val => val !== null && val !== '' || 'Debe ingresar un valor ',
+                                            val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                                        ]"/>
                                 </div>
                             </div>
                         </q-card-section>
@@ -105,7 +147,15 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input dense v-model="calidad.pcmUrbano" />
+                                    <q-input
+                                      dense
+                                      v-model.number="calidad.pcmUrbano"
+                                      type="number"
+                                        lazy-rules 
+                                        :rules="[
+                                            val => val !== null && val !== '' || 'Debe ingresar un valor ',
+                                            val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                                        ]" />
                                 </div>
                             </div>
                         </q-card-section>
@@ -119,7 +169,15 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input dense v-model="calidad.pcmRural" />
+                                    <q-input
+                                      dense
+                                      v-model.number="calidad.pcmRural"
+                                      type="number"
+                                        lazy-rules 
+                                        :rules="[
+                                            val => val !== null && val !== '' || 'Debe ingresar un valor ',
+                                            val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                                        ]" />
                                 </div>
                             </div>
                         </q-card-section>
@@ -133,7 +191,15 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input dense v-model="calidad.pcm" />
+                                    <q-input
+                                      dense
+                                      v-model.number="calidad.pcm"
+                                      type="number"
+                                        lazy-rules 
+                                        :rules="[
+                                            val => val !== null && val !== '' || 'Debe ingresar un valor ',
+                                            val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                                        ]" />
                                 </div>
                             </div>
                         </q-card-section>
@@ -141,7 +207,17 @@
               </q-form>
 
               <div class="flex justify-center">
-                    <q-btn label="Guardar y continuar" no-caps color="primary" @click="onSubmit"/>
+                    <q-btn
+                      label="Guardar y continuar"
+                      no-caps
+                      color="primary"
+                      :disable="getCalidadDeVidaState.loading"
+                      :loading="getCalidadDeVidaState.loading"
+                      @click="onSubmit" >
+                      <template v-slot:loading>
+                            <q-spinner-facebook />
+                        </template>
+                    </q-btn>
                 </div>
 
           </div>
@@ -172,18 +248,37 @@ export default {
             pcmRural:0,
             pcmUrbano:0,
         }
+        this.buscarCalidadDeVidaAction(this.encuestaID).then(data => {
+            if(data.id > 0){
+                this.calidad = {...data}
+            }
+        })
     },
     methods: {
-        ...mapActions('calidadDeVida', ['registrarCalidadDeVidaAction']),
+        ...mapActions('calidadDeVida', ['registrarCalidadDeVidaAction', 'buscarCalidadDeVidaAction']),
         onSubmit(){
-            this.registrarCalidadDeVidaAction({
-                ...this.calidad,
-                encuesta: {
-                    id: this.encuestaID
+
+            this.$refs.calidadForm.validate().then(success => {
+                if (success) {                    
+                    console.log('Form valido', this.calidad);
+                    this.registrarCalidadDeVidaAction({
+                        ...this.calidad,
+                        encuesta: {
+                            id: this.encuestaID
+                        }
+                    }).then(data => {
+                        this.calidad.id = data
+                        this.$router.push({name: 'educacion', params: {id: this.encuestaID}})
+                    })
+                }else{
+                    this.$q.notify({
+                        message: 'Favor completar los campos correctamente',
+                        color: 'red'
+                    })
                 }
-            }).then(data => {
-                this.$router.push({name: 'educacion', params: {id: this.encuestaID}})
             })
+
+
         }
         
     },

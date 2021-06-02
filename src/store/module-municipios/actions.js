@@ -18,6 +18,21 @@ export function cargarListaMunicipiosAction ({ commit }) {
   })
 }
 
+export function cargarListaComunidadesDelMunicipioAction ({ commit }, municipioID) {
+  commit('inicializarAccion')
+  const urlService = 'municipio'
+  return new Promise((resolve, reject) => {
+    axios.get(`${URL_API}/${urlService}/${municipioID}/comunidades`)
+      .then(({ data }) => {
+        resolve(data)
+      }).catch(error => {
+        console.log('Ocurrió un error al consultar las comunidades del municipio: ', error.response)
+        commit('setActionFail', error.response)
+        reject(error.response)
+      })
+  })
+}
+
 export function unsetListaMunicipiosAction ({ commit }) {
   commit('unsetListaMunicipios')
 }

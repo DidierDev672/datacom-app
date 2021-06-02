@@ -1,5 +1,5 @@
 export function getFinanzaState (state) {
-  return state.infraestructura
+  return state.finanza
 }
 
 export function getFinanzaPorId (state) {

@@ -5,13 +5,13 @@
 
         <div v-if="step==1">
           <q-form ref="ubicacionForm">          
-            <p class="text-h6 q-mt-md q-mb-sm">Ubicación del Municipio</p>
+            <p class="text-h6 q-mt-md q-mb-sm">1. Ubicación del Municipio</p>
             <q-card
               flat
               bordered
               class="my-card q-mb-md">
               <q-card-section class="q-pb-none">
-                <div class="text-h6 q-mb-none">Departamento</div>
+                <div class="text-h6 q-mb-none">Departamento *</div>
               </q-card-section>
 
               <q-card-section>
@@ -19,11 +19,16 @@
                   <div class="col-xs-12 col-sm-6">
                     <q-select
                       dense
+                      use-input
                       v-model="departamento"
                       option-label="nombreDepartamento"
                       option-value="id"
                       @input="buscarMunicipios"
-                      :options="departamentos" />
+                      @filter="filterFnDepartamento"
+                      hint="Ingrese almenos dos caracteres para filtrar departamento"
+                      :options="departamentos"
+                      lazy-rules
+                      :rules="[ val => val != null && val.id > 0 || 'Debe elegir un departamento']" />
                   </div>
                 </div>
               </q-card-section>
@@ -42,12 +47,16 @@
                   <div class="col-xs-12 col-sm-6">
                     <q-select
                       dense
+                      ref="municipio"
+                      use-input
                       v-model="infoGeneral.municipio"
                       option-label="nombreMunicipio"
                       option-value="id"
+                      hint="Ingrese almenos dos caracteres para filtrar municipios"
                       :options="municipios"
+                      @filter="filterFnMunicipio"
                       lazy-rules
-                      :rules="[ val => val.id > 0 || 'Debe seleccionar un municipio']" />
+                      :rules="[ val => val != null && val.id > 0 || 'Debe elegir un municipio']" />
                   </div>
                 </div>
               </q-card-section>
@@ -64,7 +73,9 @@
               <q-card-section>
                 <div class="row">
                   <div class="col-xs-12 col-sm-6">
-                    <q-input dense v-model="infoGeneral.region" />
+                    <q-input
+                      dense
+                      v-model="infoGeneral.region"/>
                   </div>
                 </div>
               </q-card-section>
@@ -94,7 +105,7 @@
                 bordered
                 class="my-card q-mb-md">
                 <q-card-section class="q-pb-none">
-                  <div class="text-h6 q-mb-none">Límite Norte *</div>
+                  <div class="text-h6 q-mb-none">Límite Norte</div>
                 </q-card-section>
 
                 <q-card-section>
@@ -102,9 +113,7 @@
                     <div class="col-xs-12 col-sm-6">
                       <q-input
                         dense
-                        v-model="infoGeneral.limiteNorte"
-                        lazy-rules 
-                        :rules="[ val => val.length > 0 || 'Ingrese el límite Norte ']" />
+                        v-model="infoGeneral.limiteNorte" />
                     </div>
                   </div>
                 </q-card-section>
@@ -190,15 +199,13 @@
 
               <q-card flat bordered class="my-card q-mb-md">
                 <q-card-section class="q-pb-none">
-                  <div class="text-h6 q-mb-none">Gentilicio *</div>
+                  <div class="text-h6 q-mb-none">Gentilicio</div>
                 </q-card-section>
 
                 <q-card-section>
                   <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                      <q-input dense v-model="infoGeneral.gentilicio" 
-                        lazy-rules 
-                        :rules="[ val => val.length > 0 || 'Ingrese el Gentilicio ']"/>
+                      <q-input dense v-model="infoGeneral.gentilicio" />
                     </div>
                   </div>
                 </q-card-section>
@@ -206,7 +213,7 @@
 
               <q-card flat bordered class="my-card q-mb-md">
                 <q-card-section class="q-pb-none">
-                  <div class="text-h6 q-mb-none">Fecha de fundación *</div>
+                  <div class="text-h6 q-mb-none">Fecha de fundación </div>
                 </q-card-section>
 
                 <q-card-section>
@@ -215,9 +222,7 @@
                       <q-input
                         type="date"
                         dense
-                        v-model="infoGeneral.fechaFundacion"
-                        lazy-rules 
-                        :rules="[ val => val.length > 0 || 'Ingrese la fecha de Fundación ']" />
+                        v-model="infoGeneral.fechaFundacion" />
                     </div>
                   </div>
                 </q-card-section>
@@ -225,7 +230,7 @@
 
               <q-card flat bordered class="my-card q-mb-md">
                 <q-card-section class="q-pb-none">
-                  <div class="text-h6 q-mb-none">Categoria *</div>
+                  <div class="text-h6 q-mb-none">Categoria </div>
                 </q-card-section>
 
                 <q-card-section>
@@ -233,9 +238,7 @@
                     <div class="col-xs-12 col-sm-6">
                       <q-input
                         dense
-                        v-model="infoGeneral.categoria" 
-                        lazy-rules 
-                        :rules="[ val => val.length > 0 || 'Ingrese la categoria del municipio ']"/>
+                        v-model="infoGeneral.categoria" />
                     </div>
                   </div>
                 </q-card-section>
@@ -274,11 +277,11 @@
 
         <div v-if="step == 4">
           <q-form ref="demografiaForm">
-            <p class="text-h6 q-mt-md q-mb-sm">Demografía</p>
+            <p class="text-h6 q-mt-md q-mb-sm">2. Demografía</p>
 
               <q-card flat bordered class="my-card q-mb-md">
                 <q-card-section class="q-pb-none">
-                  <div class="text-h6 q-mb-none">Población urbana *</div>
+                  <div class="text-h6 q-mb-none">Población urbana </div>
                 </q-card-section>
 
                 <q-card-section>
@@ -286,9 +289,13 @@
                     <div class="col-xs-12 col-sm-6">
                       <q-input
                         dense
-                        v-model="infoGeneral.poblacionUrbana"
+                        type="number"
+                        v-model.number="infoGeneral.poblacionUrbana"
                         lazy-rules 
-                        :rules="[ val => val.length > 0 || 'Ingrese la cantidad de población urbana ']" />
+                        :rules="[
+                          val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero ',
+                          val => val > 0 || 'El valor ingresado debe ser mayor a cero '
+                        ]" />
                     </div>
                   </div>
                 </q-card-section>
@@ -296,7 +303,7 @@
 
               <q-card flat bordered class="my-card q-mb-md">
                 <q-card-section class="q-pb-none">
-                  <div class="text-h6 q-mb-none">Población rural *</div>
+                  <div class="text-h6 q-mb-none">Población rural </div>
                 </q-card-section>
 
                 <q-card-section>
@@ -304,9 +311,13 @@
                     <div class="col-xs-12 col-sm-6">
                       <q-input
                         dense
-                        v-model="infoGeneral.poblacionRural"
+                        type="number"
+                        v-model.number="infoGeneral.poblacionRural"
                         lazy-rules 
-                        :rules="[ val => val.length > 0 || 'Ingrese la catecantidad de población rural ']" />
+                        :rules="[
+                          val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero ',
+                          val => val > 0 || 'El valor ingresado debe ser mayor a cero '
+                        ]" />
                     </div>
                   </div>
                 </q-card-section>
@@ -320,7 +331,15 @@
                 <q-card-section>
                   <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                      <q-input dense v-model="infoGeneral.noHombres"/>
+                      <q-input
+                        dense
+                        type="number"
+                        v-model.number="infoGeneral.noHombres"
+                        lazy-rules 
+                        :rules="[
+                          val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero ',
+                          val => val > 0 || 'El valor ingresado debe ser mayor a cero '
+                        ]" />
                     </div>
                   </div>
                 </q-card-section>
@@ -334,7 +353,15 @@
                 <q-card-section>
                   <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                      <q-input dense v-model="infoGeneral.noMujeres"/>
+                      <q-input
+                        dense
+                        type="number"
+                        v-model.number="infoGeneral.noMujeres" 
+                        lazy-rules 
+                        :rules="[
+                          val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero ',
+                          val => val > 0 || 'El valor ingresado debe ser mayor a cero '
+                        ]"/>
                     </div>
                   </div>
                 </q-card-section>
@@ -348,7 +375,15 @@
                 <q-card-section>
                   <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                      <q-input dense v-model="infoGeneral.noIndigenas"/>
+                      <q-input
+                        dense
+                        type="number"
+                        v-model.number="infoGeneral.noIndigenas"
+                        lazy-rules 
+                        :rules="[
+                          val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero ',
+                          val => val > 0 || 'El valor ingresado debe ser mayor a cero '
+                        ]" />
                     </div>
                   </div>
                 </q-card-section>
@@ -362,7 +397,15 @@
                 <q-card-section>
                   <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                      <q-input dense v-model="infoGeneral.noAfro"/>
+                      <q-input
+                        dense
+                        type="number"
+                        v-model.number="infoGeneral.noAfro" 
+                         lazy-rules 
+                        :rules="[
+                          val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero ',
+                          val => val > 0 || 'El valor ingresado debe ser mayor a cero '
+                        ]"/>
                     </div>
                   </div>
                 </q-card-section>
@@ -404,7 +447,15 @@
                 <q-card-section>
                   <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                      <q-input dense v-model="infoGeneral.densidad"/>
+                      <q-input
+                        dense
+                        v-model.number="infoGeneral.densidad"
+                        type="number"
+                         lazy-rules 
+                        :rules="[
+                          val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero ',
+                          val => val > 0 || 'El valor ingresado debe ser mayor a cero '
+                        ]"/>
                     </div>
                   </div>
                 </q-card-section>
@@ -461,7 +512,20 @@
         <div class="flex justify-center">
             <q-btn v-if="step > 1" label="Anterior" no-caps color="primary" flat class="q-mr-sm" @click="anterior"/>
             <q-btn v-if="step < 5" label="Siguiente" no-caps color="primary" @click="siguiente"/>
-            <q-btn v-else label="Guardar y continuar" no-caps color="primary" @click="onSubmit"/>
+            <q-btn
+              v-else
+              label="Guardar y continuar"
+              no-caps
+              color="primary"
+              :disable="getInformacionGeneralState.loading"
+              :loading="getInformacionGeneralState.loading"
+              @click="onSubmit" >
+
+              <template v-slot:loading>
+                <q-spinner-facebook />
+              </template>
+              
+              </q-btn>
         </div>
 
        
@@ -478,7 +542,9 @@ export default {
       encuestaID: 0,
       infoGeneral: {},
       departamentos: [],
+      departamentosList: [],
       municipios: [],
+      municipiosList: [],
       departamento: '',
       step: 1
     }
@@ -534,12 +600,16 @@ export default {
     }
     this.encuestaID = this.$route.params.id
     this.cargarListaDepartamentoAction().then(data => {
-      this.departamentos = data
+      this.departamentosList = data
+      this.departamentos = this.departamentosList
     })
     this.buscarInformacionGeneralAction(this.encuestaID).then(data => {
       if(data.id > 0){
-        this.step = 5
-        this.infoGeneral = data
+        //this.step = 5
+        this.infoGeneral = {...data}
+        if(data.municipio != null){
+          this.departamento = data.municipio.departamento
+        }
       }
     })
   },
@@ -547,14 +617,10 @@ export default {
     ...mapActions('informacionGeneral',['buscarInformacionGeneralAction','guardarInformacionGeneralAction']),
     ...mapActions('departamento', ['cargarListaDepartamentoAction', 'cargarListaMunicipiosDelDepartamentoAction']),
     siguiente(){
-      console.log(this.step);
+     
+
       this.validarForm()
-      // if(this.step >= 5){
-      //   this.step = 5
-      //   console.log('Ha llegado al final')
-      // }else{
-      //   this.step++
-      // }
+
     },
     anterior(){
       if(this.step < 1){
@@ -565,9 +631,14 @@ export default {
       }
     },
     buscarMunicipios(departamentoID){
-      this.cargarListaMunicipiosDelDepartamentoAction(departamentoID.id).then(data => {
-        this.municipios = data
-      })
+      this.infoGeneral.municipio = null
+      this.$refs.municipio.resetValidation()
+      if(departamentoID != null){
+        this.cargarListaMunicipiosDelDepartamentoAction(departamentoID.id).then(data => {
+          this.municipiosList = data
+          this.municipios = this.municipiosList
+        })
+      }
     },
     onSubmit () {
       this.guardarInformacionGeneralAction({
@@ -586,8 +657,20 @@ export default {
           //validar FormUbicacion
           this.$refs.ubicacionForm.validate().then(success => {
             if (success) {
-              // yay, models are correct
-              this.step++
+              this.guardarInformacionGeneralAction({
+                ...this.infoGeneral,
+                encuesta: {
+                  id: this.encuestaID
+                }
+              }).then(data => {
+                this.infoGeneral.id = data
+                this.step++                
+              })
+            }else{
+              this.$q.notify({
+                  message: 'Favor completar los campos correctamente',
+                  color: 'red'
+              })
             }
           })
           break;
@@ -595,8 +678,19 @@ export default {
           //validar FormLimites
           this.$refs.limitesForm.validate().then(success => {
             if (success) {
-              // yay, models are correct
-              this.step++
+              this.guardarInformacionGeneralAction({
+                  ...this.infoGeneral,
+                  encuesta: {
+                    id: this.encuestaID
+                  }
+                }).then(data => {
+                this.step++                
+              })
+            }else{
+              this.$q.notify({
+                  message: 'Favor completar los campos correctamente',
+                  color: 'red'
+              })
             }
           })
           break
@@ -604,8 +698,19 @@ export default {
           //validar FormLimites
           this.$refs.otroForm.validate().then(success => {
             if (success) {
-              // yay, models are correct
-              this.step++
+              this.guardarInformacionGeneralAction({
+                  ...this.infoGeneral,
+                  encuesta: {
+                    id: this.encuestaID
+                  }
+                }).then(data => {
+                this.step++                
+              })
+            }else{
+              this.$q.notify({
+                  message: 'Favor completar los campos correctamente',
+                  color: 'red'
+              })
             }
           })
           break
@@ -613,8 +718,19 @@ export default {
           //validar FormLimites
           this.$refs.demografiaForm.validate().then(success => {
             if (success) {
-              // yay, models are correct
-              this.step++
+              this.guardarInformacionGeneralAction({
+                  ...this.infoGeneral,
+                  encuesta: {
+                    id: this.encuestaID
+                  }
+                }).then(data => {
+                this.step++                
+              })
+            }else{
+              this.$q.notify({
+                  message: 'Favor completar los campos correctamente',
+                  color: 'red'
+              })
             }
           })
           break
@@ -623,7 +739,30 @@ export default {
           this.step++
           break;
       }
-    }
+    },
+    filterFnDepartamento (val, update, abort) {
+      if (val.length < 2) {
+        abort()
+        return
+      }
+
+      update(() => {
+        const needle = val.toLowerCase()
+        this.departamentos = this.departamentosList.filter(v => v.nombreDepartamento.toLowerCase().indexOf(needle) > -1)
+      })
+    },
+    filterFnMunicipio (val, update, abort) {
+      if (val.length < 2) {
+        abort()
+        return
+      }
+
+      update(() => {
+        const needle = val.toLowerCase()
+        this.municipios = this.municipiosList.filter(v => v.nombreMunicipio.toLowerCase().indexOf(needle) > -1)
+      })
+    },
+
   },
   computed: {
     ...mapGetters('informacionGeneral', ['getInformacionGeneralState']),

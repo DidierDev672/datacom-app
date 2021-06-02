@@ -2,13 +2,13 @@ import axios from 'axios'
 import { URL_API } from '../../../utils/config'
 
 // Acciones para la lista
-export function cargarListaCoberturaAction ({ commit }, municipioID) {
+export function buscarCoberturaAction ({ commit }, municipioID) {
   commit('inicializarAccion')
   const urlService = 'ficha-municipio'
   return new Promise((resolve, reject) => {
     axios.get(`${URL_API}/${urlService}/${municipioID}/cobertura-servicios`)
       .then(({ data }) => {        
-        commit('setListaCoberturaSuccess', data)
+        commit('setCoberturaSuccess', data)
         resolve(data)
       }).catch(error => {
         console.log('Ocurrió un error al consultar la cobertura en servicios: ', error.response)

@@ -66,7 +66,7 @@ export default {
         this.showFinanzaForm = true
     },
     onSubmit(){
-      this.$router.push({name: 'infraestructura-publica', params: {id: this.encuestaID}})
+      this.$router.push({name: 'indicador', params: {id: this.encuestaID}})
     }
   },
   computed: {

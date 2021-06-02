@@ -2,7 +2,7 @@
 <q-list bordered class="rounded-borders bg-white">
     <q-item>
         <q-item-section top>
-            <q-item-label>{{ infraestructura.tipoInfraestructura.nombre }}</q-item-label>
+            <q-item-label>{{ finanza.tipoIndicadorFinanza.nombre }}</q-item-label>
         </q-item-section>
 
         <q-item-section side top>              
@@ -22,47 +22,14 @@
 
     <q-item>
         <q-item-section top>
-            <q-item-label caption lines="1">
-            Persona de Contacto
-            </q-item-label>
             <q-item-label lines="1">
-                <span class="text-weight-medium">{{ infraestructura.contacto }}</span>
+                <span class="text-weight-medium">${{ finanza.valor }}</span>
+            </q-item-label>
+            <q-item-label caption lines="1">
+            {{ finanza.observacion }}
             </q-item-label>
         </q-item-section>
-    </q-item>
-
-    <q-item>
-        <q-item-section top>
-            <q-item-label caption lines="1">
-            Teléfono
-            </q-item-label>
-            <q-item-label lines="1">
-                <span class="text-weight-medium">{{ infraestructura.telefono }}</span>
-            </q-item-label>
-        </q-item-section>
-    </q-item>
-
-    <q-item>
-        <q-item-section top>
-            <q-item-label caption lines="1">
-            Email
-            </q-item-label>
-            <q-item-label lines="1">
-                <span class="text-weight-medium">{{ infraestructura.correo }}</span>
-            </q-item-label>
-        </q-item-section>
-    </q-item>
-
-    <q-item>
-        <q-item-section top>
-            <q-item-label caption lines="1">
-            Dirección
-            </q-item-label>
-            <q-item-label lines="1">
-                <span class="text-weight-medium">{{ infraestructura.direccion }}</span>
-            </q-item-label>
-        </q-item-section>
-    </q-item>          
+    </q-item>           
 
 </q-list>
 
@@ -71,14 +38,14 @@
 <script>
 export default {
     props: {
-        infraestructura: {
+        finanza: {
             type: Object,
             required: true
         }
     },
     methods: {
       editar(){
-        this.$emit("editar", this.infraestructura)
+        this.$emit("editar", this.finanza)
       }
     }
 

@@ -81,6 +81,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import { CATEGORIAS } from '../../utils/config'
 export default {
   data(){
     return {
@@ -91,6 +92,7 @@ export default {
     }
   },
   created(){
+    let categorias = [CATEGORIAS.POLITICAS_PUBLICAS]
     this.encuestaID = this.$route.params.id
     this.politica = {
       id: 0,
@@ -105,14 +107,18 @@ export default {
       this.politica.numero = this.getPoliticasPublicasState.objPoliticasPublicas.numero;
     }
 
-    this.cargarListaParametroAction().then(data => {
-      this.options = data
-    })
+    // this.cargarListaParametroAction().then(data => {
+    //   this.options = data
+    // })
+
+    this.cargarListaParametroPorCategoriaAction(categorias).then(data => {
+            this.options = data
+        })
     
   },
   methods: {
     ...mapActions('politicasPublicas', ['registrarPoliticasPublicasAction', 'actualizarPoliticasPublicasAction','unsetPoliticasPublicasAction']),
-    ...mapActions('parametros', ['cargarListaParametroAction']),
+    ...mapActions('parametros', ['cargarListaParametroPorCategoriaAction']),
     onSubmit(){
       
       let info = {

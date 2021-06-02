@@ -3,8 +3,8 @@
         <div class="row">
             <div class="col-xs-12 col-sm-8 offset-sm-2">   
 
-                <q-form ref="ubicacionForm">          
-                    <p class="text-h6 q-mt-md q-mb-sm">Composición etaria</p>
+                <q-form ref="poblacionForm">          
+                    <p class="text-h6 q-mt-md q-mb-sm">2.1. Composición etaria</p>
                     <q-card
                     flat
                     bordered
@@ -33,7 +33,15 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input dense v-model="poblacionPorRangoDeEdad.de0A4Anos" />
+                                   <q-input
+                                      dense
+                                      v-model.number="poblacionPorRangoDeEdad.de0A4Anos" 
+                                      type="number"
+                                        lazy-rules 
+                                        :rules="[
+                                            val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
+                                            val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                                        ]"/>
                                 </div>
                             </div>
                         </q-card-section>
@@ -47,7 +55,15 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input dense v-model="poblacionPorRangoDeEdad.de5A9Anos" />
+                                    <q-input
+                                      dense
+                                      v-model.number="poblacionPorRangoDeEdad.de5A9Anos" 
+                                      type="number"
+                                        lazy-rules 
+                                        :rules="[
+                                            val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
+                                            val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                                        ]"/>
                                 </div>
                             </div>
                         </q-card-section>
@@ -61,7 +77,15 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input dense v-model="poblacionPorRangoDeEdad.de10A14Anos" />
+                                    <q-input
+                                      dense
+                                      v-model.number="poblacionPorRangoDeEdad.de10A14Anos" 
+                                      type="number"
+                                        lazy-rules 
+                                        :rules="[
+                                            val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
+                                            val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                                        ]"/>
                                 </div>
                             </div>
                         </q-card-section>
@@ -75,7 +99,15 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input dense v-model="poblacionPorRangoDeEdad.de15A19Anos" />
+                                    <q-input
+                                      dense
+                                      v-model.number="poblacionPorRangoDeEdad.de15A19Anos"
+                                      type="number"
+                                        lazy-rules 
+                                        :rules="[
+                                            val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
+                                            val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                                        ]" />
                                 </div>
                             </div>
                         </q-card-section>
@@ -89,7 +121,15 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input dense v-model="poblacionPorRangoDeEdad.de20A24Anos" />
+                                    <q-input
+                                      dense
+                                      v-model.number="poblacionPorRangoDeEdad.de20A24Anos"
+                                      type="number"
+                                        lazy-rules 
+                                        :rules="[
+                                            val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
+                                            val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                                        ]" />
                                 </div>
                             </div>
                         </q-card-section>
@@ -103,7 +143,15 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input dense v-model="poblacionPorRangoDeEdad.de25A29Anos" />
+                                    <q-input
+                                      dense
+                                      v-model.number="poblacionPorRangoDeEdad.de25A29Anos"
+                                      type="number"
+                                        lazy-rules 
+                                        :rules="[
+                                            val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
+                                            val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                                        ]" />
                                 </div>
                             </div>
                         </q-card-section>
@@ -117,7 +165,15 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input dense v-model="poblacionPorRangoDeEdad.de30A34Anos" />
+                                    <q-input
+                                      dense
+                                      v-model.number="poblacionPorRangoDeEdad.de30A34Anos"
+                                      type="number"
+                                        lazy-rules 
+                                        :rules="[
+                                            val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
+                                            val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                                        ]" />
                                 </div>
                             </div>
                         </q-card-section>
@@ -131,7 +187,15 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input dense v-model="poblacionPorRangoDeEdad.de35A39Anos" />
+                                    <q-input
+                                      dense
+                                      v-model.number="poblacionPorRangoDeEdad.de35A39Anos" 
+                                      type="number"
+                                        lazy-rules 
+                                        :rules="[
+                                            val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
+                                            val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                                        ]"/>
                                 </div>
                             </div>
                         </q-card-section>
@@ -145,7 +209,15 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input dense v-model="poblacionPorRangoDeEdad.de40A44Anos" />
+                                    <q-input
+                                      dense
+                                      v-model.number="poblacionPorRangoDeEdad.de40A44Anos" 
+                                      type="number"
+                                        lazy-rules 
+                                        :rules="[
+                                            val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
+                                            val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                                        ]" />
                                 </div>
                             </div>
                         </q-card-section>
@@ -159,7 +231,15 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input dense v-model="poblacionPorRangoDeEdad.de45A49Anos" />
+                                    <q-input
+                                      dense
+                                      v-model.number="poblacionPorRangoDeEdad.de45A49Anos"
+                                      type="number"
+                                        lazy-rules 
+                                        :rules="[
+                                            val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
+                                            val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                                        ]" />
                                 </div>
                             </div>
                         </q-card-section>
@@ -173,7 +253,15 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input dense v-model="poblacionPorRangoDeEdad.de50A54Anos" />
+                                    <q-input
+                                      dense
+                                      v-model.number="poblacionPorRangoDeEdad.de50A54Anos"
+                                      type="number"
+                                        lazy-rules 
+                                        :rules="[
+                                            val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
+                                            val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                                        ]" />
                                 </div>
                             </div>
                         </q-card-section>
@@ -187,7 +275,15 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input dense v-model="poblacionPorRangoDeEdad.de55A59Anos" />
+                                    <q-input
+                                      dense
+                                      v-model.number="poblacionPorRangoDeEdad.de55A59Anos"
+                                      type="number"
+                                        lazy-rules 
+                                        :rules="[
+                                            val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
+                                            val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                                        ]" />
                                 </div>
                             </div>
                         </q-card-section>
@@ -201,7 +297,15 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input dense v-model="poblacionPorRangoDeEdad.de60A64Anos" />
+                                    <q-input
+                                      dense
+                                      v-model.number="poblacionPorRangoDeEdad.de60A64Anos" 
+                                      type="number"
+                                        lazy-rules 
+                                        :rules="[
+                                            val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
+                                            val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                                        ]"/>
                                 </div>
                             </div>
                         </q-card-section>
@@ -215,7 +319,15 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input dense v-model="poblacionPorRangoDeEdad.de65A69Anos" />
+                                    <q-input
+                                      dense
+                                      v-model.number="poblacionPorRangoDeEdad.de65A69Anos" 
+                                      type="number"
+                                        lazy-rules 
+                                        :rules="[
+                                            val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
+                                            val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                                        ]" />
                                 </div>
                             </div>
                         </q-card-section>
@@ -229,7 +341,15 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input dense v-model="poblacionPorRangoDeEdad.de70A74Anos" />
+                                    <q-input
+                                      dense
+                                      v-model.number="poblacionPorRangoDeEdad.de70A74Anos" 
+                                      type="number"
+                                        lazy-rules 
+                                        :rules="[
+                                            val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
+                                            val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                                        ]" />
                                 </div>
                             </div>
                         </q-card-section>
@@ -243,7 +363,15 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input dense v-model="poblacionPorRangoDeEdad.de75A79Anos" />
+                                    <q-input
+                                      dense
+                                      v-model.number="poblacionPorRangoDeEdad.de75A79Anos"
+                                      type="number"
+                                        lazy-rules 
+                                        :rules="[
+                                            val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
+                                            val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                                        ]" />
                                 </div>
                             </div>
                         </q-card-section>
@@ -257,7 +385,15 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input dense v-model="poblacionPorRangoDeEdad.mayorA80Anos" />
+                                    <q-input
+                                      dense
+                                      v-model.number="poblacionPorRangoDeEdad.mayorA80Anos"
+                                      type="number"
+                                        lazy-rules 
+                                        :rules="[
+                                            val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
+                                            val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                                        ]" />
                                 </div>
                             </div>
                         </q-card-section>
@@ -266,7 +402,17 @@
                 </q-form>
 
                 <div class="flex justify-center">
-                    <q-btn label="Guardar y continuar" no-caps color="primary" @click="onSubmit"/>
+                    <q-btn
+                      label="Guardar y continuar"
+                      no-caps
+                      color="primary"
+                      :disable="getPoblacionState.loading"
+                      :loading="getPoblacionState.loading"
+                      @click="onSubmit" >
+                        <template v-slot:loading>
+                            <q-spinner-facebook />
+                        </template>
+                      </q-btn>
                 </div>
              
                 
@@ -307,23 +453,42 @@ export default {
             de70A74Anos: 0,
             de75A79Anos: 0,
             mayorA80Anos: 0,
-        }        
+        }  
+        
+        this.buscarPoblacionAction(this.encuestaID).then(data => {
+            if(data.id > 0){
+                this.poblacionPorRangoDeEdad = {...data}
+            }
+        })
     },
     methods: {
-        ...mapActions('poblacion', ['guardarPoblacion','agregarPoblacionAction', 'cargarListaPoblacionAction', 'eliminarPoblacionAction']),       
+        ...mapActions('poblacion', ['guardarPoblacion','agregarPoblacionAction', 'buscarPoblacionAction', 'eliminarPoblacionAction']),       
         onSubmit(){
-            this.guardarPoblacion({
-                ...this.poblacionPorRangoDeEdad,
-                encuesta: {
-                    id: this.encuestaID
+
+            this.$refs.poblacionForm.validate().then(success => {
+                if (success) {                    
+                    this.guardarPoblacion({
+                        ...this.poblacionPorRangoDeEdad,
+                        encuesta: {
+                            id: this.encuestaID
+                        }
+                    }).then(data => {
+                        this.poblacionPorRangoDeEdad.id = data
+                        this.$router.push({name: 'calidad-vida', params: {id: this.encuestaID}})
+                    })
+                }else{
+                    this.$q.notify({
+                        message: 'Favor completar los campos correctamente',
+                        color: 'red'
+                    })
                 }
-            }).then(data => {
-                this.$router.push({name: 'calidad-vida', params: {id: this.encuestaID}})
             })
+
+
         }
     },
     computed: {
-        ...mapGetters('municipios', ['getMunicipioState'])
+        ...mapGetters('poblacion', ['getPoblacionState'])
     }
 }
 </script>

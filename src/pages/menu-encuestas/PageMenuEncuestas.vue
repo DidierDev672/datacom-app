@@ -28,7 +28,7 @@
           <q-separator spaced />
           <q-item-label header>Otras opciones</q-item-label>
 
-          <q-item clickable v-ripple class="q-mb-md">
+          <q-item clickable v-ripple class="q-mb-md" :to="{name: 'encuesta-proceso'}">
             <q-item-section avatar top>
               <q-avatar icon="ti-settings" color="grey" text-color="white" />
             </q-item-section>

@@ -18,6 +18,22 @@ export function cargarListaEncuestaAction ({ commit }) {
   })
 }
 
+export function cargarListaEncuestaEnProcesoAction ({ commit }) {
+  commit('inicializarAccion')
+  const urlService = 'encuesta'
+  return new Promise((resolve, reject) => {
+    axios.get(`${URL_API}/${urlService}/en-proceso`)
+      .then(({ data }) => {        
+        commit('setListaEncuestaSuccess', data)
+        resolve(data)
+      }).catch(error => {
+        console.log('Ocurrió un error al consultar los tipos de encuestas: ', error.response)
+        commit('setActionFail', error.response)
+        reject(error.response)
+      })
+  })
+}
+
 export function unsetListaEncuestaAction ({ commit }) {
   commit('unsetListaEncuesta')
 }

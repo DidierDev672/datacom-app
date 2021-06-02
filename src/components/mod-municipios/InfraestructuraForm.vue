@@ -104,6 +104,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import { CATEGORIAS } from '../../utils/config'
 export default {
   data(){
     return {
@@ -114,6 +115,7 @@ export default {
     }
   },
   created(){
+    let categorias = [CATEGORIAS.INFRAESTRUCTURA_PUBLICA]
     this.encuestaID = this.$route.params.id
     this.infraestructura = {
       id: 0,
@@ -132,14 +134,18 @@ export default {
       this.infraestructura.direccion = this.getInfraestructuraState.objInfraestructura.direccion;
     }
 
-    this.cargarListaParametroAction().then(data => {
-      this.options = data
-    })
+    // this.cargarListaParametroAction().then(data => {
+    //   this.options = data
+    // })
+
+    this.cargarListaParametroPorCategoriaAction(categorias).then(data => {
+            this.options = data
+        })
     
   },
   methods: {
     ...mapActions('infraestructura', ['registrarInfraestructuraAction', 'actualizarInfraestructuraAction','unsetInfraestructuraAction']),
-    ...mapActions('parametros', ['cargarListaParametroAction']),
+    ...mapActions('parametros', ['cargarListaParametroPorCategoriaAction']),
     onSubmit(){
       
       let info = {

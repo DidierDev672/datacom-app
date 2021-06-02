@@ -30,7 +30,7 @@
           Opciones
         </q-item-label>
 
-        <q-item
+        <!-- <q-item
           clickable
           :to="{name: 'municipios'}"
           exact
@@ -44,7 +44,7 @@
           <q-item-section>
             <q-item-label>Regresar</q-item-label>
           </q-item-section>
-        </q-item>
+        </q-item> -->
 
         <q-item
           clickable
@@ -253,6 +253,95 @@
             <q-item-label>Finanzas Públicas</q-item-label>
           </q-item-section>
         </q-item>
+
+        <q-item clickable :to="{ name: 'indicador', params: { id: encuestaID } }" exact>
+          <q-item-section
+            avatar
+          >
+            <q-icon size="14px" name="ti-angle-right" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Indicadores de Gestión</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-item clickable :to="{ name: 'territorio', params: { id: encuestaID } }" exact>
+          <q-item-section
+            avatar
+          >
+            <q-icon size="14px" name="ti-angle-right" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Territorio</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-item clickable :to="{ name: 'participacion', params: { id: encuestaID } }" exact>
+          <q-item-section
+            avatar
+          >
+            <q-icon size="14px" name="ti-angle-right" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Participación</q-item-label>
+          </q-item-section>
+        </q-item>  
+
+        <q-item clickable :to="{ name: 'medios', params: { id: encuestaID } }" exact>
+          <q-item-section
+            avatar
+          >
+            <q-icon size="14px" name="ti-angle-right" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Medios de Comunicación</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-item clickable :to="{ name: 'economia', params: { id: encuestaID } }" exact>
+          <q-item-section
+            avatar
+          >
+            <q-icon size="14px" name="ti-angle-right" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Economía y Marca Propia</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-item clickable :to="{ name: 'productos', params: { id: encuestaID } }" exact>
+          <q-item-section
+            avatar
+          >
+            <q-icon size="14px" name="ti-angle-right" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Principales Productos del Municipio</q-item-label>
+          </q-item-section>
+        </q-item>
+
+
+
+        <q-item clickable :to="{ name: 'fin-encuesta', params: { id: encuestaID } }" exact>
+          <q-item-section
+            avatar
+          >
+            <q-icon size="14px" name="ti-angle-right" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Fin</q-item-label>
+          </q-item-section>
+        </q-item>
+
+
+
 
         <!-- <EssentialLink
           v-for="link in essentialLinks"

@@ -81,6 +81,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import { CATEGORIAS } from '../../utils/config'
 export default {
   data(){
     return {
@@ -91,6 +92,7 @@ export default {
     }
   },
   created(){
+    let categorias = [CATEGORIAS.SECRETARIAS_DE_GOBIERNO]
     this.encuestaID = this.$route.params.id
     this.secretaria = {
       id: 0,
@@ -105,14 +107,18 @@ export default {
       this.secretaria.idGabinete = this.getSecretariaState.objSecretaria.idGabinete;
     }
 
-    this.cargarListaParametroAction().then(data => {
-      this.options = data
-    })
+    // this.cargarListaParametroAction().then(data => {
+    //   this.options = data
+    // })
+
+    this.cargarListaParametroPorCategoriaAction(categorias).then(data => {
+            this.options = data
+        })
     
   },
   methods: {
     ...mapActions('secretarias', ['registrarSecretariaAction', 'actualizarSecretariaAction','unsetSecretariaAction']),
-    ...mapActions('parametros', ['cargarListaParametroAction']),
+    ...mapActions('parametros', ['cargarListaParametroPorCategoriaAction']),
     onSubmit(){
       
       let info = {

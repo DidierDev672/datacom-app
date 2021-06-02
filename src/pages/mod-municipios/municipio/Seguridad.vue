@@ -2,7 +2,7 @@
 <div class="q-ma-sm">
     <div class="row">
       <div class="col-xs-12 col-sm-8 offset-sm-2">
-        <q-form ref="ubicacionForm">          
+        <q-form ref="seguridadForm">          
           <p class="text-h6 q-mt-md q-mb-sm">6. Seguridad</p>
           <q-card
             flat
@@ -15,7 +15,15 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input dense v-model="seguridad.homicidiosPorAno" />
+                        <q-input
+                          dense
+                          v-model.number="seguridad.homicidiosPorAno"
+                          type="number"
+                            lazy-rules 
+                            :rules="[
+                                val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
+                                val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                            ]" />
                     </div>
                 </div>
             </q-card-section>
@@ -32,7 +40,15 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input dense v-model="seguridad.tasaHomicidios" />
+                        <q-input
+                          dense
+                          v-model.number="seguridad.tasaHomicidios"
+                          type="number"
+                            lazy-rules 
+                            :rules="[
+                                val => val !== null && val !== '' || 'Debe ingresar un valor ',
+                                val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                            ]" />
                     </div>
                 </div>
             </q-card-section>
@@ -46,7 +62,15 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input dense v-model="seguridad.poblacionVictimaDelConflicto" />
+                        <q-input
+                          dense
+                          v-model.number="seguridad.poblacionVictimaDelConflicto" 
+                          type="number"
+                            lazy-rules 
+                            :rules="[
+                                val => val !== null && val !== '' || 'Debe ingresar un valor ',
+                                val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                            ]"/>
                     </div>
                 </div>
             </q-card-section>
@@ -70,7 +94,17 @@
         </q-form>
 
         <div class="flex justify-center">
-            <q-btn label="Guardar y continuar" no-caps color="primary" @click="onSubmit"/>
+            <q-btn
+              label="Guardar y continuar"
+              no-caps
+              color="primary"
+              :disable="getSeguridadState.loading"
+              :loading="getSeguridadState.loading"
+              @click="onSubmit">
+              <template v-slot:loading>
+                  <q-spinner-facebook />
+              </template>
+            </q-btn>
         </div>           
   
       </div>
@@ -96,18 +130,34 @@ export default {
       tasaHomicidios:'',
       poblacionVictimaDelConflicto:'',
       otrosDelitos:''
-    }    
+    }
+    this.buscarSeguridadAction(this.encuestaID).then(data => {
+      if(data.id > 0){
+        this.seguridad = {...data}
+      }
+    })    
   },
   methods: {
-    ...mapActions('seguridad', ['registrarSeguridadAction']),
+    ...mapActions('seguridad', ['registrarSeguridadAction', 'buscarSeguridadAction']),
     onSubmit(){
-        this.registrarSeguridadAction({
-            ...this.seguridad,
-            encuesta: {
-                id: this.encuestaID
+      this.$refs.seguridadForm.validate().then(success => {
+            if (success) {                    
+                console.log('Form valido', this.seguridad);
+              this.registrarSeguridadAction({
+                  ...this.seguridad,
+                  encuesta: {
+                      id: this.encuestaID
+                  }
+              }).then(data => {
+                this.seguridad.id = data
+                  this.$router.push({name: 'administracion', params: {id: this.encuestaID}})
+              })                                           
+            }else{
+                this.$q.notify({
+                    message: 'Favor completar los campos correctamente',
+                    color: 'red'
+                })
             }
-        }).then(data => {
-            this.$router.push({name: 'administracion', params: {id: this.encuestaID}})
         })
     }
   },
