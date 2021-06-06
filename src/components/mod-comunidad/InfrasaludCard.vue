@@ -2,7 +2,7 @@
 <q-list bordered class="rounded-borders bg-white">
     <q-item>
         <q-item-section top>
-            <q-item-label>{{ vias.tipoVia.nombre }}</q-item-label>
+            <q-item-label>{{ infrasalud.tipoInfraestructura.nombre }}</q-item-label>
         </q-item-section>
 
         <q-item-section side top>              
@@ -23,24 +23,49 @@
     <q-item >
         <q-item-section top>
             <q-item-label caption lines="1">
-            Estado
+            Área Construida
             </q-item-label>
             <q-item-label lines="1">
-            <span class="text-weight-medium">{{ vias.estadoVia }}</span>
+            <span class="text-weight-medium">{{ infrasalud.areaConstruida }}</span>
             </q-item-label>
         </q-item-section>
     </q-item>
 
-    <q-item >
+    <q-item>
         <q-item-section top>
             <q-item-label caption lines="1">
-            ¿Es transitable todo el año?
+            Área Total
             </q-item-label>
             <q-item-label lines="1">
-                <span class="text-weight-medium">{{ vias.transitable ? 'Si' : 'No' }}</span>
+            <span class="text-weight-medium">{{ infrasalud.areaTotal }}</span>
             </q-item-label>
         </q-item-section>
-    </q-item>   
+    </q-item>
+
+    <q-item>
+        <q-item-section top>
+            <q-item-label caption lines="1">
+            Teléfono
+            </q-item-label>
+            <q-item-label lines="1">
+            <span class="text-weight-medium">{{ infrasalud.telefono }}</span>
+            </q-item-label>
+        </q-item-section>
+    </q-item>
+
+    <q-item>
+        <q-item-section top>
+            <q-item-label caption lines="1">
+            Celular
+            </q-item-label>
+            <q-item-label lines="1">
+            <span class="text-weight-medium">{{ infrasalud.celular }}</span>
+            </q-item-label>
+        </q-item-section>
+    </q-item>
+
+
+  
 
 </q-list>
 </template>
@@ -48,14 +73,14 @@
 <script>
 export default {
     props: {
-        vias: {
+        infrasalud: {
             type: Object,
             required: true
         }
     },
     methods: {
       editar(){
-        this.$emit("editar", this.vias)
+        this.$emit("editar", this.infrasalud)
       }
     }
 

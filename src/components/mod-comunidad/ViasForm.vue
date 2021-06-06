@@ -6,7 +6,7 @@
     v-model="show">
       <q-card style="width: 700px;">
         <q-card-section>
-          <div class="text-h6">{{ mensajeBoton }} Organización</div>
+          <div class="text-h6">{{ mensajeBoton }} Vias de Acceso</div>
         </q-card-section>
 
         <q-separator />
@@ -17,7 +17,7 @@
             class="q-gutter-md"
           >          
 
-          <p>Datos de la Organización</p>
+          <p>Datos de la Vía</p>
 
           <div class="row q-col-gutter-sm">
             <div class="col-xs-12">
@@ -25,74 +25,30 @@
                 outlined
                 option-value="id"
                 option-label="nombre"
-                v-model="organizacion.idOrganizacion"
-                :options="options"
-                label="Seleccione el tipo de organización" />
+                v-model="via.tipoVia"
+                :options="tipoViasOptions"
+                label="Seleccione el tipo de via" />
             </div>            
           </div>
 
           <div class="row q-col-gutter-sm">
             <div class="col-xs-12">
-              <q-input
+              <q-select
                 outlined
-                v-model="organizacion.nombre"
-                label="Nombre de la organización"
-              /> 
+                v-model="via.estadoVia"
+                :options="estadoViaOptions"
+                label="Seleccione el estado de la via" />
             </div>            
           </div>
-
           <div class="row q-col-gutter-sm">
             <div class="col-xs-12">
-              <q-input
-                outlined
-                v-model="organizacion.tipoActividad"
-                label="Tipo de Actividad"
-              /> 
+              <p class="text-caption">¿La vía es transitable todo el año?</p>
+              <q-option-group
+                :options="transitableOptions"
+                type="radio"
+                v-model="via.transitable" />
             </div>            
-          </div>
-
-          <div class="row q-col-gutter-sm">
-            <div class="col-xs-12">
-              <q-input
-                outlined
-                v-model="organizacion.contacto"
-                label="Persona de Contacto"
-              /> 
-            </div>            
-          </div>
-
-
-          <div class="row q-col-gutter-sm">
-            <div class="col-xs-12">
-              <q-input
-                outlined
-                v-model="organizacion.telefono"
-                label="Teléfono"
-              /> 
-            </div>            
-          </div>
-
-
-          <div class="row q-col-gutter-sm">
-            <div class="col-xs-12">
-              <q-input
-                outlined
-                v-model="organizacion.correo"
-                label="Email"
-              /> 
-            </div>            
-          </div>   
-
-          <div class="row q-col-gutter-sm">
-            <div class="col-xs-12">
-              <q-input
-                outlined
-                v-model="organizacion.direccion"
-                label="Dirección"
-              /> 
-            </div>            
-          </div>
-                
+          </div>            
 
           </q-form>      
           
@@ -105,13 +61,13 @@
             flat
             label="Cancelar"
             color="primary"
-            :disable="getOrganizacionState.loading"
+            :disable="getViasState.loading"
             @click="close" />
           <q-btn
             :label="mensajeBoton"
             color="primary"
-            :loading="getOrganizacionState.loading"
-            :disable="getOrganizacionState.loading"
+            :loading="getViasState.loading"
+            :disable="getViasState.loading"
             @click="onSubmit">
             <template v-slot:loading>
               <q-spinner-facebook />
@@ -129,33 +85,30 @@ export default {
   data(){
     return {
       show: true,
-      organizacion: {},
+      via: {},
       encuestaID: 0,
-      options: [],
+      tipoViasOptions: [],
+      estadoViaOptions: ['Bueno', 'Regular', 'Malo'],
+      transitableOptions: [
+        { label: 'Si, la vía es transitable todo el año', value: true },
+        { label: 'No, la vía no es transitable todo el año', value: false },
+      ]
     }
   },
   created(){
-    let categorias = [CATEGORIAS.ORGANIZACIONES_DE_LA_COMUNIDAD]
+    let categorias = [CATEGORIAS.VIAS_ACCESO]
     this.encuestaID = this.$route.params.id
-    this.organizacion = {
+    this.via = {
       id: 0,
-      telefono:'',
-      correo:'',
-      nombre:'',
-      tipoActividad:'',
-      contacto:'',
-      direccion: '',
-      idOrganizacion: ''
+      tipoVia: '',
+      estadoVia:'Bueno',
+      transitable:true
     }
-    if(Object.keys(this.getOrganizacionState.objOrganizacion).length > 0){
-      this.organizacion.id = this.getOrganizacionState.objOrganizacion.id;
-      this.organizacion.telefono = this.getOrganizacionState.objOrganizacion.telefono;
-      this.organizacion.correo = this.getOrganizacionState.objOrganizacion.correo;
-      this.organizacion.nombre = this.getOrganizacionState.objOrganizacion.nombre;
-      this.organizacion.tipoActividad = this.getOrganizacionState.objOrganizacion.tipoActividad;
-      this.organizacion.contacto = this.getOrganizacionState.objOrganizacion.contacto;
-      this.organizacion.direccion = this.getOrganizacionState.objOrganizacion.direccion;
-      this.organizacion.idOrganizacion = this.getOrganizacionState.objOrganizacion.idOrganizacion;
+    if(Object.keys(this.getViasState.objVias).length > 0){
+      this.via.id = this.getViasState.objVias.id;
+      this.via.tipoVia = this.getViasState.objVias.tipoVia;
+      this.via.estadoVia = this.getViasState.objVias.estadoVia;
+      this.via.transitable = this.getViasState.objVias.transitable;
     }
 
     // this.cargarListaParametroAction().then(data => {
@@ -163,17 +116,17 @@ export default {
     // })
 
     this.cargarListaParametroPorCategoriaAction(categorias).then(data => {
-            this.options = data
+            this.tipoViasOptions = data
         })
     
   },
   methods: {
-    ...mapActions('organizacion', ['registrarOrganizacionAction', 'actualizarOrganizacionAction','unsetOrganizacionAction']),
+    ...mapActions('vias', ['registrarViasAction', 'actualizarViasAction','unsetViasAction']),
     ...mapActions('parametros', ['cargarListaParametroPorCategoriaAction']),
     onSubmit(){
       
       let info = {
-        ...this.organizacion,
+        ...this.via,
         encuesta: {
           id: this.encuestaID
         }
@@ -181,12 +134,12 @@ export default {
            
       if(info.id > 0){
         //Actualizar
-        this.actualizarOrganizacionAction(info).then(() => {          
+        this.actualizarViasAction(info).then(() => {          
         })
       }else{
         //Guardar
-        this.registrarOrganizacionAction(info).then( data => {
-          this.organizacion.id = data
+        this.registrarViasAction(info).then( data => {
+          this.via.id = data
         })
       }
     },
@@ -195,13 +148,13 @@ export default {
     }
   },  
   computed: {
-    ...mapGetters('organizacion', ['getOrganizacionState']),
+    ...mapGetters('vias', ['getViasState']),
     mensajeBoton(){
-      return this.organizacion.id > 0 ? 'Actualizar' : 'Guardar'
+      return this.via.id > 0 ? 'Actualizar' : 'Guardar'
     } 
   },
   beforeDestroy(){
-    this.unsetOrganizacionAction()
+    this.unsetViasAction()
   }
   
 

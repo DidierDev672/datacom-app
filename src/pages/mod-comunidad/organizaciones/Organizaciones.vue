@@ -66,7 +66,7 @@ export default {
         this.showOrganizacionForm = true
     },
     onSubmit(){
-      this.$router.push({name: 'infraestructura-publica', params: {id: this.encuestaID}})
+      this.$router.push({name: 'c-vias-acceso', params: {id: this.encuestaID}})
     }
   },
   computed: {

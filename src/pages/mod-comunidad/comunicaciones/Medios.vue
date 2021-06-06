@@ -3,14 +3,14 @@
     <div class="row">
       <div class="col-xs-12 col-sm-8 offset-sm-2"> 
 
-        <p class="text-h6 q-mt-md q-mb-sm">4. Vías de Acceso</p>
+        <p class="text-h6 q-mt-md q-mb-sm">14. Medios de Comunicación</p>
 
-        <vias-card
-          v-for="vias in getViasState.lista"
+        <medio-card
+          v-for="medio in getMedioState.lista"
           class="q-mb-sm"
-          :vias="vias"
+          :medio="medio"
           @editar="editarInfo"
-          :key="vias.id"></vias-card> 
+          :key="medio.id"></medio-card> 
 
           <div v-if="showBtnContinuar" class="flex justify-center">
               <q-btn label="Continuar" no-caps color="primary" @click="onSubmit"/>
@@ -25,54 +25,54 @@
     </div>
 
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
-      <q-btn fab icon="add" color="primary" @click="showViasForm = true">
+      <q-btn fab icon="add" color="primary" @click="showMedioForm = true">
           <q-tooltip>
               Agregar nuevo registro
           </q-tooltip>
       </q-btn>
     </q-page-sticky>
 
-    <vias-form v-if="showViasForm" @close="closeModal"></vias-form>
+    <medio-form v-if="showMedioForm" @close="closeModal"></medio-form>
 
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters, mapMutations } from 'vuex'
-import ViasCard from 'src/components/mod-comunidad/ViasCard.vue'
-import ViasForm from 'src/components/mod-comunidad/ViasForm.vue'
+import MedioCard from 'src/components/mod-municipios/MedioCard.vue'
+import MedioForm from 'src/components/mod-municipios/MedioForm.vue'
 export default {
-  components: { ViasCard, ViasForm },
+  components: { MedioCard, MedioForm },
   data(){
     return {
       encuestaID: 0,
-      showViasForm: false
+      showMedioForm: false
     }
   },
   created(){
     this.encuestaID = this.$route.params.id
     if(this.encuestaID > 0){
-        this.cargarListaViasAction(this.encuestaID)
+        this.cargarListaMedioAction(this.encuestaID)
     }
   },
   methods: {
-    ...mapActions('vias', ['cargarListaViasAction']),
-    ...mapMutations('vias', ['setViasSuccess']),
+    ...mapActions('medio', ['cargarListaMedioAction']),
+    ...mapMutations('medio', ['setMedioSuccess']),
     closeModal(){
-        this.showViasForm = false
+        this.showMedioForm = false
     },
     editarInfo(value){
-        this.setViasSuccess(value)
-        this.showViasForm = true
+        this.setMedioSuccess(value)
+        this.showMedioForm = true
     },
     onSubmit(){
-      this.$router.push({name: 'c-infraestructura', params: {id: this.encuestaID}})
+      this.$router.push({name: 'c-ecosistema', params: {id: this.encuestaID}})
     }
   },
   computed: {
-    ...mapGetters('vias', ['getViasState']),
+    ...mapGetters('medio', ['getMedioState']),
     showBtnContinuar(){
-      return this.getViasState.lista.length > 0 ? true : false
+      return this.getMedioState.lista.length > 0 ? true : false
     }
   }
 

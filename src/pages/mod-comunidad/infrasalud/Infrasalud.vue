@@ -3,14 +3,14 @@
     <div class="row">
       <div class="col-xs-12 col-sm-8 offset-sm-2"> 
 
-        <p class="text-h6 q-mt-md q-mb-sm">4. Vías de Acceso</p>
+        <p class="text-h6 q-mt-md q-mb-sm">Infraestructura de Salud</p>
 
-        <vias-card
-          v-for="vias in getViasState.lista"
+        <infrasalud-card
+          v-for="infrasalud in getInfrasaludState.lista"
           class="q-mb-sm"
-          :vias="vias"
+          :infrasalud="infrasalud"
           @editar="editarInfo"
-          :key="vias.id"></vias-card> 
+          :key="infrasalud.id"></infrasalud-card> 
 
           <div v-if="showBtnContinuar" class="flex justify-center">
               <q-btn label="Continuar" no-caps color="primary" @click="onSubmit"/>
@@ -25,54 +25,54 @@
     </div>
 
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
-      <q-btn fab icon="add" color="primary" @click="showViasForm = true">
+      <q-btn fab icon="add" color="primary" @click="showInfrasaludForm = true">
           <q-tooltip>
               Agregar nuevo registro
           </q-tooltip>
       </q-btn>
     </q-page-sticky>
 
-    <vias-form v-if="showViasForm" @close="closeModal"></vias-form>
+    <infrasalud-form v-if="showInfrasaludForm" @close="closeModal"></infrasalud-form>
 
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters, mapMutations } from 'vuex'
-import ViasCard from 'src/components/mod-comunidad/ViasCard.vue'
-import ViasForm from 'src/components/mod-comunidad/ViasForm.vue'
+import InfrasaludCard from 'src/components/mod-comunidad/InfrasaludCard.vue'
+import InfrasaludForm from 'src/components/mod-comunidad/InfrasaludForm.vue'
 export default {
-  components: { ViasCard, ViasForm },
+  components: { InfrasaludCard, InfrasaludForm },
   data(){
     return {
       encuestaID: 0,
-      showViasForm: false
+      showInfrasaludForm: false
     }
   },
   created(){
     this.encuestaID = this.$route.params.id
     if(this.encuestaID > 0){
-        this.cargarListaViasAction(this.encuestaID)
+        this.cargarListaInfrasaludAction(this.encuestaID)
     }
   },
   methods: {
-    ...mapActions('vias', ['cargarListaViasAction']),
-    ...mapMutations('vias', ['setViasSuccess']),
+    ...mapActions('infrasalud', ['cargarListaInfrasaludAction']),
+    ...mapMutations('infrasalud', ['setInfrasaludSuccess']),
     closeModal(){
-        this.showViasForm = false
+        this.showInfrasaludForm = false
     },
     editarInfo(value){
-        this.setViasSuccess(value)
-        this.showViasForm = true
+        this.setInfrasaludSuccess(value)
+        this.showInfrasaludForm = true
     },
     onSubmit(){
-      this.$router.push({name: 'c-infraestructura', params: {id: this.encuestaID}})
+      this.$router.push({name: 'c-calidad-de-vida', params: {id: this.encuestaID}})
     }
   },
   computed: {
-    ...mapGetters('vias', ['getViasState']),
+    ...mapGetters('infrasalud', ['getInfrasaludState']),
     showBtnContinuar(){
-      return this.getViasState.lista.length > 0 ? true : false
+      return this.getInfrasaludState.lista.length > 0 ? true : false
     }
   }
 

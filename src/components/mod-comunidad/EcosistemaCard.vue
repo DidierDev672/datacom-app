@@ -2,7 +2,7 @@
 <q-list bordered class="rounded-borders bg-white">
     <q-item>
         <q-item-section top>
-            <q-item-label>{{ vias.tipoVia.nombre }}</q-item-label>
+            <q-item-label>{{ ecosistema.tipoEcosistema.nombre }}</q-item-label>
         </q-item-section>
 
         <q-item-section side top>              
@@ -23,24 +23,13 @@
     <q-item >
         <q-item-section top>
             <q-item-label caption lines="1">
-            Estado
+            Nombre del Ecosistema
             </q-item-label>
             <q-item-label lines="1">
-            <span class="text-weight-medium">{{ vias.estadoVia }}</span>
+            <span class="text-weight-medium">{{ ecosistema.nombre }}</span>
             </q-item-label>
         </q-item-section>
-    </q-item>
-
-    <q-item >
-        <q-item-section top>
-            <q-item-label caption lines="1">
-            ¿Es transitable todo el año?
-            </q-item-label>
-            <q-item-label lines="1">
-                <span class="text-weight-medium">{{ vias.transitable ? 'Si' : 'No' }}</span>
-            </q-item-label>
-        </q-item-section>
-    </q-item>   
+    </q-item>  
 
 </q-list>
 </template>
@@ -48,14 +37,14 @@
 <script>
 export default {
     props: {
-        vias: {
+        ecosistema: {
             type: Object,
             required: true
         }
     },
     methods: {
       editar(){
-        this.$emit("editar", this.vias)
+        this.$emit("editar", this.ecosistema)
       }
     }
 

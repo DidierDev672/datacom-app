@@ -92,6 +92,118 @@
           </q-item-section>
         </q-item>
 
+        <q-item
+          clickable
+          :to="{name: 'c-infraestructura', params: {id: encuestaID}}"
+          exact
+        >
+          <q-item-section
+            avatar
+          >
+            <q-icon size="14px" name="ti-angle-right" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Infraestructura Pública</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-item
+          clickable
+          :to="{name: 'c-comunicaciones', params: {id: encuestaID}}"
+          exact
+        >
+          <q-item-section
+            avatar
+          >
+            <q-icon size="14px" name="ti-angle-right" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Medios de Comunicación</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-item
+          clickable
+          :to="{name: 'c-ecosistema', params: {id: encuestaID}}"
+          exact
+        >
+          <q-item-section
+            avatar
+          >
+            <q-icon size="14px" name="ti-angle-right" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Ecosistemas</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-item
+          clickable
+          :to="{name: 'c-salud', params: {id: encuestaID}}"
+          exact
+        >
+          <q-item-section
+            avatar
+          >
+            <q-icon size="14px" name="ti-angle-right" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Salud</q-item-label>
+          </q-item-section>
+        </q-item>
+
+          <q-item
+            clickable
+            :to="{name: 'c-calidad-de-vida', params: {id: encuestaID}}"
+            exact
+          >
+            <q-item-section
+              avatar
+            >
+              <q-icon size="14px" name="ti-angle-right" />
+            </q-item-section>
+
+            <q-item-section>
+              <q-item-label>Calidad de Vida</q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item
+            clickable
+            :to="{name: 'c-poblacion-infantil', params: {id: encuestaID}}"
+            exact
+          >
+            <q-item-section
+              avatar
+            >
+              <q-icon size="14px" name="ti-angle-right" />
+            </q-item-section>
+
+            <q-item-section>
+              <q-item-label>Atención Población Infantil</q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item
+            clickable
+            :to="{name: 'c-vivienda', params: {id: encuestaID}}"
+            exact
+          >
+            <q-item-section
+              avatar
+            >
+              <q-icon size="14px" name="ti-angle-right" />
+            </q-item-section>
+
+            <q-item-section>
+              <q-item-label>Viviendas</q-item-label>
+            </q-item-section>
+          </q-item>
+
 
 
         <q-item clickable :to="{ name: 'fin-encuesta', params: { id: encuestaID } }" exact>

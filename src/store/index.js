@@ -28,6 +28,9 @@ import producto from './module-municipios/productos'
 // ModuloComunidad
 import comunidad from './module-comunidad'
 import vias from './module-comunidad/vias-acceso'
+import ecosistema from './module-comunidad/ecosistema'
+import infrasalud from './module-comunidad/infrasalud'
+import poblacionInfantil from './module-comunidad/poblacion-infantil'
 
 Vue.use(Vuex)
 
@@ -69,7 +72,10 @@ export default function (/* { ssrContext } */) {
       producto,
       //ModuloComunidad
       comunidad,
-      vias
+      vias,
+      ecosistema,
+      infrasalud,
+      poblacionInfantil
     },
 
     // enable strict mode (adds overhead!)

@@ -175,6 +175,46 @@ const routes = [
         name: 'c-organizaciones',
         component: () => import('pages/mod-comunidad/organizaciones/Organizaciones.vue'),
       },
+      {
+        path: 'vias',
+        name: 'c-vias-acceso',
+        component: () => import('pages/mod-comunidad/vias/Vias.vue'),
+      },
+      {
+        path: 'infraestructura',
+        name: 'c-infraestructura',
+        component: () => import('pages/mod-comunidad/infraestructura/Infraestructura.vue'),
+      },
+      {
+        path: 'comunicaciones',
+        name: 'c-comunicaciones',
+        component: () => import('pages/mod-comunidad/comunicaciones/Medios.vue'),
+      },
+      {
+        path: 'ecosistemas',
+        name: 'c-ecosistema',
+        component: () => import('pages/mod-comunidad/ecosistema/Ecosistema.vue'),
+      },
+      {
+        path: 'salud',
+        name: 'c-salud',
+        component: () => import('pages/mod-comunidad/infrasalud/Infrasalud.vue'),
+      },
+      {
+        path: 'calidad-de-vida',
+        name: 'c-calidad-de-vida',
+        component: () => import('pages/mod-comunidad/calidad-vida/CalidadVida.vue'),
+      },
+      {
+        path: 'poblacion-infantil',
+        name: 'c-poblacion-infantil',
+        component: () => import('pages/mod-comunidad/poblacion-infantil/PoblacionInfantil.vue'),
+      },
+      {
+        path: 'vivienda',
+        name: 'c-vivienda',
+        component: () => import('pages/mod-comunidad/viviendas/Viviendas.vue'),
+      },
     ]
   },
   {
