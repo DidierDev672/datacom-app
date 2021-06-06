@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-xs-12 col-sm-8 offset-sm-2"> 
 
-        <q-form ref="ubicacionForm">          
+        <q-form ref="viviendaForm">          
           <p class="text-h6 q-mt-md q-mb-sm">5. Vivienda</p>
 
           <q-card
@@ -17,7 +17,15 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input dense v-model="vivienda.numeroDeViviendasUrbanas" />
+                        <q-input
+                          dense
+                          v-model.number="vivienda.numeroDeViviendasUrbanas"
+                          type="number"
+                            lazy-rules 
+                            :rules="[
+                                val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
+                                val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                            ]" />
                     </div>
                 </div>
             </q-card-section>
@@ -31,7 +39,15 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input dense v-model="vivienda.numeroDeViviendasRurales" />
+                        <q-input
+                          dense
+                          v-model.number="vivienda.numeroDeViviendasRurales"
+                          type="number"
+                            lazy-rules 
+                            :rules="[
+                                val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
+                                val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                            ]" />
                     </div>
                 </div>
             </q-card-section>
@@ -45,7 +61,15 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input dense v-model="vivienda.numeroDeHogaresUrbanos" />
+                        <q-input
+                          dense
+                          v-model.number="vivienda.numeroDeHogaresUrbanos" 
+                          type="number"
+                            lazy-rules 
+                            :rules="[
+                                val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
+                                val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                            ]"/>
                     </div>
                 </div>
             </q-card-section>
@@ -59,7 +83,15 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input dense v-model="vivienda.numeroDeHogaresRurales" />
+                        <q-input
+                          dense
+                          v-model.number="vivienda.numeroDeHogaresRurales" 
+                          type="number"
+                            lazy-rules 
+                            :rules="[
+                                val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
+                                val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                            ]"/>
                     </div>
                 </div>
             </q-card-section>
@@ -73,7 +105,15 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input dense v-model="vivienda.deficitCuantitativo" />
+                        <q-input
+                          dense
+                          v-model.number="vivienda.deficitCuantitativo"
+                          type="number"
+                            lazy-rules 
+                            :rules="[
+                                val => val !== null && val !== '' || 'Debe ingresar un valor ',
+                                val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                            ]" />
                     </div>
                 </div>
             </q-card-section>
@@ -87,7 +127,15 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input dense v-model="vivienda.deficitCualitativo" />
+                        <q-input
+                          dense
+                          v-model.number="vivienda.deficitCualitativo"
+                          type="number"
+                            lazy-rules 
+                            :rules="[
+                                val => val !== null && val !== '' || 'Debe ingresar un valor ',
+                                val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                            ]" />
                     </div>
                 </div>
             </q-card-section>
@@ -96,9 +144,18 @@
         </q-form>  
 
         <div class="flex justify-center">
-            <q-btn label="Guardar y continuar" no-caps color="primary" @click="onSubmit"/>
-        </div>
-          
+            <q-btn
+              label="Guardar y continuar"
+              no-caps
+              color="primary"
+              :disable="getViviendaState.loading"
+              :loading="getViviendaState.loading"
+              @click="onSubmit">
+              <template v-slot:loading>
+                  <q-spinner-facebook />
+              </template>
+            </q-btn>
+        </div> 
   
       </div>
     </div>
@@ -125,17 +182,33 @@ export default {
       numeroDeViviendasRurales:0,
       numeroDeViviendasUrbanas:0
     }
+    this.buscarViviendasAction(this.encuestaID).then(data => {
+      if(data.id > 0){
+        this.vivienda = {...data}
+      }
+    })
   },
   methods: {
-    ...mapActions('viviendas', ['registrarViviendaAction']),
+    ...mapActions('viviendas', ['registrarViviendaAction', 'buscarViviendasAction']),
     onSubmit(){
-        this.registrarViviendaAction({
-            ...this.vivienda,
-            encuesta: {
-                id: this.encuestaID
+      this.$refs.viviendaForm.validate().then(success => {
+            if (success) {                    
+                console.log('Form valido', this.vivienda);
+              this.registrarViviendaAction({
+                  ...this.vivienda,
+                  encuesta: {
+                      id: this.encuestaID
+                  }
+              }).then(data => {
+                this.vivienda.id = data
+                  this.$router.push({name: 'cobertura-servicio', params: {id: this.encuestaID}})
+              })               
+            }else{
+                this.$q.notify({
+                    message: 'Favor completar los campos correctamente',
+                    color: 'red'
+                })
             }
-        }).then(data => {
-            this.$router.push({name: 'cobertura-servicio', params: {id: this.encuestaID}})
         })
     }
   },

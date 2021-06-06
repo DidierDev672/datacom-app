@@ -67,7 +67,7 @@ export default {
         this.showSecretariaForm = true
     },
     onSubmit(){
-      this.$router.push({name: 'calidad-vida', params: {id: this.encuestaID}})
+      this.$router.push({name: 'politicas-publicas', params: {id: this.municipioID}})
     }
   },
   computed: {

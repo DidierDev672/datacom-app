@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-xs-12 col-sm-8 offset-sm-2">
 
-        <q-form ref="ubicacionForm">    
+        <q-form ref="coberturaForm">    
 
           <p class="text-h6 q-mt-md q-mb-sm">5.1. Cobertura Servicios Público</p>
           
@@ -15,7 +15,15 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input dense v-model="cobertura.energiaElectricaUrbana" />
+                        <q-input
+                          dense
+                          v-model.number="cobertura.energiaElectricaUrbana" 
+                          type="number"
+                            lazy-rules 
+                            :rules="[
+                                val => val !== null && val !== '' || 'Debe ingresar un valor ',
+                                val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                            ]"/>
                     </div>
                 </div>
             </q-card-section>
@@ -29,7 +37,15 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input dense v-model="cobertura.energiaElectricaRural" />
+                        <q-input
+                          dense
+                          v-model.number="cobertura.energiaElectricaRural" 
+                          type="number"
+                            lazy-rules 
+                            :rules="[
+                                val => val !== null && val !== '' || 'Debe ingresar un valor ',
+                                val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                            ]"/>
                     </div>
                 </div>
             </q-card-section>
@@ -43,7 +59,15 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input dense v-model="cobertura.acueductoUrbano" />
+                        <q-input
+                          dense
+                          v-model.number="cobertura.acueductoUrbano" 
+                          type="number"
+                            lazy-rules 
+                            :rules="[
+                                val => val !== null && val !== '' || 'Debe ingresar un valor ',
+                                val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                            ]"/>
                     </div>
                 </div>
             </q-card-section>
@@ -57,7 +81,15 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input dense v-model="cobertura.acueductoRural" />
+                        <q-input
+                          dense
+                          v-model.number="cobertura.acueductoRural" 
+                          type="number"
+                            lazy-rules 
+                            :rules="[
+                                val => val !== null && val !== '' || 'Debe ingresar un valor ',
+                                val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                            ]"/>
                     </div>
                 </div>
             </q-card-section>
@@ -71,7 +103,15 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input dense v-model="cobertura.alcantarilladoUrbana" />
+                        <q-input
+                          dense
+                          v-model.number="cobertura.alcantarilladoUrbana" 
+                          type="number"
+                            lazy-rules 
+                            :rules="[
+                                val => val !== null && val !== '' || 'Debe ingresar un valor ',
+                                val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                            ]"/>
                     </div>
                 </div>
             </q-card-section>
@@ -85,7 +125,15 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input dense v-model="cobertura.alcantarilladoRural" />
+                        <q-input
+                          dense
+                          v-model.number="cobertura.alcantarilladoRural"
+                          type="number"
+                            lazy-rules 
+                            :rules="[
+                                val => val !== null && val !== '' || 'Debe ingresar un valor ',
+                                val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                            ]" />
                     </div>
                 </div>
             </q-card-section>
@@ -99,7 +147,15 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input dense v-model="cobertura.gasNaturalUrbana" />
+                        <q-input
+                          dense
+                          v-model.number="cobertura.gasNaturalUrbana" 
+                          type="number"
+                            lazy-rules 
+                            :rules="[
+                                val => val !== null && val !== '' || 'Debe ingresar un valor ',
+                                val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                            ]"/>
                     </div>
                 </div>
             </q-card-section>
@@ -113,7 +169,15 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input dense v-model="cobertura.gasNaturalRural" />
+                        <q-input
+                          dense
+                          v-model.number="cobertura.gasNaturalRural"
+                          type="number"
+                            lazy-rules 
+                            :rules="[
+                                val => val !== null && val !== '' || 'Debe ingresar un valor ',
+                                val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                            ]" />
                     </div>
                 </div>
             </q-card-section>
@@ -127,7 +191,15 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input dense v-model="cobertura.internetUrbana" />
+                        <q-input
+                          dense
+                          v-model.number="cobertura.internetUrbana"
+                          type="number"
+                            lazy-rules 
+                            :rules="[
+                                val => val !== null && val !== '' || 'Debe ingresar un valor ',
+                                val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                            ]" />
                     </div>
                 </div>
             </q-card-section>
@@ -141,7 +213,15 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input dense v-model="cobertura.internetRural" />
+                        <q-input
+                          dense
+                          v-model.number="cobertura.internetRural"
+                          type="number"
+                            lazy-rules 
+                            :rules="[
+                                val => val !== null && val !== '' || 'Debe ingresar un valor ',
+                                val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                            ]" />
                     </div>
                 </div>
             </q-card-section>
@@ -150,11 +230,18 @@
         </q-form>
 
         <div class="flex justify-center">
-            <q-btn label="Guardar y continuar" no-caps color="primary" @click="onSubmit"/>
-        </div>
-
-           
-  
+            <q-btn
+              label="Guardar y continuar"
+              no-caps
+              color="primary"
+              :disable="getCoberturaState.loading"
+              :loading="getCoberturaState.loading"
+              @click="onSubmit">
+              <template v-slot:loading>
+                    <q-spinner-facebook />
+                </template>
+            </q-btn>
+        </div>  
       </div>
     </div>
 
@@ -185,17 +272,31 @@ export default {
       internetUrbana:'',
       internetRural:'',
     }
+    this.buscarCoberturaAction(this.encuestaID).then(data => {
+        this.cobertura = {...data}
+    })
   },
   methods: {
-    ...mapActions('coberturaServicios', ['registrarCoberturaAction']),
+    ...mapActions('coberturaServicios', ['registrarCoberturaAction', 'buscarCoberturaAction']),
     onSubmit(){
-        this.registrarCoberturaAction({
-            ...this.cobertura,
-            encuesta: {
-                id: this.encuestaID
+        this.$refs.coberturaForm.validate().then(success => {
+            if (success) {                    
+                console.log('Form valido', this.cobertura);
+                this.registrarCoberturaAction({
+                    ...this.cobertura,
+                    encuesta: {
+                        id: this.encuestaID
+                    }
+                }).then(data => {
+                    this.cobertura.id = data
+                    this.$router.push({name: 'seguridad', params: {id: this.encuestaID}})
+                })                            
+            }else{
+                this.$q.notify({
+                    message: 'Favor completar los campos correctamente',
+                    color: 'red'
+                })
             }
-        }).then(data => {
-            this.$router.push({name: 'seguridad', params: {id: this.encuestaID}})
         })
     }
   },

@@ -8,9 +8,9 @@ export function buscarInformacionGeneralAction ({ commit }, municipioID) {
   const urlService = 'ficha-municipio'
   return new Promise((resolve, reject) => {
     axios.get(`${URL_API}/${urlService}/${municipioID}/info-general`).then( ({data}) => {
-      if(Object.keys(data).length > 0){
+      // if(Object.keys(data).length > 0){
           commit('setInformacionGeneralSuccess', data);
-        }          
+        //}          
       resolve(data);
     }).catch( error => {
       console.log('Error al guardar: ', error);

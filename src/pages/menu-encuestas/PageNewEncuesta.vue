@@ -35,6 +35,23 @@
                     <q-card flat bordered class="my-card q-mb-md">
                         
                         <q-card-section>
+                            <div class="text-h6">Descripción de la encuesta</div>
+                        </q-card-section>
+
+                        <q-card-section>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6">
+                                    <q-input v-model="nuevaEncuesta.descripcion" placeholder="Agregue una descripción a la encuesta que va a registrar" />                                
+                                </div>
+                            </div>
+                        </q-card-section>
+
+                    </q-card>
+
+
+                    <q-card flat bordered class="my-card q-mb-md">
+                        
+                        <q-card-section>
                             <div class="text-h6">Fecha de la encuesta</div>
                         </q-card-section>
 
@@ -84,7 +101,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import { TIPO_ENCUESTA } from '../../utils/config'
+import { TIPO_ENCUESTA, CATEGORIAS } from '../../utils/config'
 
 export default {
     name: 'PageNuevaEncuesta',
@@ -97,7 +114,7 @@ export default {
         }
     },
     created(){
-        let categorias = ['TEST']
+        let categorias = [CATEGORIAS.TIPOS_ESTUDIO]
         this.cargarListaParametroPorCategoriaAction(categorias).then(data => {
             this.lstTiposDeEstudios = data
         })
@@ -109,9 +126,11 @@ export default {
             id: 0,
             tipoEncuesta: this.tipoEncuesta,
             tipoEstudio: '',
+            descripcion: '',
             anio: '',
             mes: '',
-            dia: ''
+            dia: '',
+            encuestaCerrada: false
         }
     },
     methods: {
@@ -129,6 +148,8 @@ export default {
                                 break
                             case TIPO_ENCUESTA.COMUNIDAD:
                                 console.log('Tipo encuesta comunidad');
+                                this.$router.push({name: 'c-info-general', params:{id: encuestaID}})
+
                                 break
                             case TIPO_ENCUESTA.MUNICIPIO:
                                 console.log('Tipo encuesta municipio');

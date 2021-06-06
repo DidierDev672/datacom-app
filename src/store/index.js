@@ -21,6 +21,16 @@ import politicasPublicas from './module-municipios/politicas-publicas'
 import organizacion from './module-municipios/organizaciones'
 import infraestructura from './module-municipios/infraestructura'
 import finanza from './module-municipios/finanzas'
+import indicador from './module-municipios/indicadores'
+import territorio from './module-municipios/territorio'
+import medio from './module-municipios/medios'
+import producto from './module-municipios/productos'
+// ModuloComunidad
+import comunidad from './module-comunidad'
+import vias from './module-comunidad/vias-acceso'
+import ecosistema from './module-comunidad/ecosistema'
+import infrasalud from './module-comunidad/infrasalud'
+import poblacionInfantil from './module-comunidad/poblacion-infantil'
 
 Vue.use(Vuex)
 
@@ -55,7 +65,17 @@ export default function (/* { ssrContext } */) {
       politicasPublicas,
       organizacion,
       infraestructura,
-      finanza
+      finanza,
+      indicador,
+      territorio,
+      medio,
+      producto,
+      //ModuloComunidad
+      comunidad,
+      vias,
+      ecosistema,
+      infrasalud,
+      poblacionInfantil
     },
 
     // enable strict mode (adds overhead!)

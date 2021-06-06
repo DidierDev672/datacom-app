@@ -2,7 +2,7 @@
 <div class="q-ma-sm">
     <div class="row">
       <div class="col-xs-12 col-sm-8 offset-sm-2">
-        <q-form ref="ubicacionForm">          
+        <q-form ref="educacionForm">          
           <p class="text-h6 q-mt-md q-mb-sm">4. Educación</p>
           <q-card
             flat
@@ -34,7 +34,15 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input dense v-model="educacion.coberturaNetaTransicion" />
+                        <q-input
+                          dense
+                          v-model.number="educacion.coberturaNetaTransicion" 
+                          type="number"
+                            lazy-rules 
+                            :rules="[
+                                val => val !== null && val !== '' || 'Debe ingresar un valor ',
+                                val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                            ]"/>
                     </div>
                 </div>
             </q-card-section>
@@ -48,7 +56,15 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input dense v-model="educacion.coberturaNetaBasicaPrimaria" />
+                        <q-input
+                          dense
+                          v-model.number="educacion.coberturaNetaBasicaPrimaria"
+                          type="number"
+                            lazy-rules 
+                            :rules="[
+                                val => val !== null && val !== '' || 'Debe ingresar un valor ',
+                                val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                            ]" />
                     </div>
                 </div>
             </q-card-section>
@@ -62,7 +78,15 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input dense v-model="educacion.coberturaNetaBasicaSecundaria" />
+                        <q-input
+                          dense
+                          v-model.number="educacion.coberturaNetaBasicaSecundaria"
+                          type="number"
+                            lazy-rules 
+                            :rules="[
+                                val => val !== null && val !== '' || 'Debe ingresar un valor ',
+                                val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                            ]" />
                     </div>
                 </div>
             </q-card-section>
@@ -76,7 +100,15 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input dense v-model="educacion.coberturaNetaEducacionMedia" />
+                        <q-input
+                          dense
+                          v-model.number="educacion.coberturaNetaEducacionMedia"
+                          type="number"
+                            lazy-rules 
+                            :rules="[
+                                val => val !== null && val !== '' || 'Debe ingresar un valor ',
+                                val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                            ]" />
                     </div>
                 </div>
             </q-card-section>
@@ -90,7 +122,15 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input dense v-model="educacion.coberturaNetaTotal" />
+                        <q-input
+                          dense
+                          v-model.number="educacion.coberturaNetaTotal"
+                          type="number"
+                            lazy-rules 
+                            :rules="[
+                                val => val !== null && val !== '' || 'Debe ingresar un valor ',
+                                val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                            ]" />
                     </div>
                 </div>
             </q-card-section>
@@ -109,7 +149,15 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input dense v-model="educacion.coberturaBrutaTransicion" />
+                        <q-input
+                          dense
+                          v-model.number="educacion.coberturaBrutaTransicion"
+                          type="number"
+                            lazy-rules 
+                            :rules="[
+                                val => val !== null && val !== '' || 'Debe ingresar un valor ',
+                                val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                            ]" />
                     </div>
                 </div>
             </q-card-section>
@@ -123,7 +171,15 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input dense v-model="educacion.coberturaBrutaBasicaPrimaria" />
+                        <q-input
+                          dense
+                          v-model.number="educacion.coberturaBrutaBasicaPrimaria"
+                          type="number"
+                            lazy-rules 
+                            :rules="[
+                                val => val !== null && val !== '' || 'Debe ingresar un valor ',
+                                val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                            ]" />
                     </div>
                 </div>
             </q-card-section>
@@ -137,7 +193,15 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input dense v-model="educacion.coberturaBrutaBasicaSecundaria" />
+                        <q-input
+                          dense
+                          v-model.number="educacion.coberturaBrutaBasicaSecundaria"
+                          type="number"
+                            lazy-rules 
+                            :rules="[
+                                val => val !== null && val !== '' || 'Debe ingresar un valor ',
+                                val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                            ]" />
                     </div>
                 </div>
             </q-card-section>
@@ -151,7 +215,15 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input dense v-model="educacion.coberturaBrutaEducacionMedia" />
+                        <q-input
+                          dense
+                          v-model.number="educacion.coberturaBrutaEducacionMedia"
+                          type="number"
+                            lazy-rules 
+                            :rules="[
+                                val => val !== null && val !== '' || 'Debe ingresar un valor ',
+                                val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                            ]" />
                     </div>
                 </div>
             </q-card-section>
@@ -165,7 +237,15 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input dense v-model="educacion.coberturaBrutaTotal" />
+                        <q-input
+                          dense
+                          v-model.number="educacion.coberturaBrutaTotal"
+                          type="number"
+                            lazy-rules 
+                            :rules="[
+                                val => val !== null && val !== '' || 'Debe ingresar un valor ',
+                                val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                            ]" />
                     </div>
                 </div>
             </q-card-section>
@@ -184,7 +264,15 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input dense v-model="educacion.tasaDeAnalfabestismoUrbano" />
+                        <q-input
+                          dense
+                          v-model.number="educacion.tasaDeAnalfabestismoUrbano"
+                          type="number"
+                            lazy-rules 
+                            :rules="[
+                                val => val !== null && val !== '' || 'Debe ingresar un valor ',
+                                val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                            ]" />
                     </div>
                 </div>
             </q-card-section>
@@ -198,7 +286,15 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input dense v-model="educacion.tasaDeAnalfabestismoRural" />
+                        <q-input
+                          dense
+                          v-model.number="educacion.tasaDeAnalfabestismoRural"
+                          type="number"
+                            lazy-rules 
+                            :rules="[
+                                val => val !== null && val !== '' || 'Debe ingresar un valor ',
+                                val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                            ]" />
                     </div>
                 </div>
             </q-card-section>
@@ -217,7 +313,15 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input dense v-model="educacion.puntajePromedioSaberMatematica" />
+                        <q-input
+                          dense
+                          v-model.number="educacion.puntajePromedioSaberMatematica"
+                          type="number"
+                            lazy-rules 
+                            :rules="[
+                                val => val !== null && val !== '' || 'Debe ingresar un valor ',
+                                val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                            ]" />
                     </div>
                 </div>
             </q-card-section>
@@ -231,7 +335,15 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input dense v-model="educacion.puntajePromedioSaberLectura" />
+                        <q-input
+                          dense
+                          v-model.number="educacion.puntajePromedioSaberLectura"
+                          type="number"
+                            lazy-rules 
+                            :rules="[
+                                val => val !== null && val !== '' || 'Debe ingresar un valor ',
+                                val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                            ]" />
                     </div>
                 </div>
             </q-card-section>
@@ -239,7 +351,17 @@
         </q-form>
 
         <div class="flex justify-center">
-            <q-btn label="Guardar y continuar" no-caps color="primary" @click="onSubmit"/>
+            <q-btn
+              label="Guardar y continuar"
+              no-caps
+              color="primary"
+              :disable="getEducacionState.loading"
+              :loading="getEducacionState.loading"
+              @click="onSubmit">
+              <template v-slot:loading>
+                    <q-spinner-facebook />
+                </template>
+            </q-btn>
         </div>           
   
       </div>
@@ -277,18 +399,36 @@ export default {
       puntajePromedioSaberMatematica:'',
       puntajePromedioSaberLectura:'',
     }
+
+    this.buscarEducacionAction(this.encuestaID).then(data => {
+        if(data.id > 0){
+            this.educacion = {...data}
+        }
+    })
     
   },
   methods: {
-    ...mapActions('educacion', ['registrarEducacionAction']),
+    ...mapActions('educacion', ['registrarEducacionAction', 'buscarEducacionAction']),
     onSubmit(){
-        this.registrarEducacionAction({
-            ...this.educacion,
-            encuesta: {
-                id: this.encuestaID
+        this.$refs.educacionForm.validate().then(success => {
+            if (success) {                    
+                console.log('Form valido', this.educacion);
+                this.registrarEducacionAction({
+                    ...this.educacion,
+                    encuesta: {
+                        id: this.encuestaID
+                    }
+                }).then(data => {
+                    this.educacion.id = data
+                    this.$router.push({name: 'viviendas-municipio', params: {id: this.encuestaID}})
+                })
+                
+            }else{
+                this.$q.notify({
+                    message: 'Favor completar los campos correctamente',
+                    color: 'red'
+                })
             }
-        }).then(data => {
-            this.$router.push({name: 'viviendas-municipio', params: {id: this.encuestaID}})
         })
     }
   },

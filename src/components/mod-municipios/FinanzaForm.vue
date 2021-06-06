@@ -6,7 +6,7 @@
     v-model="show">
       <q-card style="width: 700px;">
         <q-card-section>
-          <div class="text-h6">{{ mensajeBoton }} Infraestructura Pública</div>
+          <div class="text-h6">{{ mensajeBoton }} Indicador de Finanza Pública</div>
         </q-card-section>
 
         <q-separator />
@@ -15,9 +15,8 @@
 
           <q-form
             class="q-gutter-md"
-          >          
-
-          <p>Datos de la Infraestrructura</p>
+            ref="finanzaForm"
+          >                   
 
           <div class="row q-col-gutter-sm">
             <div class="col-xs-12">
@@ -25,9 +24,9 @@
                 outlined
                 option-value="id"
                 option-label="nombre"
-                v-model="infraestructura.tipoInfraestructura"
+                v-model="finanza.tipoIndicadorFinanza"
                 :options="options"
-                label="Seleccione el tipo de infraestructura" />
+                label="Seleccione el tipo de indicador" />
             </div>            
           </div>          
 
@@ -35,8 +34,14 @@
             <div class="col-xs-12">
               <q-input
                 outlined
-                v-model="infraestructura.contacto"
-                label="Persona de Contacto"
+                v-model.number="finanza.valor"
+                label="Valor del indicador"
+                type="number"
+                lazy-rules 
+                :rules="[
+                    val => val !== null && val !== '' || 'Debe ingresar un valor ',
+                    val => val > -1 || 'El valor ingresado debe ser mayor a cero '
+                ]"
               /> 
             </div>            
           </div>
@@ -46,33 +51,12 @@
             <div class="col-xs-12">
               <q-input
                 outlined
-                v-model="infraestructura.telefono"
-                label="Teléfono"
+                type="textarea"
+                v-model="finanza.observacion"
+                label="Observaciones"
               /> 
             </div>            
-          </div>
-
-
-          <div class="row q-col-gutter-sm">
-            <div class="col-xs-12">
-              <q-input
-                outlined
-                v-model="infraestructura.correo"
-                label="Email"
-              /> 
-            </div>            
-          </div>   
-
-          <div class="row q-col-gutter-sm">
-            <div class="col-xs-12">
-              <q-input
-                outlined
-                v-model="infraestructura.direccion"
-                label="Dirección"
-              /> 
-            </div>            
-          </div>
-                
+          </div>                
 
           </q-form>      
           
@@ -85,13 +69,13 @@
             flat
             label="Cancelar"
             color="primary"
-            :disable="getInfraestructuraState.loading"
+            :disable="getFinanzaState.loading"
             @click="close" />
           <q-btn
             :label="mensajeBoton"
             color="primary"
-            :loading="getInfraestructuraState.loading"
-            :disable="getInfraestructuraState.loading"
+            :loading="getFinanzaState.loading"
+            :disable="getFinanzaState.loading"
             @click="onSubmit">
             <template v-slot:loading>
               <q-spinner-facebook />
@@ -104,74 +88,83 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import { CATEGORIAS } from '../../utils/config'
 export default {
   data(){
     return {
       show: true,
-      infraestructura: {},
+      finanza: {},
       encuestaID: 0,
       options: [],
     }
   },
   created(){
+    let categorias = [CATEGORIAS.FINANZAS_PUBLICAS]
     this.encuestaID = this.$route.params.id
-    this.infraestructura = {
+    this.finanza = {
       id: 0,
-      telefono:'',
-      correo:'',
-      contacto:'',
-      direccion: '',
-      tipoInfraestructura: ''
+      valor:'',
+      observacion:'',
+      tipoIndicadorFinanza: ''
     }
-    if(Object.keys(this.getInfraestructuraState.objInfraestructura).length > 0){
-      this.infraestructura.id = this.getInfraestructuraState.objInfraestructura.id;
-      this.infraestructura.telefono = this.getInfraestructuraState.objInfraestructura.telefono;
-      this.infraestructura.correo = this.getInfraestructuraState.objInfraestructura.correo;
-      this.infraestructura.tipoInfraestructura = this.getInfraestructuraState.objInfraestructura.tipoInfraestructura;
-      this.infraestructura.contacto = this.getInfraestructuraState.objInfraestructura.contacto;
-      this.infraestructura.direccion = this.getInfraestructuraState.objInfraestructura.direccion;
+    if(Object.keys(this.getFinanzaState.objFinanza).length > 0){
+      this.finanza.id = this.getFinanzaState.objFinanza.id;
+      this.finanza.valor = this.getFinanzaState.objFinanza.valor;
+      this.finanza.observacion = this.getFinanzaState.objFinanza.observacion;
+      this.finanza.tipoIndicadorFinanza = this.getFinanzaState.objFinanza.tipoIndicadorFinanza;
     }
 
-    this.cargarListaParametroAction().then(data => {
-      this.options = data
-    })
+    this.cargarListaParametroPorCategoriaAction(categorias).then(data => {
+            this.options = data
+        })
     
   },
   methods: {
-    ...mapActions('infraestructura', ['registrarInfraestructuraAction', 'actualizarInfraestructuraAction','unsetInfraestructuraAction']),
-    ...mapActions('parametros', ['cargarListaParametroAction']),
+    ...mapActions('finanza', ['registrarFinanzaAction', 'actualizarFinanzaAction','unsetFinanzaAction']),
+    ...mapActions('parametros', ['cargarListaParametroPorCategoriaAction']),
     onSubmit(){
       
       let info = {
-        ...this.infraestructura,
+        ...this.finanza,
         encuesta: {
           id: this.encuestaID
         }
       }
+
+      this.$refs.finanzaForm.validate().then(success => {
+            if (success) {                    
+                console.log('Form valido', this.finanza);
+                if(info.id > 0){
+                  //Actualizar
+                  this.actualizarFinanzaAction(info).then(() => {          
+                  })
+                }else{
+                  //Guardar
+                  this.registrarFinanzaAction(info).then( data => {
+                    this.finanza.id = data
+                  })
+                }                                                        
+            }else{
+                this.$q.notify({
+                    message: 'Favor completar los campos correctamente',
+                    color: 'red'
+                })
+            }
+        })
            
-      if(info.id > 0){
-        //Actualizar
-        this.actualizarInfraestructuraAction(info).then(() => {          
-        })
-      }else{
-        //Guardar
-        this.registrarInfraestructuraAction(info).then( data => {
-          this.infraestructura.id = data
-        })
-      }
     },
     close(){
       this.$emit("close");
     }
   },  
   computed: {
-    ...mapGetters('infraestructura', ['getInfraestructuraState']),
+    ...mapGetters('finanza', ['getFinanzaState']),
     mensajeBoton(){
-      return this.infraestructura.id > 0 ? 'Actualizar' : 'Guardar'
+      return this.finanza.id > 0 ? 'Actualizar' : 'Guardar'
     } 
   },
   beforeDestroy(){
-    this.unsetInfraestructuraAction()
+    this.unsetFinanzaAction()
   }
   
 

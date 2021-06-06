@@ -44,7 +44,7 @@ export function registrarFinanzaAction ({ commit }, payload) {
   });
 }
 
-export function actualizarInfraestructuraAction ({ commit }, payload) {
+export function actualizarFinanzaAction ({ commit }, payload) {
   commit('inicializarAccion')
   const urlService = 'finanza'
   return new Promise((resolve, reject) => {

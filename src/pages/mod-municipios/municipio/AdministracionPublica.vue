@@ -23,6 +23,21 @@
 
                     <q-card flat bordered class="my-card q-mb-md">
                        <q-card-section class="q-pb-none">
+                            <div class="text-h6 q-mb-none">No. de Funcionarios de la Alcaldía</div>
+                       </q-card-section>
+
+                        <q-card-section>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6">
+                                    <q-input dense v-model="infoGeneral.numeroFuncionarios" />
+                                </div>
+                            </div>
+                        </q-card-section>
+                    </q-card>
+
+
+                    <q-card flat bordered class="my-card q-mb-md">
+                       <q-card-section class="q-pb-none">
                             <div class="text-h6 q-mb-none">Teléfono fijo</div>
                        </q-card-section>
 
@@ -152,7 +167,16 @@
                 </q-form>
 
                 <div class="flex justify-center">
-                    <q-btn label="Guardar y continuar" no-caps color="primary" @click="onSubmit"/>
+                    <q-btn
+                      label="Guardar y continuar"
+                      no-caps
+                      color="primary"
+                      :loading="getInformacionGeneralState.loading"
+                      @click="onSubmit">
+                      <template v-slot:loading>
+                            <q-spinner-facebook />
+                        </template>
+                    </q-btn>
                 </div>
 
             </div>
@@ -175,6 +199,7 @@ export default {
         this.infoGeneral = {
             id: 0,
             alcalde: "",
+            numeroFuncionarios: "",
             partidoPolitico: "",
             telefonoAlcalde: "",
             correoAlcalde: "",

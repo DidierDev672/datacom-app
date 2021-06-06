@@ -1,6 +1,23 @@
 import axios from 'axios'
 import { URL_API } from '../../../utils/config'
 
+// Acciones para la lista
+export function buscarSeguridadAction ({ commit }, municipioID) {
+  commit('inicializarAccion')
+  const urlService = 'ficha-municipio'
+  return new Promise((resolve, reject) => {
+    axios.get(`${URL_API}/${urlService}/${municipioID}/seguridad`)
+      .then(({ data }) => {        
+        commit('setSeguridadSuccess', data)
+        resolve(data)
+      }).catch(error => {
+        console.log('Ocurrió un error al consultar la cobertura en servicios: ', error.response)
+        commit('setActionFail', error.response)
+        reject(error.response)
+      })
+  })
+}
+
 // Acciones para un objeto Calidad De Vida
 
 export function registrarSeguridadAction ({ commit }, payload) {

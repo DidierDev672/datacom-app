@@ -2,13 +2,13 @@ import axios from 'axios'
 import { URL_API } from '../../../utils/config'
 
 // Acciones para la lista
-export function cargarListaViviendasAction ({ commit }, municipioID) {
+export function buscarViviendasAction ({ commit }, municipioID) {
   commit('inicializarAccion')
   const urlService = 'ficha-municipio'
   return new Promise((resolve, reject) => {
     axios.get(`${URL_API}/${urlService}/${municipioID}/viviendas`)
       .then(({ data }) => {        
-        commit('setListaViviendasSuccess', data)
+        commit('setViviendaSuccess', data)
         resolve(data)
       }).catch(error => {
         console.log('Ocurrió un error al consultar las viviendas: ', error.response)

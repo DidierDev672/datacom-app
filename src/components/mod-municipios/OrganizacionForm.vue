@@ -124,6 +124,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import { CATEGORIAS } from '../../utils/config'
 export default {
   data(){
     return {
@@ -134,6 +135,7 @@ export default {
     }
   },
   created(){
+    let categorias = [CATEGORIAS.ORGANIZACIONES_DE_LA_COMUNIDAD]
     this.encuestaID = this.$route.params.id
     this.organizacion = {
       id: 0,
@@ -156,14 +158,18 @@ export default {
       this.organizacion.idOrganizacion = this.getOrganizacionState.objOrganizacion.idOrganizacion;
     }
 
-    this.cargarListaParametroAction().then(data => {
-      this.options = data
-    })
+    // this.cargarListaParametroAction().then(data => {
+    //   this.options = data
+    // })
+
+    this.cargarListaParametroPorCategoriaAction(categorias).then(data => {
+            this.options = data
+        })
     
   },
   methods: {
     ...mapActions('organizacion', ['registrarOrganizacionAction', 'actualizarOrganizacionAction','unsetOrganizacionAction']),
-    ...mapActions('parametros', ['cargarListaParametroAction']),
+    ...mapActions('parametros', ['cargarListaParametroPorCategoriaAction']),
     onSubmit(){
       
       let info = {
