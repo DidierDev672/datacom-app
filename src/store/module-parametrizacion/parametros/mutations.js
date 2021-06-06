@@ -52,6 +52,16 @@ export function setCategoriaSuccess (state, data) {
     loaded: true
   }
 }
+export function setParametroSuccess (state, data) {
+  console.log("establecio success")
+  state.parametros = {
+    ...state.parametros,
+    objParametro: data,
+    loading: false,
+    loaded: true
+  }
+}
+
 export function actualizarCategoriaSuccess (state, data) {
   state.categoria = {
     ...state.categoria,
@@ -61,8 +71,8 @@ export function actualizarCategoriaSuccess (state, data) {
   }
 }
 
-export function agregarCategoriaState (state, data) {
-  state.categoria.lstCategorias.push(data)
+export function agregarParametroState (state, data) {
+  state.parametros.lista.push(data)
 }
 
 export function unsetCategoria (state) {

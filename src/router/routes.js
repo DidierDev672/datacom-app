@@ -26,6 +26,21 @@ const routes = [
         component: () => import('pages/parametrizacion/categorias/PageCategoria.vue')
       },
       {
+        path: 'parametros',
+        name: 'parametros',
+        component: () => import('pages/parametrizacion/Parametros/PageParametros.vue')
+      },
+      {
+        path: 'parametro/:id',
+        name: 'parametro',
+        component: () => import('pages/parametrizacion/Parametros/PageParametro.vue')
+      },
+      {
+        path: 'parametro',
+        name: 'nuevo-parametro',
+        component: () => import('pages/parametrizacion/Parametros/PageParametro.vue')
+      },
+      {
         path: '/ficha-vivienda',
         name: 'nueva-ficha-vivienda',
         component: () => import('pages/mod-viviendas/NuevaVivienda.vue'),
@@ -36,7 +51,7 @@ const routes = [
           { path: 'productos', name: 'productos-vivienda', component: () => import('pages/mod-viviendas/ProductosVivienda.vue') },
           { path: 'personas', name: 'personas-vivienda', component: () => import('pages/mod-viviendas/PersonasVivienda.vue') },
           { path: 'control-ficha', name: 'control-vivienda', component: () => import('pages/mod-viviendas/ControlVivienda.vue') },
-          
+
         ]
       },
       {

@@ -21,7 +21,7 @@
 
       <q-separator />
 
-      <q-item clickable v-ripple class="q-py-md">
+      <q-item clickable :to="{name: 'parametros'}" v-ripple class="q-py-md">
         <q-item-section avatar>
           <q-icon name="ti-agenda" />
         </q-item-section>
@@ -34,6 +34,32 @@
         </q-item-section>
       </q-item>
 
+      <q-separator />
+      <q-item clickable :to="{name: 'municipios'}" v-ripple class="q-py-md">
+        <q-item-section avatar>
+          <q-icon name="ti-agenda" />
+        </q-item-section>
+        <q-item-section>
+          <q-item-label>Municipios</q-item-label>
+          <q-item-label caption>Municipios.</q-item-label>
+        </q-item-section>
+        <q-item-section avatar>
+          <q-icon color="grey-6" name="ti-angle-right" />
+        </q-item-section>
+      </q-item>
+      <q-separator />
+      <q-item clickable :to="{name: 'departamentos'}" v-ripple class="q-py-md">
+        <q-item-section avatar>
+          <q-icon name="ti-agenda" />
+        </q-item-section>
+        <q-item-section>
+          <q-item-label>Departamentos</q-item-label>
+          <q-item-label caption>Departamentos.</q-item-label>
+        </q-item-section>
+        <q-item-section avatar>
+          <q-icon color="grey-6" name="ti-angle-right" />
+        </q-item-section>
+      </q-item>
       <q-separator />
 
     </q-list>

@@ -3,11 +3,12 @@ import { URL_API } from '../../../utils/config'
 
 // Acciones para la lista
 export function cargarListaParametroAction ({ commit }) {
+  console.log("prueba")
   commit('inicializarAccion')
   const urlService = 'parametro'
   return new Promise((resolve, reject) => {
     axios.get(`${URL_API}/${urlService}/`)
-      .then(({ data }) => {        
+      .then(({ data }) => {
         commit('setListaParametroSuccess', data)
         resolve(data)
       }).catch(error => {
@@ -23,7 +24,7 @@ export function cargarListaParametroPorCategoriaAction ({ commit }, payload) {
   const urlService = 'parametro'
   return new Promise((resolve, reject) => {
     axios.get(`${URL_API}/${urlService}/categoria/${payload}`)
-      .then(({ data }) => {        
+      .then(({ data }) => {
         commit('setListaParametroSuccess', data)
         resolve(data)
       }).catch(error => {
@@ -56,40 +57,29 @@ export function unsetListaCategoriasAction ({ commit }) {
 //   });
 // }
 
-export function registrarCategoriaAction ({ commit }, payload) {
+export function registrarParametroAction ({ commit }, payload) {
   commit('inicializarAccion')
-  const urlService = 'categoria'
+  const urlService = 'parametro'
   return new Promise((resolve, reject) => {
     axios.post(`${URL_API}/${urlService}/`, payload)
       .then(({ data }) => {
-        // Dialog.create({
-        //   title: 'Alert',
-        //   message: 'Ha guardado la categoria'
-        //  })
-        commit('agregarCategoriaState', data)
-        commit('setCategoriaSuccess', data)
+        commit('agregarParametroState', data)
+        commit('setParametroSuccess', data)
         resolve(data)
       })
       .catch(error => {
-        // Dialog.create({
-        //   title: 'Alert',
-        //   message: 'Ha ocurrido un error al grabar la categoria' + error
-        //  })
-        // console.log(error.response)
-        // commit('setActionFail', error.response)
         reject(error)
       })
   })
 }
 
-export function actualizarCategoriaAction ({ commit }, payload) {
+export function actualizarParametroAction ({ commit }, payload) {
   commit('inicializarAccion')
-  const urlService = 'categoria'
+  const urlService = 'parametro'
   return new Promise((resolve, reject) => {
     axios.put(`${URL_API}/${urlService}/${payload.id}`, payload)
       .then(({ data }) => {
-        // commit('agregarCategoriaState', data)
-        commit('setCategoriaSuccess', data)
+        commit('setParametroSuccess', data)
         resolve(data)
       })
       .catch(error => {
