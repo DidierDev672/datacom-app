@@ -31,6 +31,7 @@ import vias from './module-comunidad/vias-acceso'
 import ecosistema from './module-comunidad/ecosistema'
 import infrasalud from './module-comunidad/infrasalud'
 import poblacionInfantil from './module-comunidad/poblacion-infantil'
+import programasEducativos from './module-comunidad/programas-educativos'
 
 Vue.use(Vuex)
 
@@ -75,7 +76,8 @@ export default function (/* { ssrContext } */) {
       vias,
       ecosistema,
       infrasalud,
-      poblacionInfantil
+      poblacionInfantil,
+      programasEducativos
     },
 
     // enable strict mode (adds overhead!)

@@ -215,6 +215,11 @@ const routes = [
         name: 'c-vivienda',
         component: () => import('pages/mod-comunidad/viviendas/Viviendas.vue'),
       },
+      {
+        path: 'programas-educativos',
+        name: 'c-programas-educativos',
+        component: () => import('pages/mod-comunidad/educacion/ProgramasEducativos.vue'),
+      },
     ]
   },
   {
