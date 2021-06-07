@@ -203,7 +203,51 @@
               <q-item-label>Viviendas</q-item-label>
             </q-item-section>
           </q-item>
+        <q-item
+          clickable
+          :to="{name: 'c-comite-emergencia', params: {id: encuestaID}}"
+          exact
+        >
+          <q-item-section
+            avatar
+          >
+            <q-icon size="14px" name="ti-angle-right" />
+          </q-item-section>
 
+          <q-item-section>
+            <q-item-label>Comite Emergencia</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item
+          clickable
+          :to="{name: 'c-actividades-economicas', params: {id: encuestaID}}"
+          exact
+        >
+          <q-item-section
+            avatar
+          >
+            <q-icon size="14px" name="ti-angle-right" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Actividades Economicas</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item
+          clickable
+          :to="{name: 'c-participacion-ciudadana', params: {id: encuestaID}}"
+          exact
+        >
+          <q-item-section
+            avatar
+          >
+            <q-icon size="14px" name="ti-angle-right" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Participación Ciudadana</q-item-label>
+          </q-item-section>
+        </q-item>
 
 
         <q-item clickable :to="{ name: 'fin-encuesta', params: { id: encuestaID } }" exact>
@@ -276,7 +320,7 @@ export default {
     return {
       showAppInstallBanner: false,
       encuestaID: 0,
-      leftDrawerOpen: false,      
+      leftDrawerOpen: false,
     }
   },
   methods: {

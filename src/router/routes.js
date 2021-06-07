@@ -230,6 +230,21 @@ const routes = [
         name: 'c-vivienda',
         component: () => import('pages/mod-comunidad/viviendas/Viviendas.vue'),
       },
+      {
+        path: 'comite-emergencia',
+        name: 'c-comite-emergencia',
+        component: () => import('pages/mod-comunidad/viviendas/Viviendas.vue'),
+      },
+      {
+        path: 'actividades-economicas',
+        name: 'c-actividades-economicas',
+        component: () => import('pages/mod-comunidad/viviendas/Viviendas.vue'),
+      },
+      {
+        path: 'participacion-ciudadana',
+        name: 'c-participacion-ciudadana',
+        component: () => import('pages/mod-comunidad/viviendas/Viviendas.vue'),
+      }
     ]
   },
   {
