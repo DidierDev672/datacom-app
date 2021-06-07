@@ -19,7 +19,7 @@ export function cargarListaProgramasEducativosAction ({ commit }, municipioID) {
 }
 
 export function cargarListaPersonalProgramaEducativoAction ({ commit }, programaEducativoID) {
-  commit('inicializarAccion')
+  // commit('inicializarAccion')
   const urlService = 'instituciones-educativas'
   return new Promise((resolve, reject) => {
     axios.get(`${URL_API}/${urlService}/${programaEducativoID}/personal`)

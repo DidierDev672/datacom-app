@@ -32,6 +32,7 @@ import ecosistema from './module-comunidad/ecosistema'
 import infrasalud from './module-comunidad/infrasalud'
 import poblacionInfantil from './module-comunidad/poblacion-infantil'
 import programasEducativos from './module-comunidad/programas-educativos'
+import personalInstitucionEducativa from './module-comunidad/programas-educativos/personal-institucion-educativa'
 
 Vue.use(Vuex)
 
@@ -77,7 +78,8 @@ export default function (/* { ssrContext } */) {
       ecosistema,
       infrasalud,
       poblacionInfantil,
-      programasEducativos
+      programasEducativos,
+      personalInstitucionEducativa
     },
 
     // enable strict mode (adds overhead!)
