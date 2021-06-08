@@ -23,7 +23,7 @@
     <q-item>
         <q-item-section top>
             <q-item-label lines="1">
-                <span class="text-weight-medium">${{ finanza.valor }}</span>
+                <span class="text-weight-medium">${{ finanza.valor | formatoNumero }}</span>
             </q-item-label>
             <q-item-label caption lines="1">
             {{ finanza.observacion }}
@@ -47,6 +47,12 @@ export default {
       editar(){
         this.$emit("editar", this.finanza)
       }
+    },
+    filters: {
+        formatoNumero(value){
+            if(!value) return ''
+            return Intl.NumberFormat("en-US").format(parseInt(value))
+        }
     }
 
 }

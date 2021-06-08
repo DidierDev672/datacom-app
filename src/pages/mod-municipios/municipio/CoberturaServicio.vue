@@ -15,7 +15,7 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input
+                        <!-- <q-input
                           dense
                           v-model.number="cobertura.energiaElectricaUrbana" 
                           type="number"
@@ -23,7 +23,16 @@
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                            ]"/>
+                            ]"/> -->
+
+                            <q-field                    
+                            v-model="cobertura.energiaElectricaUrbana"
+                            hint="#,###"
+                            >
+                            <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
+                            </template>
+                            </q-field>
                     </div>
                 </div>
             </q-card-section>
@@ -37,7 +46,7 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input
+                        <!-- <q-input
                           dense
                           v-model.number="cobertura.energiaElectricaRural" 
                           type="number"
@@ -45,7 +54,16 @@
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                            ]"/>
+                            ]"/> -->
+
+                             <q-field                    
+                            v-model="cobertura.energiaElectricaRural"
+                            hint="#,###"
+                            >
+                            <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
+                            </template>
+                            </q-field>
                     </div>
                 </div>
             </q-card-section>
@@ -59,7 +77,7 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input
+                        <!-- <q-input
                           dense
                           v-model.number="cobertura.acueductoUrbano" 
                           type="number"
@@ -67,7 +85,16 @@
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                            ]"/>
+                            ]"/> -->
+
+                             <q-field                    
+                            v-model="cobertura.acueductoUrbano"
+                            hint="#,###"
+                            >
+                            <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
+                            </template>
+                            </q-field>
                     </div>
                 </div>
             </q-card-section>
@@ -81,7 +108,7 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input
+                        <!-- <q-input
                           dense
                           v-model.number="cobertura.acueductoRural" 
                           type="number"
@@ -89,7 +116,16 @@
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                            ]"/>
+                            ]"/> -->
+
+                             <q-field                    
+                            v-model="cobertura.acueductoRural"
+                            hint="#,###"
+                            >
+                            <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
+                            </template>
+                            </q-field>
                     </div>
                 </div>
             </q-card-section>
@@ -103,7 +139,7 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input
+                        <!-- <q-input
                           dense
                           v-model.number="cobertura.alcantarilladoUrbana" 
                           type="number"
@@ -111,7 +147,16 @@
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                            ]"/>
+                            ]"/> -->
+
+                             <q-field                    
+                            v-model="cobertura.alcantarilladoUrbana"
+                            hint="#,###"
+                            >
+                            <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
+                            </template>
+                            </q-field>
                     </div>
                 </div>
             </q-card-section>
@@ -125,7 +170,7 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input
+                        <!-- <q-input
                           dense
                           v-model.number="cobertura.alcantarilladoRural"
                           type="number"
@@ -133,7 +178,16 @@
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                            ]" />
+                            ]" /> -->
+
+                             <q-field                    
+                            v-model="cobertura.alcantarilladoRural"
+                            hint="#,###"
+                            >
+                            <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
+                            </template>
+                            </q-field>
                     </div>
                 </div>
             </q-card-section>
@@ -147,7 +201,7 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input
+                        <!-- <q-input
                           dense
                           v-model.number="cobertura.gasNaturalUrbana" 
                           type="number"
@@ -155,7 +209,16 @@
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                            ]"/>
+                            ]"/> -->
+
+                             <q-field                    
+                            v-model="cobertura.gasNaturalUrbana"
+                            hint="#,###"
+                            >
+                            <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
+                            </template>
+                            </q-field>
                     </div>
                 </div>
             </q-card-section>
@@ -169,7 +232,7 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input
+                        <!-- <q-input
                           dense
                           v-model.number="cobertura.gasNaturalRural"
                           type="number"
@@ -177,7 +240,16 @@
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                            ]" />
+                            ]" /> -->
+
+                             <q-field                    
+                            v-model="cobertura.gasNaturalRural"
+                            hint="#,###"
+                            >
+                            <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
+                            </template>
+                            </q-field>
                     </div>
                 </div>
             </q-card-section>
@@ -191,7 +263,7 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input
+                        <!-- <q-input
                           dense
                           v-model.number="cobertura.internetUrbana"
                           type="number"
@@ -199,7 +271,15 @@
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                            ]" />
+                            ]" /> -->
+                             <q-field                    
+                            v-model="cobertura.internetUrbana"
+                            hint="#,###"
+                            >
+                            <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
+                            </template>
+                            </q-field>
                     </div>
                 </div>
             </q-card-section>
@@ -213,7 +293,7 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input
+                        <!-- <q-input
                           dense
                           v-model.number="cobertura.internetRural"
                           type="number"
@@ -221,7 +301,16 @@
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                            ]" />
+                            ]" /> -->
+
+                             <q-field                    
+                            v-model="cobertura.internetRural"
+                            hint="#,###"
+                            >
+                            <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
+                            </template>
+                            </q-field>
                     </div>
                 </div>
             </q-card-section>
@@ -254,7 +343,13 @@ export default {
   data(){
     return {
       encuestaID: 0,
-      cobertura: {}
+      cobertura: {},
+      decimales: {
+          decimal: '.',
+          thousands: ',',
+          precision: 2,
+          masked: false /* doesn't work with directive */
+      },
     }
   },
   created(){
