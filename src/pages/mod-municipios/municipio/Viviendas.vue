@@ -230,6 +230,7 @@ export default {
       decimales: {
           decimal: '.',
           thousands: ',',
+          suffix: ' %',
           precision: 2,
           masked: false /* doesn't work with directive */
       },

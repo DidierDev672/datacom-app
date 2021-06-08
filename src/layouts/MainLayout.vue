@@ -128,9 +128,21 @@ export default {
         {
           title: 'Inicio',
           caption: '',
-          icon: 'home',
+          icon: 'ti-home',
           link: '/'
-        },        
+        },
+        {
+          title: 'Encuestas',
+          caption: '',
+          icon: 'ti-bar-chart-alt',
+          link: '/encuestas'
+        },
+        {
+          title: 'Parametrización',
+          caption: '',
+          icon: 'ti-settings',
+          link: '/parametrizacion'
+        },          
       ]
     }
   },
