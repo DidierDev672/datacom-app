@@ -35,6 +35,16 @@
             <div class="col-xs-12">
               <q-input
                 outlined
+                v-model="secretaria.nombreContacto"
+                label="Nombre del Contacto"
+              /> 
+            </div>            
+          </div>
+
+          <div class="row q-col-gutter-sm">
+            <div class="col-xs-12">
+              <q-input
+                outlined
                 v-model="secretaria.telefono"
                 label="Teléfono"
               /> 
@@ -96,12 +106,14 @@ export default {
     this.encuestaID = this.$route.params.id
     this.secretaria = {
       id: 0,
+      nombreContacto: '',
       telefono:'',
       correo:'',
       idGabinete: ''
     }
     if(Object.keys(this.getSecretariaState.objSecretaria).length > 0){
       this.secretaria.id = this.getSecretariaState.objSecretaria.id;
+      this.secretaria.nombreContacto = this.getSecretariaState.objSecretaria.nombreContacto;
       this.secretaria.telefono = this.getSecretariaState.objSecretaria.telefono;
       this.secretaria.correo = this.getSecretariaState.objSecretaria.correo;
       this.secretaria.idGabinete = this.getSecretariaState.objSecretaria.idGabinete;

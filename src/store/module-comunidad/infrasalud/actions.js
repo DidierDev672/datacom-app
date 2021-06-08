@@ -18,6 +18,36 @@ export function cargarListaInfrasaludAction ({ commit }, municipioID) {
   })
 }
 
+export function cargarListaPersonalInfrasaludAction ({ commit }, infrasaludID) {
+  // commit('inicializarAccion')
+  const urlService = 'infrasalud'
+  return new Promise((resolve, reject) => {
+    axios.get(`${URL_API}/${urlService}/${infrasaludID}/personal`)
+      .then(({ data }) => {
+        resolve(data)
+      }).catch(error => {
+        console.log('Ocurrió un error al consultar el personal de salud: ', error.response)
+        commit('setActionFail', error.response)
+        reject(error.response)
+      })
+  })
+}
+
+export function cargarListaServicioInfrasaludAction ({ commit }, infrasaludID) {
+  // commit('inicializarAccion')
+  const urlService = 'infrasalud'
+  return new Promise((resolve, reject) => {
+    axios.get(`${URL_API}/${urlService}/${infrasaludID}/servicios`)
+      .then(({ data }) => {
+        resolve(data)
+      }).catch(error => {
+        console.log('Ocurrió un error al consultar los servicios de salud: ', error.response)
+        commit('setActionFail', error.response)
+        reject(error.response)
+      })
+  })
+}
+
 export function unsetListaInfrasaludAction ({ commit }) {
   commit('unsetListaInfrasalud')
 }

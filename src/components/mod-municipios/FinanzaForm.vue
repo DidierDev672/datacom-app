@@ -32,7 +32,7 @@
 
           <div class="row q-col-gutter-sm">
             <div class="col-xs-12">
-              <q-input
+              <!-- <q-input
                 outlined
                 v-model.number="finanza.valor"
                 label="Valor del indicador"
@@ -42,7 +42,15 @@
                     val => val !== null && val !== '' || 'Debe ingresar un valor ',
                     val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                 ]"
-              /> 
+              />  -->
+              <q-field                    
+              v-model="finanza.valor"
+              hint="#,###"
+              >
+              <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                  <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
+              </template>
+              </q-field>
             </div>            
           </div>
 
@@ -96,6 +104,12 @@ export default {
       finanza: {},
       encuestaID: 0,
       options: [],
+      decimales: {
+          decimal: '.',
+          thousands: ',',
+          precision: 2,
+          masked: false /* doesn't work with directive */
+      },
     }
   },
   created(){
