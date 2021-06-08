@@ -250,6 +250,16 @@ const routes = [
         name: 'c-programas-educativos',
         component: () => import('pages/mod-comunidad/educacion/ProgramasEducativos.vue'),
       },
+      {
+        path: 'fiestas-tradicionales',
+        name: 'c-fiestas-tradicionales',
+        component: () => import('pages/mod-comunidad/fiestas-tradicionales/FiestasTradicionales.vue'),
+      },
+      {
+        path: 'fin-encuesta',
+        name: 'c-fin-encuesta',
+        component: () => import('pages/mod-comunidad/FinEncuesta.vue'),
+      },
 
     ]
   },

@@ -13,7 +13,15 @@
             <q-card-section>
               <div class="row">
                 <div class="col-xs-12 col-sm-6">
-                  <q-input dense v-model="infoGeneral.porcentajeElecciones" />
+                  <!-- <q-input dense v-model="infoGeneral.porcentajeElecciones" /> -->
+                  <q-field                    
+                  v-model="infoGeneral.porcentajeElecciones"
+                  hint="#,###"
+                  >
+                  <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                      <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
+                  </template>
+                  </q-field>
                 </div>
               </div>
             </q-card-section>
@@ -29,7 +37,15 @@
             <q-card-section>
               <div class="row">
                 <div class="col-xs-12 col-sm-6">
-                  <q-input dense v-model="infoGeneral.totalVotosAlcalde" />
+                  <!-- <q-input dense v-model="infoGeneral.totalVotosAlcalde" /> -->
+                  <q-field                    
+                  v-model="infoGeneral.totalVotosAlcalde"
+                  hint="#,###"
+                  >
+                  <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                      <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="numero" v-show="floatingLabel" />
+                  </template>
+                  </q-field>
                 </div>
               </div>
             </q-card-section>
@@ -43,7 +59,15 @@
             <q-card-section>
               <div class="row">
                 <div class="col-xs-12 col-sm-6">
-                  <q-input dense v-model="infoGeneral.porcentajeVotos" />
+                  <!-- <q-input dense v-model="infoGeneral.porcentajeVotos" /> -->
+                  <q-field                    
+                  v-model="infoGeneral.porcentajeVotos"
+                  hint="#,###"
+                  >
+                  <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                      <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
+                  </template>
+                  </q-field>
                 </div>
               </div>
             </q-card-section>
@@ -76,7 +100,19 @@ export default {
   data() {
     return {
       encuestaID: 0,
-      infoGeneral: {}
+      infoGeneral: {},
+      numero: {
+          decimal: '.',
+          thousands: ',',
+          precision: 0,
+          masked: false /* doesn't work with directive */
+      },
+      decimales: {
+          decimal: '.',
+          thousands: ',',
+          precision: 2,
+          masked: false /* doesn't work with directive */
+      },
     };
   },
 

@@ -30,7 +30,14 @@
                       title="Editar año"
                       @save="save"                      
                       buttons>
-                        <q-input hint="Editar año" type="number" v-model="registro.ano" dense autofocus />
+                        <q-input
+                          mask="(#)"
+                          unmasked-value
+                          hint="Editar año"
+                          type="number"
+                          v-model="registro.ano"
+                          dense
+                          autofocus />
                     </q-popup-edit>
                 </td>              
           </tr>

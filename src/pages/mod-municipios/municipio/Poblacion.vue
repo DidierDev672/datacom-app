@@ -16,10 +16,13 @@
                     <q-card-section>
                         <div class="row">
                             <div class="col-xs-12 col-sm-6">
-                                <q-input dense v-model="poblacionPorRangoDeEdad.ano" />
+                                <q-input
+                                  dense
+                                  v-model="poblacionPorRangoDeEdad.ano" />
                             </div>
                         </div>
                     </q-card-section>
+                    
                     </q-card>
 
                    <q-card
@@ -33,7 +36,7 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                   <q-input
+                                   <!-- <q-input
                                       dense
                                       v-model.number="poblacionPorRangoDeEdad.de0A4Anos" 
                                       type="number"
@@ -41,7 +44,15 @@
                                         :rules="[
                                             val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                                        ]"/>
+                                        ]"/> -->
+                                        <q-field                    
+                                        v-model="poblacionPorRangoDeEdad.de0A4Anos"
+                                        hint="#,###"
+                                        >
+                                        <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                            <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="numero" v-show="floatingLabel" />
+                                        </template>
+                                        </q-field>
                                 </div>
                             </div>
                         </q-card-section>
@@ -55,7 +66,7 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input
+                                    <!-- <q-input
                                       dense
                                       v-model.number="poblacionPorRangoDeEdad.de5A9Anos" 
                                       type="number"
@@ -63,7 +74,15 @@
                                         :rules="[
                                             val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                                        ]"/>
+                                        ]"/> -->
+                                    <q-field                    
+                                        v-model="poblacionPorRangoDeEdad.de5A9Anos"
+                                        hint="#,###"
+                                        >
+                                        <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                            <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="numero" v-show="floatingLabel" />
+                                        </template>
+                                        </q-field>
                                 </div>
                             </div>
                         </q-card-section>
@@ -77,7 +96,7 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input
+                                    <!-- <q-input
                                       dense
                                       v-model.number="poblacionPorRangoDeEdad.de10A14Anos" 
                                       type="number"
@@ -85,7 +104,16 @@
                                         :rules="[
                                             val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                                        ]"/>
+                                        ]"/> -->
+
+                                        <q-field                    
+                                        v-model="poblacionPorRangoDeEdad.de10A14Anos"
+                                        hint="#,###"
+                                        >
+                                        <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                            <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="numero" v-show="floatingLabel" />
+                                        </template>
+                                        </q-field>
                                 </div>
                             </div>
                         </q-card-section>
@@ -99,7 +127,7 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input
+                                    <!-- <q-input
                                       dense
                                       v-model.number="poblacionPorRangoDeEdad.de15A19Anos"
                                       type="number"
@@ -107,7 +135,16 @@
                                         :rules="[
                                             val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                                        ]" />
+                                        ]" /> -->
+
+                                        <q-field                    
+                                        v-model="poblacionPorRangoDeEdad.de15A19Anos"
+                                        hint="#,###"
+                                        >
+                                        <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                            <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="numero" v-show="floatingLabel" />
+                                        </template>
+                                        </q-field>
                                 </div>
                             </div>
                         </q-card-section>
@@ -121,7 +158,7 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input
+                                    <!-- <q-input
                                       dense
                                       v-model.number="poblacionPorRangoDeEdad.de20A24Anos"
                                       type="number"
@@ -129,7 +166,16 @@
                                         :rules="[
                                             val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                                        ]" />
+                                        ]" /> -->
+
+                                        <q-field                    
+                                        v-model="poblacionPorRangoDeEdad.de20A24Anos"
+                                        hint="#,###"
+                                        >
+                                        <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                            <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="numero" v-show="floatingLabel" />
+                                        </template>
+                                        </q-field>
                                 </div>
                             </div>
                         </q-card-section>
@@ -143,7 +189,7 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input
+                                    <!-- <q-input
                                       dense
                                       v-model.number="poblacionPorRangoDeEdad.de25A29Anos"
                                       type="number"
@@ -151,7 +197,15 @@
                                         :rules="[
                                             val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                                        ]" />
+                                        ]" /> -->
+                                        <q-field                    
+                                        v-model="poblacionPorRangoDeEdad.de25A29Anos"
+                                        hint="#,###"
+                                        >
+                                        <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                            <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="numero" v-show="floatingLabel" />
+                                        </template>
+                                        </q-field>
                                 </div>
                             </div>
                         </q-card-section>
@@ -165,7 +219,7 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input
+                                    <!-- <q-input
                                       dense
                                       v-model.number="poblacionPorRangoDeEdad.de30A34Anos"
                                       type="number"
@@ -173,7 +227,15 @@
                                         :rules="[
                                             val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                                        ]" />
+                                        ]" /> -->
+                                        <q-field                    
+                                        v-model="poblacionPorRangoDeEdad.de30A34Anos"
+                                        hint="#,###"
+                                        >
+                                        <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                            <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="numero" v-show="floatingLabel" />
+                                        </template>
+                                        </q-field>
                                 </div>
                             </div>
                         </q-card-section>
@@ -187,7 +249,7 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input
+                                    <!-- <q-input
                                       dense
                                       v-model.number="poblacionPorRangoDeEdad.de35A39Anos" 
                                       type="number"
@@ -195,7 +257,16 @@
                                         :rules="[
                                             val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                                        ]"/>
+                                        ]"/> -->
+
+                                        <q-field                    
+                                        v-model="poblacionPorRangoDeEdad.de35A39Anos"
+                                        hint="#,###"
+                                        >
+                                        <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                            <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="numero" v-show="floatingLabel" />
+                                        </template>
+                                        </q-field>
                                 </div>
                             </div>
                         </q-card-section>
@@ -209,7 +280,7 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input
+                                    <!-- <q-input
                                       dense
                                       v-model.number="poblacionPorRangoDeEdad.de40A44Anos" 
                                       type="number"
@@ -217,7 +288,16 @@
                                         :rules="[
                                             val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                                        ]" />
+                                        ]" /> -->
+
+                                        <q-field                    
+                                        v-model="poblacionPorRangoDeEdad.de40A44Anos"
+                                        hint="#,###"
+                                        >
+                                        <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                            <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="numero" v-show="floatingLabel" />
+                                        </template>
+                                        </q-field>
                                 </div>
                             </div>
                         </q-card-section>
@@ -231,7 +311,7 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input
+                                    <!-- <q-input
                                       dense
                                       v-model.number="poblacionPorRangoDeEdad.de45A49Anos"
                                       type="number"
@@ -239,7 +319,16 @@
                                         :rules="[
                                             val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                                        ]" />
+                                        ]" /> -->
+
+                                        <q-field                    
+                                        v-model="poblacionPorRangoDeEdad.de45A49Anos"
+                                        hint="#,###"
+                                        >
+                                        <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                            <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="numero" v-show="floatingLabel" />
+                                        </template>
+                                        </q-field>
                                 </div>
                             </div>
                         </q-card-section>
@@ -253,7 +342,7 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input
+                                    <!-- <q-input
                                       dense
                                       v-model.number="poblacionPorRangoDeEdad.de50A54Anos"
                                       type="number"
@@ -261,7 +350,16 @@
                                         :rules="[
                                             val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                                        ]" />
+                                        ]" /> -->
+
+                                        <q-field                    
+                                        v-model="poblacionPorRangoDeEdad.de50A54Anos"
+                                        hint="#,###"
+                                        >
+                                        <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                            <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="numero" v-show="floatingLabel" />
+                                        </template>
+                                        </q-field>
                                 </div>
                             </div>
                         </q-card-section>
@@ -275,7 +373,7 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input
+                                    <!-- <q-input
                                       dense
                                       v-model.number="poblacionPorRangoDeEdad.de55A59Anos"
                                       type="number"
@@ -283,7 +381,16 @@
                                         :rules="[
                                             val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                                        ]" />
+                                        ]" /> -->
+
+                                        <q-field                    
+                                        v-model="poblacionPorRangoDeEdad.de55A59Anos"
+                                        hint="#,###"
+                                        >
+                                        <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                            <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="numero" v-show="floatingLabel" />
+                                        </template>
+                                        </q-field>
                                 </div>
                             </div>
                         </q-card-section>
@@ -297,7 +404,7 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input
+                                    <!-- <q-input
                                       dense
                                       v-model.number="poblacionPorRangoDeEdad.de60A64Anos" 
                                       type="number"
@@ -305,7 +412,16 @@
                                         :rules="[
                                             val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                                        ]"/>
+                                        ]"/> -->
+
+                                        <q-field                    
+                                        v-model="poblacionPorRangoDeEdad.de60A64Anos"
+                                        hint="#,###"
+                                        >
+                                        <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                            <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="numero" v-show="floatingLabel" />
+                                        </template>
+                                        </q-field>
                                 </div>
                             </div>
                         </q-card-section>
@@ -319,7 +435,7 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input
+                                    <!-- <q-input
                                       dense
                                       v-model.number="poblacionPorRangoDeEdad.de65A69Anos" 
                                       type="number"
@@ -327,7 +443,16 @@
                                         :rules="[
                                             val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                                        ]" />
+                                        ]" /> -->
+
+                                        <q-field                    
+                                        v-model="poblacionPorRangoDeEdad.de65A69Anos"
+                                        hint="#,###"
+                                        >
+                                        <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                            <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="numero" v-show="floatingLabel" />
+                                        </template>
+                                        </q-field>
                                 </div>
                             </div>
                         </q-card-section>
@@ -341,7 +466,7 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input
+                                    <!-- <q-input
                                       dense
                                       v-model.number="poblacionPorRangoDeEdad.de70A74Anos" 
                                       type="number"
@@ -349,7 +474,16 @@
                                         :rules="[
                                             val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                                        ]" />
+                                        ]" /> -->
+
+                                        <q-field                    
+                                        v-model="poblacionPorRangoDeEdad.de70A74Anos"
+                                        hint="#,###"
+                                        >
+                                        <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                            <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="numero" v-show="floatingLabel" />
+                                        </template>
+                                        </q-field>
                                 </div>
                             </div>
                         </q-card-section>
@@ -363,7 +497,7 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input
+                                    <!-- <q-input
                                       dense
                                       v-model.number="poblacionPorRangoDeEdad.de75A79Anos"
                                       type="number"
@@ -371,7 +505,16 @@
                                         :rules="[
                                             val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                                        ]" />
+                                        ]" /> -->
+
+                                        <q-field                    
+                                        v-model="poblacionPorRangoDeEdad.de75A79Anos"
+                                        hint="#,###"
+                                        >
+                                        <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                            <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="numero" v-show="floatingLabel" />
+                                        </template>
+                                        </q-field>
                                 </div>
                             </div>
                         </q-card-section>
@@ -385,7 +528,7 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input
+                                    <!-- <q-input
                                       dense
                                       v-model.number="poblacionPorRangoDeEdad.mayorA80Anos"
                                       type="number"
@@ -393,11 +536,20 @@
                                         :rules="[
                                             val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                                        ]" />
+                                        ]" /> -->
+
+                                        <q-field                    
+                                        v-model="poblacionPorRangoDeEdad.mayorA80Anos"
+                                        hint="#,###"
+                                        >
+                                        <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                            <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="numero" v-show="floatingLabel" />
+                                        </template>
+                                        </q-field>
                                 </div>
                             </div>
                         </q-card-section>
-                    </q-card>
+                    </q-card>                    
                     
                 </q-form>
 
@@ -423,9 +575,17 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+
 export default {
     data(){
         return {
+            price: 5824.23,
+            numero: {
+                decimal: '.',
+                thousands: ',',
+                precision: 0,
+                masked: false /* doesn't work with directive */
+            },
             encuestaID: 0,
             poblacionPorRangoDeEdad: {}
         }
@@ -464,7 +624,6 @@ export default {
     methods: {
         ...mapActions('poblacion', ['guardarPoblacion','agregarPoblacionAction', 'buscarPoblacionAction', 'eliminarPoblacionAction']),       
         onSubmit(){
-
             this.$refs.poblacionForm.validate().then(success => {
                 if (success) {                    
                     this.guardarPoblacion({
@@ -483,9 +642,9 @@ export default {
                     })
                 }
             })
+        },
 
-
-        }
+        
     },
     computed: {
         ...mapGetters('poblacion', ['getPoblacionState'])

@@ -1,9 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import money from 'v-money'
 
 import routes from './routes'
 
 Vue.use(VueRouter)
+
+Vue.use(money, {precision: 4})
 
 /*
  * If not building with SSR mode, you can

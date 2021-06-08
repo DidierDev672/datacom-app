@@ -264,9 +264,25 @@
             </q-item-section>
           </q-item>
 
+          <q-item
+            clickable
+            :to="{name: 'c-fiestas-tradicionales', params: {id: encuestaID}}"
+            exact
+          >
+            <q-item-section
+              avatar
+            >
+              <q-icon size="14px" name="ti-angle-right" />
+            </q-item-section>
+
+            <q-item-section>
+              <q-item-label>Fiestas Tradicionales</q-item-label>
+            </q-item-section>
+          </q-item>
 
 
-        <q-item clickable :to="{ name: 'fin-encuesta', params: { id: encuestaID } }" exact>
+
+        <q-item clickable :to="{ name: 'c-fin-encuesta', params: { id: encuestaID } }" exact>
           <q-item-section
             avatar
           >

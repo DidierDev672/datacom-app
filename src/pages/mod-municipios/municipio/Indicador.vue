@@ -15,7 +15,7 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input
+                        <!-- <q-input
                           dense
                           v-model.number="indicador.indiceDeDesempenoFiscal"
                           type="number"
@@ -23,7 +23,16 @@
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                            ]" />
+                            ]" /> -->
+
+                            <q-field                    
+                            v-model="indicador.indiceDeDesempenoFiscal"
+                            hint="#,###"
+                            >
+                            <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
+                            </template>
+                            </q-field>
                     </div>
                 </div>
             </q-card-section>
@@ -54,7 +63,7 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input
+                        <!-- <q-input
                           dense
                           v-model.number="indicador.indiceDeFuncionamiento"
                           type="number"
@@ -62,7 +71,16 @@
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                            ]" />
+                            ]" /> -->
+
+                            <q-field                    
+                            v-model="indicador.indiceDeFuncionamiento"
+                            hint="#,###"
+                            >
+                            <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
+                            </template>
+                            </q-field>
                     </div>
                 </div>
             </q-card-section>
@@ -90,7 +108,7 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input
+                        <!-- <q-input
                           dense
                           v-model.number="indicador.dependenciaDetransferencia"
                           type="number"
@@ -98,7 +116,16 @@
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                            ]" />
+                            ]" /> -->
+
+                            <q-field                    
+                            v-model="indicador.dependenciaDetransferencia"
+                            hint="#,###"
+                            >
+                            <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
+                            </template>
+                            </q-field>
                     </div>
                 </div>
             </q-card-section>
@@ -112,7 +139,7 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input
+                        <!-- <q-input
                           dense
                           v-model.number="indicador.indiceDeGestionYTransferencia"
                           type="number"
@@ -120,7 +147,16 @@
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                            ]" />
+                            ]" /> -->
+
+                            <q-field                    
+                            v-model="indicador.indiceDeGestionYTransferencia"
+                            hint="#,###"
+                            >
+                            <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
+                            </template>
+                            </q-field>
                     </div>
                 </div>
             </q-card-section>
@@ -137,7 +173,7 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input
+                        <!-- <q-input
                           dense
                           v-model.number="indicador.indiceDeResultado"
                           type="number"
@@ -145,7 +181,16 @@
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                            ]" />
+                            ]" /> -->
+
+                            <q-field                    
+                            v-model="indicador.indiceDeResultado"
+                            hint="#,###"
+                            >
+                            <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
+                            </template>
+                            </q-field>
                     </div>
                 </div>
             </q-card-section>
@@ -159,7 +204,7 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input
+                        <!-- <q-input
                           dense
                           v-model.number="indicador.medidorDesempenoMunicipal"
                           type="number"
@@ -167,7 +212,16 @@
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                            ]" />
+                            ]" /> -->
+
+                            <q-field                    
+                            v-model="indicador.medidorDesempenoMunicipal"
+                            hint="#,###"
+                            >
+                            <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
+                            </template>
+                            </q-field>
                     </div>
                 </div>
             </q-card-section>
@@ -216,6 +270,12 @@ export default {
     return {
       encuestaID: 0,
       indicador: {},
+      decimales: {
+          decimal: '.',
+          thousands: ',',
+          precision: 2,
+          masked: false /* doesn't work with directive */
+      },
       options: ['Bajo', 'Medio', 'Alto', 'en Riesgo'],
       optionsCumple: [
         { label: 'Si', value: true },

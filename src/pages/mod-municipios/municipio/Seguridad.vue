@@ -15,7 +15,7 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input
+                        <!-- <q-input
                           dense
                           v-model.number="seguridad.homicidiosPorAno"
                           type="number"
@@ -23,7 +23,16 @@
                             :rules="[
                                 val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                            ]" />
+                            ]" /> -->
+
+                            <q-field                    
+                            v-model="seguridad.homicidiosPorAno"
+                            hint="#,###"
+                            >
+                            <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="numerico" v-show="floatingLabel" />
+                            </template>
+                            </q-field>
                     </div>
                 </div>
             </q-card-section>
@@ -40,7 +49,7 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input
+                        <!-- <q-input
                           dense
                           v-model.number="seguridad.tasaHomicidios"
                           type="number"
@@ -48,7 +57,16 @@
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                            ]" />
+                            ]" /> -->
+
+                            <q-field                    
+                            v-model="seguridad.tasaHomicidios"
+                            hint="#,###"
+                            >
+                            <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
+                            </template>
+                            </q-field>
                     </div>
                 </div>
             </q-card-section>
@@ -62,7 +80,7 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input
+                        <!-- <q-input
                           dense
                           v-model.number="seguridad.poblacionVictimaDelConflicto" 
                           type="number"
@@ -70,7 +88,16 @@
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                            ]"/>
+                            ]"/> -->
+
+                            <q-field                    
+                            v-model="seguridad.poblacionVictimaDelConflicto"
+                            hint="#,###"
+                            >
+                            <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="numerico" v-show="floatingLabel" />
+                            </template>
+                            </q-field>
                     </div>
                 </div>
             </q-card-section>
@@ -119,7 +146,19 @@ export default {
   data(){
     return {
       encuestaID: 0,
-      seguridad: {}
+      seguridad: {},
+      numerico: {
+          decimal: '.',
+          thousands: ',',
+          precision: 0,
+          masked: false /* doesn't work with directive */
+      },
+      decimales: {
+          decimal: '.',
+          thousands: ',',
+          precision: 2,
+          masked: false /* doesn't work with directive */
+      },
     }
   },
   created(){

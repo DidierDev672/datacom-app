@@ -30,6 +30,8 @@ import comunidad from './module-comunidad'
 import vias from './module-comunidad/vias-acceso'
 import ecosistema from './module-comunidad/ecosistema'
 import infrasalud from './module-comunidad/infrasalud'
+import personalInfrasalud from './module-comunidad/infrasalud/personal-infrasalud'
+import servicioInfrasalud from './module-comunidad/infrasalud/servicio-infrasalud'
 import poblacionInfantil from './module-comunidad/poblacion-infantil'
 import comiteEmergencia from './module-comunidad/comite-emergencia'
 import actividadEconomica from './module-comunidad/actividad-economica'
@@ -81,6 +83,8 @@ export default function (/* { ssrContext } */) {
       vias,
       ecosistema,
       infrasalud,
+      personalInfrasalud,
+      servicioInfrasalud,
       poblacionInfantil,
       comiteEmergencia,
       actividadEconomica,
