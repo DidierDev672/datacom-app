@@ -1,11 +1,11 @@
 <template>
   <q-page class="q-pa-md">
-    <q-card>
+
       <div class="row q-col-gutter-sm q-pa-sm">
         <div class="col-xs-12">
           <q-select
             outlined
-            option-value="id"
+            option-value="codigo"
             option-label="descripcion"
             v-model="l"
             :options="lstCategoria"
@@ -40,7 +40,6 @@
         </q-tooltip>
       </q-btn>
     </q-page-sticky>
-    </q-card>
   </q-page>
 </template>
 
@@ -67,7 +66,6 @@ return {
   created () {
 
     this.cargarListaParametroAction().then(data => {
-     console.log(data)
       this.lstParametro = [ ...data ]
     })
     this.cargarListaCategoriasAction().then( response =>{
@@ -76,7 +74,7 @@ return {
     })
   },
   methods: {
-    ...mapActions('parametros', ['cargarListaParametroAction']),
+    ...mapActions('parametros', ['cargarListaParametroAction','cargarListaParametroPorCategoriaAction']),
     ...mapActions('categoria', ['cargarListaCategoriasAction']),
     ...mapMutations('parametros', ['setListaParametroSuccess']),
     ...mapMutations('parametros',['setParametroSuccess']),
@@ -87,9 +85,9 @@ return {
     },
     cargarParametrosPorcategoria(valor){
       console.log("cargo datos "+ valor.id)
-      this.cargarListaParametroPorCategoriaAction(valor.id).then(data =>{
-        console.log("busco datos por categoria")
+      this.cargarListaParametroPorCategoriaAction(valor.codigo).then(data =>{
         console.log(data)
+        this.lstParametro = [...data]
       })
     }
   },

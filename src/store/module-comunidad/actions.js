@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { URL_API } from '../../utils/config'
+import { URL_API } from '../../../src/utils/config'
 
 // Acciones para la lista
 export function cargarListaComunidadAction ({ commit }) {
@@ -7,7 +7,7 @@ export function cargarListaComunidadAction ({ commit }) {
   const urlService = 'comunidad'
   return new Promise((resolve, reject) => {
     axios.get(`${URL_API}/${urlService}/`)
-      .then(({ data }) => {        
+      .then(({ data }) => {
         commit('setListaComunidadSuccess', data)
         resolve(data)
       }).catch(error => {

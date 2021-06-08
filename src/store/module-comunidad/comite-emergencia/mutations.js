@@ -47,7 +47,7 @@ export function unsetListaComiteEmergencia (state) {
 export function setComiteEmergenciaSuccess (state, data) {
   state.comiteEmergencia = {
     ...state.comiteEmergencia,
-    objEcosistema: data,
+    objComiteEmergencia: data,
     loading: false,
     loaded: true
   }
@@ -64,7 +64,7 @@ export function agregarComiteEmergenciaState (state, data) {
   state.comiteEmergencia.lista.unshift(data)
 }
 
-export function unsetEcosistema (state) {
+export function unsetComiteEmergencia (state) {
   state.comiteEmergencia = {
     ...state.comiteEmergencia,
     objComiteEmergencia: {},
@@ -73,7 +73,7 @@ export function unsetEcosistema (state) {
   }
 }
 
-export function eliminarEcosistema (state, data) {
+export function eliminarComiteEmergencia (state, data) {
   state.comiteEmergencia = {
     ...state.comiteEmergencia,
     lista: state.comiteEmergencia.lista.filter(opt => opt.id !== data),

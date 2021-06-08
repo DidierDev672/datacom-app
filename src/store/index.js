@@ -34,6 +34,9 @@ import poblacionInfantil from './module-comunidad/poblacion-infantil'
 import comiteEmergencia from './module-comunidad/comite-emergencia'
 import actividadEconomica from './module-comunidad/actividad-economica'
 import participacionCiudadana from './module-comunidad/participacion-ciudadana'
+import programasEducativos from './module-comunidad/programas-educativos'
+import personalInstitucionEducativa from './module-comunidad/programas-educativos/personal-institucion-educativa'
+import personalComiteEmergencia from "src/store/module-comunidad/comite-emergencia/personal-comite-emergencia"
 
 Vue.use(Vuex)
 
@@ -81,7 +84,10 @@ export default function (/* { ssrContext } */) {
       poblacionInfantil,
       comiteEmergencia,
       actividadEconomica,
-      participacionCiudadana
+      participacionCiudadana,
+      programasEducativos,
+      personalInstitucionEducativa,
+      personalComiteEmergencia
 
     },
 

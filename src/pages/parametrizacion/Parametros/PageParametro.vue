@@ -1,5 +1,6 @@
 <template>
-  <q-card style="width: 700px;">
+  <q-page class="q-pa-md">
+  <q-card >
     <q-card-section>
       <div class="text-h6">{{ mensajeBoton }} Parametro</div>
     </q-card-section>
@@ -51,6 +52,7 @@
     </q-card-section>
     <q-separator />
   </q-card>
+  </q-page>
 </template>
 
 <script>
@@ -68,7 +70,6 @@ export default {
   },
   created() {
     this.cargarListaCategoriasAction().then( response =>{
-      console.log(response)
       this.lstCategoria = [...response]
     })
    if(this.$route.params.id != null) {
@@ -96,7 +97,6 @@ export default {
     ...mapMutations('categoria', ['setCategoriaSuccess']),
     onSubmit () {
       if (this.objParametro.id > 0) {
-        console.log("Accion actualizar")
         this.actualizarParametroAction(this.objParametro).then(data => {
           this.$q.notify({
             message: 'Registro actualizado correctamente.',

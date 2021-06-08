@@ -20,8 +20,8 @@
             <div class="col-xs-12">
               <q-input
                 outlined
-                v-model="organizacion.nombre"
-                label="Nombre de la organización"
+                v-model="comiteEmergencia.nombreComite"
+                label="Nombre del comite de emergencia"
               />
             </div>
           </div>
@@ -34,13 +34,13 @@
           flat
           label="Cancelar"
           color="primary"
-          :disable="getOrganizacionState.loading"
+          :disable="getComiteEmergenciaState.loading"
           @click="close" />
         <q-btn
           :label="mensajeBoton"
           color="primary"
-          :loading="getOrganizacionState.loading"
-          :disable="getOrganizacionState.loading"
+          :loading="getComiteEmergenciaState.loading"
+          :disable="getComiteEmergenciaState.loading"
           @click="onSubmit">
           <template v-slot:loading>
             <q-spinner-facebook />
@@ -67,12 +67,12 @@ export default {
       this.encuestaID = this.$route.params.id
       this.comiteEmergencia = {
         id: 0,
-        nombre:'',
+        nombreComite:'',
 
       }
       if(Object.keys(this.getComiteEmergenciaState.objComiteEmergencia).length > 0){
-        this.organizacion.id = this.getOrganizacionState.objOrganizacion.id;
-        this.organizacion.nombre = this.getOrganizacionState.objOrganizacion.nombre;
+        this.comiteEmergencia.id = this.getComiteEmergenciaState.objComiteEmergencia.id;
+        this.comiteEmergencia.nombreComite = this.getComiteEmergenciaState.objComiteEmergencia.nombreComite;
       }
 
     },methods:{
@@ -87,10 +87,10 @@ export default {
       }
 
       if(info.id > 0){
-        this.actualizarComiteEmergenciaActionAction(info).then(() => {
+        this.actualizarComiteEmergenciaAction(info).then(() => {
         })
       }else{
-        this.registrarComiteEmergenciaActionAction(info).then( data => {
+        this.registrarComiteEmergenciaAction(info).then( data => {
           this.comiteEmergencia.id = data
         })
       }
@@ -105,8 +105,9 @@ export default {
       return this.comiteEmergencia.id > 0 ? 'Actualizar' : 'Guardar'
     }
   },
+
   beforeDestroy(){
-    this.unsetComiteEmergenciaActionAction()
+    this.unsetComiteEmergenciaAction()
   }
 }
 </script>

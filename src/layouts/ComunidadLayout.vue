@@ -248,6 +248,22 @@
             <q-item-label>Participación Ciudadana</q-item-label>
           </q-item-section>
         </q-item>
+          <q-item
+            clickable
+            :to="{name: 'c-programas-educativos', params: {id: encuestaID}}"
+            exact
+          >
+            <q-item-section
+              avatar
+            >
+              <q-icon size="14px" name="ti-angle-right" />
+            </q-item-section>
+
+            <q-item-section>
+              <q-item-label>Instituciones Educativas</q-item-label>
+            </q-item-section>
+          </q-item>
+
 
 
         <q-item clickable :to="{ name: 'fin-encuesta', params: { id: encuestaID } }" exact>

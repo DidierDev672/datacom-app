@@ -233,7 +233,7 @@ const routes = [
       {
         path: 'comite-emergencia',
         name: 'c-comite-emergencia',
-        component: () => import('pages/mod-comunidad/viviendas/Viviendas.vue'),
+        component: () => import('pages/mod-comunidad/comite-emergencia/ComiteEmergencia.vue'),
       },
       {
         path: 'actividades-economicas',
@@ -244,7 +244,13 @@ const routes = [
         path: 'participacion-ciudadana',
         name: 'c-participacion-ciudadana',
         component: () => import('pages/mod-comunidad/viviendas/Viviendas.vue'),
-      }
+      },
+     {
+        path: 'programas-educativos',
+        name: 'c-programas-educativos',
+        component: () => import('pages/mod-comunidad/educacion/ProgramasEducativos.vue'),
+      },
+
     ]
   },
   {

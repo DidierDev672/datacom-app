@@ -6,7 +6,7 @@ export function cargarListaComiteEmergenciaAction ({ commit }, encuestaID) {
   commit('inicializarAccion')
   const urlService = 'comite-de-emergencia'
   return new Promise((resolve, reject) => {
-    axios.get(`${URL_API}/${urlService}/${encuestaID}/`)
+    axios.get(`${URL_API}/${urlService}/encuesta/${encuestaID}`)
       .then(({ data }) => {
         commit('setListaComiteEmergenciaSuccess', data)
         resolve(data)
@@ -17,6 +17,7 @@ export function cargarListaComiteEmergenciaAction ({ commit }, encuestaID) {
     })
   })
 }
+
 
 export function unsetListaComiteEmergenciaAction ({ commit }) {
   commit('unsetListaComiteEmergencia')
