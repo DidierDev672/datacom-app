@@ -48,7 +48,7 @@
                             hint="#,###"
                             >
                             <template v-slot:control="{ id, floatingLabel, value, emitValue }">
-                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="numero" v-show="floatingLabel" />
+                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
                             </template>
                             </q-field>
                     </div>
@@ -78,7 +78,7 @@
                             hint="#,###"
                             >
                             <template v-slot:control="{ id, floatingLabel, value, emitValue }">
-                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="numero" v-show="floatingLabel" />
+                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
                             </template>
                             </q-field>
                     </div>
@@ -109,7 +109,7 @@
                             hint="#,###"
                             >
                             <template v-slot:control="{ id, floatingLabel, value, emitValue }">
-                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="numero" v-show="floatingLabel" />
+                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
                             </template>
                             </q-field>
                     </div>
@@ -139,7 +139,7 @@
                             hint="#,###"
                             >
                             <template v-slot:control="{ id, floatingLabel, value, emitValue }">
-                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="numero" v-show="floatingLabel" />
+                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
                             </template>
                             </q-field>
                     </div>
@@ -170,7 +170,7 @@
                             hint="#,###"
                             >
                             <template v-slot:control="{ id, floatingLabel, value, emitValue }">
-                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="numero" v-show="floatingLabel" />
+                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
                             </template>
                             </q-field>
                     </div>
@@ -206,7 +206,7 @@
                             hint="#,###"
                             >
                             <template v-slot:control="{ id, floatingLabel, value, emitValue }">
-                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="numero" v-show="floatingLabel" />
+                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
                             </template>
                             </q-field>
                     </div>
@@ -237,7 +237,7 @@
                             hint="#,###"
                             >
                             <template v-slot:control="{ id, floatingLabel, value, emitValue }">
-                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="numero" v-show="floatingLabel" />
+                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
                             </template>
                             </q-field>
                     </div>
@@ -268,7 +268,7 @@
                             hint="#,###"
                             >
                             <template v-slot:control="{ id, floatingLabel, value, emitValue }">
-                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="numero" v-show="floatingLabel" />
+                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
                             </template>
                             </q-field>
                     </div>
@@ -299,7 +299,7 @@
                             hint="#,###"
                             >
                             <template v-slot:control="{ id, floatingLabel, value, emitValue }">
-                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="numero" v-show="floatingLabel" />
+                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
                             </template>
                             </q-field>
                     </div>
@@ -330,7 +330,7 @@
                             hint="#,###"
                             >
                             <template v-slot:control="{ id, floatingLabel, value, emitValue }">
-                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="numero" v-show="floatingLabel" />
+                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
                             </template>
                             </q-field>
                     </div>
@@ -366,7 +366,7 @@
                             hint="#,###"
                             >
                             <template v-slot:control="{ id, floatingLabel, value, emitValue }">
-                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="numero" v-show="floatingLabel" />
+                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
                             </template>
                             </q-field>
                     </div>
@@ -397,7 +397,7 @@
                             hint="#,###"
                             >
                             <template v-slot:control="{ id, floatingLabel, value, emitValue }">
-                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="numero" v-show="floatingLabel" />
+                                <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
                             </template>
                             </q-field>
                     </div>
@@ -508,6 +508,7 @@ export default {
       decimales: {
           decimal: '.',
           thousands: ',',
+          suffix: ' %',
           precision: 2,
           masked: false /* doesn't work with directive */
       },

@@ -33,7 +33,7 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input
+                                    <!-- <q-input
                                       dense
                                       v-model.number="calidad.ipmUrbana" 
                                       type="number"
@@ -41,7 +41,15 @@
                                         :rules="[
                                             val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                                        ]"/>
+                                        ]"/> -->
+                                        <q-field                    
+                                        v-model="calidad.ipmUrbana"
+                                        hint="#,###"
+                                        >
+                                        <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                            <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
+                                        </template>
+                                        </q-field>
                                 </div>
                             </div>
                         </q-card-section>
@@ -55,7 +63,7 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input
+                                    <!-- <q-input
                                       dense
                                       v-model.number="calidad.ipmRural"
                                       type="number"
@@ -63,7 +71,16 @@
                                         :rules="[
                                             val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                                        ]" />
+                                        ]" /> -->
+
+                                        <q-field                    
+                                        v-model="calidad.ipmRural"
+                                        hint="#,###"
+                                        >
+                                        <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                            <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
+                                        </template>
+                                        </q-field>
                                 </div>
                             </div>
                         </q-card-section>
@@ -77,7 +94,7 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input
+                                    <!-- <q-input
                                       dense
                                       v-model.number="calidad.ipmTotal"
                                       type="number"
@@ -85,7 +102,16 @@
                                         :rules="[
                                             val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                                        ]" />
+                                        ]" /> -->
+
+                                        <q-field                    
+                                        v-model="calidad.ipmTotal"
+                                        hint="#,###"
+                                        >
+                                        <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                            <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
+                                        </template>
+                                        </q-field>
                                 </div>
                             </div>
                         </q-card-section>
@@ -101,7 +127,7 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input
+                                    <!-- <q-input
                                       dense
                                       v-model.number="calidad.nbi_urbano"
                                       type="number"
@@ -109,7 +135,16 @@
                                         :rules="[
                                             val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                                        ]" />
+                                        ]" /> -->
+
+                                        <q-field                    
+                                        v-model="calidad.nbi_urbano"
+                                        hint="#,###"
+                                        >
+                                        <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                            <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
+                                        </template>
+                                        </q-field>
                                 </div>
                             </div>
                         </q-card-section>
@@ -123,7 +158,7 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input
+                                    <!-- <q-input
                                       dense
                                       v-model.number="calidad.nbi_rural" 
                                       type="number"
@@ -131,7 +166,16 @@
                                         :rules="[
                                             val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                                        ]"/>
+                                        ]"/> -->
+
+                                        <q-field                    
+                                        v-model="calidad.nbi_rural"
+                                        hint="#,###"
+                                        >
+                                        <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                            <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
+                                        </template>
+                                        </q-field>
                                 </div>
                             </div>
                         </q-card-section>
@@ -147,7 +191,7 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input
+                                    <!-- <q-input
                                       dense
                                       v-model.number="calidad.pcmUrbano"
                                       type="number"
@@ -155,7 +199,16 @@
                                         :rules="[
                                             val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                                        ]" />
+                                        ]" /> -->
+
+                                        <q-field                    
+                                        v-model="calidad.pcmUrbano"
+                                        hint="#,###"
+                                        >
+                                        <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                            <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
+                                        </template>
+                                        </q-field>
                                 </div>
                             </div>
                         </q-card-section>
@@ -169,7 +222,7 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input
+                                    <!-- <q-input
                                       dense
                                       v-model.number="calidad.pcmRural"
                                       type="number"
@@ -177,7 +230,15 @@
                                         :rules="[
                                             val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                                        ]" />
+                                        ]" /> -->
+                                        <q-field                    
+                                        v-model="calidad.pcmRural"
+                                        hint="#,###"
+                                        >
+                                        <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                            <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
+                                        </template>
+                                        </q-field>
                                 </div>
                             </div>
                         </q-card-section>
@@ -191,7 +252,7 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input
+                                    <!-- <q-input
                                       dense
                                       v-model.number="calidad.pcm"
                                       type="number"
@@ -199,7 +260,16 @@
                                         :rules="[
                                             val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
-                                        ]" />
+                                        ]" /> -->
+
+                                        <q-field                    
+                                        v-model="calidad.pcm"
+                                        hint="#,###"
+                                        >
+                                        <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+                                            <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
+                                        </template>
+                                        </q-field>
                                 </div>
                             </div>
                         </q-card-section>
@@ -231,7 +301,14 @@ export default {
     data(){
         return {
             calidad: {},
-            encuestaID: 0
+            encuestaID: 0,
+            decimales: {
+                decimal: '.',
+                thousands: ',',
+                suffix: ' %',
+                precision: 2,
+                masked: false /* doesn't work with directive */
+            },
         }
     },
     created(){
