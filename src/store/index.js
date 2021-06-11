@@ -91,7 +91,7 @@ export default function (/* { ssrContext } */) {
       participacionCiudadana,
       programasEducativos,
       personalInstitucionEducativa,
-      personalComiteEmergencia
+      personalComiteEmergencia,
 
     },
 

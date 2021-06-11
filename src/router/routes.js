@@ -238,12 +238,12 @@ const routes = [
       {
         path: 'actividades-economicas',
         name: 'c-actividades-economicas',
-        component: () => import('pages/mod-comunidad/viviendas/Viviendas.vue'),
+        component: () => import('pages/mod-comunidad/actividdes-economicas/actividades-economicas.vue'),
       },
       {
         path: 'participacion-ciudadana',
         name: 'c-participacion-ciudadana',
-        component: () => import('pages/mod-comunidad/viviendas/Viviendas.vue'),
+        component: () => import('pages/mod-comunidad/parcitipacion-ciudadana/participacion-ciudadana.vue'),
       },
      {
         path: 'programas-educativos',

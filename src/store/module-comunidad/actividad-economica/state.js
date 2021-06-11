@@ -1,7 +1,7 @@
 export default function () {
   return {
     actividadEconomica: {
-      lista: [],
+      listaActividadEconomica: [],
       objActividadEconomica: {},
       loading: false,
       loaded: false,

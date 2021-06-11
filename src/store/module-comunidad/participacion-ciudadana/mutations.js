@@ -61,7 +61,7 @@ export function actualizarParticipacionCiudadanaSuccess (state, data) {
 }
 
 export function agregarParticipacionCiudadanaState (state, data) {
-  state.poblacionInfantil.lista.unshift(data)
+  state.participacionCiudadana.lista.unshift(data)
 }
 
 export function unsetParticipacionCiudadana (state) {

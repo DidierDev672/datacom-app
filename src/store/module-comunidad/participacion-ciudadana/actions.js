@@ -6,7 +6,7 @@ export function cargarListaParticipacionAction ({ commit }, encuestaID) {
   commit('inicializarAccion')
   const urlService = 'participacion-ciudadana'
   return new Promise((resolve, reject) => {
-    axios.get(`${URL_API}/${urlService}/${encuestaID}/`)
+    axios.get(`${URL_API}/${urlService}/encuesta/${encuestaID}/`)
       .then(({ data }) => {
         commit('setListaParticipacionCiudadanaSuccess', data)
         resolve(data)
@@ -62,5 +62,5 @@ export function actualizarParticipacionCiudadanaAction ({ commit }, payload) {
 }
 
 export function unsetParticipacionCiudadanaAction({commit}){
-  commit('unsetParticipacion')
+  commit('unsetParticipacionCiudadana')
 }
