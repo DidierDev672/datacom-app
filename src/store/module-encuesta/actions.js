@@ -7,7 +7,7 @@ export function cargarListaEncuestaAction ({ commit }) {
   const urlService = 'encuesta'
   return new Promise((resolve, reject) => {
     axios.get(`${URL_API}/${urlService}/`)
-      .then(({ data }) => {        
+      .then(({ data }) => {
         commit('setListaEncuestaSuccess', data)
         resolve(data)
       }).catch(error => {
@@ -23,7 +23,39 @@ export function cargarListaEncuestaEnProcesoAction ({ commit }) {
   const urlService = 'encuesta'
   return new Promise((resolve, reject) => {
     axios.get(`${URL_API}/${urlService}/en-proceso`)
-      .then(({ data }) => {        
+      .then(({ data }) => {
+        commit('setListaEncuestaSuccess', data)
+        resolve(data)
+      }).catch(error => {
+        console.log('Ocurrió un error al consultar los tipos de encuestas: ', error.response)
+        commit('setActionFail', error.response)
+        reject(error.response)
+      })
+  })
+}
+
+export function cargarListaEncuestaCerradasAction ({ commit }) {
+  commit('inicializarAccion')
+  const urlService = 'encuesta'
+  return new Promise((resolve, reject) => {
+    axios.get(`${URL_API}/${urlService}/cerradas`)
+      .then(({ data }) => {
+        commit('setListaEncuestaSuccess', data)
+        resolve(data)
+      }).catch(error => {
+        console.log('Ocurrió un error al consultar los tipos de encuestas: ', error.response)
+        commit('setActionFail', error.response)
+        reject(error.response)
+      })
+  })
+}
+
+export function cargarListaEncuestaPorTipoAction ({ commit }, tipo) {
+  commit('inicializarAccion')
+  const urlService = 'encuesta'
+  return new Promise((resolve, reject) => {
+    axios.get(`${URL_API}/${urlService}/${tipo}/tipo-encuesta`)
+      .then(({ data }) => {
         commit('setListaEncuestaSuccess', data)
         resolve(data)
       }).catch(error => {
@@ -64,7 +96,7 @@ export function registrarEncuestaAction ({ commit }, payload) {
       let info = {
         ...payload,
         id: data
-      }      
+      }
       commit('setEncuestaSuccess', info);
       commit('agregarEncuestaState', info);
       resolve(data);

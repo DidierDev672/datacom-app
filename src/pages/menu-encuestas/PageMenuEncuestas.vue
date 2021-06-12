@@ -43,7 +43,7 @@
             </q-item-section>
           </q-item>
 
-          <q-item clickable v-ripple class="q-mb-md">
+          <q-item clickable v-ripple class="q-mb-md" :to="{name: 'encuesta-cerrada'}">
             <q-item-section avatar top>
               <q-avatar icon="ti-lock" color="grey" text-color="white" />
             </q-item-section>

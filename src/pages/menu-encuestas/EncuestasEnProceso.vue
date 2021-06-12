@@ -72,6 +72,7 @@ export default {
               break
           default:
               console.log('Tipo encuesta JAC');
+              this.$router.push({name: 'a-info-general', params:{id: row.id}})
               break
       }
     },

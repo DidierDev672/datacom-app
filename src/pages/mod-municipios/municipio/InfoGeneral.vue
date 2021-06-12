@@ -700,11 +700,9 @@ export default {
   methods: {
     ...mapActions('informacionGeneral',['buscarInformacionGeneralAction','guardarInformacionGeneralAction']),
     ...mapActions('departamento', ['cargarListaDepartamentoAction', 'cargarListaMunicipiosDelDepartamentoAction']),
-    siguiente(){
-     
+    siguiente(){    
 
       this.validarForm()
-
     },
     anterior(){
       if(this.step < 1){

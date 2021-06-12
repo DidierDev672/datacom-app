@@ -39,6 +39,9 @@ import participacionCiudadana from './module-comunidad/participacion-ciudadana'
 import programasEducativos from './module-comunidad/programas-educativos'
 import personalInstitucionEducativa from './module-comunidad/programas-educativos/personal-institucion-educativa'
 import personalComiteEmergencia from "src/store/module-comunidad/comite-emergencia/personal-comite-emergencia"
+//ModuleJac
+import jac from './module-jac'
+import detalleAutoevaluacion from './module-jac/autoevaluacion'
 
 Vue.use(Vuex)
 
@@ -91,7 +94,10 @@ export default function (/* { ssrContext } */) {
       participacionCiudadana,
       programasEducativos,
       personalInstitucionEducativa,
-      personalComiteEmergencia
+      personalComiteEmergencia,
+      //ModuloJac
+      jac,
+      detalleAutoevaluacion
 
     },
 

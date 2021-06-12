@@ -1,5 +1,5 @@
-export const URL_API = 'http://localhost:28181'
-// export const URL_API = 'http://192.168.0.136:28181'
+// export const URL_API = 'http://localhost:28181'
+export const URL_API = 'http://192.168.1.16:28181'
 // export const URL_API = 'http://191.103.253.34:28181'
 // export const URL_API = 'https://datacom-backend.herokuapp.com'
 
@@ -27,4 +27,15 @@ export const CATEGORIAS = {
     CARGOS: 'CARG',
     SERVICIOS_DE_SALUD: 'SSAL',
     FRECUENCIA_SERVICIOS_SALUD: 'FSSA'
+}
+
+export const TEMAS_SEGUIMIENTO_JAC = {
+    JUNTA_ADMINISTRADORA: 1,
+    ASAMBLEA_SOCIOS: 2,
+    DIRECCIONAMIENTO_ESTRATEGICO: 3,
+    ADMINISTRATIVO: 4,
+    FINANCIERO: 5,
+    EJECUCION_PROYECTOS: 6,
+    CAPACITACION: 7,
+    PARTICIPACION: 8
 }

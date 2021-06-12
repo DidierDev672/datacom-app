@@ -9,38 +9,17 @@ const routes = [
       { path: 'encuestas/lista', name:'listado-encuesta', component: () => import('pages/menu-encuestas/EncuestasList') },
       { path: 'nueva-encuesta/:id', name:'nueva-encuesta', component: () => import('pages/menu-encuestas/PageNewEncuesta') },
       { path: 'encuesta-proceso', name:'encuesta-proceso', component: () => import('pages/menu-encuestas/EncuestasEnProceso') },
+      { path: 'encuesta-cerrada', name:'encuesta-cerrada', component: () => import('pages/menu-encuestas/EncuestasCerradas') },
       { path: 'parametrizacion', component: () => import('pages/parametrizacion/PageMenuParametrizacion.vue') },
       { path: 'reportes', component: () => import('pages/reportes/PageMenuReportes.vue') },
-      {
-        path: 'categorias',
-        name: 'categorias',
-        component: () => import('pages/parametrizacion/categorias/PageCategorias.vue')
-      },
-      {
-        path: 'categoria/:id',
-        name: 'categoria',
-        component: () => import('pages/parametrizacion/categorias/PageCategoria.vue')
-      },
-      {
-        path: 'categoria',
-        name: 'nueva-categoria',
-        component: () => import('pages/parametrizacion/categorias/PageCategoria.vue')
-      },
-      {
-        path: 'parametros',
-        name: 'parametros',
-        component: () => import('pages/parametrizacion/Parametros/PageParametros.vue')
-      },
-      {
-        path: 'parametro/:id',
-        name: 'parametro',
-        component: () => import('pages/parametrizacion/Parametros/PageParametro.vue')
-      },
-      {
-        path: 'parametro',
-        name: 'nuevo-parametro',
-        component: () => import('pages/parametrizacion/Parametros/PageParametro.vue')
-      },
+      { path: 'categorias', name: 'categorias', component: () => import('pages/parametrizacion/categorias/PageCategorias.vue')},
+      { path: 'categoria/:id', name: 'categoria', component: () => import('pages/parametrizacion/categorias/PageCategoria.vue')},
+      { path: 'categoria', name: 'nueva-categoria', component: () => import('pages/parametrizacion/categorias/PageCategoria.vue')},
+      { path: 'parametros', name: 'parametros', component: () => import('pages/parametrizacion/Parametros/PageParametros.vue')},
+      { path: 'parametro/:id', name: 'parametro', component: () => import('pages/parametrizacion/Parametros/PageParametro.vue')},
+      { path: 'parametro', name: 'nuevo-parametro', component: () => import('pages/parametrizacion/Parametros/PageParametro.vue')},
+      { path: 'organizaciones-base', name: 'nueva-organizacion', component: () => import('pages/parametrizacion/jac/Jac.vue')},
+      { path: 'icos', name: 'icos', component: () => import('pages/icos/IcosList.vue')},
       {
         path: '/ficha-vivienda',
         name: 'nueva-ficha-vivienda',
@@ -261,6 +240,28 @@ const routes = [
         component: () => import('pages/mod-comunidad/FinEncuesta.vue'),
       },
 
+    ]
+  },
+  {
+    path: '/autoevaluacion/:id',
+    name: 'autoevaluacion',
+    component: () => import('layouts/AutoevaluacionLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: 'a-info-general',
+        component: () => import('pages/mod-autoevaluacion/info-general/InfoGeneral.vue'),
+      },
+      {
+        path: 'indicadores',
+        name: 'a-indicadores',
+        component: () => import('pages/mod-autoevaluacion/indicadores/Indicador.vue'),
+      },
+      {
+        path: 'fin-encuesta',
+        name: 'a-fin-encuesta',
+        component: () => import('pages/mod-autoevaluacion/FinEncuesta.vue'),
+      },
     ]
   },
   {
