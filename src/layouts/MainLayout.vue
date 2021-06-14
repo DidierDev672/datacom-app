@@ -138,11 +138,17 @@ export default {
           link: '/encuestas'
         },
         {
+          title: 'Jac',
+          caption: '',
+          icon: 'ti-bar-chart-alt',
+          link: '/jac'
+        },
+        {
           title: 'Parametrización',
           caption: '',
           icon: 'ti-settings',
           link: '/parametrizacion'
-        },          
+        },
       ]
     }
   },
@@ -167,7 +173,7 @@ export default {
   mounted () {
     const neverShowAppInstallBanner = this.$q.localStorage.getItem('neverShowInstallBanner')
     if (!neverShowAppInstallBanner) {
-      window.addEventListener('beforeinstallprompt', (e) => {        
+      window.addEventListener('beforeinstallprompt', (e) => {
         // Prevent the mini-infobar from appearing on mobile
         e.preventDefault()
         // Stash the event so it can be triggered later.
