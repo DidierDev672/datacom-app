@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 import { TIPO_ENCUESTA, CATEGORIAS } from "../../utils/config";
 export default {
   data() {
@@ -55,8 +55,10 @@ export default {
   },
   methods: {
     ...mapActions("encuesta", ["cargarListaEncuestaPorTipoAction"]),
+    ...mapMutations('detalleAutoevaluacion', ['setDetalleAutoevaluacionSuccess']),
     seleccionar(evt, row, index) {
-      console.log("Encuesta: ", row);
+      this.setDetalleAutoevaluacionSuccess(row)
+      this.$router.push({name: 'icos-view', params: {id: row.id}})
     }
   },
   computed: {

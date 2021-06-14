@@ -110,6 +110,8 @@
 </template>
 
 <script>
+// import { exportFile } from 'quasar'
+
 import EssentialLink from 'components/EssentialLink'
 // Initialize deferredPrompt for use later to show browser install prompt.
 let deferredPrompt
@@ -143,6 +145,12 @@ export default {
           icon: 'ti-bar-chart-alt',
           link: '/icos'
         },
+        // {
+        //   title: 'Planes de Trabajo',
+        //   caption: '',
+        //   icon: 'ti-bar-chart-alt',
+        //   link: '/plan-trabajo'
+        // },
         {
           title: 'Parametrización',
           caption: '',
@@ -171,6 +179,8 @@ export default {
     }
   },
   mounted () {
+    // const status = exportFile('important.pdf', 'Some important content', 'application/pdf')
+
     const neverShowAppInstallBanner = this.$q.localStorage.getItem('neverShowInstallBanner')
     if (!neverShowAppInstallBanner) {
       window.addEventListener('beforeinstallprompt', (e) => {

@@ -20,6 +20,9 @@ const routes = [
       { path: 'parametro', name: 'nuevo-parametro', component: () => import('pages/parametrizacion/Parametros/PageParametro.vue')},
       { path: 'organizaciones-base', name: 'nueva-organizacion', component: () => import('pages/parametrizacion/jac/Jac.vue')},
       { path: 'icos', name: 'icos', component: () => import('pages/icos/IcosList.vue')},
+      { path: 'icos/:id', name: 'icos-view', component: () => import('pages/icos/IcoView.vue')},
+      // { path: 'plan-trabajo', name: 'plan-trabajo-list', component: () => import('pages/icos/PlanTrabajoList.vue')},
+      { path: 'plan-trabajo/:id', name: 'plan-trabajo', component: () => import('pages/icos/PlanTrabajo.vue')},
       {
         path: '/ficha-vivienda',
         name: 'nueva-ficha-vivienda',
