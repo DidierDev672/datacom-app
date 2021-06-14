@@ -5,10 +5,10 @@
 
                 <q-form ref="encuestaForm">
 
-                    <p class="text-h6 q-mt-md">Nueva encuesta de {{ tipoEncuesta ? tipoEncuesta.title : '' }}</p>                
+                    <p class="text-h6 q-mt-md">Nueva encuesta de {{ tipoEncuesta ? tipoEncuesta.title : '' }}</p>
 
                     <q-card flat bordered class="my-card q-mb-md">
-                        
+
                         <q-card-section>
                             <div class="text-h6">Seleccione un estudio</div>
                         </q-card-section>
@@ -33,7 +33,7 @@
                     </q-card>
 
                     <q-card flat bordered class="my-card q-mb-md">
-                        
+
                         <q-card-section>
                             <div class="text-h6">Descripción de la encuesta</div>
                         </q-card-section>
@@ -41,7 +41,7 @@
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input v-model="nuevaEncuesta.descripcion" placeholder="Agregue una descripción a la encuesta que va a registrar" />                                
+                                    <q-input v-model="nuevaEncuesta.descripcion" placeholder="Agregue una descripción a la encuesta que va a registrar" />
                                 </div>
                             </div>
                         </q-card-section>
@@ -50,7 +50,7 @@
 
 
                     <q-card flat bordered class="my-card q-mb-md">
-                        
+
                         <q-card-section>
                             <div class="text-h6">Fecha de la encuesta</div>
                         </q-card-section>
@@ -63,7 +63,7 @@
                                       type="number"
                                       v-model.number="nuevaEncuesta.anio"
                                       placeholder="Año"
-                                      lazy-rules 
+                                      lazy-rules
                                       :rules="[ val => val || 'Digite el año']" />
                                 </div>
                                 <div class="col-xs-12 col-sm-3 col-md-2">
@@ -71,15 +71,15 @@
                                       outlined
                                       v-model="nuevaEncuesta.mes"
                                       placeholder="Mes"
-                                      lazy-rules 
+                                      lazy-rules
                                       :rules="[ val => val && val.length > 0 && val.length <= 2 || 'Digite el mes']"  />
                                 </div>
                                 <div class="col-xs-12 col-sm-3 col-md-2">
                                     <q-input
                                       outlined
                                       v-model="nuevaEncuesta.dia"
-                                      placeholder="Dia" 
-                                      lazy-rules 
+                                      placeholder="Dia"
+                                      lazy-rules
                                       :rules="[ val => val && val.length > 0 && val.length <= 2 || 'Digite el dia']" />
                                 </div>
                             </div>
@@ -89,10 +89,20 @@
 
                     <div class="flex justify-center">
                         <q-btn label="Cancelar" no-caps color="primary" flat class="q-mr-sm" to="/" />
-                        <q-btn label="Siguiente" no-caps color="primary" @click="onSubmit"/>
-                    </div> 
-                
-                </q-form>               
+                        <q-btn
+                          label="Siguiente"
+                          no-caps
+                          color="primary"
+                          :loading="getEncuestaState.loading"
+                          :disable="getEncuestaState.loading"
+                          @click="onSubmit" >
+                          <template v-slot:loading>
+                            <q-spinner-facebook />
+                          </template>
+                        </q-btn>
+                    </div>
+
+                </q-form>
 
             </div>
         </div>
@@ -157,6 +167,7 @@ export default {
                                 break
                             default:
                                 console.log('Tipo encuesta JAC');
+                                this.$router.push({name: 'a-info-general', params:{id: encuestaID}})
                                 break
                         }
                     })
@@ -168,11 +179,12 @@ export default {
                     // at least one invalid value
                 }
             })
-            
+
         }
     },
     computed: {
-        ...mapGetters('tipoEncuesta', ['getTipoEncuestaPorId'])
+        ...mapGetters('tipoEncuesta', ['getTipoEncuestaPorId']),
+        ...mapGetters('encuesta', ['getEncuestaState']),
     }
 
 }

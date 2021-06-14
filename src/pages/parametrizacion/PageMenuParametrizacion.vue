@@ -35,6 +35,22 @@
       </q-item>
 
       <q-separator />
+
+      <q-item clickable :to="{name: 'nueva-organizacion'}" v-ripple class="q-py-md">
+        <q-item-section avatar>
+          <q-icon name="ti-agenda" />
+        </q-item-section>
+        <q-item-section>
+          <q-item-label>Organizaciones de Base</q-item-label>
+          <q-item-label caption>Jac / Cabildos</q-item-label>
+        </q-item-section>
+        <q-item-section avatar>
+          <q-icon color="grey-6" name="ti-angle-right" />
+        </q-item-section>
+      </q-item>
+
+      <q-separator />
+
       <q-item clickable :to="{name: 'municipios'}" v-ripple class="q-py-md">
         <q-item-section avatar>
           <q-icon name="ti-agenda" />
@@ -47,7 +63,9 @@
           <q-icon color="grey-6" name="ti-angle-right" />
         </q-item-section>
       </q-item>
+
       <q-separator />
+
       <q-item clickable :to="{name: 'departamentos'}" v-ripple class="q-py-md">
         <q-item-section avatar>
           <q-icon name="ti-agenda" />
@@ -60,6 +78,7 @@
           <q-icon color="grey-6" name="ti-angle-right" />
         </q-item-section>
       </q-item>
+
       <q-separator />
 
     </q-list>

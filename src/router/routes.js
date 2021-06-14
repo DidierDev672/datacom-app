@@ -9,38 +9,20 @@ const routes = [
       { path: 'encuestas/lista', name:'listado-encuesta', component: () => import('pages/menu-encuestas/EncuestasList') },
       { path: 'nueva-encuesta/:id', name:'nueva-encuesta', component: () => import('pages/menu-encuestas/PageNewEncuesta') },
       { path: 'encuesta-proceso', name:'encuesta-proceso', component: () => import('pages/menu-encuestas/EncuestasEnProceso') },
+      { path: 'encuesta-cerrada', name:'encuesta-cerrada', component: () => import('pages/menu-encuestas/EncuestasCerradas') },
       { path: 'parametrizacion', component: () => import('pages/parametrizacion/PageMenuParametrizacion.vue') },
       { path: 'reportes', component: () => import('pages/reportes/PageMenuReportes.vue') },
-      {
-        path: 'categorias',
-        name: 'categorias',
-        component: () => import('pages/parametrizacion/categorias/PageCategorias.vue')
-      },
-      {
-        path: 'categoria/:id',
-        name: 'categoria',
-        component: () => import('pages/parametrizacion/categorias/PageCategoria.vue')
-      },
-      {
-        path: 'categoria',
-        name: 'nueva-categoria',
-        component: () => import('pages/parametrizacion/categorias/PageCategoria.vue')
-      },
-      {
-        path: 'parametros',
-        name: 'parametros',
-        component: () => import('pages/parametrizacion/Parametros/PageParametros.vue')
-      },
-      {
-        path: 'parametro/:id',
-        name: 'parametro',
-        component: () => import('pages/parametrizacion/Parametros/PageParametro.vue')
-      },
-      {
-        path: 'parametro',
-        name: 'nuevo-parametro',
-        component: () => import('pages/parametrizacion/Parametros/PageParametro.vue')
-      },
+      { path: 'categorias', name: 'categorias', component: () => import('pages/parametrizacion/categorias/PageCategorias.vue')},
+      { path: 'categoria/:id', name: 'categoria', component: () => import('pages/parametrizacion/categorias/PageCategoria.vue')},
+      { path: 'categoria', name: 'nueva-categoria', component: () => import('pages/parametrizacion/categorias/PageCategoria.vue')},
+      { path: 'parametros', name: 'parametros', component: () => import('pages/parametrizacion/Parametros/PageParametros.vue')},
+      { path: 'parametro/:id', name: 'parametro', component: () => import('pages/parametrizacion/Parametros/PageParametro.vue')},
+      { path: 'parametro', name: 'nuevo-parametro', component: () => import('pages/parametrizacion/Parametros/PageParametro.vue')},
+      { path: 'organizaciones-base', name: 'nueva-organizacion', component: () => import('pages/parametrizacion/jac/Jac.vue')},
+      { path: 'icos', name: 'icos', component: () => import('pages/icos/IcosList.vue')},
+      { path: 'icos/:id', name: 'icos-view', component: () => import('pages/icos/IcoView.vue')},
+      // { path: 'plan-trabajo', name: 'plan-trabajo-list', component: () => import('pages/icos/PlanTrabajoList.vue')},
+      { path: 'plan-trabajo/:id', name: 'plan-trabajo', component: () => import('pages/icos/PlanTrabajo.vue')},
       {
         path: '/ficha-vivienda',
         name: 'nueva-ficha-vivienda',
@@ -264,6 +246,7 @@ const routes = [
     ]
   },
   {
+
     path: '/jac',
     name: 'jac',
     component: () => import('pages/mod-jac/JacList.vue'),
@@ -272,33 +255,55 @@ const routes = [
     path: '/jac/:id',
     name: 'jac-editar',
     component: () => import('layouts/JacLayout.vue'),
-    children:[
+    children: [
       {
         path: '',
         name: 'jac-info',
-        component:() => import('pages/mod-jac/jac-info/JacInfo.vue')
+        component: () => import('pages/mod-jac/jac-info/JacInfo.vue')
 
       },
       {
         path: 'cotratos',
         name: 'j-contratos',
-        component:() => import('pages/mod-jac/Contratos/Contratos.vue')
+        component: () => import('pages/mod-jac/Contratos/Contratos.vue')
       },
       {
         path: 'proyectos-productivos',
         name: 'j-proyectos-productivos',
-        component:() => import('pages/mod-jac/ProyectosProductivos/ProyectosProductivos.vue')
+        component: () => import('pages/mod-jac/ProyectosProductivos/ProyectosProductivos.vue')
       },
       {
         path: 'participacion',
         name: 'j-participacion',
-        component:() => import('pages/mod-jac/Participacion/Participacion.vue')
+        component: () => import('pages/mod-jac/Participacion/Participacion.vue')
       },
       {
         path: 'habilidades',
         name: 'j-habilidades',
-        component:() => import('pages/mod-jac/habilidades/Habilidades.vue')
+        component: () => import('pages/mod-jac/habilidades/Habilidades.vue')
       }
+    ]
+  },
+      {
+    path: '/autoevaluacion/:id',
+    name: 'autoevaluacion',
+    component: () => import('layouts/AutoevaluacionLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: 'a-info-general',
+        component: () => import('pages/mod-autoevaluacion/info-general/InfoGeneral.vue'),
+      },
+      {
+        path: 'indicadores',
+        name: 'a-indicadores',
+        component: () => import('pages/mod-autoevaluacion/indicadores/Indicador.vue'),
+      },
+      {
+        path: 'fin-encuesta',
+        name: 'a-fin-encuesta',
+        component: () => import('pages/mod-autoevaluacion/FinEncuesta.vue'),
+      },
     ]
   },
   {
@@ -315,6 +320,7 @@ const routes = [
     path: '*',
     component: () => import('pages/Error404.vue')
   }
+
 ]
 
 export default routes

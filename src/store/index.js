@@ -39,12 +39,20 @@ import participacionCiudadana from './module-comunidad/participacion-ciudadana'
 import programasEducativos from './module-comunidad/programas-educativos'
 import personalInstitucionEducativa from './module-comunidad/programas-educativos/personal-institucion-educativa'
 import personalComiteEmergencia from "src/store/module-comunidad/comite-emergencia/personal-comite-emergencia"
+
 import contratos from "./module-jac/contratos/"
 import habilidades from "./module-jac/habilidades"
 import jacInfo from "./module-jac/jac-info"
 import juntaDirectiva from "./module-jac/junta-directiva"
 import participacion from "./module-jac/participacion"
 import proyectosProductivos from "./module-jac/proyectos-productivos"
+
+//ModuleJac
+import jac from './module-jac'
+import detalleAutoevaluacion from './module-jac/autoevaluacion'
+import planTrabajo from './module-jac/plan-trabajo'
+import planTrabajoDetalle from './module-jac/plan-trabajo-detalle'
+
 
 Vue.use(Vuex)
 
@@ -98,14 +106,18 @@ export default function (/* { ssrContext } */) {
       programasEducativos,
       personalInstitucionEducativa,
       personalComiteEmergencia,
+
       //modulo jac
       contratos,
       habilidades,
       jacInfo,
       juntaDirectiva,
       participacion,
-      proyectosProductivos
-
+      proyectosProductivos,
+      jac,
+      detalleAutoevaluacion,
+      planTrabajo,
+      planTrabajoDetalle
     },
 
     // enable strict mode (adds overhead!)
