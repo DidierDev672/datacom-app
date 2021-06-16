@@ -155,11 +155,11 @@ export default {
                         switch (this.tipoEncuestaID) {
                             case TIPO_ENCUESTA.VIVIENDA:
                                 console.log('Tipo encuesta vivienda');
+                                this.$router.push({name: 'v-info-general', params:{id: encuestaID}})
                                 break
                             case TIPO_ENCUESTA.COMUNIDAD:
                                 console.log('Tipo encuesta comunidad');
                                 this.$router.push({name: 'c-info-general', params:{id: encuestaID}})
-
                                 break
                             case TIPO_ENCUESTA.MUNICIPIO:
                                 console.log('Tipo encuesta municipio');

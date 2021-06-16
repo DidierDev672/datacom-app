@@ -24,23 +24,24 @@ const routes = [
       // { path: 'plan-trabajo', name: 'plan-trabajo-list', component: () => import('pages/icos/PlanTrabajoList.vue')},
       { path: 'plan-trabajo/:id', name: 'plan-trabajo', component: () => import('pages/icos/PlanTrabajo.vue')},
       {
-        path: '/ficha-vivienda',
-        name: 'nueva-ficha-vivienda',
+        path: '/municipios',
+        name: 'municipios',
+        component: () => import('pages/mod-municipios/ListaMunicipios.vue'),
+      },
+      {
+        path: '/ficha-vivienda/:id',
+        name: 'ficha-vivienda',
         component: () => import('pages/mod-viviendas/NuevaVivienda.vue'),
         children: [
-          { path: 'localizacion', name: 'localizacion-vivienda', component: () => import('pages/mod-viviendas/LocalizacionVivienda.vue') },
-          { path: 'estado', name: 'estado-vivienda', component: () => import('pages/mod-viviendas/EstadoVivienda.vue') },
+          { path: '', name: 'v-info-general', component: () => import('pages/mod-viviendas/info-general/InfoGeneral.vue') },
+          { path: 'informacion-vivienda', name: 'informacion-vivienda', component: () => import('pages/mod-viviendas/LocalizacionVivienda.vue') },
           { path: 'servicios-publicos', name: 'servicios-vivienda', component: () => import('pages/mod-viviendas/ServiciosVivienda.vue') },
+          { path: 'estado', name: 'estado-vivienda', component: () => import('pages/mod-viviendas/EstadoVivienda.vue') },
           { path: 'productos', name: 'productos-vivienda', component: () => import('pages/mod-viviendas/ProductosVivienda.vue') },
           { path: 'personas', name: 'personas-vivienda', component: () => import('pages/mod-viviendas/PersonasVivienda.vue') },
           { path: 'control-ficha', name: 'control-vivienda', component: () => import('pages/mod-viviendas/ControlVivienda.vue') },
 
         ]
-      },
-      {
-        path: '/municipios',
-        name: 'municipios',
-        component: () => import('pages/mod-municipios/ListaMunicipios.vue'),
       },
       { path: '', redirect: 'encuestas' },
     ]

@@ -1,5 +1,5 @@
-// export const URL_API = 'http://localhost:28181'
-export const URL_API = 'http://192.168.1.16:28181'
+export const URL_API = 'http://localhost:28181'
+// export const URL_API = 'http://192.168.1.16:28181'
 // export const URL_API = 'http://191.103.253.34:28181'
 // export const URL_API = 'https://datacom-backend.herokuapp.com'
 
@@ -26,7 +26,16 @@ export const CATEGORIAS = {
     DISPOSICION_EXCRETAS: 'EXCR',
     CARGOS: 'CARG',
     SERVICIOS_DE_SALUD: 'SSAL',
-    FRECUENCIA_SERVICIOS_SALUD: 'FSSA'
+    FRECUENCIA_SERVICIOS_SALUD: 'FSSA',
+    AREAS_UBICACION_VIVIENDAS: 'AUVI',
+    TENENCIA_VIVIENDA: 'TEVI',
+    MATERIAL_PAREDES: 'MATP',
+    MATERIAL_PISOS: 'MAPI',
+    MATERIAL_TECHO: 'MATE',
+    SERVICIOS_PUBLICOS: 'SEPU',
+    FECUENCIA_SERVICIO_ACUEDUCTO: 'FREC',
+    FUENTES_HIDRICAS: 'FUCA',
+    CAPACIDAD_ALMACENAMIENTO: 'CAAL'
 }
 
 export const TEMAS_SEGUIMIENTO_JAC = {
