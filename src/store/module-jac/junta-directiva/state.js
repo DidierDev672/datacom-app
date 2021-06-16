@@ -1,11 +1,12 @@
 export default function () {
   return {
-    actividadEconomica: {
-      listaActividadEconomica: [],
-      objActividadEconomica: {},
+    juntaDirectiva: {
+      lista: [],
+      objJuntaDirectiva: {},
       loading: false,
       loaded: false,
       error: null
     }
   }
 }
+

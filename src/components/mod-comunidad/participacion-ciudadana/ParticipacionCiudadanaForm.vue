@@ -22,13 +22,21 @@
                 outlined
                 option-value="id"
                 option-label="nombre"
-                v-model="actividadEconomicaDB.actividadEconomica"
+                v-model="participacionCiudadanaDB.tipoParticipacion"
                 :options="options"
-                label="Seleccione el cargo"
+                label="Seleccione el tipo de participacion"
               />
             </div>
           </div>
-
+          <div class="row q-col-gutter-sm">
+            <div class="col-xs-12">
+              <q-input
+                outlined
+                v-model="participacionCiudadanaDB.observacion"
+                label="Observacion"
+              />
+            </div>
+          </div>
         </q-form>
       </q-card-section>
       <q-separator />
@@ -37,13 +45,13 @@
           flat
           label="Cancelar"
           color="primary"
-          :disable="getActividadEconomicaState.loading"
+          :disable="getParticipacionCiudadanaState.loading"
           @click="close" />
         <q-btn
           :label="mensajeBoton"
           color="primary"
-          :loading="getActividadEconomicaState.loading"
-          :disable="getActividadEconomicaState.loading"
+          :loading="getParticipacionCiudadanaState.loading"
+          :disable="getParticipacionCiudadanaState.loading"
           @click="onSubmit">
           <template v-slot:loading>
             <q-spinner-facebook />
@@ -55,11 +63,11 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from "vuex";
 import {CATEGORIAS} from "src/utils/config";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
-  name: "ActividadEconomicaForm",
+  name: "ParticipacionCiudadanaForm",
   data(){
     return {
       show: true,
@@ -72,12 +80,14 @@ export default {
     this.encuestaID = this.$route.params.id
     this.participacionCiudadanaDB = {
       id: 0,
-      actividadEconomica:'',
+      tipoParticipacion:'',
+      observacion: '',
 
     }
-    if(Object.keys(this.getActividadEconomicaState.objActividadEconomica).length > 0){
-      this.actividadEconomicaDB.id = this.getActividadEconomicaState.objActividadEconomica.id;
-      this.actividadEconomicaDB.actividadEconomica = this.getActividadEconomicaState.objActividadEconomica.actividadEconomica;
+    if(Object.keys(this.getParticipacionCiudadanaState.objParticipacionCiudadana).length > 0){
+      this.participacionCiudadanaDB.id = this.getParticipacionCiudadanaState.objParticipacionCiudadana.id;
+      this.participacionCiudadanaDB.tipoParticipacion = this.getParticipacionCiudadanaState.objParticipacionCiudadana.tipoParticipacion;
+      this.participacionCiudadanaDB.observacion = this.getParticipacionCiudadanaState.objParticipacionCiudadana.observacion;
     }
     this.cargarListaParametroPorCategoriaAction(categorias).then(data => {
       this.options = data

@@ -4,11 +4,11 @@ import { URL_API } from '../../../utils/config'
 // Acciones para la lista
 export function cargarListaActividadEconomicaAction ({ commit }, encuestaID) {
   commit('inicializarAccion')
-  const urlService = 'actividad-economica'
+  const urlService = 'actividad-economica/encuesta'
   return new Promise((resolve, reject) => {
     axios.get(`${URL_API}/${urlService}/${encuestaID}/`)
       .then(({ data }) => {
-        commit('setListaActividadEcomicaSuccess', data)
+        commit('setListaActividadEconomicaSuccess', data)
         resolve(data)
       }).catch(error => {
       console.log('Ocurrió un error al consultar las actividades economicas: ', error.response)

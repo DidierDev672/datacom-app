@@ -140,6 +140,11 @@ export default {
           link: '/encuestas'
         },
         {
+          title: 'Jac',
+          caption: '',
+          icon: 'ti-bar-chart-alt',
+          link: '/jac'
+        },{
           title: 'Icos',
           caption: '',
           icon: 'ti-bar-chart-alt',

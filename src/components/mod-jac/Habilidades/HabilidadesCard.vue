@@ -2,7 +2,7 @@
   <q-list bordered class="rounded-borders bg-white">
     <q-item>
       <q-item-section top>
-        <q-item-label>{{ actividadE.actividadEconomica.nombre }}</q-item-label>
+        <q-item-label>{{ habilidadesP.temaCapacitacion.nombre }}</q-item-label>
       </q-item-section>
       <q-item-section side top>
         <div class="text-grey-8 ">
@@ -21,10 +21,10 @@
     <q-item >
       <q-item-section top>
         <q-item-label caption lines="1">
-          Nombre de la Actividad Ec
+          Nombre de la Habilidad
         </q-item-label>
         <q-item-label lines="1">
-          <span class="text-weight-medium">{{ actividadE.actividadEconomica.nombre }}</span>
+          <span class="text-weight-medium">{{ habilidadesP.temaCapacitacion.nombre }}</span>
         </q-item-label>
       </q-item-section>
     </q-item>
@@ -33,16 +33,16 @@
 
 <script>
 export default {
-  name: "ActividadEconomicaCard",
+  name: "HabilidadesCard",
   props: {
-    actividadE: {
+    habilidadesP: {
       type: Object,
       required: true
     }
   },
   methods: {
     editar(){
-      this.$emit("editar", this.actividadE)
+      this.$emit("editar", this.habilidadesP)
     }
   }
 }

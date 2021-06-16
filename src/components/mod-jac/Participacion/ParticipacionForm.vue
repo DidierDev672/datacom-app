@@ -6,7 +6,7 @@
     v-model="show">
     <q-card style="width: 700px;">
       <q-card-section>
-        <div class="text-h6">{{ mensajeBoton }} Actividad Economica </div>
+        <div class="text-h6">{{ mensajeBoton }} Cotratos Jac </div>
       </q-card-section>
 
       <q-separator />
@@ -15,20 +15,19 @@
         <q-form
           class="q-gutter-md"
         >
-          <p>Datos de la Actividad Economica </p>
+          <p>Participacion JAC </p>
           <div class="row q-col-gutter-sm">
             <div class="col-xs-12">
               <q-select
                 outlined
                 option-value="id"
                 option-label="nombre"
-                v-model="actividadEconomicaDB.actividadEconomica"
+                v-model="participacionDB.espacioParticipacion"
                 :options="options"
-                label="Seleccione el cargo"
+                label="Seleccione el tipo de participacion"
               />
             </div>
           </div>
-
         </q-form>
       </q-card-section>
       <q-separator />
@@ -37,13 +36,13 @@
           flat
           label="Cancelar"
           color="primary"
-          :disable="getActividadEconomicaState.loading"
+          :disable="getParticipacionState.loading"
           @click="close" />
         <q-btn
           :label="mensajeBoton"
           color="primary"
-          :loading="getActividadEconomicaState.loading"
-          :disable="getActividadEconomicaState.loading"
+          :loading="getParticipacionState.loading"
+          :disable="getParticipacionState.loading"
           @click="onSubmit">
           <template v-slot:loading>
             <q-spinner-facebook />
@@ -59,49 +58,50 @@ import {mapActions, mapGetters} from "vuex";
 import {CATEGORIAS} from "src/utils/config";
 
 export default {
-  name: "ActividadEconomicaForm",
+  name: "ParticipacionForm",
   data(){
     return {
       show: true,
-      participacionCiudadanaDB: {},
-      encuestaID: 0,
+      participacionDB: {},
+      jacID: 0,
       options: [],
+
     }},
   created(){
-    let categorias = [CATEGORIAS.PARTICIPACION_CIUDADANA]
-    this.encuestaID = this.$route.params.id
-    this.participacionCiudadanaDB = {
+    let categorias = [CATEGORIAS.ESPACIO_PARTICIPACION]
+    this.jacID = this.$route.params.id
+    this.participacionDB = {
       id: 0,
-      actividadEconomica:'',
-
+      espacioParticipacion:''
     }
-    if(Object.keys(this.getActividadEconomicaState.objActividadEconomica).length > 0){
-      this.actividadEconomicaDB.id = this.getActividadEconomicaState.objActividadEconomica.id;
-      this.actividadEconomicaDB.actividadEconomica = this.getActividadEconomicaState.objActividadEconomica.actividadEconomica;
+    if(Object.keys(this.getParticipacionState.objParticipacion).length > 0){
+      this.participacionDB.id = this.getParticipacionState.objParticipacion.id;
+      this.participacionDB.espacioParticipacion = this.getParticipacionState.objParticipacion.espacioParticipacion;
+
     }
     this.cargarListaParametroPorCategoriaAction(categorias).then(data => {
       this.options = data
     })
 
   },methods:{
-    ...mapActions('participacionCiudadana', ['registrarParticipacionCiudadanaAction', 'actualizarParticipacionCiudadanaAction','unsetParticipacionCiudadanaAction']),
-    ...mapActions('parametros',['cargarListaParametroPorCategoriaAction']),
+    ...mapActions ('participacion', ['registrarParticipacionAction', 'actualizarParticipacionAction','unsetParticipacionAction']),
+    ...mapActions ('parametros',['cargarListaParametroPorCategoriaAction']),
     onSubmit(){
 
       let info = {
-        ...this.participacionCiudadanaDB,
-        encuesta: {
-          id: this.encuestaID
+        ...this.participacionDB,
+        jac: {
+          id: this.jacID
         }
       }
 
       if(info.id > 0){
-        this.actualizarParticipacionCiudadanaAction(info).then(() => {
+        this.actualizarParticipacionAction(info).then(() => {
 
         })
       }else{
-        this.registrarParticipacionCiudadanaAction(info).then( data => {
-          this.participacionCiudadanaDB.id = data
+        this.registrarParticipacionAction(info).then( data => {
+          this.participacionDB.id = data
         })
       }
     },
@@ -110,13 +110,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('participacionCiudadana', ['getParticipacionCiudadanaState']),
+    ...mapGetters('participacion', ['getParticipacionState']),
     mensajeBoton(){
-      return this.participacionCiudadanaDB.id > 0 ? 'Actualizar' : 'Guardar'
+      return this.participacionDB.id > 0 ? 'Actualizar' : 'Guardar'
     }
   },
   beforeDestroy(){
-    this.unsetParticipacionCiudadanaAction()
+    this.unsetParticipacionAction()
   }
 }
 </script>

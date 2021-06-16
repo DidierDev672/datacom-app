@@ -221,12 +221,12 @@ const routes = [
       {
         path: 'actividades-economicas',
         name: 'c-actividades-economicas',
-        component: () => import('pages/mod-comunidad/viviendas/Viviendas.vue'),
+        component: () => import('pages/mod-comunidad/actividdes-economicas/actividades-economicas.vue'),
       },
       {
         path: 'participacion-ciudadana',
         name: 'c-participacion-ciudadana',
-        component: () => import('pages/mod-comunidad/viviendas/Viviendas.vue'),
+        component: () => import('pages/mod-comunidad/parcitipacion-ciudadana/participacion-ciudadana.vue'),
       },
      {
         path: 'programas-educativos',
@@ -247,6 +247,45 @@ const routes = [
     ]
   },
   {
+
+    path: '/jac',
+    name: 'jac',
+    component: () => import('pages/mod-jac/JacList.vue'),
+  },
+  {
+    path: '/jac/:id',
+    name: 'jac-editar',
+    component: () => import('layouts/JacLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: 'jac-info',
+        component: () => import('pages/mod-jac/jac-info/JacInfo.vue')
+
+      },
+      {
+        path: 'cotratos',
+        name: 'j-contratos',
+        component: () => import('pages/mod-jac/Contratos/Contratos.vue')
+      },
+      {
+        path: 'proyectos-productivos',
+        name: 'j-proyectos-productivos',
+        component: () => import('pages/mod-jac/ProyectosProductivos/ProyectosProductivos.vue')
+      },
+      {
+        path: 'participacion',
+        name: 'j-participacion',
+        component: () => import('pages/mod-jac/Participacion/Participacion.vue')
+      },
+      {
+        path: 'habilidades',
+        name: 'j-habilidades',
+        component: () => import('pages/mod-jac/habilidades/Habilidades.vue')
+      }
+    ]
+  },
+      {
     path: '/autoevaluacion/:id',
     name: 'autoevaluacion',
     component: () => import('layouts/AutoevaluacionLayout.vue'),
@@ -282,6 +321,7 @@ const routes = [
     path: '*',
     component: () => import('pages/Error404.vue')
   }
+
 ]
 
 export default routes

@@ -26,7 +26,7 @@ export function setActionFail (state, payload) {
 export function setListaActividadEconomicaSuccess (state, data) {
   state.actividadEconomica = {
     ...state.actividadEconomica,
-    lista: data,
+    listaActividadEconomica: data,
     loading: false,
     loaded: true
   }

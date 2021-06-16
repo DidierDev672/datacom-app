@@ -1,11 +1,12 @@
 export default function () {
   return {
-    actividadEconomica: {
-      listaActividadEconomica: [],
-      objActividadEconomica: {},
+    contratos: {
+      lista: [],
+      objContratos: {},
       loading: false,
       loaded: false,
       error: null
     }
   }
 }
+

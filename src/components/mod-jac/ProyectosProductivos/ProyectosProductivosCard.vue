@@ -2,7 +2,7 @@
   <q-list bordered class="rounded-borders bg-white">
     <q-item>
       <q-item-section top>
-        <q-item-label>{{ actividadE.actividadEconomica.nombre }}</q-item-label>
+        <q-item-label>{{ proyectosProductivos.linea.nombre }}</q-item-label>
       </q-item-section>
       <q-item-section side top>
         <div class="text-grey-8 ">
@@ -21,10 +21,10 @@
     <q-item >
       <q-item-section top>
         <q-item-label caption lines="1">
-          Nombre de la Actividad Ec
+          Nombre del Proyecto Productivos
         </q-item-label>
         <q-item-label lines="1">
-          <span class="text-weight-medium">{{ actividadE.actividadEconomica.nombre }}</span>
+          <span class="text-weight-medium">{{ proyectosProductivos.linea.nombre }}</span>
         </q-item-label>
       </q-item-section>
     </q-item>
@@ -33,18 +33,18 @@
 
 <script>
 export default {
-  name: "ActividadEconomicaCard",
-  props: {
-    actividadE: {
-      type: Object,
+  name: "ProyectosProductivosCard",
+props: {
+  proyectosProductivos: {
+    type: Object,
       required: true
-    }
-  },
-  methods: {
-    editar(){
-      this.$emit("editar", this.actividadE)
-    }
   }
+},
+methods: {
+  editar(){
+    this.$emit("editar", this.proyectosProductivos)
+  }
+}
 }
 </script>
 

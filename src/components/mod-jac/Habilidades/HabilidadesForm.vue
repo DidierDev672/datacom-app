@@ -6,7 +6,7 @@
     v-model="show">
     <q-card style="width: 700px;">
       <q-card-section>
-        <div class="text-h6">{{ mensajeBoton }} Actividad Economica </div>
+        <div class="text-h6">{{ mensajeBoton }} Habilidades Jac </div>
       </q-card-section>
 
       <q-separator />
@@ -15,20 +15,28 @@
         <q-form
           class="q-gutter-md"
         >
-          <p>Datos de la Actividad Economica </p>
+          <p>Habilidades JAC </p>
           <div class="row q-col-gutter-sm">
             <div class="col-xs-12">
               <q-select
                 outlined
                 option-value="id"
                 option-label="nombre"
-                v-model="actividadEconomicaDB.actividadEconomica"
+                v-model="habilidadesDB.temaCapacitacion"
                 :options="options"
-                label="Seleccione el cargo"
+                label="Seleccione la Habilidad"
               />
             </div>
           </div>
-
+          <div class="row q-col-gutter-sm">
+            <div class="col-xs-12">
+              <q-input
+                outlined
+                v-model="habilidadesDB.entidadQueCapacita"
+                label="Entidad Que Capacita"
+              />
+            </div>
+          </div>
         </q-form>
       </q-card-section>
       <q-separator />
@@ -37,13 +45,13 @@
           flat
           label="Cancelar"
           color="primary"
-          :disable="getActividadEconomicaState.loading"
+          :disable="getHabilidadesState.loading"
           @click="close" />
         <q-btn
           :label="mensajeBoton"
           color="primary"
-          :loading="getActividadEconomicaState.loading"
-          :disable="getActividadEconomicaState.loading"
+          :loading="getHabilidadesState.loading"
+          :disable="getHabilidadesState.loading"
           @click="onSubmit">
           <template v-slot:loading>
             <q-spinner-facebook />
@@ -59,49 +67,52 @@ import {mapActions, mapGetters} from "vuex";
 import {CATEGORIAS} from "src/utils/config";
 
 export default {
-  name: "ActividadEconomicaForm",
+  name: "HabilidadesForm",
   data(){
     return {
       show: true,
-      participacionCiudadanaDB: {},
-      encuestaID: 0,
+      habilidadesDB: {},
+      jacID: 0,
       options: [],
+
     }},
   created(){
-    let categorias = [CATEGORIAS.PARTICIPACION_CIUDADANA]
-    this.encuestaID = this.$route.params.id
-    this.participacionCiudadanaDB = {
+    let categorias = [CATEGORIAS.TEMAS_CAPACITACION]
+    this.jacID = this.$route.params.id
+    this.habilidadesDB = {
       id: 0,
-      actividadEconomica:'',
-
+      temaCapacitacion:'',
+      entidadQueCapacita: ''
     }
-    if(Object.keys(this.getActividadEconomicaState.objActividadEconomica).length > 0){
-      this.actividadEconomicaDB.id = this.getActividadEconomicaState.objActividadEconomica.id;
-      this.actividadEconomicaDB.actividadEconomica = this.getActividadEconomicaState.objActividadEconomica.actividadEconomica;
+    if(Object.keys(this.getHabilidadesState.objHabilidades).length > 0){
+      this.habilidadesDB.id = this.getHabilidadesState.objHabilidades.id;
+      this.habilidadesDB.temaCapacitacion = this.getHabilidadesState.objHabilidades.temaCapacitacion;
+      this.habilidadesDB.entidadQueCapacita = this.getHabilidadesState.objHabilidades.entidadQueCapacita;
+
     }
     this.cargarListaParametroPorCategoriaAction(categorias).then(data => {
       this.options = data
     })
 
   },methods:{
-    ...mapActions('participacionCiudadana', ['registrarParticipacionCiudadanaAction', 'actualizarParticipacionCiudadanaAction','unsetParticipacionCiudadanaAction']),
+    ...mapActions('habilidades', ['registrarHabilidadesAction', 'actualizarHabilidadesAction','unsetHabilidadesAction']),
     ...mapActions('parametros',['cargarListaParametroPorCategoriaAction']),
     onSubmit(){
 
       let info = {
-        ...this.participacionCiudadanaDB,
-        encuesta: {
-          id: this.encuestaID
+        ...this.habilidadesDB,
+        jac: {
+          id: this.jacID
         }
       }
 
       if(info.id > 0){
-        this.actualizarParticipacionCiudadanaAction(info).then(() => {
+        this.actualizarHabilidadesAction(info).then(() => {
 
         })
       }else{
-        this.registrarParticipacionCiudadanaAction(info).then( data => {
-          this.participacionCiudadanaDB.id = data
+        this.registrarHabilidadesAction(info).then( data => {
+          this.habilidadesDB.id = data
         })
       }
     },
@@ -110,13 +121,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('participacionCiudadana', ['getParticipacionCiudadanaState']),
+    ...mapGetters('habilidades', ['getHabilidadesState']),
     mensajeBoton(){
-      return this.participacionCiudadanaDB.id > 0 ? 'Actualizar' : 'Guardar'
+      return this.habilidadesDB.id > 0 ? 'Actualizar' : 'Guardar'
     }
   },
   beforeDestroy(){
-    this.unsetParticipacionCiudadanaAction()
+    this.unsetHabilidadesAction()
   }
 }
 </script>

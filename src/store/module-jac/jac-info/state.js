@@ -1,11 +1,12 @@
 export default function () {
   return {
-    actividadEconomica: {
-      listaActividadEconomica: [],
-      objActividadEconomica: {},
+    jacInfo: {
+      lista: [],
+      objJacInfo: {},
       loading: false,
       loaded: false,
       error: null
     }
   }
 }
+
