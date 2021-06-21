@@ -54,6 +54,8 @@ import planTrabajo from './module-jac/plan-trabajo'
 import planTrabajoDetalle from './module-jac/plan-trabajo-detalle'
 //ModuleVivienda
 import datosVivienda from './module-vivienda/datos-vivienda'
+//ModuleFileManager
+import fileManager from './module-file-manager'
 
 
 
@@ -122,7 +124,9 @@ export default function (/* { ssrContext } */) {
       planTrabajo,
       planTrabajoDetalle,
       //ModuleVivienda
-      datosVivienda
+      datosVivienda,
+      //ModuleFileManager
+      fileManager
     },
 
     // enable strict mode (adds overhead!)

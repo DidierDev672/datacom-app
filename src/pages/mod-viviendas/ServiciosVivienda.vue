@@ -15,26 +15,54 @@
 
               <q-card-section>
                 <div class="row">
-                  <div
-                    class="col-xs-12 col-sm-6"
-                    v-for="registro in serviciosPublicosOptions"
-                    :key="registro.id">
-                    <!-- <q-option-group
-                      :options="serviciosPublicosOptions"
-                      type="checkbox"
-                      v-model="serviciosSeleccionados"
-                    /> -->
+
+                  <div class="col-xs-12 col-sm-6">
                     <q-checkbox
-                      v-model="serviciosSeleccionados"
-                      @input="actualizarModelo"
-                      :val="registro"
-                      :label="registro.nombre" />
+                      v-model="datosVivienda.servicioEnergia"
+                      label="Energía Eléctrica" />
                   </div>
+
+                  <div class="col-xs-12 col-sm-6">
+                    <q-checkbox
+                      v-model="datosVivienda.servicioGas"
+                      label="Gas Natural" />
+                  </div>
+
+                  <div class="col-xs-12 col-sm-6">
+                    <q-checkbox
+                      v-model="datosVivienda.servicioAcueducto"
+                      label="Acueducto" />
+                  </div>
+
+                  <div class="col-xs-12 col-sm-6">
+                    <q-checkbox
+                      v-model="datosVivienda.servicioInternet"
+                      label="Internet" />
+                  </div>
+
+                  <div class="col-xs-12 col-sm-6">
+                    <q-checkbox
+                      v-model="datosVivienda.servicioTelevision"
+                      label="Televisión" />
+                  </div>
+
+                  <div class="col-xs-12 col-sm-6">
+                    <q-checkbox
+                      v-model="datosVivienda.servicioTelefonia"
+                      label="telefonía Móvil" />
+                  </div>
+
+                  <div class="col-xs-12 col-sm-6">
+                    <q-checkbox
+                      v-model="datosVivienda.servicioWhatsapp"
+                      label="WhatsApp" />
+                  </div>
+
                 </div>
               </q-card-section>
             </q-card>
 
-            <q-card v-if="showControl" flat bordered class="my-card q-mb-md">
+            <q-card v-if="datosVivienda.servicioAcueducto" flat bordered class="my-card q-mb-md">
               <q-card-section>
                 <div class="text-h6">16. Calidad del Agua</div>
               </q-card-section>
@@ -56,7 +84,7 @@
               </q-card-section>
             </q-card>
 
-            <q-card v-if="showControl" flat bordered class="my-card q-mb-md">
+            <q-card v-if="datosVivienda.servicioAcueducto" flat bordered class="my-card q-mb-md">
               <q-card-section>
                 <div class="text-h6">17. Frecuencia del servicio de acueducto</div>
               </q-card-section>
@@ -84,20 +112,37 @@
 
               <q-card-section>
                 <div class="row">
-                  <div
-                    class="col-xs-12 col-sm-6"
-                    v-for="registro in fuentesCaptacionOptions"
-                    :key="registro.id">
-                    <!-- <q-option-group
-                      :options="serviciosPublicosOptions"
-                      type="checkbox"
-                      v-model="serviciosSeleccionados"
-                    /> -->
+
+                  <div class="col-xs-12 col-sm-6">
                     <q-checkbox
-                      v-model="fuentesCaptacionSeleccionados"
-                      :val="registro"
-                      :label="registro.nombre" />
+                      v-model="datosVivienda.pozoProfundo"
+                      label="Pozos Profundos" />
                   </div>
+
+                  <div class="col-xs-12 col-sm-6">
+                    <q-checkbox
+                      v-model="datosVivienda.quebradas"
+                      label="Quebradas" />
+                  </div>
+
+                  <div class="col-xs-12 col-sm-6">
+                    <q-checkbox
+                      v-model="datosVivienda.rios"
+                      label="Ríos" />
+                  </div>
+
+                  <div class="col-xs-12 col-sm-6">
+                    <q-checkbox
+                      v-model="datosVivienda.represa"
+                      label="Represas" />
+                  </div>
+
+                  <div class="col-xs-12 col-sm-6">
+                    <q-checkbox
+                      v-model="datosVivienda.aguaLluvia"
+                      label="Aguas Lluvias" />
+                  </div>
+
                 </div>
               </q-card-section>
             </q-card>
@@ -155,12 +200,7 @@ export default {
         return {
           encuestaID: 0,
           datosVivienda: {},
-          showControl: false,
-          serviciosSeleccionados: [],
-          fuentesCaptacionSeleccionados: [],
-          serviciosPublicosOptions: [],
           frecuenciaAcueductoOptions: [],
-          fuentesCaptacionOptions: [],
           capacidadAlmacenamientoOptions: [],
           calidadAguaOptions: [
             {label: 'Potable', value: 1},
@@ -170,11 +210,22 @@ export default {
     },
     created(){
       this.encuestaID = this.$route.params.id
-      let categorias = [CATEGORIAS.SERVICIOS_PUBLICOS, CATEGORIAS.FECUENCIA_SERVICIO_ACUEDUCTO,
-      CATEGORIAS.FUENTES_HIDRICAS, CATEGORIAS.CAPACIDAD_ALMACENAMIENTO];
+      let categorias = [CATEGORIAS.FECUENCIA_SERVICIO_ACUEDUCTO, CATEGORIAS.CAPACIDAD_ALMACENAMIENTO];
       this.datosVivienda = {
         id: 0,
         calidadAgua: '',
+        servicioEnergia: false,
+        servicioGas: false,
+        servicioAcueducto: false,
+        servicioInternet: false,
+        servicioTelevision: false,
+        servicioTelefonia: false,
+        servicioWhatsapp: false,
+        pozoProfundo: false,
+        quebradas: false,
+        rios: false,
+        represa: false,
+        aguaLluvia: false,
         frecuenciaServicioAcueducto: '',
         capacidadAlmacenamientoAgua: ''
       }
@@ -182,14 +233,8 @@ export default {
         data.map(opt => {
           let codigoCategoria = opt.categoria.codigo
           switch (codigoCategoria) {
-            case 'SEPU':
-              this.serviciosPublicosOptions.push(opt)
-              break;
             case 'FREC':
               this.frecuenciaAcueductoOptions.push(opt)
-              break;
-            case 'FUCA':
-              this.fuentesCaptacionOptions.push(opt)
               break;
             case 'CAAL':
               this.capacidadAlmacenamientoOptions.push(opt)
@@ -199,14 +244,33 @@ export default {
           }
         })
       });
+
+      this.buscarDatosViviendaAction(this.encuestaID).then(data => {
+        if(data.id > 0){
+          this.datosVivienda = {...data}
+        }
+      })
+
     },
     methods: {
       ...mapActions("parametros", ["cargarListaParametroPorCategoriaAction"]),
     ...mapActions("datosVivienda", ["buscarDatosViviendaAction", 'registrarDatosViviendaAction', 'actualizarDatosViviendaAction']),
       onSubmit(){
         console.log(this.datosVivienda);
-        console.log(this.serviciosSeleccionados);
-        console.log(this.fuentesCaptacionSeleccionados);
+        let info = {
+            ...this.datosVivienda,
+            encuesta: {
+              id: this.encuestaID
+            }
+          }
+        if(this.datosVivienda.id > 0){
+          this.actualizarDatosViviendaAction(info)
+        }else{
+          this.registrarDatosViviendaAction(info).then(data => {
+            this.datosVivienda.id = data
+          })
+        }
+        this.$router.push({name: 'saneamiento-basico', params: {id: this.encuestaID}})
       },
       actualizarModelo(value){
         this.showControl = false

@@ -1,7 +1,7 @@
 <template>
   <q-dialog
-    persistent 
-    transition-show="scale" 
+    persistent
+    transition-show="scale"
     transition-hide="scale"
     v-model="show">
       <q-card style="width: 700px;">
@@ -14,8 +14,9 @@
         <q-card-section style="max-height: 50vh" class="scroll">
 
           <q-form
+            ref="politicasForm"
             class="q-gutter-md"
-          >          
+          >
 
           <p>Seleccione un tipo de política</p>
 
@@ -27,8 +28,10 @@
                 option-label="nombre"
                 v-model="politica.tipoPolitica"
                 :options="options"
-                label="Seleccione una política" />
-            </div>            
+                label="Seleccione una política"
+                lazy-rules
+                :rules="[val => !!val || 'Campo requerido']" />
+            </div>
           </div>
 
           <div class="row q-col-gutter-sm">
@@ -37,8 +40,10 @@
                 outlined
                 v-model="politica.numero"
                 label="No. Acuerdo municipal"
-              /> 
-            </div>            
+                lazy-rules
+                :rules="[val => !!val || 'Campo requerido']"
+              />
+            </div>
           </div>
 
           <div class="row q-col-gutter-sm">
@@ -47,12 +52,14 @@
                 outlined
                 v-model="politica.ano"
                 label="Año"
-              /> 
-            </div>            
-          </div>                   
+                lazy-rules
+                :rules="[val => !!val || 'Campo requerido']"
+              />
+            </div>
+          </div>
 
-          </q-form>      
-          
+          </q-form>
+
         </q-card-section>
 
         <q-separator />
@@ -114,45 +121,62 @@ export default {
     this.cargarListaParametroPorCategoriaAction(categorias).then(data => {
             this.options = data
         })
-    
+
   },
   methods: {
     ...mapActions('politicasPublicas', ['registrarPoliticasPublicasAction', 'actualizarPoliticasPublicasAction','unsetPoliticasPublicasAction']),
     ...mapActions('parametros', ['cargarListaParametroPorCategoriaAction']),
     onSubmit(){
-      
-      let info = {
-        ...this.politica,
-        encuesta: {
-          id: this.encuestaID
+
+      this.$refs.politicasForm.validate().then(success => {
+        if (success) {
+          let info = {
+            ...this.politica,
+            encuesta: {
+              id: this.encuestaID
+            }
+          }
+          if(info.id > 0){
+            //Actualizar
+            this.actualizarPoliticasPublicasAction(info).then(() => {
+              this.$q.notify({
+                  message: 'Registro actualizado',
+                  color: 'positive'
+              })
+            })
+          }else{
+            //Guardar
+            this.registrarPoliticasPublicasAction(info).then( data => {
+              this.politica.id = data
+              this.$q.notify({
+                  message: 'Registro guardado',
+                  color: 'positive'
+              })
+            })
+          }
+        }else{
+            this.$q.notify({
+                message: 'Favor completar los campos correctamente',
+                color: 'red'
+            })
         }
-      }
-      console.log('Secretaria a guardar: ', info);      
-      if(info.id > 0){
-        //Actualizar
-        this.actualizarPoliticasPublicasAction(info).then(() => {          
-        })
-      }else{
-        //Guardar
-        this.registrarPoliticasPublicasAction(info).then( data => {
-          this.politica.id = data
-        })
-      }
+    })
+
     },
     close(){
       this.$emit("close");
     }
-  },  
+  },
   computed: {
     ...mapGetters('politicasPublicas', ['getPoliticasPublicasState']),
     mensajeBoton(){
       return this.politica.id > 0 ? 'Actualizar' : 'Guardar'
-    } 
+    }
   },
   beforeDestroy(){
     this.unsetPoliticasPublicasAction()
   }
-  
+
 
 }
 </script>

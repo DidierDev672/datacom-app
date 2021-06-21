@@ -36,13 +36,15 @@ const routes = [
           { path: '', name: 'v-info-general', component: () => import('pages/mod-viviendas/info-general/InfoGeneral.vue') },
           { path: 'informacion-vivienda', name: 'informacion-vivienda', component: () => import('pages/mod-viviendas/LocalizacionVivienda.vue') },
           { path: 'servicios-publicos', name: 'servicios-vivienda', component: () => import('pages/mod-viviendas/ServiciosVivienda.vue') },
+          { path: 'saneamiento-basico', name: 'saneamiento-basico', component: () => import('pages/mod-viviendas/SaneamientoBasico.vue') },
+          { path: 'personas', name: 'personas-vivienda', component: () => import('pages/mod-viviendas/PersonasVivienda.vue') },
           { path: 'estado', name: 'estado-vivienda', component: () => import('pages/mod-viviendas/EstadoVivienda.vue') },
           { path: 'productos', name: 'productos-vivienda', component: () => import('pages/mod-viviendas/ProductosVivienda.vue') },
-          { path: 'personas', name: 'personas-vivienda', component: () => import('pages/mod-viviendas/PersonasVivienda.vue') },
           { path: 'control-ficha', name: 'control-vivienda', component: () => import('pages/mod-viviendas/ControlVivienda.vue') },
 
         ]
       },
+      { path: '/jac', name: 'jac', component: () => import('pages/mod-jac/JacList.vue')},
       { path: '', redirect: 'encuestas' },
     ]
   },
@@ -245,12 +247,6 @@ const routes = [
       },
 
     ]
-  },
-  {
-
-    path: '/jac',
-    name: 'jac',
-    component: () => import('pages/mod-jac/JacList.vue'),
   },
   {
     path: '/jac/:id',

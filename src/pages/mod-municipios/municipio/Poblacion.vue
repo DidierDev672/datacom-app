@@ -1,9 +1,9 @@
 <template>
     <div class="q-ma-sm">
         <div class="row">
-            <div class="col-xs-12 col-sm-8 offset-sm-2">   
+            <div class="col-xs-12 col-sm-8 offset-sm-2">
 
-                <q-form ref="poblacionForm">          
+                <q-form ref="poblacionForm">
                     <p class="text-h6 q-mt-md q-mb-sm">2.1. Composición etaria</p>
                     <q-card
                     flat
@@ -18,11 +18,13 @@
                             <div class="col-xs-12 col-sm-6">
                                 <q-input
                                   dense
-                                  v-model="poblacionPorRangoDeEdad.ano" />
+                                  v-model="poblacionPorRangoDeEdad.ano"
+                                  lazy-rules
+                                  :rules="[val => !!val || 'Campo requerido']" />
                             </div>
                         </div>
                     </q-card-section>
-                    
+
                     </q-card>
 
                    <q-card
@@ -38,14 +40,14 @@
                                 <div class="col-xs-12 col-sm-6">
                                    <!-- <q-input
                                       dense
-                                      v-model.number="poblacionPorRangoDeEdad.de0A4Anos" 
+                                      v-model.number="poblacionPorRangoDeEdad.de0A4Anos"
                                       type="number"
-                                        lazy-rules 
+                                        lazy-rules
                                         :rules="[
                                             val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                                         ]"/> -->
-                                        <q-field                    
+                                        <q-field
                                         v-model="poblacionPorRangoDeEdad.de0A4Anos"
                                         hint="#,###"
                                         >
@@ -68,14 +70,14 @@
                                 <div class="col-xs-12 col-sm-6">
                                     <!-- <q-input
                                       dense
-                                      v-model.number="poblacionPorRangoDeEdad.de5A9Anos" 
+                                      v-model.number="poblacionPorRangoDeEdad.de5A9Anos"
                                       type="number"
-                                        lazy-rules 
+                                        lazy-rules
                                         :rules="[
                                             val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                                         ]"/> -->
-                                    <q-field                    
+                                    <q-field
                                         v-model="poblacionPorRangoDeEdad.de5A9Anos"
                                         hint="#,###"
                                         >
@@ -98,15 +100,15 @@
                                 <div class="col-xs-12 col-sm-6">
                                     <!-- <q-input
                                       dense
-                                      v-model.number="poblacionPorRangoDeEdad.de10A14Anos" 
+                                      v-model.number="poblacionPorRangoDeEdad.de10A14Anos"
                                       type="number"
-                                        lazy-rules 
+                                        lazy-rules
                                         :rules="[
                                             val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                                         ]"/> -->
 
-                                        <q-field                    
+                                        <q-field
                                         v-model="poblacionPorRangoDeEdad.de10A14Anos"
                                         hint="#,###"
                                         >
@@ -131,13 +133,13 @@
                                       dense
                                       v-model.number="poblacionPorRangoDeEdad.de15A19Anos"
                                       type="number"
-                                        lazy-rules 
+                                        lazy-rules
                                         :rules="[
                                             val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                                         ]" /> -->
 
-                                        <q-field                    
+                                        <q-field
                                         v-model="poblacionPorRangoDeEdad.de15A19Anos"
                                         hint="#,###"
                                         >
@@ -162,13 +164,13 @@
                                       dense
                                       v-model.number="poblacionPorRangoDeEdad.de20A24Anos"
                                       type="number"
-                                        lazy-rules 
+                                        lazy-rules
                                         :rules="[
                                             val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                                         ]" /> -->
 
-                                        <q-field                    
+                                        <q-field
                                         v-model="poblacionPorRangoDeEdad.de20A24Anos"
                                         hint="#,###"
                                         >
@@ -193,12 +195,12 @@
                                       dense
                                       v-model.number="poblacionPorRangoDeEdad.de25A29Anos"
                                       type="number"
-                                        lazy-rules 
+                                        lazy-rules
                                         :rules="[
                                             val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                                         ]" /> -->
-                                        <q-field                    
+                                        <q-field
                                         v-model="poblacionPorRangoDeEdad.de25A29Anos"
                                         hint="#,###"
                                         >
@@ -223,12 +225,12 @@
                                       dense
                                       v-model.number="poblacionPorRangoDeEdad.de30A34Anos"
                                       type="number"
-                                        lazy-rules 
+                                        lazy-rules
                                         :rules="[
                                             val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                                         ]" /> -->
-                                        <q-field                    
+                                        <q-field
                                         v-model="poblacionPorRangoDeEdad.de30A34Anos"
                                         hint="#,###"
                                         >
@@ -251,15 +253,15 @@
                                 <div class="col-xs-12 col-sm-6">
                                     <!-- <q-input
                                       dense
-                                      v-model.number="poblacionPorRangoDeEdad.de35A39Anos" 
+                                      v-model.number="poblacionPorRangoDeEdad.de35A39Anos"
                                       type="number"
-                                        lazy-rules 
+                                        lazy-rules
                                         :rules="[
                                             val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                                         ]"/> -->
 
-                                        <q-field                    
+                                        <q-field
                                         v-model="poblacionPorRangoDeEdad.de35A39Anos"
                                         hint="#,###"
                                         >
@@ -282,15 +284,15 @@
                                 <div class="col-xs-12 col-sm-6">
                                     <!-- <q-input
                                       dense
-                                      v-model.number="poblacionPorRangoDeEdad.de40A44Anos" 
+                                      v-model.number="poblacionPorRangoDeEdad.de40A44Anos"
                                       type="number"
-                                        lazy-rules 
+                                        lazy-rules
                                         :rules="[
                                             val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                                         ]" /> -->
 
-                                        <q-field                    
+                                        <q-field
                                         v-model="poblacionPorRangoDeEdad.de40A44Anos"
                                         hint="#,###"
                                         >
@@ -315,13 +317,13 @@
                                       dense
                                       v-model.number="poblacionPorRangoDeEdad.de45A49Anos"
                                       type="number"
-                                        lazy-rules 
+                                        lazy-rules
                                         :rules="[
                                             val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                                         ]" /> -->
 
-                                        <q-field                    
+                                        <q-field
                                         v-model="poblacionPorRangoDeEdad.de45A49Anos"
                                         hint="#,###"
                                         >
@@ -346,13 +348,13 @@
                                       dense
                                       v-model.number="poblacionPorRangoDeEdad.de50A54Anos"
                                       type="number"
-                                        lazy-rules 
+                                        lazy-rules
                                         :rules="[
                                             val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                                         ]" /> -->
 
-                                        <q-field                    
+                                        <q-field
                                         v-model="poblacionPorRangoDeEdad.de50A54Anos"
                                         hint="#,###"
                                         >
@@ -377,13 +379,13 @@
                                       dense
                                       v-model.number="poblacionPorRangoDeEdad.de55A59Anos"
                                       type="number"
-                                        lazy-rules 
+                                        lazy-rules
                                         :rules="[
                                             val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                                         ]" /> -->
 
-                                        <q-field                    
+                                        <q-field
                                         v-model="poblacionPorRangoDeEdad.de55A59Anos"
                                         hint="#,###"
                                         >
@@ -406,15 +408,15 @@
                                 <div class="col-xs-12 col-sm-6">
                                     <!-- <q-input
                                       dense
-                                      v-model.number="poblacionPorRangoDeEdad.de60A64Anos" 
+                                      v-model.number="poblacionPorRangoDeEdad.de60A64Anos"
                                       type="number"
-                                        lazy-rules 
+                                        lazy-rules
                                         :rules="[
                                             val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                                         ]"/> -->
 
-                                        <q-field                    
+                                        <q-field
                                         v-model="poblacionPorRangoDeEdad.de60A64Anos"
                                         hint="#,###"
                                         >
@@ -437,15 +439,15 @@
                                 <div class="col-xs-12 col-sm-6">
                                     <!-- <q-input
                                       dense
-                                      v-model.number="poblacionPorRangoDeEdad.de65A69Anos" 
+                                      v-model.number="poblacionPorRangoDeEdad.de65A69Anos"
                                       type="number"
-                                        lazy-rules 
+                                        lazy-rules
                                         :rules="[
                                             val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                                         ]" /> -->
 
-                                        <q-field                    
+                                        <q-field
                                         v-model="poblacionPorRangoDeEdad.de65A69Anos"
                                         hint="#,###"
                                         >
@@ -468,15 +470,15 @@
                                 <div class="col-xs-12 col-sm-6">
                                     <!-- <q-input
                                       dense
-                                      v-model.number="poblacionPorRangoDeEdad.de70A74Anos" 
+                                      v-model.number="poblacionPorRangoDeEdad.de70A74Anos"
                                       type="number"
-                                        lazy-rules 
+                                        lazy-rules
                                         :rules="[
                                             val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                                         ]" /> -->
 
-                                        <q-field                    
+                                        <q-field
                                         v-model="poblacionPorRangoDeEdad.de70A74Anos"
                                         hint="#,###"
                                         >
@@ -501,13 +503,13 @@
                                       dense
                                       v-model.number="poblacionPorRangoDeEdad.de75A79Anos"
                                       type="number"
-                                        lazy-rules 
+                                        lazy-rules
                                         :rules="[
                                             val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                                         ]" /> -->
 
-                                        <q-field                    
+                                        <q-field
                                         v-model="poblacionPorRangoDeEdad.de75A79Anos"
                                         hint="#,###"
                                         >
@@ -532,13 +534,13 @@
                                       dense
                                       v-model.number="poblacionPorRangoDeEdad.mayorA80Anos"
                                       type="number"
-                                        lazy-rules 
+                                        lazy-rules
                                         :rules="[
                                             val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                                         ]" /> -->
 
-                                        <q-field                    
+                                        <q-field
                                         v-model="poblacionPorRangoDeEdad.mayorA80Anos"
                                         hint="#,###"
                                         >
@@ -549,8 +551,8 @@
                                 </div>
                             </div>
                         </q-card-section>
-                    </q-card>                    
-                    
+                    </q-card>
+
                 </q-form>
 
                 <div class="flex justify-center">
@@ -566,8 +568,8 @@
                         </template>
                       </q-btn>
                 </div>
-             
-                
+
+
             </div>
         </div>
     </div>
@@ -589,7 +591,7 @@ export default {
             encuestaID: 0,
             poblacionPorRangoDeEdad: {}
         }
-    },   
+    },
     created () {
         this.encuestaID = this.$route.params.id
         this.poblacionPorRangoDeEdad = {
@@ -613,8 +615,8 @@ export default {
             de70A74Anos: 0,
             de75A79Anos: 0,
             mayorA80Anos: 0,
-        }  
-        
+        }
+
         this.buscarPoblacionAction(this.encuestaID).then(data => {
             if(data.id > 0){
                 this.poblacionPorRangoDeEdad = {...data}
@@ -622,10 +624,10 @@ export default {
         })
     },
     methods: {
-        ...mapActions('poblacion', ['guardarPoblacion','agregarPoblacionAction', 'buscarPoblacionAction', 'eliminarPoblacionAction']),       
+        ...mapActions('poblacion', ['guardarPoblacion','agregarPoblacionAction', 'buscarPoblacionAction', 'eliminarPoblacionAction']),
         onSubmit(){
             this.$refs.poblacionForm.validate().then(success => {
-                if (success) {                    
+                if (success) {
                     this.guardarPoblacion({
                         ...this.poblacionPorRangoDeEdad,
                         encuesta: {
@@ -644,7 +646,7 @@ export default {
             })
         },
 
-        
+
     },
     computed: {
         ...mapGetters('poblacion', ['getPoblacionState'])

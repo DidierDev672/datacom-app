@@ -1,8 +1,8 @@
 <template>
   <div class="q-ma-sm">
       <div class="row">
-          <div class="col-xs-12 col-sm-8 offset-sm-2">                
-              <q-form ref="calidadForm">          
+          <div class="col-xs-12 col-sm-8 offset-sm-2">
+              <q-form ref="calidadForm">
                     <p class="text-h6 q-mt-md q-mb-sm">3. Calidad de Vida</p>
                     <q-card
                         flat
@@ -17,7 +17,9 @@
                                 <div class="col-xs-12 col-sm-6">
                                     <q-input
                                       dense
-                                      v-model="calidad.ano" />
+                                      v-model="calidad.ano"
+                                      lazy-rules
+                                  :rules="[val => !!val || 'Campo requerido']" />
                                 </div>
                             </div>
                         </q-card-section>
@@ -35,14 +37,14 @@
                                 <div class="col-xs-12 col-sm-6">
                                     <!-- <q-input
                                       dense
-                                      v-model.number="calidad.ipmUrbana" 
+                                      v-model.number="calidad.ipmUrbana"
                                       type="number"
-                                        lazy-rules 
+                                        lazy-rules
                                         :rules="[
                                             val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                                         ]"/> -->
-                                        <q-field                    
+                                        <q-field
                                         v-model="calidad.ipmUrbana"
                                         hint="#,###"
                                         >
@@ -67,13 +69,13 @@
                                       dense
                                       v-model.number="calidad.ipmRural"
                                       type="number"
-                                        lazy-rules 
+                                        lazy-rules
                                         :rules="[
                                             val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                                         ]" /> -->
 
-                                        <q-field                    
+                                        <q-field
                                         v-model="calidad.ipmRural"
                                         hint="#,###"
                                         >
@@ -98,13 +100,13 @@
                                       dense
                                       v-model.number="calidad.ipmTotal"
                                       type="number"
-                                        lazy-rules 
+                                        lazy-rules
                                         :rules="[
                                             val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                                         ]" /> -->
 
-                                        <q-field                    
+                                        <q-field
                                         v-model="calidad.ipmTotal"
                                         hint="#,###"
                                         >
@@ -131,13 +133,13 @@
                                       dense
                                       v-model.number="calidad.nbi_urbano"
                                       type="number"
-                                        lazy-rules 
+                                        lazy-rules
                                         :rules="[
                                             val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                                         ]" /> -->
 
-                                        <q-field                    
+                                        <q-field
                                         v-model="calidad.nbi_urbano"
                                         hint="#,###"
                                         >
@@ -160,15 +162,15 @@
                                 <div class="col-xs-12 col-sm-6">
                                     <!-- <q-input
                                       dense
-                                      v-model.number="calidad.nbi_rural" 
+                                      v-model.number="calidad.nbi_rural"
                                       type="number"
-                                        lazy-rules 
+                                        lazy-rules
                                         :rules="[
                                             val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                                         ]"/> -->
 
-                                        <q-field                    
+                                        <q-field
                                         v-model="calidad.nbi_rural"
                                         hint="#,###"
                                         >
@@ -195,13 +197,13 @@
                                       dense
                                       v-model.number="calidad.pcmUrbano"
                                       type="number"
-                                        lazy-rules 
+                                        lazy-rules
                                         :rules="[
                                             val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                                         ]" /> -->
 
-                                        <q-field                    
+                                        <q-field
                                         v-model="calidad.pcmUrbano"
                                         hint="#,###"
                                         >
@@ -226,12 +228,12 @@
                                       dense
                                       v-model.number="calidad.pcmRural"
                                       type="number"
-                                        lazy-rules 
+                                        lazy-rules
                                         :rules="[
                                             val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                                         ]" /> -->
-                                        <q-field                    
+                                        <q-field
                                         v-model="calidad.pcmRural"
                                         hint="#,###"
                                         >
@@ -256,13 +258,13 @@
                                       dense
                                       v-model.number="calidad.pcm"
                                       type="number"
-                                        lazy-rules 
+                                        lazy-rules
                                         :rules="[
                                             val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                                         ]" /> -->
 
-                                        <q-field                    
+                                        <q-field
                                         v-model="calidad.pcm"
                                         hint="#,###"
                                         >
@@ -291,7 +293,7 @@
                 </div>
 
           </div>
-      </div>      
+      </div>
   </div>
 </template>
 
@@ -336,7 +338,7 @@ export default {
         onSubmit(){
 
             this.$refs.calidadForm.validate().then(success => {
-                if (success) {                    
+                if (success) {
                     console.log('Form valido', this.calidad);
                     this.registrarCalidadDeVidaAction({
                         ...this.calidad,
@@ -357,7 +359,7 @@ export default {
 
 
         }
-        
+
     },
     computed: {
         ...mapGetters('calidadDeVida', ['getCalidadDeVidaState'])

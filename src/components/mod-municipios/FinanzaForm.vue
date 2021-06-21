@@ -1,7 +1,7 @@
 <template>
   <q-dialog
-    persistent 
-    transition-show="scale" 
+    persistent
+    transition-show="scale"
     transition-hide="scale"
     v-model="show">
       <q-card style="width: 700px;">
@@ -16,7 +16,7 @@
           <q-form
             class="q-gutter-md"
             ref="finanzaForm"
-          >                   
+          >
 
           <div class="row q-col-gutter-sm">
             <div class="col-xs-12">
@@ -26,9 +26,11 @@
                 option-label="nombre"
                 v-model="finanza.tipoIndicadorFinanza"
                 :options="options"
-                label="Seleccione el tipo de indicador" />
-            </div>            
-          </div>          
+                label="Seleccione el tipo de indicador"
+                lazy-rules
+                :rules="[val => !!val || 'Campo requerido']" />
+            </div>
+          </div>
 
           <div class="row q-col-gutter-sm">
             <div class="col-xs-12">
@@ -37,21 +39,37 @@
                 v-model.number="finanza.valor"
                 label="Valor del indicador"
                 type="number"
-                lazy-rules 
+                lazy-rules
                 :rules="[
                     val => val !== null && val !== '' || 'Debe ingresar un valor ',
                     val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                 ]"
               />  -->
-              <q-field                    
+              <q-field
+              label="Valor"
               v-model="finanza.valor"
+              lazy-rules
+              :rules="[val => !!val || 'Campo requerido']"
               hint="#,###"
               >
               <template v-slot:control="{ id, floatingLabel, value, emitValue }">
                   <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
               </template>
               </q-field>
-            </div>            
+            </div>
+          </div>
+
+          <div class="row q-col-gutter-sm">
+            <div class="col-xs-12">
+              <q-input
+                outlined
+                v-model="finanza.periodo"
+                placeholder="Año o rango de años de la vigencia"
+                label="Periodo"
+                lazy-rules
+              :rules="[val => !!val || 'Campo requerido']"
+              />
+            </div>
           </div>
 
 
@@ -61,13 +79,14 @@
                 outlined
                 type="textarea"
                 v-model="finanza.observacion"
+                placeholder="Ingrese cualquier observación que ayude a identificar la información ingresada"
                 label="Observaciones"
-              /> 
-            </div>            
-          </div>                
+              />
+            </div>
+          </div>
 
-          </q-form>      
-          
+          </q-form>
+
         </q-card-section>
 
         <q-separator />
@@ -118,12 +137,14 @@ export default {
     this.finanza = {
       id: 0,
       valor:'',
+      periodo: '',
       observacion:'',
       tipoIndicadorFinanza: ''
     }
     if(Object.keys(this.getFinanzaState.objFinanza).length > 0){
       this.finanza.id = this.getFinanzaState.objFinanza.id;
       this.finanza.valor = this.getFinanzaState.objFinanza.valor;
+      this.finanza.periodo = this.getFinanzaState.objFinanza.periodo;
       this.finanza.observacion = this.getFinanzaState.objFinanza.observacion;
       this.finanza.tipoIndicadorFinanza = this.getFinanzaState.objFinanza.tipoIndicadorFinanza;
     }
@@ -131,13 +152,13 @@ export default {
     this.cargarListaParametroPorCategoriaAction(categorias).then(data => {
             this.options = data
         })
-    
+
   },
   methods: {
     ...mapActions('finanza', ['registrarFinanzaAction', 'actualizarFinanzaAction','unsetFinanzaAction']),
     ...mapActions('parametros', ['cargarListaParametroPorCategoriaAction']),
     onSubmit(){
-      
+
       let info = {
         ...this.finanza,
         encuesta: {
@@ -146,18 +167,18 @@ export default {
       }
 
       this.$refs.finanzaForm.validate().then(success => {
-            if (success) {                    
+            if (success) {
                 console.log('Form valido', this.finanza);
                 if(info.id > 0){
                   //Actualizar
-                  this.actualizarFinanzaAction(info).then(() => {          
+                  this.actualizarFinanzaAction(info).then(() => {
                   })
                 }else{
                   //Guardar
                   this.registrarFinanzaAction(info).then( data => {
                     this.finanza.id = data
                   })
-                }                                                        
+                }
             }else{
                 this.$q.notify({
                     message: 'Favor completar los campos correctamente',
@@ -165,22 +186,22 @@ export default {
                 })
             }
         })
-           
+
     },
     close(){
       this.$emit("close");
     }
-  },  
+  },
   computed: {
     ...mapGetters('finanza', ['getFinanzaState']),
     mensajeBoton(){
       return this.finanza.id > 0 ? 'Actualizar' : 'Guardar'
-    } 
+    }
   },
   beforeDestroy(){
     this.unsetFinanzaAction()
   }
-  
+
 
 }
 </script>

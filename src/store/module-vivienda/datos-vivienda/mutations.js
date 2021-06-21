@@ -56,6 +56,7 @@ export function actualizarDatosViviendaSuccess (state, data) {
   state.datosVivienda.lista = state.datosVivienda.lista.map(opt => {
     return opt.id === data.id ? data : opt
   })
+  state.datosVivienda.objDatosVivienda = data
   state.datosVivienda.loading = false
   state.datosVivienda.loaded = true
 }
