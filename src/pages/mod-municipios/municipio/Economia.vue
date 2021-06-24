@@ -24,7 +24,7 @@
           <q-card flat bordered class="my-card q-mb-md">
             <q-card-section class="q-pb-none">
               <div class="text-h6 q-mb-none">
-                Riquesa Natural Orgullo del Municipio
+                Riqueza Natural Orgullo del Municipio
               </div>
             </q-card-section>
 

@@ -2,8 +2,6 @@
   <div class="q-ma-sm">
     <div class="row">
       <div class="col-xs-12 col-sm-8 offset-sm-2">
-        <h6>Infor general autoevaluacion</h6>
-
         <div v-if="step==1">
           <q-form ref="organizacionForm">
             <p class="text-h6 q-mt-md q-mb-sm">1. Datos de la Organización</p>

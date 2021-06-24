@@ -3,17 +3,17 @@
     <div class="row">
       <div class="col-xs-12 col-sm-8 offset-sm-2">
         <div>
-            <p class="text-h6 q-mt-md q-mb-sm">{{ title }} {{step}}</p>
+            <p class="text-h6 q-mt-md q-mb-sm">{{ title }}</p>
             <autoevaluacion-form
                 v-for="opt in indicadoresSeleccionados"
                 :detalleAutoevaluacion="opt"
                 @actualizar="editarIndicador"
-                :key="opt.id" />      
+                :key="opt.id" />
         </div>
 
         <div class="flex justify-center">
             <q-btn v-if="step > 1" label="Anterior" no-caps color="primary" flat class="q-mr-sm" @click="anterior"/>
-            <q-btn label="Continuar" no-caps color="primary" @click="siguiente"/>            
+            <q-btn label="Continuar" no-caps color="primary" @click="siguiente"/>
         </div>
 
       </div>
@@ -30,7 +30,7 @@ export default {
 
   data () {
     return {
-      encuestaID: 0,     
+      encuestaID: 0,
       detalleAutoevaluacion: [],
       indicadoresSeleccionados: [],
       step: TEMAS_SEGUIMIENTO_JAC.JUNTA_ADMINISTRADORA,
@@ -38,7 +38,7 @@ export default {
     }
   },
   created() {
-    
+
     this.encuestaID = this.$route.params.id
     this.cargarListaDetalleAutoevaluacionAction(this.encuestaID).then(data =>{
         this.indicadoresSeleccionados = data.filter(opt => opt.indicador.tema.id === this.step)
@@ -46,7 +46,7 @@ export default {
     })
 
   },
-  methods: {    
+  methods: {
     ...mapActions('detalleAutoevaluacion',['cargarListaDetalleAutoevaluacionAction', 'actualizarDetalleAutoevaluacionAction']),
     siguiente(){
         this.step++
@@ -74,30 +74,30 @@ export default {
     consultarIndicadores(){
         switch (this.step) {
             case TEMAS_SEGUIMIENTO_JAC.JUNTA_ADMINISTRADORA:
-                this.title = 'Junta Administradora o Directiva'                
+                this.title = 'Junta Administradora o Directiva'
                 break;
             case TEMAS_SEGUIMIENTO_JAC.ASAMBLEA_SOCIOS:
-                this.title = 'Asamblea de Socios'                
+                this.title = 'Asamblea de Socios'
                 break;
             case TEMAS_SEGUIMIENTO_JAC.DIRECCIONAMIENTO_ESTRATEGICO:
-                this.title = 'Direccionamiento Estratégico'                
+                this.title = 'Direccionamiento Estratégico'
                 break;
             case TEMAS_SEGUIMIENTO_JAC.ADMINISTRATIVO:
-                this.title = 'Administrativo y Aspectos Legales'                
+                this.title = 'Administrativo y Aspectos Legales'
                 break;
             case TEMAS_SEGUIMIENTO_JAC.FINANCIERO:
-                this.title = 'Financiero'                
+                this.title = 'Financiero'
                 break;
             case TEMAS_SEGUIMIENTO_JAC.EJECUCION_PROYECTOS:
-                this.title = 'Ejecución de proyectos y Contratos'                
+                this.title = 'Ejecución de proyectos y Contratos'
                 break;
             case TEMAS_SEGUIMIENTO_JAC.CAPACITACION:
-                this.title = 'Capacitación'                
+                this.title = 'Capacitación'
                 break;
             case TEMAS_SEGUIMIENTO_JAC.PARTICIPACION:
-                this.title = 'Espacios de participación ciudadana y comunitaria'                
+                this.title = 'Espacios de participación ciudadana y comunitaria'
                 break;
-        
+
             default:
                 break;
         }

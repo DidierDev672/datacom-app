@@ -22,9 +22,9 @@
                 outlined
                 option-value="id"
                 option-label="nombre"
-                v-model="actividadEconomicaDB.actividadEconomica"
+                v-model="aEconomica.actividadEconomica"
                 :options="options"
-                label="Seleccione el cargo"
+                label="Seleccione la actividad económica"
               />
             </div>
           </div>
@@ -63,45 +63,45 @@ export default {
   data(){
     return {
       show: true,
-      participacionCiudadanaDB: {},
+      aEconomica: {},
       encuestaID: 0,
       options: [],
     }},
   created(){
-    let categorias = [CATEGORIAS.PARTICIPACION_CIUDADANA]
+    let categorias = [CATEGORIAS.ACTIVDADES_ECONOMICAS]
     this.encuestaID = this.$route.params.id
-    this.participacionCiudadanaDB = {
+    this.aEconomica = {
       id: 0,
       actividadEconomica:'',
 
     }
     if(Object.keys(this.getActividadEconomicaState.objActividadEconomica).length > 0){
-      this.actividadEconomicaDB.id = this.getActividadEconomicaState.objActividadEconomica.id;
-      this.actividadEconomicaDB.actividadEconomica = this.getActividadEconomicaState.objActividadEconomica.actividadEconomica;
+      this.aEconomica.id = this.getActividadEconomicaState.objActividadEconomica.id;
+      this.aEconomica.actividadEconomica = this.getActividadEconomicaState.objActividadEconomica.actividadEconomica;
     }
     this.cargarListaParametroPorCategoriaAction(categorias).then(data => {
       this.options = data
     })
 
   },methods:{
-    ...mapActions('participacionCiudadana', ['registrarParticipacionCiudadanaAction', 'actualizarParticipacionCiudadanaAction','unsetParticipacionCiudadanaAction']),
+    ...mapActions('actividadEconomica', ['registrarActividadEconomicaAction', 'actualizarActividadEconomicaAction','unsetActividadEconomicaAction']),
     ...mapActions('parametros',['cargarListaParametroPorCategoriaAction']),
     onSubmit(){
 
       let info = {
-        ...this.participacionCiudadanaDB,
+        ...this.aEconomica,
         encuesta: {
           id: this.encuestaID
         }
       }
 
       if(info.id > 0){
-        this.actualizarParticipacionCiudadanaAction(info).then(() => {
+        this.actualizarActividadEconomicaAction(info).then(() => {
 
         })
       }else{
-        this.registrarParticipacionCiudadanaAction(info).then( data => {
-          this.participacionCiudadanaDB.id = data
+        this.registrarActividadEconomicaAction(info).then( data => {
+          this.aEconomica.id = data
         })
       }
     },
@@ -110,13 +110,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('participacionCiudadana', ['getParticipacionCiudadanaState']),
+    ...mapGetters('actividadEconomica', ['getActividadEconomicaState']),
     mensajeBoton(){
-      return this.participacionCiudadanaDB.id > 0 ? 'Actualizar' : 'Guardar'
+      return this.aEconomica.id > 0 ? 'Actualizar' : 'Guardar'
     }
   },
   beforeDestroy(){
-    this.unsetParticipacionCiudadanaAction()
+    this.unsetActividadEconomicaAction()
   }
 }
 </script>

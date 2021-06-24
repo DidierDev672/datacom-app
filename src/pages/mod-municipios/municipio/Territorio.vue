@@ -278,19 +278,19 @@ export default {
     this.territorio = {
       id: 0,
       planDeOrdenamiento:false,
-      planDeOrdenamientoFile:'',
+      planDeOrdenamientoFile:null,
       planDeGestionAmbiental:false,
-      planDeGestionAmbientalFile:'',
+      planDeGestionAmbientalFile:null,
       delimitacionDeAreasProtegidas:false,
-      delimitacionDeAreasProtegidasFile:'',
+      delimitacionDeAreasProtegidasFile:null,
       planDeOrdenamientoDeCuentasHidricas:false,
-      planDeOrdenamientoDeCuentasHidricasFile:'',
+      planDeOrdenamientoDeCuentasHidricasFile:null,
       zonasForestalesProtectoras:false,
-      zonasForestalesProtectorasFile:'',
+      zonasForestalesProtectorasFile:null,
       enZonaDeParquesNaturales:false,
-      nombreParque: '',
+      nombreParque: null,
       catastroActualizado:false,
-      catastroActualizadoFile:''
+      catastroActualizadoFile:null
     }
 
     this.buscarTerritorioAction(this.encuestaID).then(data => {

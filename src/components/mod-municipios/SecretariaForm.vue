@@ -151,7 +151,6 @@ export default {
       },
       telefono: {
         required,
-        Number,
         minLength: minLength(5),
       },
       idGabinete: {
@@ -214,7 +213,6 @@ export default {
     telefonoErrors(){
       let msgError = ''
         if (!this.$v.secretaria.telefono.$dirty) return msgError
-        if (!this.$v.secretaria.telefono.Number) msgError = 'Debe ingresar solo numeros'
         if (!this.$v.secretaria.telefono.minLength) msgError = 'Ingrese almenos 5 caracteres'
         if (!this.$v.secretaria.telefono.required) msgError = 'Debe ingresar un numero telefónico válido'
         return msgError

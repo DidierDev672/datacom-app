@@ -35,7 +35,7 @@ export function setListaActividadEconomicaSuccess (state, data) {
 export function unsetListaActividadEconomica (state) {
   state.actividadEconomica = {
     ...state.actividadEconomica,
-    lista: [],
+    listaActividadEconomica: [],
     loading: false,
     loaded: false,
     error: null
@@ -53,7 +53,7 @@ export function setActividadEconomicaSuccess (state, data) {
   }
 }
 export function actualizarActividadEconomicaSuccess (state, data) {
-  state.actividadEconomica.lista = state.actividadEconomica.lista.map(opt => {
+  state.actividadEconomica.listaActividadEconomica = state.actividadEconomica.listaActividadEconomica.map(opt => {
     return opt.id === data.id ? data : opt
   })
   state.actividadEconomica.loading = false
@@ -61,7 +61,7 @@ export function actualizarActividadEconomicaSuccess (state, data) {
 }
 
 export function agregarActividadEconomicaState (state, data) {
-  state.actividadEconomica.lista.unshift(data)
+  state.actividadEconomica.listaActividadEconomica.unshift(data)
 }
 
 export function unsetActividadEconomica (state) {

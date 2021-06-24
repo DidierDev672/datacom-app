@@ -59,6 +59,11 @@ const routes = [
         component: () => import('pages/mod-municipios/municipio/InfoGeneral.vue'),
       },
       {
+        path: 'view',
+        name: 'ver-encuesta',
+        component: () => import('pages/mod-municipios/municipio/View.vue'),
+      },
+      {
         path: 'poblacion',
         name: 'poblacion',
         component: () => import('pages/mod-municipios/municipio/Poblacion.vue'),

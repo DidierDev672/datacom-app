@@ -68,7 +68,7 @@ export default {
 
     }},
   created(){
-    let categorias = [CATEGORIAS.ESPACIO_PARTICIPACION]
+    let categorias = [CATEGORIAS.PARTICIPACION_CIUDADANA]
     this.jacID = this.$route.params.id
     this.participacionDB = {
       id: 0,

@@ -18,7 +18,7 @@
         </div>
       </q-item-section>
     </q-item>
-    <q-item >
+    <!-- <q-item >
       <q-item-section top>
         <q-item-label caption lines="1">
           Nombre de la Actividad Ec
@@ -27,7 +27,7 @@
           <span class="text-weight-medium">{{ participacioP.espacioParticipacion.nombre }}</span>
         </q-item-label>
       </q-item-section>
-    </q-item>
+    </q-item> -->
   </q-list>
 </template>
 
