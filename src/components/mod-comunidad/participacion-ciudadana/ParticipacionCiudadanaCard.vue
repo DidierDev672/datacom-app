@@ -21,10 +21,10 @@
     <q-item >
       <q-item-section top>
         <q-item-label caption lines="1">
-          Nombre de la Actividad Ec
+          Espacio de participación
         </q-item-label>
         <q-item-label lines="1">
-          <span class="text-weight-medium">{{ participacionC.tipoParticipacion.nombre }}</span>
+          <span class="text-weight-medium">{{ participacionC.observacion }}</span>
         </q-item-label>
       </q-item-section>
     </q-item>

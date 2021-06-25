@@ -2,14 +2,36 @@
 <div class="q-ma-sm">
     <div class="row">
       <div class="col-xs-12 col-sm-8 offset-sm-2">
-        <q-form ref="seguridadForm">          
+        <q-form ref="seguridadForm">
           <p class="text-h6 q-mt-md q-mb-sm">6. Seguridad</p>
           <q-card
             flat
             bordered
             class="my-card q-mb-md">
             <q-card-section class="q-pb-none">
-                <div class="text-h6 q-mb-none">Homicidos año</div>
+                <div class="text-h6 q-mb-none">Año de medición</div>
+            </q-card-section>
+
+            <q-card-section>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6">
+                        <q-input
+                          dense
+                          v-model="seguridad.ano"
+                          lazy-rules
+                          :rules="[val => !!val || 'Campo requerido']" />
+                    </div>
+                </div>
+            </q-card-section>
+
+            </q-card>
+
+          <q-card
+            flat
+            bordered
+            class="my-card q-mb-md">
+            <q-card-section class="q-pb-none">
+                <div class="text-h6 q-mb-none">No. de Homicidos al año</div>
             </q-card-section>
 
             <q-card-section>
@@ -19,13 +41,13 @@
                           dense
                           v-model.number="seguridad.homicidiosPorAno"
                           type="number"
-                            lazy-rules 
+                            lazy-rules
                             :rules="[
                                 val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                             ]" /> -->
 
-                            <q-field                    
+                            <q-field
                             v-model="seguridad.homicidiosPorAno"
                             hint="#,###"
                             >
@@ -53,13 +75,13 @@
                           dense
                           v-model.number="seguridad.tasaHomicidios"
                           type="number"
-                            lazy-rules 
+                            lazy-rules
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                             ]" /> -->
 
-                            <q-field                    
+                            <q-field
                             v-model="seguridad.tasaHomicidios"
                             hint="#,###"
                             >
@@ -82,15 +104,15 @@
                     <div class="col-xs-12 col-sm-6">
                         <!-- <q-input
                           dense
-                          v-model.number="seguridad.poblacionVictimaDelConflicto" 
+                          v-model.number="seguridad.poblacionVictimaDelConflicto"
                           type="number"
-                            lazy-rules 
+                            lazy-rules
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                             ]"/> -->
 
-                            <q-field                    
+                            <q-field
                             v-model="seguridad.poblacionVictimaDelConflicto"
                             hint="#,###"
                             >
@@ -111,13 +133,15 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12">
-                        <q-input type="textarea" dense v-model="seguridad.otrosDelitos" />
+                        <q-input type="textarea" dense v-model="seguridad.otrosDelitos"
+                        lazy-rules
+                        :rules="[val => !!val || 'Campo requerido']" />
                     </div>
                 </div>
             </q-card-section>
           </q-card>
 
-         
+
         </q-form>
 
         <div class="flex justify-center">
@@ -132,8 +156,8 @@
                   <q-spinner-facebook />
               </template>
             </q-btn>
-        </div>           
-  
+        </div>
+
       </div>
     </div>
 
@@ -166,6 +190,7 @@ export default {
     this.encuestaID = this.$route.params.id
     this.seguridad = {
       id: 0,
+      ano: '',
       homicidiosPorAno:'',
       tasaHomicidios:'',
       poblacionVictimaDelConflicto:'',
@@ -175,13 +200,13 @@ export default {
       if(data.id > 0){
         this.seguridad = {...data}
       }
-    })    
+    })
   },
   methods: {
     ...mapActions('seguridad', ['registrarSeguridadAction', 'buscarSeguridadAction']),
     onSubmit(){
       this.$refs.seguridadForm.validate().then(success => {
-            if (success) {                    
+            if (success) {
                 console.log('Form valido', this.seguridad);
               this.registrarSeguridadAction({
                   ...this.seguridad,
@@ -191,7 +216,7 @@ export default {
               }).then(data => {
                 this.seguridad.id = data
                   this.$router.push({name: 'administracion', params: {id: this.encuestaID}})
-              })                                           
+              })
             }else{
                 this.$q.notify({
                     message: 'Favor completar los campos correctamente',

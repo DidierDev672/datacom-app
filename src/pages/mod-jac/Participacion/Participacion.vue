@@ -10,6 +10,7 @@
           :participacioP="participacion"
           @editar="editarInfo"
           :key="participacion.id"></participacion-card>
+
         <div v-if="showBtnContinuar" class="flex justify-center">
           <q-btn label="Continuar" no-caps color="primary" @click="onSubmit"/>
         </div>

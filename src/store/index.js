@@ -52,6 +52,11 @@ import jac from './module-jac'
 import detalleAutoevaluacion from './module-jac/autoevaluacion'
 import planTrabajo from './module-jac/plan-trabajo'
 import planTrabajoDetalle from './module-jac/plan-trabajo-detalle'
+//ModuleVivienda
+import datosVivienda from './module-vivienda/datos-vivienda'
+//ModuleFileManager
+import fileManager from './module-file-manager'
+
 
 
 Vue.use(Vuex)
@@ -117,7 +122,11 @@ export default function (/* { ssrContext } */) {
       jac,
       detalleAutoevaluacion,
       planTrabajo,
-      planTrabajoDetalle
+      planTrabajoDetalle,
+      //ModuleVivienda
+      datosVivienda,
+      //ModuleFileManager
+      fileManager
     },
 
     // enable strict mode (adds overhead!)

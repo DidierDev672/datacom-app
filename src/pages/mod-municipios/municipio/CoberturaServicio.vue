@@ -3,10 +3,27 @@
     <div class="row">
       <div class="col-xs-12 col-sm-8 offset-sm-2">
 
-        <q-form ref="coberturaForm">    
+        <q-form ref="coberturaForm">
 
           <p class="text-h6 q-mt-md q-mb-sm">5.1. Cobertura Servicios Público</p>
-          
+
+          <q-card flat bordered class="my-card q-mb-md">
+            <q-card-section class="q-pb-none">
+                <div class="text-h6 q-mb-none">Año de medición</div>
+            </q-card-section>
+
+            <q-card-section>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6">
+                        <q-input dense v-model="cobertura.ano"
+                        lazy-rules
+                                  :rules="[val => !!val || 'Campo requerido']"/>
+                    </div>
+                </div>
+            </q-card-section>
+          </q-card>
+
+
           <q-card flat bordered class="my-card q-mb-md">
             <q-card-section class="q-pb-none">
                 <div class="text-h6 q-mb-none">Energía Eléctrica Urbana</div>
@@ -17,15 +34,15 @@
                     <div class="col-xs-12 col-sm-6">
                         <!-- <q-input
                           dense
-                          v-model.number="cobertura.energiaElectricaUrbana" 
+                          v-model.number="cobertura.energiaElectricaUrbana"
                           type="number"
-                            lazy-rules 
+                            lazy-rules
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                             ]"/> -->
 
-                            <q-field                    
+                            <q-field
                             v-model="cobertura.energiaElectricaUrbana"
                             hint="#,###"
                             >
@@ -36,7 +53,7 @@
                     </div>
                 </div>
             </q-card-section>
-          </q-card> 
+          </q-card>
 
           <q-card flat bordered class="my-card q-mb-md">
             <q-card-section class="q-pb-none">
@@ -48,15 +65,15 @@
                     <div class="col-xs-12 col-sm-6">
                         <!-- <q-input
                           dense
-                          v-model.number="cobertura.energiaElectricaRural" 
+                          v-model.number="cobertura.energiaElectricaRural"
                           type="number"
-                            lazy-rules 
+                            lazy-rules
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                             ]"/> -->
 
-                             <q-field                    
+                             <q-field
                             v-model="cobertura.energiaElectricaRural"
                             hint="#,###"
                             >
@@ -79,15 +96,15 @@
                     <div class="col-xs-12 col-sm-6">
                         <!-- <q-input
                           dense
-                          v-model.number="cobertura.acueductoUrbano" 
+                          v-model.number="cobertura.acueductoUrbano"
                           type="number"
-                            lazy-rules 
+                            lazy-rules
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                             ]"/> -->
 
-                             <q-field                    
+                             <q-field
                             v-model="cobertura.acueductoUrbano"
                             hint="#,###"
                             >
@@ -98,7 +115,7 @@
                     </div>
                 </div>
             </q-card-section>
-          </q-card> 
+          </q-card>
 
           <q-card flat bordered class="my-card q-mb-md">
             <q-card-section class="q-pb-none">
@@ -110,15 +127,15 @@
                     <div class="col-xs-12 col-sm-6">
                         <!-- <q-input
                           dense
-                          v-model.number="cobertura.acueductoRural" 
+                          v-model.number="cobertura.acueductoRural"
                           type="number"
-                            lazy-rules 
+                            lazy-rules
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                             ]"/> -->
 
-                             <q-field                    
+                             <q-field
                             v-model="cobertura.acueductoRural"
                             hint="#,###"
                             >
@@ -141,15 +158,15 @@
                     <div class="col-xs-12 col-sm-6">
                         <!-- <q-input
                           dense
-                          v-model.number="cobertura.alcantarilladoUrbana" 
+                          v-model.number="cobertura.alcantarilladoUrbana"
                           type="number"
-                            lazy-rules 
+                            lazy-rules
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                             ]"/> -->
 
-                             <q-field                    
+                             <q-field
                             v-model="cobertura.alcantarilladoUrbana"
                             hint="#,###"
                             >
@@ -160,7 +177,7 @@
                     </div>
                 </div>
             </q-card-section>
-          </q-card> 
+          </q-card>
 
           <q-card flat bordered class="my-card q-mb-md">
             <q-card-section class="q-pb-none">
@@ -174,13 +191,13 @@
                           dense
                           v-model.number="cobertura.alcantarilladoRural"
                           type="number"
-                            lazy-rules 
+                            lazy-rules
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                             ]" /> -->
 
-                             <q-field                    
+                             <q-field
                             v-model="cobertura.alcantarilladoRural"
                             hint="#,###"
                             >
@@ -203,15 +220,15 @@
                     <div class="col-xs-12 col-sm-6">
                         <!-- <q-input
                           dense
-                          v-model.number="cobertura.gasNaturalUrbana" 
+                          v-model.number="cobertura.gasNaturalUrbana"
                           type="number"
-                            lazy-rules 
+                            lazy-rules
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                             ]"/> -->
 
-                             <q-field                    
+                             <q-field
                             v-model="cobertura.gasNaturalUrbana"
                             hint="#,###"
                             >
@@ -222,7 +239,7 @@
                     </div>
                 </div>
             </q-card-section>
-          </q-card> 
+          </q-card>
 
           <q-card flat bordered class="my-card q-mb-md">
             <q-card-section class="q-pb-none">
@@ -236,13 +253,13 @@
                           dense
                           v-model.number="cobertura.gasNaturalRural"
                           type="number"
-                            lazy-rules 
+                            lazy-rules
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                             ]" /> -->
 
-                             <q-field                    
+                             <q-field
                             v-model="cobertura.gasNaturalRural"
                             hint="#,###"
                             >
@@ -267,12 +284,12 @@
                           dense
                           v-model.number="cobertura.internetUrbana"
                           type="number"
-                            lazy-rules 
+                            lazy-rules
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                             ]" /> -->
-                             <q-field                    
+                             <q-field
                             v-model="cobertura.internetUrbana"
                             hint="#,###"
                             >
@@ -283,7 +300,7 @@
                     </div>
                 </div>
             </q-card-section>
-          </q-card> 
+          </q-card>
 
           <q-card flat bordered class="my-card q-mb-md">
             <q-card-section class="q-pb-none">
@@ -297,13 +314,13 @@
                           dense
                           v-model.number="cobertura.internetRural"
                           type="number"
-                            lazy-rules 
+                            lazy-rules
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                             ]" /> -->
 
-                             <q-field                    
+                             <q-field
                             v-model="cobertura.internetRural"
                             hint="#,###"
                             >
@@ -330,7 +347,7 @@
                     <q-spinner-facebook />
                 </template>
             </q-btn>
-        </div>  
+        </div>
       </div>
     </div>
 
@@ -357,6 +374,7 @@ export default {
     this.encuestaID = this.$route.params.id
     this.cobertura = {
       id: 0,
+      ano: '',
       energiaElectricaUrbana:'',
       energiaElectricaRural:'',
       acueductoUrbano:'',
@@ -376,7 +394,7 @@ export default {
     ...mapActions('coberturaServicios', ['registrarCoberturaAction', 'buscarCoberturaAction']),
     onSubmit(){
         this.$refs.coberturaForm.validate().then(success => {
-            if (success) {                    
+            if (success) {
                 console.log('Form valido', this.cobertura);
                 this.registrarCoberturaAction({
                     ...this.cobertura,
@@ -386,7 +404,7 @@ export default {
                 }).then(data => {
                     this.cobertura.id = data
                     this.$router.push({name: 'seguridad', params: {id: this.encuestaID}})
-                })                            
+                })
             }else{
                 this.$q.notify({
                     message: 'Favor completar los campos correctamente',

@@ -18,16 +18,6 @@
         </div>
       </q-item-section>
     </q-item>
-    <q-item >
-      <q-item-section top>
-        <q-item-label caption lines="1">
-          Nombre de la Actividad Ec
-        </q-item-label>
-        <q-item-label lines="1">
-          <span class="text-weight-medium">{{ actividadE.actividadEconomica.nombre }}</span>
-        </q-item-label>
-      </q-item-section>
-    </q-item>
   </q-list>
 </template>
 

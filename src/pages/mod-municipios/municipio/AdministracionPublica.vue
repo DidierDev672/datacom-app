@@ -2,20 +2,22 @@
     <div class="q-ma-sm">
         <div class="row">
             <div class="col-xs-12 col-sm-8 offset-sm-2">
-                
-                <q-form ref="ubicacionForm">        
+
+                <q-form ref="administracionForm">
 
                     <p class="text-h6 q-mt-md q-mb-sm">7. Administración Pública</p>
 
                    <q-card flat bordered class="my-card q-mb-md">
                        <q-card-section class="q-pb-none">
-                            <div class="text-h6 q-mb-none">Dirección de la Alcaldía</div>
+                            <div class="text-h6 q-mb-none">Dirección de la Alcaldía *</div>
                        </q-card-section>
 
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input dense v-model="infoGeneral.direccionAlcaldia" />
+                                    <q-input dense v-model="infoGeneral.direccionAlcaldia"
+                                    lazy-rules
+                                  :rules="[val => !!val || 'Campo requerido']" />
                                 </div>
                             </div>
                         </q-card-section>
@@ -23,13 +25,15 @@
 
                     <q-card flat bordered class="my-card q-mb-md">
                        <q-card-section class="q-pb-none">
-                            <div class="text-h6 q-mb-none">No. de Funcionarios de la Alcaldía</div>
+                            <div class="text-h6 q-mb-none">No. de Funcionarios de la Alcaldía *</div>
                        </q-card-section>
 
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input dense v-model="infoGeneral.numeroFuncionarios" />
+                                    <q-input dense v-model="infoGeneral.numeroFuncionarios"
+                                    lazy-rules
+                                  :rules="[val => !!val || 'Campo requerido']"/>
                                 </div>
                             </div>
                         </q-card-section>
@@ -38,13 +42,15 @@
 
                     <q-card flat bordered class="my-card q-mb-md">
                        <q-card-section class="q-pb-none">
-                            <div class="text-h6 q-mb-none">Teléfono fijo</div>
+                            <div class="text-h6 q-mb-none">Teléfono fijo *</div>
                        </q-card-section>
 
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input dense v-model="infoGeneral.telefono" />
+                                    <q-input dense v-model="infoGeneral.telefono"
+                                    lazy-rules
+                                  :rules="[val => !!val || 'Campo requerido']"/>
                                 </div>
                             </div>
                         </q-card-section>
@@ -52,13 +58,15 @@
 
                     <q-card flat bordered class="my-card q-mb-md">
                        <q-card-section class="q-pb-none">
-                            <div class="text-h6 q-mb-none">Horario de Atención</div>
+                            <div class="text-h6 q-mb-none">Horario de Atención *</div>
                        </q-card-section>
 
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input dense v-model="infoGeneral.horarioDeAtencion" />
+                                    <q-input dense v-model="infoGeneral.horarioDeAtencion"
+                                    lazy-rules
+                                  :rules="[val => !!val || 'Campo requerido']" />
                                 </div>
                             </div>
                         </q-card-section>
@@ -66,13 +74,15 @@
 
                     <q-card flat bordered class="my-card q-mb-md">
                        <q-card-section class="q-pb-none">
-                            <div class="text-h6 q-mb-none">Correo electrónico</div>
+                            <div class="text-h6 q-mb-none">Correo electrónico *</div>
                        </q-card-section>
 
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input dense v-model="infoGeneral.correo" />
+                                    <q-input dense v-model="infoGeneral.correo"
+                                    lazy-rules
+                                  :rules="[val => !!val || 'Campo requerido']" />
                                 </div>
                             </div>
                         </q-card-section>
@@ -80,13 +90,15 @@
 
                     <q-card flat bordered class="my-card q-mb-md">
                        <q-card-section class="q-pb-none">
-                            <div class="text-h6 q-mb-none">Página Web</div>
+                            <div class="text-h6 q-mb-none">Página Web *</div>
                        </q-card-section>
 
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input dense v-model="infoGeneral.paginaWeb" />
+                                    <q-input dense v-model="infoGeneral.paginaWeb"
+                                    lazy-rules
+                                  :rules="[val => !!val || 'Campo requerido']" />
                                 </div>
                             </div>
                         </q-card-section>
@@ -94,13 +106,15 @@
 
                     <q-card flat bordered class="my-card q-mb-md">
                        <q-card-section class="q-pb-none">
-                            <div class="text-h6 q-mb-none">Facebook</div>
+                            <div class="text-h6 q-mb-none">Facebook *</div>
                        </q-card-section>
 
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input dense v-model="infoGeneral.paginaDeFacebook" />
+                                    <q-input dense v-model="infoGeneral.paginaDeFacebook"
+                                    lazy-rules
+                                  :rules="[val => !!val || 'Campo requerido']" />
                                 </div>
                             </div>
                         </q-card-section>
@@ -110,13 +124,15 @@
 
                    <q-card flat bordered class="my-card q-mb-md">
                        <q-card-section class="q-pb-none">
-                            <div class="text-h6 q-mb-none">Nombre completo</div>
+                            <div class="text-h6 q-mb-none">Nombre completo *</div>
                        </q-card-section>
 
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input dense v-model="infoGeneral.alcalde" />
+                                    <q-input dense v-model="infoGeneral.alcalde"
+                                    lazy-rules
+                                  :rules="[val => !!val || 'Campo requerido']" />
                                 </div>
                             </div>
                         </q-card-section>
@@ -124,13 +140,15 @@
 
                     <q-card flat bordered class="my-card q-mb-md">
                        <q-card-section class="q-pb-none">
-                            <div class="text-h6 q-mb-none">Partido Político</div>
+                            <div class="text-h6 q-mb-none">Partido Político *</div>
                        </q-card-section>
 
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input dense v-model="infoGeneral.partidoPolitico" />
+                                    <q-input dense v-model="infoGeneral.partidoPolitico"
+                                    lazy-rules
+                                  :rules="[val => !!val || 'Campo requerido']" />
                                 </div>
                             </div>
                         </q-card-section>
@@ -138,13 +156,15 @@
 
                     <q-card flat bordered class="my-card q-mb-md">
                        <q-card-section class="q-pb-none">
-                            <div class="text-h6 q-mb-none">Teléfono</div>
+                            <div class="text-h6 q-mb-none">Teléfono *</div>
                        </q-card-section>
 
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input dense v-model="infoGeneral.telefonoAlcalde" />
+                                    <q-input dense v-model="infoGeneral.telefonoAlcalde"
+                                    lazy-rules
+                                  :rules="[val => !!val || 'Campo requerido']"/>
                                 </div>
                             </div>
                         </q-card-section>
@@ -152,13 +172,15 @@
 
                     <q-card flat bordered class="my-card q-mb-md">
                        <q-card-section class="q-pb-none">
-                            <div class="text-h6 q-mb-none">Correo electrónico</div>
+                            <div class="text-h6 q-mb-none">Correo electrónico *</div>
                        </q-card-section>
 
                         <q-card-section>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6">
-                                    <q-input dense v-model="infoGeneral.correoAlcalde" />
+                                    <q-input dense v-model="infoGeneral.correoAlcalde"
+                                    lazy-rules
+                                  :rules="[val => !!val || 'Campo requerido']" />
                                 </div>
                             </div>
                         </q-card-section>
@@ -222,9 +244,18 @@ export default {
     methods: {
         ...mapActions('informacionGeneral',['buscarInformacionGeneralAction','actualizarInformacionGeneralAction']),
         onSubmit(){
-            this.actualizarInformacionGeneralAction(this.infoGeneral).then(data => {
-                this.$router.push({name: 'secretarias', params: {id: this.encuestaID}})
-            })
+          this.$refs.administracionForm.validate().then(success => {
+                if (success) {
+                  this.actualizarInformacionGeneralAction(this.infoGeneral).then(data => {
+                      this.$router.push({name: 'secretarias', params: {id: this.encuestaID}})
+                  })
+                }else{
+                    this.$q.notify({
+                        message: 'Favor completar los campos correctamente',
+                        color: 'red'
+                    })
+                }
+          })
         }
     },
 

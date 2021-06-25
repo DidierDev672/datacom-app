@@ -90,7 +90,7 @@ export default {
           break;
         case TIPO_ENCUESTA.MUNICIPIO:
           console.log("Tipo encuesta municipio");
-          this.$router.push({ name: "info-general", params: { id: row.id } });
+          this.$router.push({ name: "ver-encuesta", params: { id: row.id } });
           break;
         default:
           console.log("Tipo encuesta JAC");

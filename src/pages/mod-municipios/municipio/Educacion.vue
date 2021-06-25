@@ -2,7 +2,7 @@
 <div class="q-ma-sm">
     <div class="row">
       <div class="col-xs-12 col-sm-8 offset-sm-2">
-        <q-form ref="educacionForm">          
+        <q-form ref="educacionForm">
           <p class="text-h6 q-mt-md q-mb-sm">4. Educación</p>
           <q-card
             flat
@@ -15,7 +15,9 @@
             <q-card-section>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <q-input dense v-model="educacion.ano" />
+                        <q-input dense v-model="educacion.ano"
+                        lazy-rules
+                                  :rules="[val => !!val || 'Campo requerido']"/>
                     </div>
                 </div>
             </q-card-section>
@@ -36,14 +38,14 @@
                     <div class="col-xs-12 col-sm-6">
                         <!-- <q-input
                           dense
-                          v-model.number="educacion.coberturaNetaTransicion" 
+                          v-model.number="educacion.coberturaNetaTransicion"
                           type="number"
-                            lazy-rules 
+                            lazy-rules
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                             ]"/> -->
-                            <q-field                    
+                            <q-field
                             v-model="educacion.coberturaNetaTransicion"
                             hint="#,###"
                             >
@@ -68,12 +70,12 @@
                           dense
                           v-model.number="educacion.coberturaNetaBasicaPrimaria"
                           type="number"
-                            lazy-rules 
+                            lazy-rules
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                             ]" /> -->
-                            <q-field                    
+                            <q-field
                             v-model="educacion.coberturaNetaBasicaPrimaria"
                             hint="#,###"
                             >
@@ -98,13 +100,13 @@
                           dense
                           v-model.number="educacion.coberturaNetaBasicaSecundaria"
                           type="number"
-                            lazy-rules 
+                            lazy-rules
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                             ]" /> -->
 
-                            <q-field                    
+                            <q-field
                             v-model="educacion.coberturaNetaBasicaSecundaria"
                             hint="#,###"
                             >
@@ -129,12 +131,12 @@
                           dense
                           v-model.number="educacion.coberturaNetaEducacionMedia"
                           type="number"
-                            lazy-rules 
+                            lazy-rules
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                             ]" /> -->
-                            <q-field                    
+                            <q-field
                             v-model="educacion.coberturaNetaEducacionMedia"
                             hint="#,###"
                             >
@@ -159,13 +161,13 @@
                           dense
                           v-model.number="educacion.coberturaNetaTotal"
                           type="number"
-                            lazy-rules 
+                            lazy-rules
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                             ]" /> -->
 
-                            <q-field                    
+                            <q-field
                             v-model="educacion.coberturaNetaTotal"
                             hint="#,###"
                             >
@@ -195,13 +197,13 @@
                           dense
                           v-model.number="educacion.coberturaBrutaTransicion"
                           type="number"
-                            lazy-rules 
+                            lazy-rules
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                             ]" /> -->
 
-                            <q-field                    
+                            <q-field
                             v-model="educacion.coberturaBrutaTransicion"
                             hint="#,###"
                             >
@@ -226,13 +228,13 @@
                           dense
                           v-model.number="educacion.coberturaBrutaBasicaPrimaria"
                           type="number"
-                            lazy-rules 
+                            lazy-rules
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                             ]" /> -->
 
-                            <q-field                    
+                            <q-field
                             v-model="educacion.coberturaBrutaBasicaPrimaria"
                             hint="#,###"
                             >
@@ -257,13 +259,13 @@
                           dense
                           v-model.number="educacion.coberturaBrutaBasicaSecundaria"
                           type="number"
-                            lazy-rules 
+                            lazy-rules
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                             ]" /> -->
 
-                            <q-field                    
+                            <q-field
                             v-model="educacion.coberturaBrutaBasicaSecundaria"
                             hint="#,###"
                             >
@@ -288,13 +290,13 @@
                           dense
                           v-model.number="educacion.coberturaBrutaEducacionMedia"
                           type="number"
-                            lazy-rules 
+                            lazy-rules
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                             ]" /> -->
 
-                            <q-field                    
+                            <q-field
                             v-model="educacion.coberturaBrutaEducacionMedia"
                             hint="#,###"
                             >
@@ -319,13 +321,13 @@
                           dense
                           v-model.number="educacion.coberturaBrutaTotal"
                           type="number"
-                            lazy-rules 
+                            lazy-rules
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                             ]" /> -->
 
-                            <q-field                    
+                            <q-field
                             v-model="educacion.coberturaBrutaTotal"
                             hint="#,###"
                             >
@@ -355,13 +357,13 @@
                           dense
                           v-model.number="educacion.tasaDeAnalfabestismoUrbano"
                           type="number"
-                            lazy-rules 
+                            lazy-rules
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                             ]" /> -->
 
-                            <q-field                    
+                            <q-field
                             v-model="educacion.tasaDeAnalfabestismoUrbano"
                             hint="#,###"
                             >
@@ -386,13 +388,13 @@
                           dense
                           v-model.number="educacion.tasaDeAnalfabestismoRural"
                           type="number"
-                            lazy-rules 
+                            lazy-rules
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                             ]" /> -->
 
-                            <q-field                    
+                            <q-field
                             v-model="educacion.tasaDeAnalfabestismoRural"
                             hint="#,###"
                             >
@@ -422,13 +424,13 @@
                           dense
                           v-model.number="educacion.puntajePromedioSaberMatematica"
                           type="number"
-                            lazy-rules 
+                            lazy-rules
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                             ]" /> -->
 
-                            <q-field                    
+                            <q-field
                             v-model="educacion.puntajePromedioSaberMatematica"
                             hint="#,###"
                             >
@@ -453,12 +455,12 @@
                           dense
                           v-model.number="educacion.puntajePromedioSaberLectura"
                           type="number"
-                            lazy-rules 
+                            lazy-rules
                             :rules="[
                                 val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                 val => val > -1 || 'El valor ingresado debe ser mayor a cero '
                             ]" /> -->
-                            <q-field                    
+                            <q-field
                             v-model="educacion.puntajePromedioSaberLectura"
                             hint="#,###"
                             >
@@ -484,8 +486,8 @@
                     <q-spinner-facebook />
                 </template>
             </q-btn>
-        </div>           
-  
+        </div>
+
       </div>
     </div>
 
@@ -540,13 +542,13 @@ export default {
             this.educacion = {...data}
         }
     })
-    
+
   },
   methods: {
     ...mapActions('educacion', ['registrarEducacionAction', 'buscarEducacionAction']),
     onSubmit(){
         this.$refs.educacionForm.validate().then(success => {
-            if (success) {                    
+            if (success) {
                 console.log('Form valido', this.educacion);
                 this.registrarEducacionAction({
                     ...this.educacion,
@@ -557,7 +559,7 @@ export default {
                     this.educacion.id = data
                     this.$router.push({name: 'viviendas-municipio', params: {id: this.encuestaID}})
                 })
-                
+
             }else{
                 this.$q.notify({
                     message: 'Favor completar los campos correctamente',

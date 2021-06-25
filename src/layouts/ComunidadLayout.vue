@@ -11,7 +11,7 @@
           @click="leftDrawerOpen = !leftDrawerOpen"
         />
         <q-toolbar-title>
-          Datacom
+          Datacom - {{ getEncuestaState.objEncuesta.descripcion }}
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
@@ -342,7 +342,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 // import EssentialLink from 'components/EssentialLink'
 
 export default {
@@ -362,6 +362,9 @@ export default {
     this.encuestaID = this.$route.params.id
     this.buscarEncuestaAction(this.encuestaID)
   },
+  computed: {
+    ...mapGetters('encuesta', ['getEncuestaState'])
+  }
 }
 </script>
 <style lang="sass">

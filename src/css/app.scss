@@ -32,3 +32,32 @@ body{
   max-width: 975px;
   margin: 0 auto;
 }
+
+@media print {
+  /* Contenido del fichero print.css */
+
+  .text-center {
+    text-align: center;
+  }
+
+  .report-list .q-item__section {
+    border-right: 1px solid #ccc;
+  }
+
+  .q-list--bordered {
+    border: 1px solid rgba(0, 0, 0, 0.12);
+  }
+
+  @page {
+    size: auto; /* auto is the initial value */
+    margin: 10%;
+  }
+
+  header, footer, nav, aside {
+    display: none;
+  }
+
+
+
+}
+

@@ -1,10 +1,10 @@
-<template>  
+<template>
   <div class="q-ma-sm">
     <div class="row">
-      <div class="col-xs-12 col-sm-8 offset-sm-2">        
+      <div class="col-xs-12 col-sm-8 offset-sm-2">
 
         <div v-if="step==1">
-          <q-form ref="ubicacionForm">          
+          <q-form ref="ubicacionForm">
             <p class="text-h6 q-mt-md q-mb-sm">1. Ubicación del Municipio</p>
             <q-card
               flat
@@ -75,7 +75,9 @@
                   <div class="col-xs-12 col-sm-6">
                     <q-input
                       dense
-                      v-model="infoGeneral.region"/>
+                      v-model="infoGeneral.region"
+                      lazy-rules
+                      :rules="[val => !!val || 'Campo requerido']" />
                   </div>
                 </div>
               </q-card-section>
@@ -90,8 +92,10 @@
                 <div class="row">
                   <div class="col-xs-12 col-sm-6">
                     <!-- <q-input dense v-model="infoGeneral.extension" /> -->
-                    <q-field                    
+                    <q-field
                     v-model="infoGeneral.extension"
+                    lazy-rules
+                      :rules="[val => val > 0 || 'Campo requerido']"
                     hint="#,###"
                     >
                     <template v-slot:control="{ id, floatingLabel, value, emitValue }">
@@ -106,7 +110,7 @@
         </div>
 
         <div v-if="step==2">
-          <q-form ref="limitesForm"> 
+          <q-form ref="limitesForm">
             <p class="text-h6 q-mt-md q-mb-sm">Límites Geográficos</p>
               <q-card
                 flat
@@ -121,7 +125,9 @@
                     <div class="col-xs-12 col-sm-6">
                       <q-input
                         dense
-                        v-model="infoGeneral.limiteNorte" />
+                        v-model="infoGeneral.limiteNorte"
+                        lazy-rules
+                      :rules="[val => !!val || 'Campo requerido']" />
                     </div>
                   </div>
                 </q-card-section>
@@ -135,7 +141,9 @@
                 <q-card-section>
                   <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                      <q-input dense v-model="infoGeneral.limiteSur" />
+                      <q-input dense v-model="infoGeneral.limiteSur"
+                      lazy-rules
+                      :rules="[val => !!val || 'Campo requerido']" />
                     </div>
                   </div>
                 </q-card-section>
@@ -149,7 +157,9 @@
                 <q-card-section>
                   <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                      <q-input dense v-model="infoGeneral.limiteOriente" />
+                      <q-input dense v-model="infoGeneral.limiteOriente"
+                      lazy-rules
+                      :rules="[val => !!val || 'Campo requerido']" />
                     </div>
                   </div>
                 </q-card-section>
@@ -163,7 +173,9 @@
                 <q-card-section>
                   <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                      <q-input dense v-model="infoGeneral.limiteOccidente" />
+                      <q-input dense v-model="infoGeneral.limiteOccidente"
+                      lazy-rules
+                      :rules="[val => !!val || 'Campo requerido']" />
                     </div>
                   </div>
                 </q-card-section>
@@ -172,7 +184,7 @@
         </div>
 
         <div v-if="step == 3">
-          <q-form ref="otroForm">  
+          <q-form ref="otroForm">
             <p class="text-h6 q-mt-md q-mb-sm">Otros datos</p>
               <q-card
                 flat
@@ -185,7 +197,9 @@
                 <q-card-section>
                   <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                      <q-input hint="No. de veredas" dense v-model="infoGeneral.composicion"/>
+                      <q-input hint="No. de veredas" dense v-model="infoGeneral.composicion"
+                      lazy-rules
+                      :rules="[val => !!val || 'Campo requerido']"/>
                     </div>
                   </div>
                 </q-card-section>
@@ -200,7 +214,7 @@
                   <div class="row">
                     <div class="col-xs-12 col-sm-6">
                       <!-- <q-input dense v-model="infoGeneral.altitud"/> -->
-                      <q-field                    
+                      <q-field
                       v-model="infoGeneral.altitud"
                       hint="#,###"
                       >
@@ -221,7 +235,9 @@
                 <q-card-section>
                   <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                      <q-input dense v-model="infoGeneral.gentilicio" />
+                      <q-input dense v-model="infoGeneral.gentilicio"
+                      lazy-rules
+                      :rules="[val => !!val || 'Campo requerido']" />
                     </div>
                   </div>
                 </q-card-section>
@@ -238,7 +254,9 @@
                       <q-input
                         type="date"
                         dense
-                        v-model="infoGeneral.fechaFundacion" />
+                        v-model="infoGeneral.fechaFundacion"
+                        lazy-rules
+                      :rules="[val => !!val || 'Campo requerido']" />
                     </div>
                   </div>
                 </q-card-section>
@@ -246,7 +264,7 @@
 
               <q-card flat bordered class="my-card q-mb-md">
                 <q-card-section class="q-pb-none">
-                  <div class="text-h6 q-mb-none">Categoria </div>
+                  <div class="text-h6 q-mb-none">Categoría </div>
                 </q-card-section>
 
                 <q-card-section>
@@ -254,7 +272,9 @@
                     <div class="col-xs-12 col-sm-6">
                       <q-input
                         dense
-                        v-model="infoGeneral.categoria" />
+                        v-model="infoGeneral.categoria"
+                        lazy-rules
+                      :rules="[val => !!val || 'Campo requerido']" />
                     </div>
                   </div>
                 </q-card-section>
@@ -268,7 +288,9 @@
                 <q-card-section>
                   <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                      <q-input type="textarea" dense v-model="infoGeneral.emblema"/>
+                      <q-input type="textarea" dense v-model="infoGeneral.emblema"
+                      lazy-rules
+                      :rules="[val => !!val || 'Campo requerido']"/>
                     </div>
                   </div>
                 </q-card-section>
@@ -276,13 +298,15 @@
 
               <q-card flat bordered class="my-card q-mb-md">
                 <q-card-section class="q-pb-none">
-                  <div class="text-h6 q-mb-none">Personajes representativo</div>
+                  <div class="text-h6 q-mb-none">Personajes representativos</div>
                 </q-card-section>
 
                 <q-card-section>
                   <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                      <q-input type="textarea" dense v-model="infoGeneral.personajeRepresentativo"/>
+                      <q-input type="textarea" dense v-model="infoGeneral.personajeRepresentativo"
+                      lazy-rules
+                      :rules="[val => !!val || 'Campo requerido']"/>
                     </div>
                   </div>
                 </q-card-section>
@@ -307,13 +331,13 @@
                         dense
                         type="number"
                         v-model.number="infoGeneral.poblacionUrbana"
-                        lazy-rules 
+                        lazy-rules
                         :rules="[
                           val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero ',
                           val => val > 0 || 'El valor ingresado debe ser mayor a cero '
                         ]" /> -->
 
-                        <q-field                    
+                        <q-field
                         v-model="infoGeneral.poblacionUrbana"
                         hint="#,###"
                         >
@@ -338,12 +362,12 @@
                         dense
                         type="number"
                         v-model.number="infoGeneral.poblacionRural"
-                        lazy-rules 
+                        lazy-rules
                         :rules="[
                           val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero ',
                           val => val > 0 || 'El valor ingresado debe ser mayor a cero '
                         ]" /> -->
-                        <q-field                    
+                        <q-field
                         v-model="infoGeneral.poblacionRural"
                         hint="#,###"
                         >
@@ -368,12 +392,12 @@
                         dense
                         type="number"
                         v-model.number="infoGeneral.noHombres"
-                        lazy-rules 
+                        lazy-rules
                         :rules="[
                           val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero ',
                           val => val > 0 || 'El valor ingresado debe ser mayor a cero '
                         ]" /> -->
-                        <q-field                    
+                        <q-field
                         v-model="infoGeneral.noHombres"
                         hint="#,###"
                         >
@@ -397,8 +421,8 @@
                       <!-- <q-input
                         dense
                         type="number"
-                        v-model.number="infoGeneral.noMujeres" 
-                        lazy-rules 
+                        v-model.number="infoGeneral.noMujeres"
+                        lazy-rules
                         :rules="[
                           val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero ',
                           val => val > 0 || 'El valor ingresado debe ser mayor a cero '
@@ -426,12 +450,12 @@
                         dense
                         type="number"
                         v-model.number="infoGeneral.noIndigenas"
-                        lazy-rules 
+                        lazy-rules
                         :rules="[
                           val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero ',
                           val => val > 0 || 'El valor ingresado debe ser mayor a cero '
                         ]" /> -->
-                        <q-field                    
+                        <q-field
                         v-model="infoGeneral.noIndigenas"
                         hint="#,###"
                         >
@@ -455,13 +479,13 @@
                       <!-- <q-input
                         dense
                         type="number"
-                        v-model.number="infoGeneral.noAfro" 
-                         lazy-rules 
+                        v-model.number="infoGeneral.noAfro"
+                         lazy-rules
                         :rules="[
                           val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero ',
                           val => val > 0 || 'El valor ingresado debe ser mayor a cero '
                         ]"/> -->
-                        <q-field                    
+                        <q-field
                         v-model="infoGeneral.noAfro"
                         hint="#,###"
                         >
@@ -482,7 +506,9 @@
                 <q-card-section>
                   <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                      <q-input dense v-model="infoGeneral.tasaFecundidad"/>
+                      <q-input dense v-model="infoGeneral.tasaFecundidad"
+                      lazy-rules
+                      :rules="[val => !!val || 'Campo requerido']"/>
                     </div>
                   </div>
                 </q-card-section>
@@ -496,7 +522,9 @@
                 <q-card-section>
                   <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                      <q-input dense v-model="infoGeneral.tasaNatalidad"/>
+                      <q-input dense v-model="infoGeneral.tasaNatalidad"
+                      lazy-rules
+                      :rules="[val => !!val || 'Campo requerido']" />
                     </div>
                   </div>
                 </q-card-section>
@@ -514,12 +542,12 @@
                         dense
                         v-model.number="infoGeneral.densidad"
                         type="number"
-                         lazy-rules 
+                         lazy-rules
                         :rules="[
                           val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero ',
                           val => val > 0 || 'El valor ingresado debe ser mayor a cero '
                         ]"/> -->
-                        <q-field                    
+                        <q-field
                         v-model="infoGeneral.densidad"
                         hint="#,###"
                         >
@@ -579,7 +607,7 @@
             </q-card>
         </div>
 
-        
+
         <div class="flex justify-center">
             <q-btn v-if="step > 1" label="Anterior" no-caps color="primary" flat class="q-mr-sm" @click="anterior"/>
             <q-btn v-if="step < 5" label="Siguiente" no-caps color="primary" @click="siguiente"/>
@@ -595,11 +623,11 @@
               <template v-slot:loading>
                 <q-spinner-facebook />
               </template>
-              
+
               </q-btn>
         </div>
 
-       
+
       </div>
     </div>
   </div>
@@ -700,7 +728,7 @@ export default {
   methods: {
     ...mapActions('informacionGeneral',['buscarInformacionGeneralAction','guardarInformacionGeneralAction']),
     ...mapActions('departamento', ['cargarListaDepartamentoAction', 'cargarListaMunicipiosDelDepartamentoAction']),
-    siguiente(){    
+    siguiente(){
 
       this.validarForm()
     },
@@ -746,7 +774,7 @@ export default {
                 }
               }).then(data => {
                 this.infoGeneral.id = data
-                this.step++                
+                this.step++
               })
             }else{
               this.$q.notify({
@@ -766,7 +794,7 @@ export default {
                     id: this.encuestaID
                   }
                 }).then(data => {
-                this.step++                
+                this.step++
               })
             }else{
               this.$q.notify({
@@ -786,7 +814,7 @@ export default {
                     id: this.encuestaID
                   }
                 }).then(data => {
-                this.step++                
+                this.step++
               })
             }else{
               this.$q.notify({
@@ -806,7 +834,7 @@ export default {
                     id: this.encuestaID
                   }
                 }).then(data => {
-                this.step++                
+                this.step++
               })
             }else{
               this.$q.notify({
@@ -816,7 +844,7 @@ export default {
             }
           })
           break
-      
+
         default:
           this.step++
           break;
