@@ -2,13 +2,13 @@ import axios from 'axios'
 import { URL_API } from '../../../utils/config'
 
 // Acciones para la lista
-export function cargarListaProyectosProductivosAction ({ commit }) {
+export function cargarListaProyectosProductivosAction ({ commit },jacID) {
   commit('inicializarAccion')
   const urlService = 'proyectos-productivos'
   return new Promise((resolve, reject) => {
-    axios.get(`${URL_API}/${urlService}/`)
+    axios.get(`${URL_API}/${urlService}/jac/${jacID}`)
       .then(({ data }) => {
-        commit('setListaParticipacionSuccess', data)
+        commit('setListaProyectosProductivosSuccess', data)
         resolve(data)
       }).catch(error => {
       console.log('Ocurrió un error al consultar los tipos de Participacion jac: ', error.response)
@@ -49,7 +49,7 @@ export function registrarProyectosProductivosAction ({ commit }, payload) {
         ...payload,
         id: data
       }
-      commit('setProyectosProductivosSuccess', info);
+      commit('setProyectosProductosSuccess', info);
       commit('agregarProyectosProductivosState', info);
       resolve(data);
     }).catch( error => {

@@ -53,12 +53,11 @@ export function setContratosSuccess (state, data) {
   }
 }
 export function actualizarContratosSuccess (state, data) {
-  state.contratos = {
-    ...state.contratos,
-    objContratos: data,
-    loading: false,
-    loaded: true
-  }
+  state.contratos.lista = state.contratos.lista.map(opt => {
+    return opt.id === data.id ? data : opt
+  })
+  state.contratos.loading = false
+  state.contratos.loaded = true
 }
 
 export function agregarContratosState (state, data) {

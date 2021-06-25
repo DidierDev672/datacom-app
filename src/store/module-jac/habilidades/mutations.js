@@ -53,12 +53,11 @@ export function setHabilidadesSuccess (state, data) {
   }
 }
 export function actualizarHabilidadesSuccess (state, data) {
-  state.habilidades = {
-    ...state.habilidades,
-    objHabilidades: data,
-    loading: false,
-    loaded: true
-  }
+  state.habilidades.lista = state.habilidades.lista.map(opt => {
+    return opt.id === data.id ? data : opt
+  })
+  state.habilidades.loading = false
+  state.habilidades.loaded = true
 }
 
 export function agregarHabilidadesState (state, data) {

@@ -53,12 +53,11 @@ export function setProyectosProductosSuccess (state, data) {
   }
 }
 export function actualizarProyectosProductivosSuccess (state, data) {
-  state.proyectosProductivos = {
-    ...state.proyectosProductivos,
-    objProyectosProductivos: data,
-    loading: false,
-    loaded: true
-  }
+  state.proyectosProductivos.lista = state.proyectosProductivos.lista.map(opt => {
+    return opt.id === data.id ? data : opt
+  })
+  state.proyectosProductivos.loading = false
+  state.proyectosProductivos.loaded = true
 }
 
 export function agregarProyectoProductivosState (state, data) {
