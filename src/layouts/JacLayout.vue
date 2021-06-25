@@ -256,5 +256,18 @@ export default {
 </script>
 
 <style lang="sass">
-
+  .q-toolbar
+    @media (min-width: $breakpoint-sm-min)
+      height: 77px
+  .q-toolbar__title
+    font-size: 30px
+    @media (max-width: $breakpoint-xs-max)
+      text-align: center
+  .q-footer
+    .q-tab__icon
+      font-size: 30px
+  .fondo-nav
+    background: rgb(175,202,11)
+    background: linear-gradient(90deg, rgba(175,202,11,1) 0%, rgba(100,194,200, 1) 100%)
+    background: --prefix-linear-gradient(90deg, rgba(175,202,11,1) 0%, rgba(100,194,200, 1) 100%)
 </style>
