@@ -53,12 +53,11 @@ export function setParticipacionSuccess (state, data) {
   }
 }
 export function actualizarParticipacionSuccess (state, data) {
-  state.participacion = {
-    ...state.participacion,
-    objParticipacion: data,
-    loading: false,
-    loaded: true
-  }
+  state.participacion.lista = state.participacion.lista.map(opt => {
+    return opt.id === data.id ? data : opt
+  })
+  state.participacion.loading = false
+  state.participacion.loaded = true
 }
 
 export function agregarParticipacionState (state, data) {

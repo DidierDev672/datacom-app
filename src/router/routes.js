@@ -281,6 +281,11 @@ const routes = [
         path: 'habilidades',
         name: 'j-habilidades',
         component: () => import('pages/mod-jac/habilidades/Habilidades.vue')
+      },
+      {
+        path: 'junta-directiva',
+        name: 'j-junta-directiva',
+        component: () => import('pages/mod-jac/JuntaDirectiva/JuntaDirectiva.vue')
       }
     ]
   },

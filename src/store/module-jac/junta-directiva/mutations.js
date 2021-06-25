@@ -53,12 +53,11 @@ export function setJuntaDirectivaSuccess (state, data) {
   }
 }
 export function actualizarJuntaDirectivaSuccess (state, data) {
-  state.juntaDirectiva = {
-    ...state.juntaDirectiva,
-    objJuntaDirectiva: data,
-    loading: false,
-    loaded: true
-  }
+  state.juntaDirectiva.lista = state.juntaDirectiva.lista.map(opt => {
+    return opt.id === data.id ? data : opt
+  })
+  state.juntaDirectiva.loading = false
+  state.juntaDirectiva.loaded = true
 }
 
 export function agregarJuntaDirectivaState (state, data) {

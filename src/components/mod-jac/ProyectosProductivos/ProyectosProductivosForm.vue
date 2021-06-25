@@ -6,7 +6,7 @@
     v-model="show">
     <q-card style="width: 700px;">
       <q-card-section>
-        <div class="text-h6">{{ mensajeBoton }} Cotratos Jac </div>
+        <div class="text-h6">{{ mensajeBoton }} Proyectos Productivos  Jac </div>
       </q-card-section>
 
       <q-separator />
@@ -97,13 +97,14 @@ export default {
     }
     if(Object.keys(this.getProyectosProductivosState.objProyectosProductivos).length > 0){
       this.proyectosProductivosDB.id = this.getProyectosProductivosState.objProyectosProductivos.id;
-      this.proyectosProductivosDB.linea = this.getContratosState.objProyectosProductivos.linea;
-      this.proyectosProductivosDB.observacion = this.getProyectosProductivosState.objProyectosProductivos.descripcion;
+      this.proyectosProductivosDB.linea = this.getProyectosProductivosState.objProyectosProductivos.linea;
+      this.proyectosProductivosDB.descripcion = this.getProyectosProductivosState.objProyectosProductivos.descripcion;
       this.proyectosProductivosDB.avaluo = this.getProyectosProductivosState.objProyectosProductivos.avaluo;
     }
     this.cargarListaParametroPorCategoriaAction(categorias).then(data => {
       this.options = data
     })
+
 
   },methods:{
     ...mapActions('proyectosProductivos', ['registrarProyectosProductivosAction', 'actualizarProyectosProductivosAction','unsetProyectosProductivosAction']),

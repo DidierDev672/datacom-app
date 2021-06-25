@@ -8,7 +8,7 @@
         <proyectos-productivos-card
           v-for="proyectosProductivosv in getProyectosProductivosState.lista"
           class="q-mb-sm"
-          :proyectoProductivos="proyectosProductivosv"
+          :proyectoProductivosP="proyectosProductivosv"
           @editar="editarInfo"
           :key="proyectosProductivosv.id"></proyectos-productivos-card>
 

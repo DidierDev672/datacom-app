@@ -14,7 +14,7 @@
           <q-btn label="Continuar" no-caps color="primary" @click="onSubmit"/>
         </div>
 
-        <div class="flex flex-center" v-if="!showParticipacionForm">
+        <div class="flex flex-center" v-if="!showBtnContinuar">
           No hay registros para mostrar, agregue los que necesite haciendo click en el botón
         </div>
       </div>

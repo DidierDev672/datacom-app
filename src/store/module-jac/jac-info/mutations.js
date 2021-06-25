@@ -53,12 +53,11 @@ export function setJacInfoSuccess (state, data) {
   }
 }
 export function actualizarJacInfoSuccess (state, data) {
-  state.jacInfo = {
-    ...state.jacInfo,
-    objJacInfo: data,
-    loading: false,
-    loaded: true
-  }
+  state.jacInfo.lista = state.jacInfo.lista.map(opt => {
+    return opt.id === data.id ? data : opt
+  })
+  state.jacInfo.loading = false
+  state.jacInfo.loaded = true
 }
 
 export function agregarJacInfoState (state, data) {

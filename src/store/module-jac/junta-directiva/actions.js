@@ -2,11 +2,11 @@ import axios from 'axios'
 import { URL_API } from '../../../utils/config'
 
 // Acciones para la lista
-export function cargarListaJuntaDirectivaAction ({ commit }) {
+export function cargarListaJuntaDirectivaAction ({ commit }, jacID) {
   commit('inicializarAccion')
   const urlService = 'junta-directiva'
   return new Promise((resolve, reject) => {
-    axios.get(`${URL_API}/${urlService}/`)
+    axios.get(`${URL_API}/${urlService}/jac/${jacID}`)
       .then(({ data }) => {
         commit('setListaJuntaDirectivaSuccess', data)
         resolve(data)
