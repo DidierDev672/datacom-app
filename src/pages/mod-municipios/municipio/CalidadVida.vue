@@ -25,7 +25,7 @@
                         </q-card-section>
                     </q-card>
 
-                    <p class="text-h6 q-mt-md q-mb-sm">Índice de Pobresa multidimensional</p>
+                    <p class="text-h6 q-mt-md q-mb-sm">Índice de Pobreza multidimensional</p>
 
                     <q-card flat bordered class="my-card q-mb-md">
                         <q-card-section class="q-pb-none">

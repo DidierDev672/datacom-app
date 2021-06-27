@@ -1,518 +1,316 @@
 <template>
-  <div class="q-ma-sm">
-    <div class="row">
-      <div class="col-xs-12 col-sm-8 offset-sm-2">
+<q-card
+  flat
+  bordered>
 
-        <div v-if="step==1">
-          <q-form ref="ubicacionForm">
-            <p class="text-h6 q-mt-md q-mb-sm">1. Datos JAC</p>
-            <q-card flat bordered class="my-card q-mb-md">
+  <q-form ref="jacForm">    
 
+  <q-card-section>
 
-              <q-card-section>
-                <div class="row q-col-gutter-sm">
-                  <div class="col-xs-12">
-                    <q-select
-                      outlined
-                      option-value="id"
-                      option-label="nombre"
-                      v-model="jacInfoDB.tipo"
-                      :options="tipoOptions"
-                      label="Seleccione el tipo "
-                    />
-                  </div>
-                </div>
-                </q-card-section>
-              </q-card>
-            <q-card flat bordered class="my-card q-mb-md">
-              <q-card-section>
-                <div class="row q-col-gutter-sm">
-                  <div class="col-xs-12">
-                    <q-input
-                      outlined
-                      v-model="jacInfoDB.email"
-                      label="Email"
-                    />
-                  </div>
-                </div>
-                </q-card-section>
-              </q-card>
-            <q-card flat bordered class="my-card q-mb-md">
-              <q-card-section>
-                <div class="row q-col-gutter-sm">
-                  <div class="col-xs-12">
-                    <q-checkbox v-model="jacInfoDB.tienePersoneriaJuridica" label="Tiene Personeria Juridica" />
-                  </div>
-                </div>
-                </q-card-section>
-              </q-card>
-            <q-card flat bordered class="my-card q-mb-md">
-              <q-card-section>
-                <div class="row q-col-gutter-sm">
-                  <div class="col-xs-12">
-                    <q-input
-                      outlined
-                      v-model="jacInfoDB.noPersoneriaJuridica"
-                      label="No Personeria Juridica"
-                    />
-                  </div>
-                </div>
-                </q-card-section>
-              </q-card>
-            <q-card flat bordered class="my-card q-mb-md">
-              <q-card-section>
-                <div class="row q-col-gutter-sm">
-                  <div class="col-xs-12">
-                    <q-input
-                      outlined
-                      v-model="jacInfoDB.personeriaJuridicaOtorgadaPor"
-                      label="Personeria Juridica Otorgada Por"
-                    />
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
-            <q-card flat bordered class="my-card q-mb-md">
-              <q-card-section>
-                <div class="row q-col-gutter-sm">
-                  <div class="col-xs-12">
-                    <q-checkbox v-model="jacInfoDB.necesidadCapacitacion" label="Necesidad Capacitacion" />
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
-            <q-card flat bordered class="my-card q-mb-md">
-              <q-card-section class="q-pb-none">
-                <div class="text-h6 q-mb-none">Fecha Actualizacion</div>
-              </q-card-section>
-              <q-card-section>
-                <div class="row">
-                  <div class="col-xs-12 col-sm-6">
-                    <q-input filled v-model="jacInfoDB.fechaActualizacionJac" mask="date" :rules="['date']">
-                      <template v-slot:append>
-                        <q-icon name="event" class="cursor-pointer">
-                          <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
-                            <q-date v-model="jacInfoDB.fechaActualizacionJac">
-                              <div class="row items-center justify-end">
-                                <q-btn v-close-popup label="Close" color="primary" flat></q-btn>
-                              </div>
-                            </q-date>
-                          </q-popup-proxy>
-                        </q-icon>
-                      </template>
-                    </q-input>
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
-          </q-form>
-        </div>
+    <q-list class="report-list">
 
-        <div v-if="step==2">
-          <q-form ref="limitesForm">
-            <p class="text-h6 q-mt-md q-mb-sm">1. Datos JAC</p>
-            <q-card
-              flat
-              bordered
-              class="my-card q-mb-md">
+      <q-item>
+        <q-item-section>
+          <q-item-label>1. Información General</q-item-label>
+        </q-item-section>
+      </q-item>
+      
 
-              <q-card-section>
-                <div class="row">
-                  <div class="col-xs-12 ">
-                    <q-input filled v-model="jacInfoDB.fechaExpedicionPersoneria" mask="date" :rules="['date']">
-                      <template v-slot:append>
-                        <q-icon name="event" class="cursor-pointer">
-                          <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
-                            <q-date v-model="jacInfoDB.fechaExpedicionPersoneria">
-                              <div class="row items-center justify-end">
-                                <q-btn v-close-popup label="Close" color="primary" flat></q-btn>
-                              </div>
-                            </q-date>
-                          </q-popup-proxy>
-                        </q-icon>
-                      </template>
-                    </q-input>
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
+    <q-item>
 
-            <q-card flat bordered class="my-card q-mb-md">
-              <q-card-section class="q-pb-none">
-                <div class="row q-col-gutter-sm">
-                  <div class="col-xs-12">
-                    <q-checkbox v-model="jacInfoDB.tieneRut" label="Tiene Rut" />
-                  </div>
-                </div>
-              </q-card-section>
-              </q-card>
-            <q-card flat bordered class="my-card q-mb-md">
-              <q-card-section class="q-pb-none">
-                <div class="text-h6 q-mb-none">No Rut</div>
-              </q-card-section>
-              <q-card-section>
-                <div class="row">
-                  <div class="col-xs-12 col-sm-6">
-                    <q-input dense v-model="jacInfoDB.noRut" label="No Rut" />
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
+      <q-item-section>
+        <q-item-label>Nombre de la organización</q-item-label>
+        <q-item-label caption>
+          <q-input
+            outlined
+            v-model="jacInfoDB.nombre"
+            lazy-rules
+            :rules="[val => !!val || 'Campo requerido']" />
+        </q-item-label>
+      </q-item-section>
 
-            <q-card flat bordered class="my-card q-mb-md">
-              <q-card-section class="q-pb-none">
-                <div class="text-h6 q-mb-none">Fecha Expedicion Rut</div>
-              </q-card-section>
+      <q-item-section>
+        <q-item-label>Tipo</q-item-label>
+        <q-item-label caption>
+          <!-- <q-input outlined v-model="jacInfoDB.tipo"/> -->
+          <q-select
+            outlined
+            option-value="id"
+            option-label="nombre"
+            v-model="jacInfoDB.tipo"
+            :options="tipoOptions"
+            lazy-rules
+            :rules="[val => !!val || 'Campo requerido']" />
+        </q-item-label>
+      </q-item-section>
 
-              <q-card-section>
-                <div class="row">
-                  <div class="col-xs-12 ">
-                    <q-input filled v-model="jacInfoDB.fechaExpedicionRut" mask="date" :rules="['date']">
-                      <template v-slot:append>
-                        <q-icon name="event" class="cursor-pointer">
-                          <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
-                            <q-date v-model="jacInfoDB.fechaExpedicionRut">
-                              <div class="row items-center justify-end">
-                                <q-btn v-close-popup label="Close" color="primary" flat></q-btn>
-                              </div>
-                            </q-date>
-                          </q-popup-proxy>
-                        </q-icon>
-                      </template>
-                    </q-input>
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
+    </q-item>
+    
+    <q-item>
 
-            <q-card flat bordered class="my-card q-mb-md">
+      <q-item-section>
+        <q-item-label>Departamento</q-item-label>
+        <q-item-label caption>
+          <q-select
+            outlined
+            use-input
+            v-model="departamento"
+            option-label="nombreDepartamento"
+            option-value="id"
+            @input="buscarMunicipios"
+            @filter="filterFnDepartamento"
+            :options="departamentos"
+            lazy-rules
+            :rules="[ val => val != null && val.id > 0 || 'Debe elegir un departamento']" />
+        </q-item-label>
+      </q-item-section>
 
-              <q-card-section>
-                <div class="row">
-                  <div class="col-xs-12 ">
-                    <q-checkbox v-model="jacInfoDB.tieneRuc" label="Tiene Ruc" />
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
+      <q-item-section>
+        <q-item-label>Municipio</q-item-label>
+        <q-item-label caption>
+          <q-select
+            outlined
+            ref="municipio"
+            use-input
+            v-model="municipio"
+            option-label="nombreMunicipio"
+            option-value="id"
+            :options="municipios"
+            @filter="filterFnMunicipio"
+            @input="buscarComunidades"
+            lazy-rules
+            :rules="[ val => val != null && val.id > 0 || 'Debe elegir un municipio']" />
+        </q-item-label>
+      </q-item-section>
 
-            <q-card flat bordered class="my-card q-mb-md">
-              <q-card-section class="q-pb-none">
-                <div class="text-h6 q-mb-none">No Ruc</div>
-              </q-card-section>
-              <q-card-section>
-                <div class="row">
-                  <div class="col-xs-12 ">
-                    <q-input dense v-model="jacInfoDB.noRuc" />
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
+      <q-item-section>
+        <q-item-label>Comunidad/Barrio</q-item-label>
+        <q-item-label caption>
+          <!-- <q-input outlined v-model="jacInfoDB.comunidad"/> -->
+          <q-select
+            outlined
+            ref="comunidad"
+            v-model="jacInfoDB.comunidad"
+            option-label="nombreComunidad"
+            option-value="id"
+            :options="comunidades"
+            lazy-rules
+            :rules="[ val => val != null && val.id > 0 || 'Debe elegir una comunidad']" />
+        </q-item-label>
+      </q-item-section>
 
-            <q-card flat bordered class="my-card q-mb-md">
-              <q-card-section class="q-pb-none">
-                <div class="text-h6 q-mb-none">Fecha Expedicion Ruc</div>
-              </q-card-section>
-              <q-card-section>
-                <div class="row">
-                  <div class="col-xs-12">
-                    <q-input filled v-model="jacInfoDB.fechaExpedicionRuc" mask="date" :rules="['date']">
-                      <template v-slot:append>
-                        <q-icon name="event" class="cursor-pointer">
-                          <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
-                            <q-date v-model="jacInfoDB.fechaExpedicionRuc">
-                              <div class="row items-center justify-end">
-                                <q-btn v-close-popup label="Close" color="primary" flat></q-btn>
-                              </div>
-                            </q-date>
-                          </q-popup-proxy>
-                        </q-icon>
-                      </template>
-                    </q-input>
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
-          </q-form>
-        </div>
+    </q-item>
 
-        <div v-if="step == 3">
-          <q-form ref="otroForm">
-            <q-card
-              flat
-              bordered
-              class="my-card q-mb-md">
-              <q-card-section>
-                <div class="row q-col-gutter-sm">
-                  <div class="col-xs-12 col-sm-6">
-                    <q-checkbox v-model="jacInfoDB.tieneRuc" label="Tiene AutoRecocimento" />
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
+    <q-item>
 
-            <q-card flat bordered class="my-card q-mb-md">
-              <q-card-section class="q-pb-none">
-                <div class="text-h6 q-mb-none">Autorecocimiento Expedido Por</div>
-              </q-card-section>
+      <q-item-section>
+        <q-item-label>Email</q-item-label>
+        <q-item-label caption>
+          <q-input
+            outlined
+            v-model="jacInfoDB.email"
+            lazy-rules
+            :rules="[val => !!val || 'Campo requerido']" />
+        </q-item-label>
+      </q-item-section>
 
-              <q-card-section>
-                <div class="row">
-                  <div class="col-xs-12 col-sm-6">
-                    <q-input dense v-model="jacInfoDB.autorecocimientoExpedidoPor"/>
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
+    </q-item>
 
-            <q-card flat bordered class="my-card q-mb-md">
-              <q-card-section class="q-pb-none">
-                <div class="text-h6 q-mb-none">Fecha Expedicion Autoreconocimiento</div>
-              </q-card-section>
-              <q-card-section>
-                <div class="row">
-                  <div class="col-xs-12 col-sm-6">
-                    <q-input dense v-model="jacInfoDB.fechaExpedicionAutoreconocimiento" />
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
-            <q-card flat bordered class="my-card q-mb-md">
-              <q-card-section class="q-pb-none">
-                <div class="text-h6 q-mb-none">Tipo Identificacion Rep Legal</div>
-              </q-card-section>
-              <q-card-section>
-                <div class="row">
-                  <div class="col-xs-12 ">
-                    <q-select
-                      outlined
-                      option-value="id"
-                      option-label="nombre"
-                      v-model="jacInfoDB.tipoIdentificacionRepresentanteLegal"
-                      :options="tipoOptions"
-                      label="Seleccione el tipo de Identificacion"
-                    />
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
-            <q-card flat bordered class="my-card q-mb-md">
-              <q-card-section class="q-pb-none">
-                <div class="text-h6 q-mb-none">No Idetificacion Rep Legal</div>
-              </q-card-section>
-              <q-card-section>
-                <div class="row">
-                  <div class="col-xs-12 col-sm-6">
-                    <q-input dense v-model="jacInfoDB.noIdentificacionRepresentanteLegal" />
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
+    <q-item>
 
-            <q-card flat bordered class="my-card q-mb-md">
-              <q-card-section class="q-pb-none">
-                <div class="text-h6 q-mb-none">Fecha Nacimiento</div>
-              </q-card-section>
-              <q-card-section>
-                <div class="row">
-                  <div class="col-xs-12 col-sm-6">
-                    <q-input filled v-model="jacInfoDB.fechaNacimiento" mask="date" :rules="['date']">
-                      <template v-slot:append>
-                        <q-icon name="event" class="cursor-pointer">
-                          <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
-                            <q-date v-model="jacInfoDB.fechaNacimiento">
-                              <div class="row items-center justify-end">
-                                <q-btn v-close-popup label="Close" color="primary" flat></q-btn>
-                              </div>
-                            </q-date>
-                          </q-popup-proxy>
-                        </q-icon>
-                      </template>
-                    </q-input>
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
-            <q-card flat bordered class="my-card q-mb-md">
-              <q-card-section class="q-pb-none">
-                <div class="text-h6 q-mb-none">Genero</div>
-              </q-card-section>
-              <q-card-section>
-                <div class="row">
-                  <div class="col-xs-12 col-sm-6">
-                    <q-input dense v-model="jacInfoDB.genero" />
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
-            <q-card flat bordered class="my-card q-mb-md">
-              <q-card-section class="q-pb-none">
-                <div class="text-h6 q-mb-none">Nivel Educativo</div>
-              </q-card-section>
-              <q-card-section>
-                <div class="row">
-                  <div class="col-xs-12">
-                    <q-select
-                      outlined
-                      option-value="id"
-                      option-label="nombre"
-                      v-model="jacInfoDB.nivelEducativa"
-                      :options="nivelEducativa"
-                      label="Seleccione el Nivel"
-                    />
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
-            <q-card flat bordered class="my-card q-mb-md">
-              <q-card-section class="q-pb-none">
-                <div class="text-h6 q-mb-none">Celular</div>
-              </q-card-section>
-              <q-card-section>
-                <div class="row">
-                  <div class="col-xs-12 col-sm-6">
-                    <q-input dense v-model="jacInfoDB.celular" />
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
-          </q-form>
+      <q-item-section>
+        <q-item-label>¿Tiene Personería Jurídica?</q-item-label>
+        <q-item-label caption>
+           <q-option-group inline :options="options" type="radio" v-model="jacInfoDB.tienePersoneriaJuridica" />
+        </q-item-label>
+      </q-item-section>
 
-        </div>
-        <div v-if="step == 4">
-          <q-form ref="otroFormd">
-            <q-card flat bordered class="my-card q-mb-md">
-              <q-card-section class="q-pb-none">
-                <div class="text-h6 q-mb-none">Direccion</div>
-              </q-card-section>
-              <q-card-section>
-                <div class="row">
-                  <div class="col-xs-12 col-sm-6">
-                    <q-input dense v-model="jacInfoDB.direccion"/>
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
-            <q-card flat bordered class="my-card q-mb-md">
-              <q-card-section class="q-pb-none">
-                <div class="text-h6 q-mb-none">Email</div>
-              </q-card-section>
-              <q-card-section>
-                <div class="row">
-                  <div class="col-xs-12 col-sm-6">
-                    <q-input dense v-model="jacInfoDB.email"/>
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
-            <q-card flat bordered class="my-card q-mb-md">
-              <q-card-section class="q-pb-none">
-                <div class="text-h6 q-mb-none">No Hombres</div>
-              </q-card-section>
-              <q-card-section>
-                <div class="row">
-                  <div class="col-xs-12 col-sm-6">
-                    <q-input dense v-model="jacInfoDB.noHombres"/>
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
-            <q-card flat bordered class="my-card q-mb-md">
-              <q-card-section class="q-pb-none">
-                <div class="text-h6 q-mb-none">No Afros</div>
-              </q-card-section>
-              <q-card-section>
-                <div class="row">
-                  <div class="col-xs-12 col-sm-6">
-                    <q-input dense v-model="jacInfoDB.noAfros"/>
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
-            <q-card flat bordered class="my-card q-mb-md">
-              <q-card-section class="q-pb-none">
-                <div class="text-h6 q-mb-none">No Indigenas</div>
-              </q-card-section>
-              <q-card-section>
-                <div class="row">
-                  <div class="col-xs-12 col-sm-6">
-                    <q-input dense v-model="jacInfoDB.noIndigenas"/>
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
-            <q-card flat bordered class="my-card q-mb-md">
-              <q-card-section class="q-pb-none">
-                <div class="text-h6 q-mb-none">No Poblacion Discapacitada </div>
-              </q-card-section>
-              <q-card-section>
-                <div class="row">
-                  <div class="col-xs-12 col-sm-6">
-                    <q-input dense v-model="jacInfoDB.noPoblacionDiscapacitada"/>
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
-            <q-card flat bordered class="my-card q-mb-md">
-              <q-card-section class="q-pb-none">
-                <div class="text-h6 q-mb-none">No Poblacion Entre 14 y 28 años </div>
-              </q-card-section>
-              <q-card-section>
-                <div class="row">
-                  <div class="col-xs-12 col-sm-6">
-                    <q-input dense v-model="jacInfoDB.noPoblacionEntre14y28"/>
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
-            <q-card flat bordered class="my-card q-mb-md">
-              <q-card-section class="q-pb-none">
-                <div class="text-h6 q-mb-none">No Hombres Jovenes </div>
-              </q-card-section>
-              <q-card-section>
-                <div class="row">
-                  <div class="col-xs-12 col-sm-6">
-                    <q-input dense v-model="jacInfoDB.noHombresJovenes"/>
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
-            <q-card flat bordered class="my-card q-mb-md">
-              <q-card-section class="q-pb-none">
-                <div class="text-h6 q-mb-none">No Mujeres Jovenes </div>
-              </q-card-section>
-              <q-card-section>
-                <div class="row">
-                  <div class="col-xs-12 col-sm-6">
-                    <q-input dense v-model="jacInfoDB.noMujeresJovenes"/>
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
-          </q-form>
-        </div>
+    </q-item>
 
-        <div class="flex justify-center">
-          <q-btn v-if="step > 1" label="Anterior" no-caps color="primary" flat class="q-mr-sm" @click="anterior"/>
-          <q-btn v-if="step < 4" label="Guardar y continuar" no-caps color="primary" @click="siguiente"/>
-          <q-btn
-            v-else
-            label="Guardar y continuar"
-            no-caps
-            color="primary"
-            :disable="getJacInfoState.loading"
-            :loading="getJacInfoState.loading"
-            @click="onSubmit" >
+    <q-item v-if="jacInfoDB.tienePersoneriaJuridica">
 
-            <template v-slot:loading>
-              <q-spinner-facebook />
+      <q-item-section>
+        <q-item-label>No. Personería Jurídica</q-item-label>
+        <q-item-label caption>
+          <q-input outlined v-model="jacInfoDB.noPersoneriaJuridica"/>
+        </q-item-label>
+      </q-item-section>
+
+      <q-item-section>
+        <q-item-label>Otorgada por</q-item-label>
+        <q-item-label caption>
+          <q-input outlined v-model="jacInfoDB.personeriaJuridicaOtorgadaPor" />
+        </q-item-label>
+      </q-item-section>
+
+      <q-item-section>
+        <q-item-label>Fecha expedición</q-item-label>
+        <q-item-label caption>
+          <!-- <q-input outlined v-model="jacInfoDB.fechaExpedicionPersoneria"/> -->
+          <q-input outlined v-model="jacInfoDB.fechaExpedicionPersoneria" mask="date">
+            <template v-slot:append>
+              <q-icon name="event" class="cursor-pointer">
+                <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
+                  <q-date v-model="jacInfoDB.fechaExpedicionPersoneria">
+                    <div class="row items-center justify-end">
+                      <q-btn v-close-popup label="Close" color="primary" flat />
+                    </div>
+                  </q-date>
+                </q-popup-proxy>
+              </q-icon>
             </template>
+          </q-input>
+        </q-item-label>
+      </q-item-section>
 
-          </q-btn>
-        </div>
-      </div>
-    </div>
-  </div>
+    </q-item>
+
+    <q-item>
+
+      <q-item-section>
+        <q-item-label>¿Tiene RUT?</q-item-label>
+        <q-item-label caption>
+           <q-option-group inline :options="options" type="radio" v-model="jacInfoDB.tieneRut" />
+        </q-item-label>
+      </q-item-section>
+
+    </q-item>
+
+    <q-item v-if="jacInfoDB.tieneRut">
+
+      <q-item-section>
+        <q-item-label>No. RUT</q-item-label>
+        <q-item-label caption>
+          <q-input outlined v-model="jacInfoDB.noRut"/>
+        </q-item-label>
+      </q-item-section>
+
+      <q-item-section>
+        <q-item-label>Fecha expedición</q-item-label>
+        <q-item-label caption>
+          <!-- <q-input outlined v-model="jacInfoDB.fechaExpedicionRut"/> -->
+          <q-input outlined v-model="jacInfoDB.fechaExpedicionRut" mask="date">
+            <template v-slot:append>
+              <q-icon name="event" class="cursor-pointer">
+                <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
+                  <q-date v-model="jacInfoDB.fechaExpedicionRut">
+                    <div class="row items-center justify-end">
+                      <q-btn v-close-popup label="Close" color="primary" flat />
+                    </div>
+                  </q-date>
+                </q-popup-proxy>
+              </q-icon>
+            </template>
+          </q-input>
+        </q-item-label>
+      </q-item-section>
+
+    </q-item>
+
+    <q-item>
+
+      <q-item-section>
+        <q-item-label>¿Tiene RUC?</q-item-label>
+        <q-item-label caption>
+           <q-option-group inline :options="options" type="radio" v-model="jacInfoDB.tieneRuc" />
+        </q-item-label>
+      </q-item-section>
+
+    </q-item>
+
+    <q-item v-if="jacInfoDB.tieneRuc">
+
+      <q-item-section>
+        <q-item-label>No. RUC</q-item-label>
+        <q-item-label caption>
+          <q-input outlined v-model="jacInfoDB.noRuc"/>
+        </q-item-label>
+      </q-item-section>
+
+      <q-item-section>
+        <q-item-label>Fecha expedición</q-item-label>
+        <q-item-label caption>
+          <!-- <q-input outlined v-model="jacInfoDB.fechaExpedicionRuc"/> -->
+          <q-input outlined v-model="jacInfoDB.fechaExpedicionRuc" mask="date">
+            <template v-slot:append>
+              <q-icon name="event" class="cursor-pointer">
+                <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
+                  <q-date v-model="jacInfoDB.fechaExpedicionRuc">
+                    <div class="row items-center justify-end">
+                      <q-btn v-close-popup label="Close" color="primary" flat />
+                    </div>
+                  </q-date>
+                </q-popup-proxy>
+              </q-icon>
+            </template>
+          </q-input>
+        </q-item-label>
+      </q-item-section>
+
+    </q-item>
+
+    <q-item>
+
+      <q-item-section>
+        <q-item-label>¿Tiene Autoreconocimiento?</q-item-label>
+        <q-item-label caption>
+           <q-option-group inline :options="options" type="radio" v-model="jacInfoDB.tieneAutoreconocimiento" />
+        </q-item-label>
+      </q-item-section>
+
+    </q-item>
+
+    <q-item v-if="jacInfoDB.tieneAutoreconocimiento">
+
+      <q-item-section>
+        <q-item-label>No. Autoreconocimiento</q-item-label>
+        <q-item-label caption>
+          <q-input outlined v-model="jacInfoDB.noAutoreconocimiento"/>
+        </q-item-label>
+      </q-item-section>
+
+      <q-item-section>
+        <q-item-label>Autoreconocimiento otorgado por</q-item-label>
+        <q-item-label caption>
+          <q-input outlined v-model="jacInfoDB.autorecocimientoExpedidoPor"/>
+        </q-item-label>
+      </q-item-section>
+
+      <q-item-section>
+        <q-item-label>Fecha expedición</q-item-label>
+        <q-item-label caption>
+          <!-- <q-input outlined v-model="jacInfoDB.fechaExpedicionAutoreconocimiento"/> -->
+          <q-input outlined v-model="jacInfoDB.fechaExpedicionAutoreconocimiento" mask="date">
+            <template v-slot:append>
+              <q-icon name="event" class="cursor-pointer">
+                <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
+                  <q-date v-model="jacInfoDB.fechaExpedicionAutoreconocimiento">
+                    <div class="row items-center justify-end">
+                      <q-btn v-close-popup label="Close" color="primary" flat />
+                    </div>
+                  </q-date>
+                </q-popup-proxy>
+              </q-icon>
+            </template>
+          </q-input>
+        </q-item-label>
+      </q-item-section>
+
+    </q-item>
+
+    </q-list>
+    
+  </q-card-section>
+
+   <q-separator />
+
+  <q-card-actions align="right">
+    <q-btn @click="onSubmit" color="primary">Actualizar</q-btn>
+  </q-card-actions>
+
+  </q-form>
+
+</q-card>
 </template>
 
 <script>
@@ -525,94 +323,79 @@ export default {
     return {
       jacID: 0,
       jacInfoDB: {},
+      departamentos: [],
+      departamentosList: [],
+      departamento: '',
+      municipios: [],
+      municipiosList: [],
+      municipio: '',
       tipoOptions: [],
-      nivelEducativa: [],
       comunidades: [],
       tipoIdentificacionRepresentante:[],
-      step: 1
+      options: [
+        { label: 'Si', value: true },
+        { label: 'No', value: false }
+      ]
     }
   },
   created() {
-    let categoriasTipoJunta = [CATEGORIAS.TIPO_JUNTA]
-    let categoriasNivelEducativa = [CATEGORIAS.NIVEL_INSTITUCION_EDUCATIVA]
-    let categoriasTipoIdentificacion = [CATEGORIAS.TIPO_DOCUMENTO_IDENTIDAD]
-    this.cargarListaParametroPorCategoriaAction(categoriasTipoJunta).then(data => {
-     console.log(data)
+
+    this.jacID = this.$route.params.id
+
+    let categorias = [CATEGORIAS.TIPO_JUNTA]
+
+    this.cargarListaParametroPorCategoriaAction(categorias).then(data => {
       this.tipoOptions = data
     })
-    this.cargarListaParametroPorCategoriaAction(categoriasNivelEducativa).then(data => {
-      console.log(data)
-      this.nivelEducativa = data
-    })
-    this.cargarListaParametroPorCategoriaAction(categoriasTipoIdentificacion).then(data => {
-      console.log(data)
-      this.tipoIdentificacionRepresentante = data
+
+    this.cargarListaDepartamentoAction().then(data => {
+      this.departamentosList = data
+      this.departamentos = this.departamentosList
     })
 
     this.jacInfoDB = {
       id: 0,
+      nombre: '',
       tipo: '',
       comunidad: '',
-      tipoIdentificacionRepresentanteLegal: '',
-      noIdentificacionRepresentanteLegal: '',
-      nivelEducativa: '',
       email: '',
-      tienePersoneriaJuridica: '',
+      tienePersoneriaJuridica: true,
       noPersoneriaJuridica: '',
       personeriaJuridicaOtorgadaPor: '',
       fechaExpedicionPersoneria: '',
-      tieneRut: '',
+      tieneRut: true,
       noRut: '',
       fechaExpedicionRut: '',
-      tieneRuc: '',
+      tieneRuc: true,
       noRuc: '',
       fechaExpedicionRuc: '',
-      tieneAutoreconocimiento: '',
+      tieneAutoreconocimiento: true,
       autorecocimientoExpedidoPor: '',
       fechaExpedicionAutoreconocimiento: '',
-      fechaNacimiento: '',
-      genero: '',
-      celular: '',
-      direccion: '',
-      emailRepresentanteLegal: '',
-      noHombres: '',
-      noMujeres: '',
-      noAfros: '',
-      noIndigenas: '',
-      noPoblacionDiscapacitada: '',
-      noPoblacionEntre14y28: '',
-      noHombresJovenes: '',
-      noMujeresJovenes: '',
-      nit: '',
-      nombre: '',
-      representanteLegal: '',
-      necesidadCapacitacion: '',
-      areaInfluencia: '',
       fechaActualizacionJac: ''
-    }
-    this.jacID = this.$route.params.id
+    }    
 
     this.buscarJacInfoAction(this.jacID).then(data => {
       if(data.id > 0){
-        //this.step = 5
         this.jacInfoDB = {...data}
-
+        this.municipio = data.comunidad.municipio
+        this.departamento = data.comunidad.municipio.departamento
       }
     })
   },
   methods: {
     ...mapActions('jacInfo',['buscarJacInfoAction','registrarJacInfoAction']),
     ...mapActions('parametros', ['cargarListaParametroPorCategoriaAction']),
-    ...mapActions('comunidad', ['cargarListaComunidadAction']),
-    siguiente(){
-      this.validarForm()
-    },
-    anterior(){
-      if(this.step < 1){
-        this.step = 1
-        console.log('No se puede regresar mas')
-      }else{
-        this.step--
+    ...mapActions('departamento', ['cargarListaDepartamentoAction', 'cargarListaMunicipiosDelDepartamentoAction']),
+    ...mapActions('municipios', ['cargarListaComunidadesDelMunicipioAction']),
+    buscarMunicipios(departamentoID){
+      this.municipio = null
+      this.$refs.municipio.resetValidation()
+      if(departamentoID != null){
+        this.cargarListaMunicipiosDelDepartamentoAction(departamentoID.id).then(data => {
+          this.municipiosList = data
+          this.municipios = this.municipiosList
+        })
       }
     },
     buscarComunidades(municipioID){
@@ -626,15 +409,17 @@ export default {
     },
     onSubmit () {
 
-      this.$refs.otroForm.validate().then(success => {
+      this.$refs.jacForm.validate().then(success => {
         if (success) {
-          this.guardarInformacionGeneralAction({
+          console.log('Formulario: ', this.jacInfoDB);
+          this.registrarJacInfoAction({
             ...this.jacInfoDB,
-            encuesta: {
-              id: this.encuestaID
-            }
+              id: this.jacID
           }).then(data => {
-            this.$router.push({name: 'c-poblacion', params: {id: this.encuestaID}})
+            this.$q.notify({
+              message: 'Información actualizada correctamente',
+              color: 'positive'
+            })
           })
         }else{
           this.$q.notify({
@@ -644,71 +429,17 @@ export default {
         }
       })
     },
-    validarForm(){
-      let stepValue = this.step
-      switch (stepValue) {
-        case 1:
-          //validar FormUbicacion
-          this.$refs.ubicacionForm.validate().then(success => {
-            if (success) {
-              this.registrarJacInfoAction({
-                ...this.jacInfoDB,
-              }).then(data => {
-                this.jacInfoDB.id = data
-                this.step++
-              })
-            }else{
-              this.$q.notify({
-                message: 'Favor completar los campos correctamente',
-                color: 'red'
-              })
-            }
-          })
-          break;
-        case 2:
-          console.log(this.jacInfoDB)
-          //validar FormLimites
-          this.$refs.limitesForm.validate().then(success => {
-            if (success) {
-
-              this.registrarJacInfoAction({
-                ...this.jacInfoDB,
-
-              }).then(data => {
-                this.step++
-              })
-            }else{
-              this.$q.notify({
-                message: 'Favor completar los campos correctamente',
-                color: 'red'
-              })
-            }
-          })
-          break
-        case 3:
-          console.log(this.jacInfoDB)
-          //validar FormLimites
-          this.$refs.otroForm.validate().then(success => {
-            if (success) {
-
-              this.registrarJacInfoAction({
-                ...this.jacInfoDB,
-
-              }).then(data => {
-                this.step++
-              })
-            }else{
-              this.$q.notify({
-                message: 'Favor completar los campos correctamente',
-                color: 'red'
-              })
-            }
-          })
-          break
-        default:
-          this.step++
-          break;
-      }
+    filterFnDepartamento (val, update, abort) {
+      update(() => {
+        const needle = val.toLowerCase()
+        this.departamentos = this.departamentosList.filter(v => v.nombreDepartamento.toLowerCase().indexOf(needle) > -1)
+      })
+    },
+    filterFnMunicipio (val, update, abort) {
+      update(() => {
+        const needle = val.toLowerCase()
+        this.municipios = this.municipiosList.filter(v => v.nombreMunicipio.toLowerCase().indexOf(needle) > -1)
+      })
     },
 
   },
@@ -719,6 +450,6 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="sass">
 
 </style>

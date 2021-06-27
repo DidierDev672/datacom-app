@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <q-dialog
     persistent
     transition-show="scale"
@@ -6,7 +6,7 @@
     v-model="show">
     <q-card style="width: 700px;">
       <q-card-section>
-        <div class="text-h6">{{ mensajeBoton }} Junta Directiva Jac </div>
+        <div class="text-h6">{{ mensajeBoton }} Comités de Trabajo </div>
       </q-card-section>
 
       <q-separator />
@@ -15,18 +15,6 @@
         <q-form
           class="q-gutter-md"
         >
-        <!-- <div class="row q-col-gutter-sm">
-          <div class="col-xs-12">
-            <q-select
-              outlined
-              option-value="id"
-              option-label="nombre"
-              v-model="juntaDirectivaDB.tipo"
-              :options="tipoOptions"
-              label="Seleccione el tipo"
-            />
-          </div>
-        </div> -->
           <div class="row q-col-gutter-sm">
             <div class="col-xs-12">
               <q-select
@@ -35,7 +23,7 @@
                 option-label="nombre"
                 v-model="juntaDirectivaDB.cargo"
                 :options="cargosOptions"
-                label="Seleccione el cargo"
+                label="Seleccione el comité"
               />
             </div>
           </div>
@@ -123,7 +111,7 @@ import {mapActions, mapGetters} from "vuex";
 import {CATEGORIAS, NIVEL_GERENCIAL} from "src/utils/config";
 
 export default {
-  name: "JuntaDirectivaForm",
+  name: "ComitesForm",
   data(){
     return {
       show: true,
@@ -135,13 +123,12 @@ export default {
 
     }},
   created(){
-    let categoriasCargo = [CATEGORIAS.CARGOS]
-    let categoriasTipo =[CATEGORIAS.TIPO_JUNTA]
+    let categoriasCargo = [CATEGORIAS.COMITES_TRABAJO]
 
    this.jacID = this.$route.params.id
     this.juntaDirectivaDB = {
       id: 0,
-      tipo:{id: NIVEL_GERENCIAL.JUNTA_DIRECTIVA},
+      tipo:{id: NIVEL_GERENCIAL.COMITE_TRABAJO},
       cargo: '',
       nombre:'',
       primerApellido: '',
@@ -165,9 +152,6 @@ export default {
     this.cargarListaParametroPorCategoriaAction(categoriasCargo).then(data => {
       this.cargosOptions = data
     })
-    // this.cargarListaParametroPorCategoriaAction(categoriasTipo).then(data => {
-    //   this.tipoOptions = data
-    // })
 
   },methods:{
     ...mapActions('juntaDirectiva', ['registrarJuntaDirectivaAction', 'actualizarJuntaDirectivaAction','unsetJuntaDirectivaAction']),

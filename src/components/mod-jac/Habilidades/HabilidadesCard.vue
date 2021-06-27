@@ -2,6 +2,9 @@
   <q-list bordered class="rounded-borders bg-white">
     <q-item>
       <q-item-section top>
+        <q-item-label caption lines="1">
+          Tema de capacitación
+        </q-item-label>
         <q-item-label>{{ habilidadesP.temaCapacitacion.nombre }}</q-item-label>
       </q-item-section>
       <q-item-section side top>
@@ -21,10 +24,10 @@
     <q-item >
       <q-item-section top>
         <q-item-label caption lines="1">
-          Nombre de la Habilidad
+          Entidad que los capacita
         </q-item-label>
         <q-item-label lines="1">
-          <span class="text-weight-medium">{{ habilidadesP.temaCapacitacion.nombre }}</span>
+          <span class="text-weight-medium">{{ habilidadesP.entidadQueCapacita }}</span>
         </q-item-label>
       </q-item-section>
     </q-item>

@@ -265,6 +265,16 @@ const routes = [
 
       },
       {
+        path: 'representante-legal',
+        name: 'jac-representante-legal',
+        component: () => import('pages/mod-jac/jac-info/RepresentanteLegal.vue')
+      },
+      {
+        path: 'afiliados',
+        name: 'jac-afiliados',
+        component: () => import('pages/mod-jac/jac-info/Afiliados.vue')
+      },
+      {
         path: 'cotratos',
         name: 'j-contratos',
         component: () => import('pages/mod-jac/Contratos/Contratos.vue')
@@ -288,6 +298,31 @@ const routes = [
         path: 'junta-directiva',
         name: 'j-junta-directiva',
         component: () => import('pages/mod-jac/JuntaDirectiva/JuntaDirectiva.vue')
+      },
+      {
+        path: 'fiscal',
+        name: 'j-fiscal',
+        component: () => import('pages/mod-jac/jac-info/Fiscal.vue')
+      },
+      {
+        path: 'comites-trabajo',
+        name: 'j-comites-trabajo',
+        component: () => import('pages/mod-jac/comites/Comites.vue')
+      },
+      {
+        path: 'nivel-gerencial',
+        name: 'j-nivel-gerencial',
+        component: () => import('pages/mod-jac/jac-info/NivelGerencial.vue')
+      },
+      {
+        path: 'nivel-administrativo',
+        name: 'j-nivel-administrativo',
+        component: () => import('pages/mod-jac/jac-info/NivelAdministrativo.vue')
+      },
+      {
+        path: 'balance',
+        name: 'j-balance',
+        component: () => import('pages/mod-jac/jac-info/Balance.vue')
       }
     ]
   },

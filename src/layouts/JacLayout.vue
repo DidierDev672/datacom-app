@@ -32,7 +32,23 @@
 
         <q-item
           clickable
-          :to="{name: 'j-informacion-general', params: {id: jacID}}"
+          to="/jac"
+          exact
+        >
+          <q-item-section
+            avatar
+          >
+            <q-icon size="14px" name="ti-home"/>
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Regresar</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-item
+          clickable
+          :to="{name: 'jac-info', params: {id: jacID}}"
           exact
         >
           <q-item-section
@@ -48,7 +64,7 @@
 
         <q-item
           clickable
-          :to="{name: 'j-plan-trabajo-detalle', params: {id: jacID}}"
+          :to="{name: 'jac-representante-legal', params: {id: jacID}}"
           exact
         >
           <q-item-section
@@ -58,7 +74,23 @@
           </q-item-section>
 
           <q-item-section>
-            <q-item-label>Plan De Trabajo Detalle</q-item-label>
+            <q-item-label>Representante Legal</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-item
+          clickable
+          :to="{name: 'jac-afiliados', params: {id: jacID}}"
+          exact
+        >
+          <q-item-section
+            avatar
+          >
+            <q-icon size="14px" name="ti-angle-right"/>
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Datos de Afiliados</q-item-label>
           </q-item-section>
         </q-item>
 
@@ -75,6 +107,38 @@
 
           <q-item-section>
             <q-item-label>Junta Directiva</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-item
+          clickable
+          :to="{name: 'j-fiscal', params: {id: jacID}}"
+          exact
+        >
+          <q-item-section
+            avatar
+          >
+            <q-icon size="14px" name="ti-angle-right"/>
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Fiscal</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-item
+          clickable
+          :to="{name: 'j-comites-trabajo', params: {id: jacID}}"
+          exact
+        >
+          <q-item-section
+            avatar
+          >
+            <q-icon size="14px" name="ti-angle-right"/>
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Comités de Trabajo</q-item-label>
           </q-item-section>
         </q-item>
 

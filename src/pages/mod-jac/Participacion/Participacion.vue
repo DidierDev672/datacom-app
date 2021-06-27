@@ -3,17 +3,13 @@
     <div class="row">
       <div class="col-xs-12 col-sm-8 offset-sm-2">
 
-        <p class="text-h6 q-mt-md q-mb-sm">Participacion Jac</p>
+        <p class="text-h6 q-mt-md q-mb-sm">Espacios de participación ciudadana y comunitaria a los que está vinculada la organización.</p>
         <participacion-card
           v-for="participacion in getParticipacionState.lista"
           class="q-mb-sm"
           :participacioP="participacion"
           @editar="editarInfo"
-          :key="participacion.id"></participacion-card>
-
-        <div v-if="showBtnContinuar" class="flex justify-center">
-          <q-btn label="Continuar" no-caps color="primary" @click="onSubmit"/>
-        </div>
+          :key="participacion.id"></participacion-card>       
 
         <div class="flex flex-center" v-if="!showBtnContinuar">
           No hay registros para mostrar, agregue los que necesite haciendo click en el botón

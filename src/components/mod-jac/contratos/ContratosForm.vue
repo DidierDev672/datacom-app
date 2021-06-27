@@ -24,7 +24,7 @@
                 option-label="nombre"
                 v-model="contratosDB.tipoContrato"
                 :options="options"
-                label="Seleccione el tipo de participacion"
+                label="Seleccione si es contrato o proyecto"
               />
             </div>
           </div>
@@ -33,7 +33,7 @@
               <q-input
                 outlined
                 v-model="contratosDB.descripcion"
-                label="Observacion"
+                label="Nombre del proyecto o contrato"
               />
             </div>
           </div>
@@ -122,7 +122,7 @@ export default {
 
     }},
   created(){
-    let categorias = [CATEGORIAS.TIPO_CONTRATO]
+    let categorias = [CATEGORIAS.CONTRATOS_PROYECTOS]
     this.jacID = this.$route.params.id
     this.contratosDB = {
       id: 0,
@@ -137,8 +137,13 @@ export default {
     }
     if(Object.keys(this.getContratosState.objContratos).length > 0){
       this.contratosDB.id = this.getContratosState.objContratos.id;
-      this.contratosDB.tipoParticipacion = this.getContratosState.objContratos.tipoContrato;
-      this.contratosDB.observacion = this.getContratosState.objContratos.descripcion;
+      this.contratosDB.tipoContrato = this.getContratosState.objContratos.tipoContrato;
+      this.contratosDB.descripcion = this.getContratosState.objContratos.descripcion;
+      this.contratosDB.fechaEjecucion = this.getContratosState.objContratos.fechaEjecucion;
+      this.contratosDB.valor = this.getContratosState.objContratos.valor;
+      this.contratosDB.entidad = this.getContratosState.objContratos.entidad;
+      this.contratosDB.montoExcedente = this.getContratosState.objContratos.montoExcedente;
+      this.contratosDB.montoInversion = this.getContratosState.objContratos.montoInversion;
     }
     this.cargarListaParametroPorCategoriaAction(categorias).then(data => {
       this.options = data

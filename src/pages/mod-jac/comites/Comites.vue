@@ -1,8 +1,8 @@
-<template>
+﻿<template>
   <div>
         <q-table
-          title="Junta Directiva"
-          :data="getJuntaDirectiva"
+          title="Comités de Trabajo"
+          :data="getComites"
           :columns="columns"
           row-key="name"
           @row-click="seleccionar"
@@ -10,7 +10,7 @@
           loading-label="Cargando información, por favor espere"
         >
           <template v-slot:top="props">
-            <div class="col-4 q-table__title">Junta Directiva</div>
+            <div class="col-4 q-table__title">Comités de Trabajo</div>
 
             <q-space />
             <q-btn
@@ -27,16 +27,6 @@
             <q-btn flat round icon="edit" />
           </q-td>
         </q-table>
-        <!-- <junta-directiva-card
-          v-for="juntaDirectiva in getJuntaDirectivaState.lista"
-          class="q-mb-sm"
-          :juntaDirectivaP="juntaDirectiva"
-          @editar="editarInfo"
-          :key="juntaDirectiva.id"></junta-directiva-card> -->
-
-        <!-- <div v-if="showBtnContinuar" class="flex justify-center">
-          <q-btn label="Continuar" no-caps color="primary" @click="onSubmit"/>
-        </div> -->
 
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
       <q-btn fab icon="add" color="primary" @click="showJuntaDirectivaForm = true">
@@ -46,24 +36,24 @@
       </q-btn>
     </q-page-sticky>
 
-    <junta-directiva-form v-if="showJuntaDirectivaForm" @close="closeModal"></junta-directiva-form>
+    <comites-form v-if="showJuntaDirectivaForm" @close="closeModal"></comites-form>
     
   </div>
 </template>
 
 <script>
 import {mapActions, mapGetters, mapMutations} from "vuex";
-import JuntaDirectivaForm from "components/mod-jac/JuntaDirectiva/JuntaDirectivaForm";
+import ComitesForm from "components/mod-jac/comites/ComitesForm";
 import { NIVEL_GERENCIAL } from "src/utils/config";
 export default {
   name: "JuntaDirectiva",
-  components: {JuntaDirectivaForm},
+  components: {ComitesForm},
   data() {
     return {
       jacID: 0,
       showJuntaDirectivaForm: false,
       columns: [
-        { name: "cargo", align: "left", label: "Cargo", field: row => row.cargo.nombre, sortable: true },
+        { name: "cargo", align: "left", label: "Comité", field: row => row.cargo.nombre, sortable: true },
         { name: "nombre", align: "left", label: "Nombre completo", field: row => row.nombre + row.primerApellido,   sortable: true },
         { name: "noDocumentoIdentificacion",  align: "left", label: "Doc. Identificación", field: "noDocumentoIdentificacion" },        
         { name: "celular",  align: "left", label: "Celular", field: "celular" },        
@@ -93,7 +83,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('juntaDirectiva', ['getJuntaDirectivaState', 'getJuntaDirectiva', 'getComites']),
+    ...mapGetters('juntaDirectiva', ['getJuntaDirectivaState', 'getComites']),
     showBtnContinuar(){
       return this.getJuntaDirectivaState.lista.length > 0 ? true : false
     }

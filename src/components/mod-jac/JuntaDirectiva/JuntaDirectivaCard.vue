@@ -2,7 +2,7 @@
   <q-list bordered class="rounded-borders bg-white">
     <q-item>
       <q-item-section top>
-        <q-item-label>{{ juntaDirectivaP.nombre }}</q-item-label>
+        <q-item-label>{{ juntaDirectivaP.cargo.nombre }}</q-item-label>
       </q-item-section>
       <q-item-section side top>
         <div class="text-grey-8 ">
@@ -18,16 +18,36 @@
         </div>
       </q-item-section>
     </q-item>
+
     <q-item >
+
       <q-item-section top>
-        <q-item-label caption lines="1">
-         Nombre Junta
-        </q-item-label>
+        <q-item-label caption lines="1">Nombre</q-item-label>
         <q-item-label lines="1">
-          <span class="text-weight-medium">{{ juntaDirectivaP.nombre }}</span>
+          <span class="text-weight-medium">{{ nombreCompleto }}</span>
         </q-item-label>
       </q-item-section>
+
     </q-item>
+
+    <q-item >
+
+      <q-item-section top>
+        <q-item-label caption lines="1">Celular</q-item-label>
+        <q-item-label lines="1">
+          <span class="text-weight-medium">{{ juntaDirectivaP.celular }}</span>
+        </q-item-label>
+      </q-item-section>
+
+      <q-item-section top>
+        <q-item-label caption lines="1">Email</q-item-label>
+        <q-item-label lines="1">
+          <span class="text-weight-medium">{{ juntaDirectivaP.email }}</span>
+        </q-item-label>
+      </q-item-section>
+
+    </q-item>
+
   </q-list>
 </template>
 
@@ -43,6 +63,14 @@ export default {
   methods: {
     editar(){
       this.$emit("editar", this.juntaDirectivaP)
+    }
+  },
+  computed: {
+    nombreCompleto(){
+      return this.juntaDirectivaP.noDocumentoIdentificacion + " - " +
+        this.juntaDirectivaP.nombre + " " + 
+        this.juntaDirectivaP.primerApellido + " " + 
+        this.juntaDirectivaP.segundoApellido
     }
   }
 }

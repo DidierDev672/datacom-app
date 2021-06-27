@@ -6,7 +6,7 @@
     v-model="show">
     <q-card style="width: 700px;">
       <q-card-section>
-        <div class="text-h6">{{ mensajeBoton }} Proyectos Productivos  Jac </div>
+        <div class="text-h6">{{ mensajeBoton }} Proyectos Productivos Jac </div>
       </q-card-section>
 
       <q-separator />
@@ -15,7 +15,7 @@
         <q-form
           class="q-gutter-md"
         >
-          <p>Datos de Proyecto Productivos Jac </p>
+          <p>Datos del Proyecto Productivo </p>
           <div class="row q-col-gutter-sm">
             <div class="col-xs-12">
               <q-select
@@ -86,7 +86,7 @@ export default {
 
     }},
   created(){
-    let categorias = [CATEGORIAS.LINEA]
+    let categorias = [CATEGORIAS.LINEA_PROYECTOS]
     this.jacID = this.$route.params.id
     this.proyectosProductivosDB = {
       id: 0,
