@@ -131,9 +131,10 @@ export default {
     this.encuestaID = this.$route.params.id
     this.buscarInformacionGeneralAction(this.encuestaID).then(data => {
       if(data.id > 0){
+        console.log('Data: ', data)
         //this.step = 5
         this.infoGeneral = {...data}
-        this.nit = data.jac.nit
+        this.nit = data.jac.noRut
         this.repLegal = data.jac.representanteLegal
       }
     })

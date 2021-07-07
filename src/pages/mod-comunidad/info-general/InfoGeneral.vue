@@ -39,7 +39,7 @@
               bordered
               class="my-card q-mb-md">
               <q-card-section class="q-pb-none">
-                <div class="text-h6 q-mb-none">Muncipio *</div>
+                <div class="text-h6 q-mb-none">Municipio *</div>
               </q-card-section>
 
               <q-card-section>

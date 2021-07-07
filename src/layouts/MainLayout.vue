@@ -142,12 +142,12 @@ export default {
         {
           title: 'Jac',
           caption: '',
-          icon: 'ti-bar-chart-alt',
+          icon: 'ti-view-list',
           link: '/jac'
         },{
           title: 'Icos',
           caption: '',
-          icon: 'ti-bar-chart-alt',
+          icon: 'ti-pencil-alt',
           link: '/icos'
         },
         // {
@@ -161,6 +161,12 @@ export default {
           caption: '',
           icon: 'ti-settings',
           link: '/parametrizacion'
+        },
+        {
+          title: 'Reportes',
+          caption: '',
+          icon: 'ti-export',
+          link: '/reportes'
         },
       ]
     }

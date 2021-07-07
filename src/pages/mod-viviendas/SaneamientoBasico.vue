@@ -176,7 +176,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 import { CATEGORIAS } from "src/utils/config";
 export default {
   data() {
@@ -231,13 +231,10 @@ export default {
   },
   methods: {
     ...mapActions("parametros", ["cargarListaParametroPorCategoriaAction"]),
-    ...mapActions("datosVivienda", [
-      "buscarDatosViviendaAction",
-      "registrarDatosViviendaAction",
-      "actualizarDatosViviendaAction"
-    ]),
+    ...mapActions("datosVivienda", ["buscarDatosViviendaAction", "registrarDatosViviendaAction", "actualizarDatosViviendaAction"]),
+    ...mapMutations('persona', ['setListaPersonaSuccess']),
     onSubmit() {
-      console.log(this.datosVivienda);
+      // console.log(this.datosVivienda);
       let info = {
         ...this.datosVivienda,
         encuesta: {
@@ -245,7 +242,22 @@ export default {
         }
       };
       if (this.datosVivienda.id > 0) {
-        this.actualizarDatosViviendaAction(info);
+        this.actualizarDatosViviendaAction(info).then(data => {
+          let personas = []
+          for(var i = 1; i <= this.datosVivienda.noPersonas; i++){
+            personas.push({
+              id: 0,
+              nombre: 'Integrante No. ' + i,
+              parentesco: 'Por definir',
+              noOrden: i,
+              persistido: false,
+              encuesta: {
+                id: this.encuestaID
+              }
+            })
+          }
+          this.setListaPersonaSuccess(personas)
+        })
       } else {
         this.registrarDatosViviendaAction(info).then(data => {
           this.datosVivienda.id = data;

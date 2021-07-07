@@ -729,7 +729,6 @@ export default {
     ...mapActions('informacionGeneral',['buscarInformacionGeneralAction','guardarInformacionGeneralAction']),
     ...mapActions('departamento', ['cargarListaDepartamentoAction', 'cargarListaMunicipiosDelDepartamentoAction']),
     siguiente(){
-
       this.validarForm()
     },
     anterior(){

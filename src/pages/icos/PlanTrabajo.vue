@@ -14,7 +14,7 @@
             <q-btn color="grey-7" round flat icon="more_vert">
               <q-menu cover auto-close>
                 <q-list>
-                  <q-item clickable @click="imprimir">
+                  <q-item clickable @click="bajarPlan">
                     <q-item-section>Imprimir</q-item-section>
                   </q-item>
                 </q-list>
@@ -67,6 +67,8 @@
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import print from "print-js";
 import EditarActividad from "src/components/ico-plan-trabajo/EditarActividad.vue";
+import axios from 'axios'
+import { URL_API } from 'src/utils/config'
 
 export default {
 	components: { EditarActividad },
@@ -105,7 +107,29 @@ export default {
     },
     imprimir() {
       print("tabla_indicadores", "html");
-    }
+    },
+    bajarPlan(){
+      const urlService = 'reportes/plan-trabajo';
+      const encuestaID = this.planTrabajoID
+      axios.get(`${URL_API}/${urlService}/${encuestaID}`, { responseType: 'blob' }).then( ({data}) => {
+        console.log('DATA: ', data);
+        setTimeout(() => {
+            const url = window.URL.createObjectURL(data);
+            console.log('Url: ', url)
+            const a = document.createElement('a');
+            a.setAttribute('style', 'display:none;');
+            document.body.appendChild(a);
+            a.href = url;
+            a.download = this.planTrabajo.titulo + ".xls";
+            a.click();
+            return url;
+
+        }, 500)
+      }).catch( error => {
+        console.log('Error: ', error.response);
+      });
+
+    },
   }
 };
 </script>

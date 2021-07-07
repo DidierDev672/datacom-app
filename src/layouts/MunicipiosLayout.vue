@@ -22,7 +22,31 @@
       bordered
       content-class="bg-grey-1"
     >
-      <q-list>
+    <q-list v-if="getEncuestaState.objEncuesta.encuestaCerrada">
+
+      <q-item-label header class="text-grey-8">
+          Opciones
+        </q-item-label>
+
+        <q-item
+          clickable
+          :to="{name: 'encuesta-cerrada'}"
+          exact
+        >
+          <q-item-section
+            avatar
+          >
+            <q-icon size="14px" name="ti-angle-right" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Volver a encuestas</q-item-label>
+          </q-item-section>
+        </q-item>
+
+    </q-list>
+
+      <q-list v-else>
         <q-item-label
           header
           class="text-grey-8"
@@ -515,7 +539,11 @@ export default {
   },
   created () {
     this.encuestaID = this.$route.params.id
-    this.buscarEncuestaAction(this.encuestaID)
+    this.buscarEncuestaAction(this.encuestaID).then(data => {
+      console.log('Data: ', data.encuestaCerrada)
+      if(data.encuestaCerrada)
+        this.leftDrawerOpen = false
+    })
   },
   computed: {
     ...mapGetters('encuesta', ['getEncuestaState'])

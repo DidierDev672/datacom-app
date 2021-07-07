@@ -1,7 +1,7 @@
 ﻿<template>
   <div>
     <q-table
-      title="Encuestas en Proceso"
+      title="Encuestas Cerradas"
       :data="encuestas"
       :columns="columns"
       row-key="name"
@@ -10,7 +10,7 @@
       loading-label="Cargando información, por favor espere"
     >
       <template v-slot:top="props">
-        <div class="col-4 q-table__title">Encuestas en Proceso</div>
+        <div class="col-4 q-table__title">Encuestas Cerradas</div>
 
         <q-space />
         <q-btn
@@ -24,7 +24,7 @@
       </template>
 
       <q-td slot="body-cell-acciones" slot-scope="props" :props="props">
-        <q-btn flat round icon="edit" />
+        <q-btn flat round icon="ti-zoom-in" />
       </q-td>
     </q-table>
   </div>
@@ -82,6 +82,7 @@ export default {
       switch (tipoEncuestaID) {
         case TIPO_ENCUESTA.VIVIENDA:
           console.log("Tipo encuesta vivienda");
+          this.$router.push({ name: "v-ver-encuesta", params: { id: row.id } });
           break;
         case TIPO_ENCUESTA.COMUNIDAD:
           console.log("Tipo encuesta comunidad");
