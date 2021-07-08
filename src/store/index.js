@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 
 // import example from './module-example'
+import auth from "./module-auth";
 import departamento from "./module-departamento";
 import encuesta from "./module-encuesta";
 import informacionGeneral from "./module-municipios/informacion-general";
@@ -73,6 +74,7 @@ Vue.use(Vuex);
 export default function(/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
+      auth,
       // example
       departamento,
       encuesta,

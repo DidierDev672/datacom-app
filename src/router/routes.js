@@ -2,6 +2,7 @@ const routes = [
   {
     path: "/",
     component: () => import("layouts/MainLayout.vue"),
+    meta: { requiresAuth: true },
     children: [
       // { path: '', component: () => import('pages/PageHome.vue') },
       {
@@ -179,6 +180,7 @@ const routes = [
   {
     path: "/municipio/:id",
     name: "municipio",
+    meta: { requiresAuth: true },
     component: () => import("layouts/MunicipiosLayout.vue"),
     children: [
       {
@@ -301,6 +303,7 @@ const routes = [
   {
     path: "/comunidad/:id",
     name: "comunidad",
+    meta: { requiresAuth: true },
     component: () => import("layouts/ComunidadLayout.vue"),
     children: [
       {
@@ -409,6 +412,7 @@ const routes = [
   {
     path: "/jac/:id",
     name: "jac-editar",
+    meta: { requiresAuth: true },
     component: () => import("layouts/JacLayout.vue"),
     children: [
       {
@@ -484,6 +488,7 @@ const routes = [
   {
     path: "/autoevaluacion/:id",
     name: "autoevaluacion",
+    meta: { requiresAuth: true },
     component: () => import("layouts/AutoevaluacionLayout.vue"),
     children: [
       {
