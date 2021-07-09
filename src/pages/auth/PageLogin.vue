@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 export default {
   data() {
     return {
@@ -88,6 +88,7 @@ export default {
 
   methods: {
     ...mapActions("auth", ["loginAction"]),
+    ...mapMutations("auth", ["SET_USER_DATA"]),
     onSubmit() {
       // this.loading = true;
       this.loginAction({
@@ -96,6 +97,7 @@ export default {
         remember_me: this.remember
       }).then(data => {
         if (this.$jwt.hasToken()) {
+          this.SET_USER_DATA(this.username);
           this.$router.push("/");
         } else {
           console.log("No existe el token");
