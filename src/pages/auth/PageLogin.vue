@@ -97,9 +97,6 @@ export default {
       }).then(data => {
         if (this.$jwt.hasToken()) {
           this.$router.push("/");
-          console.log("Existe el token: ");
-          let token = JSON.parse(this.$jwt.getToken());
-          console.log("Decode: ", this.$jwt.decode(token));
         } else {
           console.log("No existe el token");
         }

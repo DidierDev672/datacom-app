@@ -13,6 +13,7 @@
         <q-toolbar-title>
           Datacom
         </q-toolbar-title>
+        <nav-bar-user />
       </q-toolbar>
     </q-header>
 
@@ -23,22 +24,13 @@
       content-class="bg-grey-1"
     >
       <q-list>
-        <q-item-label
-          header
-          class="text-grey-8"
-        >
+        <q-item-label header class="text-grey-8">
           Opciones
         </q-item-label>
 
-        <q-item
-          clickable
-          to="/jac"
-          exact
-        >
-          <q-item-section
-            avatar
-          >
-            <q-icon size="14px" name="ti-home"/>
+        <q-item clickable to="/jac" exact>
+          <q-item-section avatar>
+            <q-icon size="14px" name="ti-home" />
           </q-item-section>
 
           <q-item-section>
@@ -48,13 +40,11 @@
 
         <q-item
           clickable
-          :to="{name: 'jac-info', params: {id: jacID}}"
+          :to="{ name: 'jac-info', params: { id: jacID } }"
           exact
         >
-          <q-item-section
-            avatar
-          >
-            <q-icon size="14px" name="ti-angle-right"/>
+          <q-item-section avatar>
+            <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
           <q-item-section>
@@ -64,13 +54,11 @@
 
         <q-item
           clickable
-          :to="{name: 'jac-representante-legal', params: {id: jacID}}"
+          :to="{ name: 'jac-representante-legal', params: { id: jacID } }"
           exact
         >
-          <q-item-section
-            avatar
-          >
-            <q-icon size="14px" name="ti-angle-right"/>
+          <q-item-section avatar>
+            <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
           <q-item-section>
@@ -80,13 +68,11 @@
 
         <q-item
           clickable
-          :to="{name: 'jac-afiliados', params: {id: jacID}}"
+          :to="{ name: 'jac-afiliados', params: { id: jacID } }"
           exact
         >
-          <q-item-section
-            avatar
-          >
-            <q-icon size="14px" name="ti-angle-right"/>
+          <q-item-section avatar>
+            <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
           <q-item-section>
@@ -96,13 +82,11 @@
 
         <q-item
           clickable
-          :to="{name: 'j-junta-directiva', params: {id: jacID}}"
+          :to="{ name: 'j-junta-directiva', params: { id: jacID } }"
           exact
         >
-          <q-item-section
-            avatar
-          >
-            <q-icon size="14px" name="ti-angle-right"/>
+          <q-item-section avatar>
+            <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
           <q-item-section>
@@ -112,13 +96,11 @@
 
         <q-item
           clickable
-          :to="{name: 'j-fiscal', params: {id: jacID}}"
+          :to="{ name: 'j-fiscal', params: { id: jacID } }"
           exact
         >
-          <q-item-section
-            avatar
-          >
-            <q-icon size="14px" name="ti-angle-right"/>
+          <q-item-section avatar>
+            <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
           <q-item-section>
@@ -128,13 +110,11 @@
 
         <q-item
           clickable
-          :to="{name: 'j-comites-trabajo', params: {id: jacID}}"
+          :to="{ name: 'j-comites-trabajo', params: { id: jacID } }"
           exact
         >
-          <q-item-section
-            avatar
-          >
-            <q-icon size="14px" name="ti-angle-right"/>
+          <q-item-section avatar>
+            <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
           <q-item-section>
@@ -144,13 +124,11 @@
 
         <q-item
           clickable
-          :to="{name: 'j-nivel-gerencial', params: {id: jacID}}"
+          :to="{ name: 'j-nivel-gerencial', params: { id: jacID } }"
           exact
         >
-          <q-item-section
-            avatar
-          >
-            <q-icon size="14px" name="ti-angle-right"/>
+          <q-item-section avatar>
+            <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
           <q-item-section>
@@ -160,13 +138,11 @@
 
         <q-item
           clickable
-          :to="{name: 'j-nivel-administrativo', params: {id: jacID}}"
+          :to="{ name: 'j-nivel-administrativo', params: { id: jacID } }"
           exact
         >
-          <q-item-section
-            avatar
-          >
-            <q-icon size="14px" name="ti-angle-right"/>
+          <q-item-section avatar>
+            <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
           <q-item-section>
@@ -175,13 +151,11 @@
         </q-item>
         <q-item
           clickable
-          :to="{name: 'j-balance', params: {id: jacID}}"
+          :to="{ name: 'j-balance', params: { id: jacID } }"
           exact
         >
-          <q-item-section
-            avatar
-          >
-            <q-icon size="14px" name="ti-angle-right"/>
+          <q-item-section avatar>
+            <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
           <q-item-section>
@@ -190,13 +164,11 @@
         </q-item>
         <q-item
           clickable
-          :to="{name: 'j-contratos', params: {id: jacID}}"
+          :to="{ name: 'j-contratos', params: { id: jacID } }"
           exact
         >
-          <q-item-section
-            avatar
-          >
-            <q-icon size="14px" name="ti-angle-right"/>
+          <q-item-section avatar>
+            <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
           <q-item-section>
@@ -205,13 +177,11 @@
         </q-item>
         <q-item
           clickable
-          :to="{name: 'j-proyectos-productivos', params: {id: jacID}}"
+          :to="{ name: 'j-proyectos-productivos', params: { id: jacID } }"
           exact
         >
-          <q-item-section
-            avatar
-          >
-            <q-icon size="14px" name="ti-angle-right"/>
+          <q-item-section avatar>
+            <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
           <q-item-section>
@@ -220,13 +190,11 @@
         </q-item>
         <q-item
           clickable
-          :to="{name: 'j-participacion', params: {id: jacID}}"
+          :to="{ name: 'j-participacion', params: { id: jacID } }"
           exact
         >
-          <q-item-section
-            avatar
-          >
-            <q-icon size="14px" name="ti-angle-right"/>
+          <q-item-section avatar>
+            <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
           <q-item-section>
@@ -236,38 +204,34 @@
 
         <q-item
           clickable
-          :to="{name: 'j-habilidades', params: {id: jacID}}"
+          :to="{ name: 'j-habilidades', params: { id: jacID } }"
           exact
         >
-          <q-item-section
-            avatar
-          >
-            <q-icon size="14px" name="ti-angle-right"/>
+          <q-item-section avatar>
+            <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
           <q-item-section>
             <q-item-label>Habilidades</q-item-label>
           </q-item-section>
         </q-item>
-
       </q-list>
     </q-drawer>
-    <q-footer
-      class="bg-white"
-      bordered
-    >
-      <div
-        v-if="showAppInstallBanner"
-        class="banner-container bg-primary">
+    <q-footer class="bg-white" bordered>
+      <div v-if="showAppInstallBanner" class="banner-container bg-primary">
         <transition
           appear
           enter-active-class="animated fadeIn"
           leave-active-class="animated fadeOut"
         >
           <div class="constrain">
-            <q-banner inline-actions class="bg-primary text-white q-mb-sm" dense>
+            <q-banner
+              inline-actions
+              class="bg-primary text-white q-mb-sm"
+              dense
+            >
               <template v-slot:avatar>
-                <q-icon name="ti-instagram" color="white"/>
+                <q-icon name="ti-instagram" color="white" />
               </template>
               <b>¿Desea instalar Datacom?</b>
               <template v-slot:action>
@@ -276,12 +240,14 @@
                   @click="installApp"
                   flat
                   label="Si"
-                  class="q-mr-sm"/>
+                  class="q-mr-sm"
+                />
                 <q-btn
                   dense
                   @click="neverShowAppInstallBanner"
                   flat
-                  label="No"/>
+                  label="No"
+                />
               </template>
             </q-banner>
           </div>
@@ -291,47 +257,51 @@
 
     <q-page-container>
       <keep-alive :include="['PageCategorias']">
-        <router-view/>
+        <router-view />
       </keep-alive>
     </q-page-container>
   </q-layout>
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import { mapActions } from "vuex";
+import NavBarUser from "components/NavBarUser";
 
 export default {
   name: "JacLayout",
+  components: {
+    NavBarUser
+  },
   data() {
     return {
       showAppInstallBanner: false,
       jacID: 0,
-      leftDrawerOpen: false,
-    }
+      leftDrawerOpen: false
+    };
   },
   methods: {
-    ...mapActions('jacInfo', ['buscarJacInfoAction']),
+    ...mapActions("jacInfo", ["buscarJacInfoAction"])
   },
   created() {
-    this.jacID = this.$route.params.id
-    this.buscarJacInfoAction(this.jacID)
-  },
-}
+    this.jacID = this.$route.params.id;
+    this.buscarJacInfoAction(this.jacID);
+  }
+};
 </script>
 
 <style lang="sass">
-  .q-toolbar
-    @media (min-width: $breakpoint-sm-min)
-      height: 77px
-  .q-toolbar__title
+.q-toolbar
+  @media (min-width: $breakpoint-sm-min)
+    height: 77px
+.q-toolbar__title
+  font-size: 30px
+  @media (max-width: $breakpoint-xs-max)
+    text-align: center
+.q-footer
+  .q-tab__icon
     font-size: 30px
-    @media (max-width: $breakpoint-xs-max)
-      text-align: center
-  .q-footer
-    .q-tab__icon
-      font-size: 30px
-  .fondo-nav
-    background: rgb(175,202,11)
-    background: linear-gradient(90deg, rgba(175,202,11,1) 0%, rgba(100,194,200, 1) 100%)
-    background: --prefix-linear-gradient(90deg, rgba(175,202,11,1) 0%, rgba(100,194,200, 1) 100%)
+.fondo-nav
+  background: rgb(175,202,11)
+  background: linear-gradient(90deg, rgba(175,202,11,1) 0%, rgba(100,194,200, 1) 100%)
+  background: --prefix-linear-gradient(90deg, rgba(175,202,11,1) 0%, rgba(100,194,200, 1) 100%)
 </style>

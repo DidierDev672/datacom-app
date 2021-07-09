@@ -174,6 +174,21 @@ const routes = [
         name: "jac",
         component: () => import("pages/mod-jac/JacList.vue")
       },
+      {
+        path: "usuarios",
+        name: "UsuariosIndex",
+        component: () => import("pages/parametrizacion/UsuariosIndex.vue")
+      },
+      {
+        path: "usuario-create",
+        name: "UsuarioCreate",
+        component: () => import("pages/parametrizacion/UsuarioCreate.vue")
+      },
+      {
+        path: "usuario-edit/:id",
+        name: "UsuarioEdit",
+        component: () => import("pages/parametrizacion/UsuarioEdit.vue")
+      },
       { path: "", redirect: "encuestas" }
     ]
   },

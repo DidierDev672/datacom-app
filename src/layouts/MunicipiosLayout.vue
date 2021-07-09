@@ -13,6 +13,7 @@
         <q-toolbar-title>
           Datacom - {{ getEncuestaState.objEncuesta.descripcion }}
         </q-toolbar-title>
+        <nav-bar-user />
       </q-toolbar>
     </q-header>
 
@@ -22,20 +23,13 @@
       bordered
       content-class="bg-grey-1"
     >
-    <q-list v-if="getEncuestaState.objEncuesta.encuestaCerrada">
-
-      <q-item-label header class="text-grey-8">
+      <q-list v-if="getEncuestaState.objEncuesta.encuestaCerrada">
+        <q-item-label header class="text-grey-8">
           Opciones
         </q-item-label>
 
-        <q-item
-          clickable
-          :to="{name: 'encuesta-cerrada'}"
-          exact
-        >
-          <q-item-section
-            avatar
-          >
+        <q-item clickable :to="{ name: 'encuesta-cerrada' }" exact>
+          <q-item-section avatar>
             <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
@@ -43,14 +37,10 @@
             <q-item-label>Volver a encuestas</q-item-label>
           </q-item-section>
         </q-item>
-
-    </q-list>
+      </q-list>
 
       <q-list v-else>
-        <q-item-label
-          header
-          class="text-grey-8"
-        >
+        <q-item-label header class="text-grey-8">
           Opciones
         </q-item-label>
 
@@ -72,12 +62,10 @@
 
         <q-item
           clickable
-          :to="{name: 'info-general', params: {id: encuestaID}}"
+          :to="{ name: 'info-general', params: { id: encuestaID } }"
           exact
         >
-          <q-item-section
-            avatar
-          >
+          <q-item-section avatar>
             <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
@@ -88,12 +76,10 @@
 
         <q-item
           clickable
-          :to="{name: 'poblacion', params: {id: encuestaID}}"
+          :to="{ name: 'poblacion', params: { id: encuestaID } }"
           exact
         >
-          <q-item-section
-            avatar
-          >
+          <q-item-section avatar>
             <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
@@ -104,12 +90,10 @@
 
         <q-item
           clickable
-          :to="{name: 'calidad-vida', params: {id: encuestaID}}"
+          :to="{ name: 'calidad-vida', params: { id: encuestaID } }"
           exact
         >
-          <q-item-section
-            avatar
-          >
+          <q-item-section avatar>
             <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
@@ -120,12 +104,10 @@
 
         <q-item
           clickable
-          :to="{name: 'educacion', params: {id: encuestaID}}"
+          :to="{ name: 'educacion', params: { id: encuestaID } }"
           exact
         >
-          <q-item-section
-            avatar
-          >
+          <q-item-section avatar>
             <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
@@ -136,12 +118,10 @@
 
         <q-item
           clickable
-          :to="{name: 'viviendas-municipio', params: {id: encuestaID}}"
+          :to="{ name: 'viviendas-municipio', params: { id: encuestaID } }"
           exact
         >
-          <q-item-section
-            avatar
-          >
+          <q-item-section avatar>
             <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
@@ -152,12 +132,10 @@
 
         <q-item
           clickable
-          :to="{name: 'cobertura-servicio', params: {id: encuestaID}}"
+          :to="{ name: 'cobertura-servicio', params: { id: encuestaID } }"
           exact
         >
-          <q-item-section
-            avatar
-          >
+          <q-item-section avatar>
             <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
@@ -168,12 +146,10 @@
 
         <q-item
           clickable
-          :to="{name: 'seguridad', params: {id: encuestaID}}"
+          :to="{ name: 'seguridad', params: { id: encuestaID } }"
           exact
         >
-          <q-item-section
-            avatar
-          >
+          <q-item-section avatar>
             <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
@@ -184,12 +160,10 @@
 
         <q-item
           clickable
-          :to="{name: 'administracion', params: {id: encuestaID}}"
+          :to="{ name: 'administracion', params: { id: encuestaID } }"
           exact
         >
-          <q-item-section
-            avatar
-          >
+          <q-item-section avatar>
             <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
@@ -200,12 +174,10 @@
 
         <q-item
           clickable
-          :to="{name: 'secretarias', params: {id: encuestaID}}"
+          :to="{ name: 'secretarias', params: { id: encuestaID } }"
           exact
         >
-          <q-item-section
-            avatar
-          >
+          <q-item-section avatar>
             <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
@@ -216,12 +188,10 @@
 
         <q-item
           clickable
-          :to="{name: 'politicas-publicas', params: {id: encuestaID}}"
+          :to="{ name: 'politicas-publicas', params: { id: encuestaID } }"
           exact
         >
-          <q-item-section
-            avatar
-          >
+          <q-item-section avatar>
             <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
@@ -232,12 +202,10 @@
 
         <q-item
           clickable
-          :to="{name: 'organizaciones', params: {id: encuestaID}}"
+          :to="{ name: 'organizaciones', params: { id: encuestaID } }"
           exact
         >
-          <q-item-section
-            avatar
-          >
+          <q-item-section avatar>
             <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
@@ -248,12 +216,10 @@
 
         <q-item
           clickable
-          :to="{name: 'infraestructura-publica', params: {id: encuestaID}}"
+          :to="{ name: 'infraestructura-publica', params: { id: encuestaID } }"
           exact
         >
-          <q-item-section
-            avatar
-          >
+          <q-item-section avatar>
             <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
@@ -264,12 +230,10 @@
 
         <q-item
           clickable
-          :to="{name: 'finanza', params: {id: encuestaID}}"
+          :to="{ name: 'finanza', params: { id: encuestaID } }"
           exact
         >
-          <q-item-section
-            avatar
-          >
+          <q-item-section avatar>
             <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
@@ -278,10 +242,12 @@
           </q-item-section>
         </q-item>
 
-        <q-item clickable :to="{ name: 'indicador', params: { id: encuestaID } }" exact>
-          <q-item-section
-            avatar
-          >
+        <q-item
+          clickable
+          :to="{ name: 'indicador', params: { id: encuestaID } }"
+          exact
+        >
+          <q-item-section avatar>
             <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
@@ -290,10 +256,12 @@
           </q-item-section>
         </q-item>
 
-        <q-item clickable :to="{ name: 'territorio', params: { id: encuestaID } }" exact>
-          <q-item-section
-            avatar
-          >
+        <q-item
+          clickable
+          :to="{ name: 'territorio', params: { id: encuestaID } }"
+          exact
+        >
+          <q-item-section avatar>
             <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
@@ -302,10 +270,12 @@
           </q-item-section>
         </q-item>
 
-        <q-item clickable :to="{ name: 'participacion', params: { id: encuestaID } }" exact>
-          <q-item-section
-            avatar
-          >
+        <q-item
+          clickable
+          :to="{ name: 'participacion', params: { id: encuestaID } }"
+          exact
+        >
+          <q-item-section avatar>
             <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
@@ -314,10 +284,12 @@
           </q-item-section>
         </q-item>
 
-        <q-item clickable :to="{ name: 'medios', params: { id: encuestaID } }" exact>
-          <q-item-section
-            avatar
-          >
+        <q-item
+          clickable
+          :to="{ name: 'medios', params: { id: encuestaID } }"
+          exact
+        >
+          <q-item-section avatar>
             <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
@@ -326,10 +298,12 @@
           </q-item-section>
         </q-item>
 
-        <q-item clickable :to="{ name: 'economia', params: { id: encuestaID } }" exact>
-          <q-item-section
-            avatar
-          >
+        <q-item
+          clickable
+          :to="{ name: 'economia', params: { id: encuestaID } }"
+          exact
+        >
+          <q-item-section avatar>
             <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
@@ -338,10 +312,12 @@
           </q-item-section>
         </q-item>
 
-        <q-item clickable :to="{ name: 'productos', params: { id: encuestaID } }" exact>
-          <q-item-section
-            avatar
-          >
+        <q-item
+          clickable
+          :to="{ name: 'productos', params: { id: encuestaID } }"
+          exact
+        >
+          <q-item-section avatar>
             <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
@@ -350,12 +326,12 @@
           </q-item-section>
         </q-item>
 
-
-
-        <q-item clickable :to="{ name: 'fin-encuesta', params: { id: encuestaID } }" exact>
-          <q-item-section
-            avatar
-          >
+        <q-item
+          clickable
+          :to="{ name: 'fin-encuesta', params: { id: encuestaID } }"
+          exact
+        >
+          <q-item-section avatar>
             <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
@@ -364,9 +340,6 @@
           </q-item-section>
         </q-item>
 
-
-
-
         <!-- <EssentialLink
           v-for="link in essentialLinks"
           :key="link.title"
@@ -374,20 +347,19 @@
         /> -->
       </q-list>
     </q-drawer>
-    <q-footer
-      class="bg-white"
-      bordered
-      >
-      <div
-      v-if="showAppInstallBanner"
-        class="banner-container bg-primary">
+    <q-footer class="bg-white" bordered>
+      <div v-if="showAppInstallBanner" class="banner-container bg-primary">
         <transition
           appear
           enter-active-class="animated fadeIn"
           leave-active-class="animated fadeOut"
         >
           <div class="constrain">
-            <q-banner inline-actions class="bg-primary text-white q-mb-sm" dense>
+            <q-banner
+              inline-actions
+              class="bg-primary text-white q-mb-sm"
+              dense
+            >
               <template v-slot:avatar>
                 <q-icon name="ti-instagram" color="white" />
               </template>
@@ -398,12 +370,14 @@
                   @click="installApp"
                   flat
                   label="Si"
-                  class="q-mr-sm" />
+                  class="q-mr-sm"
+                />
                 <q-btn
                   dense
                   @click="neverShowAppInstallBanner"
                   flat
-                  label="No" />
+                  label="No"
+                />
               </template>
             </q-banner>
           </div>
@@ -420,149 +394,146 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
-// import EssentialLink from 'components/EssentialLink'
+import { mapActions, mapGetters } from "vuex";
+import NavBarUser from "components/NavBarUser";
 
 export default {
-  name: 'MunicipioLayout',
-
-  // components: {
-  //   EssentialLink
-  // },
-
-  data () {
+  name: "MunicipioLayout",
+  components: {
+    NavBarUser
+  },
+  data() {
     return {
       showAppInstallBanner: false,
       encuestaID: 0,
       leftDrawerOpen: false,
       essentialLinks: [
         {
-          title: 'Regresar',
-          icon: 'ti-arrow-left',
-          link: '/municipios'
+          title: "Regresar",
+          icon: "ti-arrow-left",
+          link: "/municipios"
         },
         {
-          title: 'Información general',
-          icon: 'ti-angle-right',
-          link: '/municipio'
+          title: "Información general",
+          icon: "ti-angle-right",
+          link: "/municipio"
         },
         {
-          title: 'Población',
-          icon: 'ti-angle-right',
+          title: "Población",
+          icon: "ti-angle-right",
           link: `{name: 'calidad-vida', params: {id: municipioID}}`
         },
         {
-          title: 'Calidad de vida',
-          icon: 'ti-angle-right',
-          link: '/municipio/5/calidad-vida'
+          title: "Calidad de vida",
+          icon: "ti-angle-right",
+          link: "/municipio/5/calidad-vida"
         },
         {
-          title: 'Educación',
-          icon: 'ti-angle-right',
-          link: '/municipio/5/calidad-vida'
+          title: "Educación",
+          icon: "ti-angle-right",
+          link: "/municipio/5/calidad-vida"
         },
         {
-          title: 'Viviendas',
-          icon: 'ti-angle-right',
-          link: '/municipio/5/calidad-vida'
+          title: "Viviendas",
+          icon: "ti-angle-right",
+          link: "/municipio/5/calidad-vida"
         },
         {
-          title: 'Cobertura en servicios',
-          icon: 'ti-angle-right',
-          link: '/municipio/5/calidad-vida'
+          title: "Cobertura en servicios",
+          icon: "ti-angle-right",
+          link: "/municipio/5/calidad-vida"
         },
         {
-          title: 'Seguridad',
-          icon: 'ti-angle-right',
-          link: '/municipio/5/calidad-vida'
+          title: "Seguridad",
+          icon: "ti-angle-right",
+          link: "/municipio/5/calidad-vida"
         },
         {
-          title: 'Secretarias de gobierno',
-          icon: 'ti-angle-right',
-          link: '/municipio/5/calidad-vida'
+          title: "Secretarias de gobierno",
+          icon: "ti-angle-right",
+          link: "/municipio/5/calidad-vida"
         },
         {
-          title: 'Políticas públicas',
-          icon: 'ti-angle-right',
-          link: '/municipio/5/calidad-vida'
+          title: "Políticas públicas",
+          icon: "ti-angle-right",
+          link: "/municipio/5/calidad-vida"
         },
         {
-          title: 'Organizaciones',
-          icon: 'ti-angle-right',
-          link: '/municipio/5/calidad-vida'
+          title: "Organizaciones",
+          icon: "ti-angle-right",
+          link: "/municipio/5/calidad-vida"
         },
         {
-          title: 'Infraestructura pública',
-          icon: 'ti-angle-right',
-          link: '/municipio/5/calidad-vida'
+          title: "Infraestructura pública",
+          icon: "ti-angle-right",
+          link: "/municipio/5/calidad-vida"
         },
         {
-          title: 'Finanzas',
-          icon: 'ti-angle-right',
-          link: '/municipio/5/calidad-vida'
+          title: "Finanzas",
+          icon: "ti-angle-right",
+          link: "/municipio/5/calidad-vida"
         },
         {
-          title: 'Indicadores de Gestión',
-          icon: 'ti-angle-right',
-          link: '/municipio/5/calidad-vida'
+          title: "Indicadores de Gestión",
+          icon: "ti-angle-right",
+          link: "/municipio/5/calidad-vida"
         },
         {
-          title: 'Territorio',
-          icon: 'ti-angle-right',
-          link: '/municipio/5/calidad-vida'
+          title: "Territorio",
+          icon: "ti-angle-right",
+          link: "/municipio/5/calidad-vida"
         },
         {
-          title: 'Participación',
-          icon: 'ti-angle-right',
-          link: '/municipio/5/calidad-vida'
+          title: "Participación",
+          icon: "ti-angle-right",
+          link: "/municipio/5/calidad-vida"
         },
         {
-          title: 'Medios de Comunicación',
-          icon: 'ti-angle-right',
-          link: '/municipio/5/calidad-vida'
+          title: "Medios de Comunicación",
+          icon: "ti-angle-right",
+          link: "/municipio/5/calidad-vida"
         },
         {
-          title: 'Productos',
-          icon: 'ti-angle-right',
-          link: '/municipio/5/calidad-vida'
+          title: "Productos",
+          icon: "ti-angle-right",
+          link: "/municipio/5/calidad-vida"
         },
         {
-          title: 'Otra información',
-          icon: 'ti-angle-right',
-          link: '/municipio/5/calidad-vida'
-        },
+          title: "Otra información",
+          icon: "ti-angle-right",
+          link: "/municipio/5/calidad-vida"
+        }
       ]
-    }
+    };
   },
   methods: {
-    ...mapActions('encuesta', ['buscarEncuestaAction']),
+    ...mapActions("encuesta", ["buscarEncuestaAction"])
   },
-  created () {
-    this.encuestaID = this.$route.params.id
+  created() {
+    this.encuestaID = this.$route.params.id;
     this.buscarEncuestaAction(this.encuestaID).then(data => {
-      console.log('Data: ', data.encuestaCerrada)
-      if(data.encuestaCerrada)
-        this.leftDrawerOpen = false
-    })
+      console.log("Data: ", data.encuestaCerrada);
+      if (data.encuestaCerrada) this.leftDrawerOpen = false;
+    });
   },
   computed: {
-    ...mapGetters('encuesta', ['getEncuestaState'])
+    ...mapGetters("encuesta", ["getEncuestaState"])
   }
-}
+};
 </script>
 <style lang="sass">
-  .q-toolbar
-    @media (min-width: $breakpoint-sm-min)
-      height: 77px
-  .q-toolbar__title
+.q-toolbar
+  @media (min-width: $breakpoint-sm-min)
+    height: 77px
+.q-toolbar__title
+  font-size: 30px
+  @media (max-width: $breakpoint-xs-max)
+    text-align: center
+.q-footer
+  .q-tab__icon
     font-size: 30px
-    @media (max-width: $breakpoint-xs-max)
-      text-align: center
-  .q-footer
-    .q-tab__icon
-      font-size: 30px
-  .fondo-nav
-    background: rgb(175,202,11)
-    background: linear-gradient(90deg, rgba(175,202,11,1) 0%, rgba(100,194,200, 1) 100%)
-    background: --prefix-linear-gradient(90deg, rgba(175,202,11,1) 0%, rgba(100,194,200, 1) 100%)
+.fondo-nav
+  background: rgb(175,202,11)
+  background: linear-gradient(90deg, rgba(175,202,11,1) 0%, rgba(100,194,200, 1) 100%)
+  background: --prefix-linear-gradient(90deg, rgba(175,202,11,1) 0%, rgba(100,194,200, 1) 100%)
 </style>

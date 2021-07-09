@@ -64,7 +64,6 @@ export function loginAction({ commit, dispatch }, credentials) {
         }
       })
       .then(({ data }) => {
-        console.log("Response: ", data);
         commit("SET_TOKEN_INFO", data);
         resolve(data);
       })

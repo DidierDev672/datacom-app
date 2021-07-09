@@ -34,6 +34,8 @@ export default function(/* { store, ssrContext } */) {
   Router.beforeEach((to, from, next) => {
     const loggedIn = localStorage.getItem("token");
 
+    //Validar fecha de caducidad del token
+
     if (to.matched.some(record => record.meta.requiresAuth) && !loggedIn) {
       next("/auth");
     } else {

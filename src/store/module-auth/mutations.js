@@ -6,7 +6,7 @@ export function SET_TOKEN_INFO(state, tokenInfo) {
   // state.tokenInfo = tokenInfo;
   state.loading = false;
   state.loaded = true;
-  localStorage.setItem("token", JSON.stringify(tokenInfo.access_token));
+  localStorage.setItem("token", JSON.stringify(tokenInfo));
   axios.defaults.headers.common[
     "Authorization"
   ] = `Bearer ${tokenInfo.access_token}`;

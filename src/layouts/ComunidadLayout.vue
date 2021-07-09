@@ -13,6 +13,7 @@
         <q-toolbar-title>
           Datacom - {{ getEncuestaState.objEncuesta.descripcion }}
         </q-toolbar-title>
+        <nav-bar-user />
       </q-toolbar>
     </q-header>
 
@@ -23,21 +24,16 @@
       content-class="bg-grey-1"
     >
       <q-list>
-        <q-item-label
-          header
-          class="text-grey-8"
-        >
+        <q-item-label header class="text-grey-8">
           Opciones
         </q-item-label>
 
         <q-item
           clickable
-          :to="{name: 'c-info-general', params: {id: encuestaID}}"
+          :to="{ name: 'c-info-general', params: { id: encuestaID } }"
           exact
         >
-          <q-item-section
-            avatar
-          >
+          <q-item-section avatar>
             <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
@@ -46,10 +42,12 @@
           </q-item-section>
         </q-item>
 
-        <q-item clickable :to="{ name: 'c-poblacion', params: { id: encuestaID } }" exact>
-          <q-item-section
-            avatar
-          >
+        <q-item
+          clickable
+          :to="{ name: 'c-poblacion', params: { id: encuestaID } }"
+          exact
+        >
+          <q-item-section avatar>
             <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
@@ -58,16 +56,12 @@
           </q-item-section>
         </q-item>
 
-
-
         <q-item
           clickable
-          :to="{name: 'c-organizaciones', params: {id: encuestaID}}"
+          :to="{ name: 'c-organizaciones', params: { id: encuestaID } }"
           exact
         >
-          <q-item-section
-            avatar
-          >
+          <q-item-section avatar>
             <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
@@ -78,12 +72,10 @@
 
         <q-item
           clickable
-          :to="{name: 'c-vias-acceso', params: {id: encuestaID}}"
+          :to="{ name: 'c-vias-acceso', params: { id: encuestaID } }"
           exact
         >
-          <q-item-section
-            avatar
-          >
+          <q-item-section avatar>
             <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
@@ -94,12 +86,10 @@
 
         <q-item
           clickable
-          :to="{name: 'c-infraestructura', params: {id: encuestaID}}"
+          :to="{ name: 'c-infraestructura', params: { id: encuestaID } }"
           exact
         >
-          <q-item-section
-            avatar
-          >
+          <q-item-section avatar>
             <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
@@ -110,12 +100,10 @@
 
         <q-item
           clickable
-          :to="{name: 'c-comunicaciones', params: {id: encuestaID}}"
+          :to="{ name: 'c-comunicaciones', params: { id: encuestaID } }"
           exact
         >
-          <q-item-section
-            avatar
-          >
+          <q-item-section avatar>
             <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
@@ -126,12 +114,10 @@
 
         <q-item
           clickable
-          :to="{name: 'c-ecosistema', params: {id: encuestaID}}"
+          :to="{ name: 'c-ecosistema', params: { id: encuestaID } }"
           exact
         >
-          <q-item-section
-            avatar
-          >
+          <q-item-section avatar>
             <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
@@ -142,12 +128,10 @@
 
         <q-item
           clickable
-          :to="{name: 'c-salud', params: {id: encuestaID}}"
+          :to="{ name: 'c-salud', params: { id: encuestaID } }"
           exact
         >
-          <q-item-section
-            avatar
-          >
+          <q-item-section avatar>
             <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
@@ -156,61 +140,53 @@
           </q-item-section>
         </q-item>
 
-          <q-item
-            clickable
-            :to="{name: 'c-calidad-de-vida', params: {id: encuestaID}}"
-            exact
-          >
-            <q-item-section
-              avatar
-            >
-              <q-icon size="14px" name="ti-angle-right" />
-            </q-item-section>
-
-            <q-item-section>
-              <q-item-label>Calidad de Vida</q-item-label>
-            </q-item-section>
-          </q-item>
-
-          <q-item
-            clickable
-            :to="{name: 'c-poblacion-infantil', params: {id: encuestaID}}"
-            exact
-          >
-            <q-item-section
-              avatar
-            >
-              <q-icon size="14px" name="ti-angle-right" />
-            </q-item-section>
-
-            <q-item-section>
-              <q-item-label>Atención Población Infantil</q-item-label>
-            </q-item-section>
-          </q-item>
-
-          <q-item
-            clickable
-            :to="{name: 'c-vivienda', params: {id: encuestaID}}"
-            exact
-          >
-            <q-item-section
-              avatar
-            >
-              <q-icon size="14px" name="ti-angle-right" />
-            </q-item-section>
-
-            <q-item-section>
-              <q-item-label>Viviendas</q-item-label>
-            </q-item-section>
-          </q-item>
         <q-item
           clickable
-          :to="{name: 'c-comite-emergencia', params: {id: encuestaID}}"
+          :to="{ name: 'c-calidad-de-vida', params: { id: encuestaID } }"
           exact
         >
-          <q-item-section
-            avatar
-          >
+          <q-item-section avatar>
+            <q-icon size="14px" name="ti-angle-right" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Calidad de Vida</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-item
+          clickable
+          :to="{ name: 'c-poblacion-infantil', params: { id: encuestaID } }"
+          exact
+        >
+          <q-item-section avatar>
+            <q-icon size="14px" name="ti-angle-right" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Atención Población Infantil</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-item
+          clickable
+          :to="{ name: 'c-vivienda', params: { id: encuestaID } }"
+          exact
+        >
+          <q-item-section avatar>
+            <q-icon size="14px" name="ti-angle-right" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Viviendas</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item
+          clickable
+          :to="{ name: 'c-comite-emergencia', params: { id: encuestaID } }"
+          exact
+        >
+          <q-item-section avatar>
             <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
@@ -220,12 +196,10 @@
         </q-item>
         <q-item
           clickable
-          :to="{name: 'c-actividades-economicas', params: {id: encuestaID}}"
+          :to="{ name: 'c-actividades-economicas', params: { id: encuestaID } }"
           exact
         >
-          <q-item-section
-            avatar
-          >
+          <q-item-section avatar>
             <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
@@ -235,12 +209,13 @@
         </q-item>
         <q-item
           clickable
-          :to="{name: 'c-participacion-ciudadana', params: {id: encuestaID}}"
+          :to="{
+            name: 'c-participacion-ciudadana',
+            params: { id: encuestaID }
+          }"
           exact
         >
-          <q-item-section
-            avatar
-          >
+          <q-item-section avatar>
             <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
@@ -248,44 +223,40 @@
             <q-item-label>Participación Ciudadana</q-item-label>
           </q-item-section>
         </q-item>
-          <q-item
-            clickable
-            :to="{name: 'c-programas-educativos', params: {id: encuestaID}}"
-            exact
-          >
-            <q-item-section
-              avatar
-            >
-              <q-icon size="14px" name="ti-angle-right" />
-            </q-item-section>
+        <q-item
+          clickable
+          :to="{ name: 'c-programas-educativos', params: { id: encuestaID } }"
+          exact
+        >
+          <q-item-section avatar>
+            <q-icon size="14px" name="ti-angle-right" />
+          </q-item-section>
 
-            <q-item-section>
-              <q-item-label>Instituciones Educativas</q-item-label>
-            </q-item-section>
-          </q-item>
+          <q-item-section>
+            <q-item-label>Instituciones Educativas</q-item-label>
+          </q-item-section>
+        </q-item>
 
-          <q-item
-            clickable
-            :to="{name: 'c-fiestas-tradicionales', params: {id: encuestaID}}"
-            exact
-          >
-            <q-item-section
-              avatar
-            >
-              <q-icon size="14px" name="ti-angle-right" />
-            </q-item-section>
+        <q-item
+          clickable
+          :to="{ name: 'c-fiestas-tradicionales', params: { id: encuestaID } }"
+          exact
+        >
+          <q-item-section avatar>
+            <q-icon size="14px" name="ti-angle-right" />
+          </q-item-section>
 
-            <q-item-section>
-              <q-item-label>Fiestas Tradicionales</q-item-label>
-            </q-item-section>
-          </q-item>
+          <q-item-section>
+            <q-item-label>Fiestas Tradicionales</q-item-label>
+          </q-item-section>
+        </q-item>
 
-
-
-        <q-item clickable :to="{ name: 'c-fin-encuesta', params: { id: encuestaID } }" exact>
-          <q-item-section
-            avatar
-          >
+        <q-item
+          clickable
+          :to="{ name: 'c-fin-encuesta', params: { id: encuestaID } }"
+          exact
+        >
+          <q-item-section avatar>
             <q-icon size="14px" name="ti-angle-right" />
           </q-item-section>
 
@@ -293,23 +264,21 @@
             <q-item-label>Fin</q-item-label>
           </q-item-section>
         </q-item>
-
       </q-list>
     </q-drawer>
-    <q-footer
-      class="bg-white"
-      bordered
-      >
-      <div
-      v-if="showAppInstallBanner"
-        class="banner-container bg-primary">
+    <q-footer class="bg-white" bordered>
+      <div v-if="showAppInstallBanner" class="banner-container bg-primary">
         <transition
           appear
           enter-active-class="animated fadeIn"
           leave-active-class="animated fadeOut"
         >
           <div class="constrain">
-            <q-banner inline-actions class="bg-primary text-white q-mb-sm" dense>
+            <q-banner
+              inline-actions
+              class="bg-primary text-white q-mb-sm"
+              dense
+            >
               <template v-slot:avatar>
                 <q-icon name="ti-instagram" color="white" />
               </template>
@@ -320,12 +289,14 @@
                   @click="installApp"
                   flat
                   label="Si"
-                  class="q-mr-sm" />
+                  class="q-mr-sm"
+                />
                 <q-btn
                   dense
                   @click="neverShowAppInstallBanner"
                   flat
-                  label="No" />
+                  label="No"
+                />
               </template>
             </q-banner>
           </div>
@@ -342,44 +313,47 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters } from "vuex";
+import NavBarUser from "components/NavBarUser";
 // import EssentialLink from 'components/EssentialLink'
 
 export default {
-  name: 'ComunidadLayout',
-
-  data () {
+  name: "ComunidadLayout",
+  components: {
+    NavBarUser
+  },
+  data() {
     return {
       showAppInstallBanner: false,
       encuestaID: 0,
-      leftDrawerOpen: false,
-    }
+      leftDrawerOpen: false
+    };
   },
   methods: {
-    ...mapActions('encuesta', ['buscarEncuestaAction']),
+    ...mapActions("encuesta", ["buscarEncuestaAction"])
   },
-  created () {
-    this.encuestaID = this.$route.params.id
-    this.buscarEncuestaAction(this.encuestaID)
+  created() {
+    this.encuestaID = this.$route.params.id;
+    this.buscarEncuestaAction(this.encuestaID);
   },
   computed: {
-    ...mapGetters('encuesta', ['getEncuestaState'])
+    ...mapGetters("encuesta", ["getEncuestaState"])
   }
-}
+};
 </script>
 <style lang="sass">
-  .q-toolbar
-    @media (min-width: $breakpoint-sm-min)
-      height: 77px
-  .q-toolbar__title
+.q-toolbar
+  @media (min-width: $breakpoint-sm-min)
+    height: 77px
+.q-toolbar__title
+  font-size: 30px
+  @media (max-width: $breakpoint-xs-max)
+    text-align: center
+.q-footer
+  .q-tab__icon
     font-size: 30px
-    @media (max-width: $breakpoint-xs-max)
-      text-align: center
-  .q-footer
-    .q-tab__icon
-      font-size: 30px
-  .fondo-nav
-    background: rgb(175,202,11)
-    background: linear-gradient(90deg, rgba(175,202,11,1) 0%, rgba(100,194,200, 1) 100%)
-    background: --prefix-linear-gradient(90deg, rgba(175,202,11,1) 0%, rgba(100,194,200, 1) 100%)
+.fondo-nav
+  background: rgb(175,202,11)
+  background: linear-gradient(90deg, rgba(175,202,11,1) 0%, rgba(100,194,200, 1) 100%)
+  background: --prefix-linear-gradient(90deg, rgba(175,202,11,1) 0%, rgba(100,194,200, 1) 100%)
 </style>

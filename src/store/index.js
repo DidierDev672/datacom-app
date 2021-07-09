@@ -59,6 +59,9 @@ import persona from "./module-vivienda/personas";
 import productoVivienda from "./module-vivienda/productos";
 //ModuleFileManager
 import fileManager from "./module-file-manager";
+//ModuleUsuario
+import usuario from "./module-usuario";
+import rol from "./module-rol";
 
 Vue.use(Vuex);
 
@@ -130,7 +133,10 @@ export default function(/* { ssrContext } */) {
       persona,
       productoVivienda,
       //ModuleFileManager
-      fileManager
+      fileManager,
+      //ModuleUsuario
+      usuario,
+      rol
     },
 
     // enable strict mode (adds overhead!)
