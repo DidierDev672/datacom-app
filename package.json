@@ -19,6 +19,7 @@
     "quasar": "^1.0.0",
     "v-money": "^0.8.1",
     "vue2-dropzone": "^3.6.0",
+    "vuejs-jwt": "^1.1.0",
     "vuelidate": "^0.7.6"
   },
   "devDependencies": {

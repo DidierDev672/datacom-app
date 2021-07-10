@@ -1,28 +1,33 @@
 <template>
-  <div class="q-ma-sm">
-    <div class="row">
-      <div class="col-xs-12 col-sm-8 offset-sm-2">
+  <div>
+    
+    <q-table
+      title="Relación de proyectos productivos"
+      :data="getProyectosProductivosState.lista"
+      :columns="columns"
+      row-key="name"
+      @row-click="seleccionar"
+      :loading="getProyectosProductivosState.loading"
+      loading-label="Cargando información, por favor espere"
+    >
+      <template v-slot:top="props">
+        <div class="col-8 q-table__title">Relación de proyectos productivos</div>
 
-        <p class="text-h6 q-mt-md q-mb-sm">Proyectos Productivos</p>
+        <q-space />
+        <q-btn
+          flat
+          round
+          dense
+          :icon="props.inFullscreen ? 'fullscreen_exit' : 'fullscreen'"
+          @click="props.toggleFullscreen"
+          class="q-ml-md"
+        />
+      </template>
 
-        <proyectos-productivos-card
-          v-for="proyectosProductivosv in getProyectosProductivosState.lista"
-          class="q-mb-sm"
-          :proyectoProductivosP="proyectosProductivosv"
-          @editar="editarInfo"
-          :key="proyectosProductivosv.id"></proyectos-productivos-card>
-
-        <div v-if="showBtnContinuar" class="flex justify-center">
-          <q-btn label="Continuar" no-caps color="primary" @click="onSubmit"/>
-        </div>
-
-        <div class="flex flex-center" v-if="!showProyectoProductivoForm">
-          No hay registros para mostrar, agregue los que necesite haciendo click en el botón
-        </div>
-
-
-      </div>
-    </div>
+      <q-td slot="body-cell-acciones" slot-scope="props" :props="props">
+        <q-btn flat round icon="edit" />
+      </q-td>
+    </q-table>
 
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
       <q-btn fab icon="add" color="primary" @click="showProyectoProductivoForm = true">
@@ -38,16 +43,22 @@
 </template>
 
 <script>
-import ProyectosProductivosCard from "components/mod-jac/ProyectosProductivos/ProyectosProductivosCard";
+// import ProyectosProductivosCard from "components/mod-jac/ProyectosProductivos/ProyectosProductivosCard";
 import ProyectosProductivosForm from "components/mod-jac/ProyectosProductivos/ProyectosProductivosForm";
 import {mapActions, mapGetters, mapMutations} from "vuex";
 export default {
   name: "ProyectosProductivos",
-  components: {ProyectosProductivosForm, ProyectosProductivosCard},
+  components: {ProyectosProductivosForm},
   data() {
     return {
       jacID: 0,
-      showProyectoProductivoForm: false
+      showProyectoProductivoForm: false,
+      columns: [
+        { name: "linea", align: "left", label: "Línea", field: row => row.linea.nombre, sortable: true },
+        { name: "descripcion", align: "left", label: "Nombre Proyecto/Contrato", field: 'descripcion', sortable: true },
+        { name: "avaluo",  align: "left", label: "Avalúo", field: "avaluo" },       
+        { name: "acciones", label: "", field: "acciones" }
+      ]
     }
   }, created() {
     this.jacID = this.$route.params.id
@@ -62,14 +73,10 @@ export default {
     closeModal(){
       this.showProyectoProductivoForm = false
     },
-    editarInfo(value){
-      console.log(value)
-      this.setProyectosProductosSuccess(value)
+    seleccionar(evt, row, index){
+      this.setProyectosProductosSuccess(row)
       this.showProyectoProductivoForm = true
     },
-    onSubmit(){
-      this.$router.push({name: 'c-salud', params: {id: this.jacID}})
-    }
   },
   computed: {
     ...mapGetters('proyectosProductivos', ['getProyectosProductivosState']),

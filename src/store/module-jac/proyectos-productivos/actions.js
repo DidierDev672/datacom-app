@@ -50,7 +50,7 @@ export function registrarProyectosProductivosAction ({ commit }, payload) {
         id: data
       }
       commit('setProyectosProductosSuccess', info);
-      commit('agregarProyectosProductivosState', info);
+      commit('agregarProyectoProductivosState', info);
       resolve(data);
     }).catch( error => {
       console.log('Error al guardar: ', error);

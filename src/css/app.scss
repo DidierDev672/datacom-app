@@ -51,6 +51,7 @@ body{
   @page {
     size: auto; /* auto is the initial value */
     margin: 10%;
+    margin-top: 0;
   }
 
   header, footer, nav, aside {

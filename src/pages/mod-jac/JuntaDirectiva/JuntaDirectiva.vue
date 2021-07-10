@@ -1,24 +1,42 @@
 <template>
-  <div class="q-ma-sm">
-    <div class="row">
-      <div class="col-xs-12 col-sm-8 offset-sm-2">
+  <div>
+        <q-table
+          title="Junta Directiva"
+          :data="getJuntaDirectiva"
+          :columns="columns"
+          row-key="name"
+          @row-click="seleccionar"
+          :loading="getJuntaDirectivaState.loading"
+          loading-label="Cargando información, por favor espere"
+        >
+          <template v-slot:top="props">
+            <div class="col-4 q-table__title">Junta Directiva</div>
 
-        <p class="text-h6 q-mt-md q-mb-sm">Junta directiva  Jac</p>
-        <junta-directiva-card
+            <q-space />
+            <q-btn
+              flat
+              round
+              dense
+              :icon="props.inFullscreen ? 'fullscreen_exit' : 'fullscreen'"
+              @click="props.toggleFullscreen"
+              class="q-ml-md"
+            />
+          </template>
+
+          <q-td slot="body-cell-acciones" slot-scope="props" :props="props">
+            <q-btn flat round icon="edit" />
+          </q-td>
+        </q-table>
+        <!-- <junta-directiva-card
           v-for="juntaDirectiva in getJuntaDirectivaState.lista"
           class="q-mb-sm"
           :juntaDirectivaP="juntaDirectiva"
           @editar="editarInfo"
-          :key="juntaDirectiva.id"></junta-directiva-card>
-        <div v-if="showBtnContinuar" class="flex justify-center">
-          <q-btn label="Continuar" no-caps color="primary" @click="onSubmit"/>
-        </div>
+          :key="juntaDirectiva.id"></junta-directiva-card> -->
 
-        <div class="flex flex-center" v-if="!showBtnContinuar">
-          No hay registros para mostrar, agregue los que necesite haciendo click en el botón
-        </div>
-      </div>
-    </div>
+        <!-- <div v-if="showBtnContinuar" class="flex justify-center">
+          <q-btn label="Continuar" no-caps color="primary" @click="onSubmit"/>
+        </div> -->
 
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
       <q-btn fab icon="add" color="primary" @click="showJuntaDirectivaForm = true">
@@ -29,22 +47,29 @@
     </q-page-sticky>
 
     <junta-directiva-form v-if="showJuntaDirectivaForm" @close="closeModal"></junta-directiva-form>
-
+    
   </div>
 </template>
 
 <script>
 import {mapActions, mapGetters, mapMutations} from "vuex";
 import JuntaDirectivaForm from "components/mod-jac/JuntaDirectiva/JuntaDirectivaForm";
-import JuntaDirectivaCard from "components/mod-jac/JuntaDirectiva/JuntaDirectivaCard";
-
+import { NIVEL_GERENCIAL } from "src/utils/config";
 export default {
   name: "JuntaDirectiva",
-  components: {JuntaDirectivaCard, JuntaDirectivaForm},
+  components: {JuntaDirectivaForm},
   data() {
     return {
       jacID: 0,
-      showJuntaDirectivaForm: false
+      showJuntaDirectivaForm: false,
+      columns: [
+        { name: "cargo", align: "left", label: "Cargo", field: row => row.cargo.nombre, sortable: true },
+        { name: "nombre", align: "left", label: "Nombre completo", field: row => row.nombre + row.primerApellido,   sortable: true },
+        { name: "noDocumentoIdentificacion",  align: "left", label: "Doc. Identificación", field: "noDocumentoIdentificacion" },        
+        { name: "celular",  align: "left", label: "Celular", field: "celular" },        
+        { name: "email",  align: "left", label: "Email", field: "email" },        
+        { name: "acciones", label: "", field: "acciones" }
+      ]
     }
   }, created() {
     this.jacID = this.$route.params.id
@@ -59,8 +84,8 @@ export default {
     closeModal(){
       this.showJuntaDirectivaForm = false
     },
-    editarInfo(value){
-      this.setJuntaDirectivaSuccess(value)
+    seleccionar(evt, row, index){
+      this.setJuntaDirectivaSuccess(row)
       this.showJuntaDirectivaForm = true
     },
     onSubmit(){
@@ -68,7 +93,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('juntaDirectiva', ['getJuntaDirectivaState']),
+    ...mapGetters('juntaDirectiva', ['getJuntaDirectivaState', 'getJuntaDirectiva', 'getComites']),
     showBtnContinuar(){
       return this.getJuntaDirectivaState.lista.length > 0 ? true : false
     }

@@ -6,7 +6,7 @@
     v-model="show">
     <q-card style="width: 700px;">
       <q-card-section>
-        <div class="text-h6">{{ mensajeBoton }} Cotratos Jac </div>
+        <div class="text-h6">{{ mensajeBoton }} Junta Directiva Jac </div>
       </q-card-section>
 
       <q-separator />
@@ -15,84 +15,84 @@
         <q-form
           class="q-gutter-md"
         >
-  <div class="row q-col-gutter-sm">
-    <div class="col-xs-12">
-      <q-select
-        outlined
-        option-value="id"
-        option-label="nombre"
-        v-model="juntaDirectivaDB.tipo"
-        :options="tipoOptions"
-        label="Seleccione el tipo"
-      />
-    </div>
-  </div>
-    <div class="row q-col-gutter-sm">
-      <div class="col-xs-12">
-        <q-select
-          outlined
-          option-value="id"
-          option-label="nombre"
-          v-model="juntaDirectivaDB.cargo"
-          :options="cargosOptions"
-          label="Seleccione el cargo"
-        />
-      </div>
-    </div>
-    <div class="row q-col-gutter-sm">
-      <div class="col-xs-12">
-        <q-input
-          outlined
-          v-model="juntaDirectivaDB.nombre"
-          label="Nombre"
-        />
-      </div>
-    </div>
-    <div class="row q-col-gutter-sm">
-      <div class="col-xs-12">
-        <q-input
-          outlined
-          v-model="juntaDirectivaDB.primerApellido"
-          label="Primer Apellido"
-        />
-      </div>
-    </div>
-    <div class="row q-col-gutter-sm">
-      <div class="col-xs-12">
-        <q-input
-          outlined
-          v-model="juntaDirectivaDB.segundoApellido"
-          label="Segundo Apellido"
-        />
-      </div>
-    </div>
-    <div class="row q-col-gutter-sm">
-      <div class="col-xs-12">
-        <q-input
-          outlined
-          v-model="juntaDirectivaDB.noDocumentoIdentificacion"
-          label="No Documento"
-        />
-      </div>
-    </div>
-    <div class="row q-col-gutter-sm">
-      <div class="col-xs-12">
-        <q-input
-          outlined
-          v-model="juntaDirectivaDB.email"
-          label="Email"
-        />
-      </div>
-    </div>
-    <div class="row q-col-gutter-sm">
-      <div class="col-xs-12">
-        <q-input
-          outlined
-          v-model="juntaDirectivaDB.celular"
-          label="Celular"
-        />
-      </div>
-    </div>
+        <!-- <div class="row q-col-gutter-sm">
+          <div class="col-xs-12">
+            <q-select
+              outlined
+              option-value="id"
+              option-label="nombre"
+              v-model="juntaDirectivaDB.tipo"
+              :options="tipoOptions"
+              label="Seleccione el tipo"
+            />
+          </div>
+        </div> -->
+          <div class="row q-col-gutter-sm">
+            <div class="col-xs-12">
+              <q-select
+                outlined
+                option-value="id"
+                option-label="nombre"
+                v-model="juntaDirectivaDB.cargo"
+                :options="cargosOptions"
+                label="Seleccione el cargo"
+              />
+            </div>
+          </div>
+          <div class="row q-col-gutter-sm">
+            <div class="col-xs-12">
+              <q-input
+                outlined
+                v-model="juntaDirectivaDB.nombre"
+                label="Nombre"
+              />
+            </div>
+          </div>
+          <div class="row q-col-gutter-sm">
+            <div class="col-xs-12">
+              <q-input
+                outlined
+                v-model="juntaDirectivaDB.primerApellido"
+                label="Primer Apellido"
+              />
+            </div>
+          </div>
+          <div class="row q-col-gutter-sm">
+            <div class="col-xs-12">
+              <q-input
+                outlined
+                v-model="juntaDirectivaDB.segundoApellido"
+                label="Segundo Apellido"
+              />
+            </div>
+          </div>
+          <div class="row q-col-gutter-sm">
+            <div class="col-xs-12">
+              <q-input
+                outlined
+                v-model="juntaDirectivaDB.noDocumentoIdentificacion"
+                label="No Documento"
+              />
+            </div>
+          </div>
+          <div class="row q-col-gutter-sm">
+            <div class="col-xs-12">
+              <q-input
+                outlined
+                v-model="juntaDirectivaDB.email"
+                label="Email"
+              />
+            </div>
+          </div>
+          <div class="row q-col-gutter-sm">
+            <div class="col-xs-12">
+              <q-input
+                outlined
+                v-model="juntaDirectivaDB.celular"
+                label="Celular"
+              />
+            </div>
+          </div>
         </q-form>
       </q-card-section>
       <q-card-actions align="right">
@@ -120,7 +120,7 @@
 
 <script>
 import {mapActions, mapGetters} from "vuex";
-import {CATEGORIAS} from "src/utils/config";
+import {CATEGORIAS, NIVEL_GERENCIAL} from "src/utils/config";
 
 export default {
   name: "JuntaDirectivaForm",
@@ -141,7 +141,7 @@ export default {
    this.jacID = this.$route.params.id
     this.juntaDirectivaDB = {
       id: 0,
-      tipo:'',
+      tipo:{id: NIVEL_GERENCIAL.JUNTA_DIRECTIVA},
       cargo: '',
       nombre:'',
       primerApellido: '',
@@ -165,9 +165,9 @@ export default {
     this.cargarListaParametroPorCategoriaAction(categoriasCargo).then(data => {
       this.cargosOptions = data
     })
-    this.cargarListaParametroPorCategoriaAction(categoriasTipo).then(data => {
-      this.tipoOptions = data
-    })
+    // this.cargarListaParametroPorCategoriaAction(categoriasTipo).then(data => {
+    //   this.tipoOptions = data
+    // })
 
   },methods:{
     ...mapActions('juntaDirectiva', ['registrarJuntaDirectivaAction', 'actualizarJuntaDirectivaAction','unsetJuntaDirectivaAction']),

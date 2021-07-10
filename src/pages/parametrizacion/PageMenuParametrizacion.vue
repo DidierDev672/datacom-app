@@ -2,11 +2,7 @@
   <q-page class="q-py-md">
     <h5 class="q-px-md">Parametrización</h5>
     <q-list bordered>
-      <q-item
-        clickable
-        :to="{name: 'categorias'}"
-        v-ripple
-        class="q-py-md">
+      <q-item clickable :to="{ name: 'categorias' }" v-ripple class="q-py-md">
         <q-item-section avatar>
           <q-icon name="ti-agenda" />
         </q-item-section>
@@ -21,7 +17,7 @@
 
       <q-separator />
 
-      <q-item clickable :to="{name: 'parametros'}" v-ripple class="q-py-md">
+      <q-item clickable :to="{ name: 'parametros' }" v-ripple class="q-py-md">
         <q-item-section avatar>
           <q-icon name="ti-agenda" />
         </q-item-section>
@@ -36,7 +32,12 @@
 
       <q-separator />
 
-      <q-item clickable :to="{name: 'nueva-organizacion'}" v-ripple class="q-py-md">
+      <q-item
+        clickable
+        :to="{ name: 'nueva-organizacion' }"
+        v-ripple
+        class="q-py-md"
+      >
         <q-item-section avatar>
           <q-icon name="ti-agenda" />
         </q-item-section>
@@ -51,7 +52,27 @@
 
       <q-separator />
 
-      <q-item clickable :to="{name: 'municipios'}" v-ripple class="q-py-md">
+      <q-item
+        clickable
+        :to="{ name: 'UsuariosIndex' }"
+        v-ripple
+        class="q-py-md"
+      >
+        <q-item-section avatar>
+          <q-icon name="ti-agenda" />
+        </q-item-section>
+        <q-item-section>
+          <q-item-label>Usuarios</q-item-label>
+          <q-item-label caption>Gestión de Usuarios</q-item-label>
+        </q-item-section>
+        <q-item-section avatar>
+          <q-icon color="grey-6" name="ti-angle-right" />
+        </q-item-section>
+      </q-item>
+
+      <q-separator />
+
+      <q-item clickable :to="{ name: 'municipios' }" v-ripple class="q-py-md">
         <q-item-section avatar>
           <q-icon name="ti-agenda" />
         </q-item-section>
@@ -66,7 +87,12 @@
 
       <q-separator />
 
-      <q-item clickable :to="{name: 'departamentos'}" v-ripple class="q-py-md">
+      <q-item
+        clickable
+        :to="{ name: 'departamentos' }"
+        v-ripple
+        class="q-py-md"
+      >
         <q-item-section avatar>
           <q-icon name="ti-agenda" />
         </q-item-section>
@@ -80,13 +106,12 @@
       </q-item>
 
       <q-separator />
-
     </q-list>
   </q-page>
 </template>
 
 <script>
 export default {
-  name: 'PageMenuParametrizacion'
-}
+  name: "PageMenuParametrizacion"
+};
 </script>

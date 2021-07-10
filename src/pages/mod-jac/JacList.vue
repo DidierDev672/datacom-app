@@ -1,6 +1,6 @@
 <template>
   <q-table
-    title="Encuestas en Proceso"
+    title="Juntas de Acciones Comunales"
     :data="jacInfos"
     :columns="columns"
     row-key="name"
@@ -9,7 +9,7 @@
     loading-label="Cargando información, por favor espere"
   >
     <template v-slot:top="props">
-      <div class="col-4 q-table__title">Encuestas en Proceso</div>
+      <div class="col-4 q-table__title">Juntas de Acciones Comunales</div>
 
       <q-space/>
       <q-btn
@@ -39,7 +39,7 @@ export default {
       columns: [
         {name: 'id', align: 'left', label: '#', field: 'id', sortable: true},
         {name: 'comunidad', align: 'left', label: 'Comunidad', field: row => row.comunidad.nombreComunidad, sortable: true},
-        {name: 'nit', align: 'left', label: 'Nit', field: 'nit'},
+        {name: 'noRut', align: 'left', label: 'Nit', field: 'noRut'},
         {
           name: 'representante_legal',
           align: 'left',
@@ -62,7 +62,7 @@ export default {
     seleccionar(evt, row, index) {
       console.log('jacInfo: ', row);
       let jacID = row.id
-      this.$router.push({name: 'jac-editar', params: {id: row.id}})
+      this.$router.push({name: 'jac-info', params: {id: row.id}})
     },
   },
   computed: {

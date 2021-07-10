@@ -11,7 +11,7 @@
       <q-card-section style="max-height: 50vh" class="scroll">
         <div class="row items-center no-wrap">
           <div class="col">
-            <div class="text-h6">Autoevaluación</div>
+            <div class="text-h6">Evaluación</div>
             <div class="text-subtitle2">{{ getDetalleAutoevaluacionState.objDetalleAutoevaluacion.nit }} - {{ getDetalleAutoevaluacionState.objDetalleAutoevaluacion.organizacion }}</div>
             <div class="text-caption">Puntaje Obtenido: {{ getDetalleAutoevaluacionState.objDetalleAutoevaluacion.calificacion }}</div>
           </div>

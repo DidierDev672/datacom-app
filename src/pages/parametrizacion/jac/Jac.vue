@@ -98,7 +98,7 @@
                   <div class="col-xs-12">
                   <q-input
                     outlined
-                    v-model="jac.nit"
+                    v-model="jac.noRut"
                     label="Nit de la Organización"
                   />
                   </div>
@@ -193,7 +193,7 @@ export default {
   created() {
     this.jac = {
       id: 0,
-      nit: '',
+      noRut: '',
       nombre: '',
       representanteLegal: '',
       areaInfluencia: true,

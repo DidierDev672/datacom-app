@@ -40,7 +40,7 @@ export default {
       columns: [
         { name: "id", align: "left", label: "#", field: "id", sortable: true },
         { name: "comunidad", align: "left", label: "Comunidad", field: "comunidad", sortable: true },
-        { name: "nit", align: "left", label: "Nit", field: "nit" },
+        { name: "rut", align: "left", label: "Nit", field: "rut" },
         { name: "organizacion", align: "left", label: "Organización", field: "organizacion", sortable: true },
         { name: "puntaje", align: "left", label: "Calificación", field: "calificacion" },
         { name: "fecha", align: "left", label: "Fecha Evaluación", field: "fecha" },

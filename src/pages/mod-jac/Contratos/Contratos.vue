@@ -1,28 +1,32 @@
 <template>
-  <div class="q-ma-sm">
-    <div class="row">
-      <div class="col-xs-12 col-sm-8 offset-sm-2">
+  <div>
+    <q-table
+      title="Relación de contratos y/o proyectos"
+      :data="getContratosState.lista"
+      :columns="columns"
+      row-key="name"
+      @row-click="seleccionar"
+      :loading="getContratosState.loading"
+      loading-label="Cargando información, por favor espere"
+    >
+      <template v-slot:top="props">
+        <div class="col-8 q-table__title">Relación de contratos y/o proyectos</div>
 
-        <p class="text-h6 q-mt-md q-mb-sm">Contratos</p>
+        <q-space />
+        <q-btn
+          flat
+          round
+          dense
+          :icon="props.inFullscreen ? 'fullscreen_exit' : 'fullscreen'"
+          @click="props.toggleFullscreen"
+          class="q-ml-md"
+        />
+      </template>
 
-        <contratos-card
-          v-for="contratosv in getContratosState.lista"
-          class="q-mb-sm"
-          :contratos="contratosv"
-          @editar="editarInfo"
-          :key="contratosv.id"></contratos-card>
-
-        <div v-if="showBtnContinuar" class="flex justify-center">
-          <q-btn label="Continuar" no-caps color="primary" @click="onSubmit"/>
-        </div>
-
-        <div class="flex flex-center" v-if="!showBtnContinuar">
-          No hay registros para mostrar, agregue los que necesite haciendo click en el botón
-        </div>
-
-
-      </div>
-    </div>
+      <q-td slot="body-cell-acciones" slot-scope="props" :props="props">
+        <q-btn flat round icon="edit" />
+      </q-td>
+    </q-table>
 
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
       <q-btn fab icon="add" color="primary" @click="showContratoForm = true">
@@ -38,16 +42,26 @@
 </template>
 
 <script>
-import ContratosCard from "components/mod-jac/contratos/ContratosCard";
+// import ContratosCard from "components/mod-jac/contratos/ContratosCard";
 import ContratosForm from "components/mod-jac/contratos/ContratosForm";
 import {mapActions, mapGetters, mapMutations} from "vuex";
 export default {
   name: "Contratos",
-  components: {ContratosForm, ContratosCard},
+  components: {ContratosForm},
   data() {
     return {
       jacID: 0,
-      showContratoForm: false
+      showContratoForm: false,
+      columns: [
+        { name: "tipoContrato", align: "left", label: "Tipo", field: row => row.tipoContrato.nombre, sortable: true },
+        { name: "descripcion", align: "left", label: "Nombre Proyecto/Contrato", field: 'descripcion', sortable: true },
+        { name: "fechaEjecucion",  align: "left", label: "Fecha", field: "fechaEjecucion" },        
+        { name: "valor",  align: "left", label: "Valor", field: "valor" },        
+        { name: "entidad",  align: "left", label: "Entidad", field: "entidad" },        
+        { name: "montoExcedente",  align: "left", label: "Monto excedente", field: "montoExcedente" },        
+        { name: "montoInversion",  align: "left", label: "Monto inversión", field: "montoInversion" },        
+        { name: "acciones", label: "", field: "acciones" }
+      ]
     }
   }, created() {
     this.jacID = this.$route.params.id
@@ -62,9 +76,8 @@ export default {
     closeModal(){
       this.showContratoForm = false
     },
-    editarInfo(value){
-      console.log(value)
-      this.setContratosSuccess(value)
+    seleccionar(evt, row, index){
+      this.setContratosSuccess(row)
       this.showContratoForm = true
     },
     onSubmit(){

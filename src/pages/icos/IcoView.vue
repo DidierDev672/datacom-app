@@ -4,9 +4,8 @@
       <q-card-section>
         <div class="row items-center no-wrap">
           <div class="col">
-            <div class="text-h6">Detalle Autoevaluación</div>
-            <div class="text-subtitle2">{{ getDetalleAutoevaluacionState.objDetalleAutoevaluacion.nit }} - {{ getDetalleAutoevaluacionState.objDetalleAutoevaluacion.organizacion }}</div>
-            <div class="text-caption">Puntaje Obtenido: {{ getDetalleAutoevaluacionState.objDetalleAutoevaluacion.calificacion }}</div>
+            <div class="text-h6">{{ getDetalleAutoevaluacionState.objDetalleAutoevaluacion.rut }} - {{ getDetalleAutoevaluacionState.objDetalleAutoevaluacion.organizacion }}</div>
+            <div class="text-subtitle2">Puntaje Obtenido: {{ getDetalleAutoevaluacionState.objDetalleAutoevaluacion.calificacion }}</div>            
           </div>
 
           <div class="col-auto">
@@ -16,8 +15,8 @@
                   <q-item clickable @click="showPlanTrabajoForm = true">
                     <q-item-section>Plan de Trabajo</q-item-section>
                   </q-item>
-                  <q-item clickable @click="imprimir">
-                    <q-item-section>Imprimir</q-item-section>
+                  <q-item clickable @click="bajarIco">
+                    <q-item-section>Descargar</q-item-section>
                   </q-item>
                 </q-list>
               </q-menu>
@@ -29,8 +28,8 @@
       <q-markup-table wrap-cells>
         <thead>
           <tr>
-            <th class="text-center">Area</th>
-            <th class="text-center">Subarea</th>
+            <th class="text-center">Área</th>
+            <th class="text-center">Subárea</th>
             <th class="text-center">Tema</th>
             <th class="text-lef">Indicador</th>
             <th class="text-center">Calificación</th>
@@ -61,6 +60,8 @@ import { mapGetters, mapActions } from 'vuex'
 import NuevoPlanTrabajo from 'src/components/ico-plan-trabajo/NuevoPlanTrabajo.vue'
 import print from 'print-js'
 import { exportFile } from 'quasar'
+import axios from 'axios'
+import { URL_API } from 'src/utils/config'
 
 function wrapCsvValue (val, formatFn) {
   let formatted = formatFn !== void 0
@@ -110,6 +111,28 @@ export default {
     ...mapActions('encuesta',['buscarEncuestaAction']),
     imprimir(){
       print('tabla_indicadores', 'html')
+    },
+    bajarIco(){
+      const urlService = 'reportes/ficha-ico';
+      const encuestaID = this.encuesta.id
+      axios.get(`${URL_API}/${urlService}/${encuestaID}`, { responseType: 'blob' }).then( ({data}) => {
+        console.log('DATA: ', data);
+        setTimeout(() => {
+            const url = window.URL.createObjectURL(data);
+            console.log('Url: ', url)
+            const a = document.createElement('a');
+            a.setAttribute('style', 'display:none;');
+            document.body.appendChild(a);
+            a.href = url;
+            a.download = "Ico " + this.encuesta.descripcion + ".xls";
+            a.click();
+            return url;
+
+        }, 500)
+      }).catch( error => {
+        console.log('Error: ', error.response);
+      });
+
     },
     cerrarModal(){
       this.showPlanTrabajoForm = false
