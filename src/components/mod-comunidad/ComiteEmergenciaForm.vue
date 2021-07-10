@@ -83,7 +83,8 @@ export default {
         ...this.comiteEmergencia,
         encuesta: {
           id: this.encuestaID
-        }
+        },
+        usuarioCreacion: this.
       }
 
       if(info.id > 0){
@@ -101,6 +102,7 @@ export default {
   },
   computed: {
     ...mapGetters('comiteEmergencia', ['getComiteEmergenciaState']),
+    ...mapGetters('auth', ['getUser']),
     mensajeBoton(){
       return this.comiteEmergencia.id > 0 ? 'Actualizar' : 'Guardar'
     }

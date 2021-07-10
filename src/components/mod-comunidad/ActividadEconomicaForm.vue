@@ -92,7 +92,9 @@ export default {
         ...this.aEconomica,
         encuesta: {
           id: this.encuestaID
-        }
+        },
+        usuarioCreacion: this.getUser,
+        usuarioActualizacion: this.getUser
       }
 
       if(info.id > 0){
@@ -112,6 +114,7 @@ export default {
   },
   computed: {
     ...mapGetters('actividadEconomica', ['getActividadEconomicaState']),
+    ...mapGetters('auth', ['getUser']),
     mensajeBoton(){
       return this.aEconomica.id > 0 ? 'Actualizar' : 'Guardar'
     }
