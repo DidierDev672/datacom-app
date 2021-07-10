@@ -64,6 +64,7 @@
 </template>
 
 <script>
+import { date } from "quasar";
 import { mapActions, mapGetters } from "vuex";
 import { CATEGORIAS } from "src/utils/config";
 export default {
@@ -104,6 +105,7 @@ export default {
     ]),
     ...mapActions("parametros", ["cargarListaParametroPorCategoriaAction"]),
     onSubmit() {
+      const fecha = date.formatDate(new Date(), "YYYY-MM-DDTHH:mm:ss.SSSZ");
       let info = {
         ...this.producto,
         encuesta: {
@@ -112,10 +114,18 @@ export default {
       };
       if (info.id > 0) {
         //Actualizar
-        this.actualizarProductoViviendaAction(info).then(() => {});
+        this.actualizarProductoViviendaAction({
+          ...info,
+          fechaActualizacion: fecha,
+          usuarioActualizacion: this.getUser
+        }).then(() => {});
       } else {
         //Guardar
-        this.registrarProductoViviendaAction(info).then(data => {
+        this.registrarProductoViviendaAction({
+          ...info,
+          fechaCreacion: fecha,
+          usuarioCreacion: this.getUser
+        }).then(data => {
           this.producto.id = data;
         });
       }
@@ -126,6 +136,7 @@ export default {
   },
   computed: {
     ...mapGetters("productoVivienda", ["getProductoViviendaState"]),
+    ...mapGetters("auth", ["getUser"]),
     mensajeBoton() {
       return this.producto.id > 0 ? "Actualizar" : "Guardar";
     }

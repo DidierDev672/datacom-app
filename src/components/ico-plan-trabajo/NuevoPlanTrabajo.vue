@@ -6,21 +6,37 @@
     v-model="show"
   >
     <q-card style="width: 700px;">
-
       <q-separator />
       <q-card-section style="max-height: 50vh" class="scroll">
         <div class="row items-center no-wrap">
           <div class="col">
             <div class="text-h6">Evaluación</div>
-            <div class="text-subtitle2">{{ getDetalleAutoevaluacionState.objDetalleAutoevaluacion.nit }} - {{ getDetalleAutoevaluacionState.objDetalleAutoevaluacion.organizacion }}</div>
-            <div class="text-caption">Puntaje Obtenido: {{ getDetalleAutoevaluacionState.objDetalleAutoevaluacion.calificacion }}</div>
+            <div class="text-subtitle2">
+              {{ getDetalleAutoevaluacionState.objDetalleAutoevaluacion.nit }} -
+              {{
+                getDetalleAutoevaluacionState.objDetalleAutoevaluacion
+                  .organizacion
+              }}
+            </div>
+            <div class="text-caption">
+              Puntaje Obtenido:
+              {{
+                getDetalleAutoevaluacionState.objDetalleAutoevaluacion
+                  .calificacion
+              }}
+            </div>
           </div>
         </div>
 
         <q-list bordered padding v-if="showDetalle && indicadores.length > 0">
           <!-- <q-item-label header>Indicadores para el plan de trabajo</q-item-label> -->
 
-          <q-item tag="label" v-ripple v-for="registro in options" :key="registro.id">
+          <q-item
+            tag="label"
+            v-ripple
+            v-for="registro in options"
+            :key="registro.id"
+          >
             <q-item-section side top>
               <q-checkbox v-model="selected" />
             </q-item-section>
@@ -33,32 +49,27 @@
               {{ registro.calificacion }}
             </q-item-section>
           </q-item>
-
         </q-list>
 
         <q-list bordered padding v-else>
           <!-- <q-item-label header>Indicadores para el plan de trabajo</q-item-label> -->
 
-          <q-item tag="label" v-ripple >
-
+          <q-item tag="label" v-ripple>
             <q-item-section>
-              <q-item-label class="q-mb-md">El plan de trabajo se ha generado correctamente</q-item-label>
-              <q-btn :to="{name: 'plan-trabajo', params:{id: planTrabajo.id}}" label="Ver plan de trabajo" />
+              <q-item-label class="q-mb-md"
+                >El plan de trabajo se ha generado correctamente</q-item-label
+              >
+              <q-btn
+                :to="{ name: 'plan-trabajo', params: { id: planTrabajo.id } }"
+                label="Ver plan de trabajo"
+              />
             </q-item-section>
-
           </q-item>
-
         </q-list>
-
       </q-card-section>
       <q-separator />
       <q-card-actions align="right">
-        <q-btn
-          flat
-          label="Cancelar"
-          color="primary"
-          @click="close"
-        />
+        <q-btn flat label="Cancelar" color="primary" @click="close" />
         <q-btn
           label="Generar Plan de Trabajo"
           color="primary"
@@ -76,8 +87,8 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
-
+import { mapGetters, mapActions } from "vuex";
+import { date } from "quasar";
 export default {
   name: "NuevoPlanTrabajoForm",
   data() {
@@ -94,46 +105,66 @@ export default {
     this.encuestaID = this.$route.params.id;
     this.planTrabajo = {
       id: 0,
-      titulo: "Plan de Trabajo "+this.getDetalleAutoevaluacionState.objDetalleAutoevaluacion.organizacion,
+      titulo:
+        "Plan de Trabajo " +
+        this.getDetalleAutoevaluacionState.objDetalleAutoevaluacion
+          .organizacion,
       detalle: []
     };
-    this.buscarPlanTrabajoPorEncuestaAction(this.encuestaID).then(data => {
-      if(data.id > 0){
-        this.planTrabajo.id = data.id
-        this.showDetalle = false
-      }
-    }).catch(error => {
-      this.$q.notify({
-          message: 'Ha ocurrido un error al consultar el plan de trabajo:' + error.data.message,
-          color: 'red'
+    this.buscarPlanTrabajoPorEncuestaAction(this.encuestaID)
+      .then(data => {
+        if (data.id > 0) {
+          this.planTrabajo.id = data.id;
+          this.showDetalle = false;
+        }
       })
-      console.log('Ha ocurrido un error al consultar el plan de trabajo:', error.data.message)
-      this.close();
-    })
+      .catch(error => {
+        this.$q.notify({
+          message:
+            "Ha ocurrido un error al consultar el plan de trabajo:" +
+            error.data.message,
+          color: "red"
+        });
+        console.log(
+          "Ha ocurrido un error al consultar el plan de trabajo:",
+          error.data.message
+        );
+        this.close();
+      });
   },
   methods: {
-    ...mapActions("planTrabajo", ['registrarPlanTrabajoAction', 'buscarPlanTrabajoPorEncuestaAction']),
+    ...mapActions("planTrabajo", [
+      "registrarPlanTrabajoAction",
+      "buscarPlanTrabajoPorEncuestaAction"
+    ]),
     onSubmit() {
+      const fecha = date.formatDate(new Date(), "YYYY-MM-DDTHH:mm:ss.SSSZ");
       this.$q.loading.show({
-        message: 'Espere mientras generamos el plan de trabajo...</span>'
-      })
+        message: "Espere mientras generamos el plan de trabajo...</span>"
+      });
       let info = {
         ...this.planTrabajo,
         encuesta: {
           id: this.encuestaID
         },
-        detalle: this.options
+        detalle: this.options,
+        fechaCreacion: fecha,
+        usuarioCreacion: this.getUser,
+        fechaActualizacion: fecha,
+        usuarioActualizacion: this.getUser
       };
-      console.log('Plan de Trabajo: ', info);
+      console.log("Plan de Trabajo: ", info);
 
-      this.registrarPlanTrabajoAction(info).then(data => {
-        this.planTrabajo.id = data
-        this.showDetalle = false
-        this.$q.loading.hide()
-      }).catch(error => {
-        console.log('Ocurrió un error al crear el plan de trabajo: '+ error);
-        this.$q.loading.hide()
-      })
+      this.registrarPlanTrabajoAction(info)
+        .then(data => {
+          this.planTrabajo.id = data;
+          this.showDetalle = false;
+          this.$q.loading.hide();
+        })
+        .catch(error => {
+          console.log("Ocurrió un error al crear el plan de trabajo: " + error);
+          this.$q.loading.hide();
+        });
     },
     close() {
       this.$emit("close");
@@ -143,20 +174,23 @@ export default {
     ...mapGetters("planTrabajo", ["getPlanTrabajoState"]),
     ...mapGetters("detalleAutoevaluacion", ["getDetalleAutoevaluacionState"]),
     ...mapGetters("encuesta", ["getEncuestaState"]),
-    indicadores(){
-      let opcionesArray = this.getEncuestaState.objEncuesta.detalleAutoevaluacion.map(opt => {
-        if(opt.calificacion < 3){
-          this.options.push({
-            indicador: opt.indicador,
-            calificacion: opt.calificacion
-          })
-          return {
-            indicador: opt.indicador,
-            calificacion: opt.calificacion
+    ...mapGetters("auth", ["getUser"]),
+    indicadores() {
+      let opcionesArray = this.getEncuestaState.objEncuesta.detalleAutoevaluacion.map(
+        opt => {
+          if (opt.calificacion < 3) {
+            this.options.push({
+              indicador: opt.indicador,
+              calificacion: opt.calificacion
+            });
+            return {
+              indicador: opt.indicador,
+              calificacion: opt.calificacion
+            };
           }
         }
-      })
-      return opcionesArray
+      );
+      return opcionesArray;
     }
   },
   beforeDestroy() {

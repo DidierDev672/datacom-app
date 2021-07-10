@@ -617,6 +617,7 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import { CATEGORIAS } from "src/utils/config";
+import { date } from "quasar";
 export default {
   data() {
     return {
@@ -728,7 +729,12 @@ export default {
       this.validarForm();
     },
     onSubmit() {
-      this.registrarPersonaAction(this.persona).then(data => {
+      const fecha = date.formatDate(new Date(), "YYYY-MM-DDTHH:mm:ss.SSSZ");
+      this.registrarPersonaAction({
+        ...this.persona,
+        fechaActualizacion: fecha,
+        usuarioActualizacion: this.getUser
+      }).then(data => {
         this.$router.push({
           name: "personas-vivienda",
           params: { id: this.persona.encuesta.id }
@@ -785,7 +791,8 @@ export default {
   },
 
   computed: {
-    ...mapGetters("persona", ["getPersonaState", "getPersonaPorNoOrden"])
+    ...mapGetters("persona", ["getPersonaState", "getPersonaPorNoOrden"]),
+    ...mapGetters("auth", ["getUser"])
   }
 };
 </script>

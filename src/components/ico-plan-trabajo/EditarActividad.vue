@@ -60,8 +60,6 @@
               />
             </div>
           </div>
-
-
         </q-form>
       </q-card-section>
       <q-separator />
@@ -90,6 +88,7 @@
 </template>
 
 <script>
+import { date } from "quasar";
 import { mapGetters, mapActions } from "vuex";
 import { CATEGORIAS } from "src/utils/config";
 export default {
@@ -110,40 +109,53 @@ export default {
     });
     this.actividad = {
       id: 0,
-      calificacion: '',
-      indicador: '',
-      plan: '',
-      actividad: '',
-      responsable: '',
-      cargo: '',
-      fecha_vencimiento: ''
+      calificacion: "",
+      indicador: "",
+      plan: "",
+      actividad: "",
+      responsable: "",
+      cargo: "",
+      fecha_vencimiento: ""
     };
 
-    if(Object.keys(this.getPlanTrabajoDetalleState.objPlanTrabajoDetalle).length > 0){
-        this.actividad.id = this.getPlanTrabajoDetalleState.objPlanTrabajoDetalle.id;
-        this.actividad.calificacion = this.getPlanTrabajoDetalleState.objPlanTrabajoDetalle.calificacion;
-        this.actividad.indicador = this.getPlanTrabajoDetalleState.objPlanTrabajoDetalle.indicador;
-        this.actividad.plan = this.getPlanTrabajoDetalleState.objPlanTrabajoDetalle.plan;
-        this.actividad.actividad = this.getPlanTrabajoDetalleState.objPlanTrabajoDetalle.actividad;
-        this.actividad.responsable = this.getPlanTrabajoDetalleState.objPlanTrabajoDetalle.responsable;
-        this.actividad.cargo = this.getPlanTrabajoDetalleState.objPlanTrabajoDetalle.cargo;
-        this.actividad.fecha_vencimiento = this.getPlanTrabajoDetalleState.objPlanTrabajoDetalle.fecha_vencimiento;
-      }
+    if (
+      Object.keys(this.getPlanTrabajoDetalleState.objPlanTrabajoDetalle)
+        .length > 0
+    ) {
+      this.actividad.id = this.getPlanTrabajoDetalleState.objPlanTrabajoDetalle.id;
+      this.actividad.calificacion = this.getPlanTrabajoDetalleState.objPlanTrabajoDetalle.calificacion;
+      this.actividad.indicador = this.getPlanTrabajoDetalleState.objPlanTrabajoDetalle.indicador;
+      this.actividad.plan = this.getPlanTrabajoDetalleState.objPlanTrabajoDetalle.plan;
+      this.actividad.actividad = this.getPlanTrabajoDetalleState.objPlanTrabajoDetalle.actividad;
+      this.actividad.responsable = this.getPlanTrabajoDetalleState.objPlanTrabajoDetalle.responsable;
+      this.actividad.cargo = this.getPlanTrabajoDetalleState.objPlanTrabajoDetalle.cargo;
+      this.actividad.fecha_vencimiento = this.getPlanTrabajoDetalleState.objPlanTrabajoDetalle.fecha_vencimiento;
+    }
   },
   methods: {
-    ...mapActions("planTrabajoDetalle", ["buscarPlanTrabajoDetalleAction", 'actualizarPlanTrabajoDetalleAction', 'unsetPlanTrabajoDetalleAction']),
+    ...mapActions("planTrabajoDetalle", [
+      "buscarPlanTrabajoDetalleAction",
+      "actualizarPlanTrabajoDetalleAction",
+      "unsetPlanTrabajoDetalleAction"
+    ]),
     ...mapActions("parametros", ["cargarListaParametroPorCategoriaAction"]),
     onSubmit() {
-      this.actualizarPlanTrabajoDetalleAction(this.actividad).then(data => {
-        this.$emit("editar", this.actividad)
-      })
+      const fecha = date.formatDate(new Date(), "YYYY-MM-DDTHH:mm:ss.SSSZ");
+      this.actualizarPlanTrabajoDetalleAction({
+        ...this.actividad,
+        fechaActualizacion: fecha,
+        usuarioActualizacion: this.getUser
+      }).then(data => {
+        this.$emit("editar", this.actividad);
+      });
     },
     close() {
       this.$emit("close");
     }
   },
   computed: {
-    ...mapGetters("planTrabajoDetalle", ["getPlanTrabajoDetalleState"])
+    ...mapGetters("planTrabajoDetalle", ["getPlanTrabajoDetalleState"]),
+    ...mapGetters("auth", ["getUser"])
   },
   beforeDestroy() {
     this.unsetPlanTrabajoDetalleAction();
