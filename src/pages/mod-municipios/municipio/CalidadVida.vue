@@ -351,6 +351,7 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import { date } from "quasar";
 export default {
   data() {
     return {
@@ -391,6 +392,7 @@ export default {
       "buscarCalidadDeVidaAction"
     ]),
     onSubmit() {
+      const fecha = date.formatDate(new Date(), "YYYY-MM-DDTHH:mm:ss.SSSZ");
       this.$refs.calidadForm.validate().then(success => {
         if (success) {
           console.log("Form valido", this.calidad);
@@ -399,6 +401,9 @@ export default {
             encuesta: {
               id: this.encuestaID
             },
+            fechaActualizacion: fecha,
+            usuarioActualizacion: this.getUser,
+            fechaCreacion: fecha,
             usuarioCreacion: this.getUser
           }).then(data => {
             this.calidad.id = data;

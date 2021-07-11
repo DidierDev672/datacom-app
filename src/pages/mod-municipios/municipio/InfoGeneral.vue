@@ -778,6 +778,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import { date } from "quasar";
 export default {
   data() {
     return {
@@ -805,6 +806,7 @@ export default {
     };
   },
   created() {
+    const fecha = date.formatDate(new Date(), "YYYY-MM-DDTHH:mm:ss.SSSZ");
     this.infoGeneral = {
       id: 0,
       alcalde: "",
@@ -851,7 +853,11 @@ export default {
           codigo: "",
           nombreDepartamento: ""
         }
-      }
+      },
+      fechaActualizacion: fecha,
+      usuarioActualizacion: this.getUser,
+      fechaCreacion: fecha,
+      usuarioCreacion: this.getUser
     };
     this.encuestaID = this.$route.params.id;
     this.cargarListaDepartamentoAction().then(data => {
@@ -924,7 +930,8 @@ export default {
                 ...this.infoGeneral,
                 encuesta: {
                   id: this.encuestaID
-                }
+                },
+                usuarioCreacion: this.getUser
               }).then(data => {
                 this.infoGeneral.id = data;
                 this.step++;
@@ -945,7 +952,8 @@ export default {
                 ...this.infoGeneral,
                 encuesta: {
                   id: this.encuestaID
-                }
+                },
+                usuarioActualizacion: this.getUser
               }).then(data => {
                 this.step++;
               });
@@ -965,7 +973,8 @@ export default {
                 ...this.infoGeneral,
                 encuesta: {
                   id: this.encuestaID
-                }
+                },
+                usuarioActualizacion: this.getUser
               }).then(data => {
                 this.step++;
               });
@@ -985,7 +994,8 @@ export default {
                 ...this.infoGeneral,
                 encuesta: {
                   id: this.encuestaID
-                }
+                },
+                usuarioActualizacion: this.getUser
               }).then(data => {
                 this.step++;
               });
@@ -1031,7 +1041,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters("informacionGeneral", ["getInformacionGeneralState"])
+    ...mapGetters("informacionGeneral", ["getInformacionGeneralState"]),
+    ...mapGetters("auth", ["getUser"])
   }
 };
 </script>

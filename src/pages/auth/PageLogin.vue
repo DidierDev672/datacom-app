@@ -80,8 +80,8 @@ export default {
     return {
       isPwd: true,
       loading: false,
-      username: "enarvaez",
-      password: "edinson261282",
+      username: "", //enarvaez
+      password: "", //edinson261282
       remember: false
     };
   },

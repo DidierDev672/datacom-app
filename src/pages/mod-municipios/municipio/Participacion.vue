@@ -7,20 +7,31 @@
 
           <q-card flat bordered class="my-card q-mb-md">
             <q-card-section class="q-pb-none">
-              <div class="text-h6 q-mb-none">Porcentaje de participación elecciones locales</div>
+              <div class="text-h6 q-mb-none">
+                Porcentaje de participación elecciones locales
+              </div>
             </q-card-section>
 
             <q-card-section>
               <div class="row">
                 <div class="col-xs-12 col-sm-6">
                   <!-- <q-input dense v-model="infoGeneral.porcentajeElecciones" /> -->
-                  <q-field                    
-                  v-model="infoGeneral.porcentajeElecciones"
-                  hint="#,###"
+                  <q-field
+                    v-model="infoGeneral.porcentajeElecciones"
+                    hint="#,###"
                   >
-                  <template v-slot:control="{ id, floatingLabel, value, emitValue }">
-                      <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
-                  </template>
+                    <template
+                      v-slot:control="{ id, floatingLabel, value, emitValue }"
+                    >
+                      <money
+                        :id="id"
+                        class="q-field__input"
+                        :value="value"
+                        @input="emitValue"
+                        v-bind="decimales"
+                        v-show="floatingLabel"
+                      />
+                    </template>
                   </q-field>
                 </div>
               </div>
@@ -38,13 +49,19 @@
               <div class="row">
                 <div class="col-xs-12 col-sm-6">
                   <!-- <q-input dense v-model="infoGeneral.totalVotosAlcalde" /> -->
-                  <q-field                    
-                  v-model="infoGeneral.totalVotosAlcalde"
-                  hint="#,###"
-                  >
-                  <template v-slot:control="{ id, floatingLabel, value, emitValue }">
-                      <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="numero" v-show="floatingLabel" />
-                  </template>
+                  <q-field v-model="infoGeneral.totalVotosAlcalde" hint="#,###">
+                    <template
+                      v-slot:control="{ id, floatingLabel, value, emitValue }"
+                    >
+                      <money
+                        :id="id"
+                        class="q-field__input"
+                        :value="value"
+                        @input="emitValue"
+                        v-bind="numero"
+                        v-show="floatingLabel"
+                      />
+                    </template>
                   </q-field>
                 </div>
               </div>
@@ -60,19 +77,24 @@
               <div class="row">
                 <div class="col-xs-12 col-sm-6">
                   <!-- <q-input dense v-model="infoGeneral.porcentajeVotos" /> -->
-                  <q-field                    
-                  v-model="infoGeneral.porcentajeVotos"
-                  hint="#,###"
-                  >
-                  <template v-slot:control="{ id, floatingLabel, value, emitValue }">
-                      <money :id="id" class="q-field__input" :value="value" @input="emitValue" v-bind="decimales" v-show="floatingLabel" />
-                  </template>
+                  <q-field v-model="infoGeneral.porcentajeVotos" hint="#,###">
+                    <template
+                      v-slot:control="{ id, floatingLabel, value, emitValue }"
+                    >
+                      <money
+                        :id="id"
+                        class="q-field__input"
+                        :value="value"
+                        @input="emitValue"
+                        v-bind="decimales"
+                        v-show="floatingLabel"
+                      />
+                    </template>
                   </q-field>
                 </div>
               </div>
             </q-card-section>
           </q-card>
-          
         </q-form>
 
         <div class="flex justify-center">
@@ -96,24 +118,25 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import { date } from "quasar";
 export default {
   data() {
     return {
       encuestaID: 0,
       infoGeneral: {},
       numero: {
-          decimal: '.',
-          thousands: ',',
-          precision: 0,
-          masked: false /* doesn't work with directive */
+        decimal: ".",
+        thousands: ",",
+        precision: 0,
+        masked: false /* doesn't work with directive */
       },
       decimales: {
-          decimal: '.',
-          thousands: ',',
-          suffix: ' %',
-          precision: 2,
-          masked: false /* doesn't work with directive */
-      },
+        decimal: ".",
+        thousands: ",",
+        suffix: " %",
+        precision: 2,
+        masked: false /* doesn't work with directive */
+      }
     };
   },
 
@@ -123,11 +146,14 @@ export default {
       id: 0,
       porcentajeElecciones: "",
       totalVotosAlcalde: "",
-      porcentajeVotos: ""
+      porcentajeVotos: "",
+      fechaActualizacion: this.getFecha,
+      usuarioActualizacion: this.getUser,
+      fechaCreacion: this.getFecha,
+      usuarioCreacion: this.getUser
     };
 
     this.buscarInformacionGeneralAction(this.encuestaID).then(data => {
-      console.log(data);
       if (data.id > 0) {
         this.infoGeneral = { ...data };
       }
@@ -140,8 +166,12 @@ export default {
       "actualizarInformacionGeneralAction"
     ]),
     onSubmit() {
-      this.actualizarInformacionGeneralAction(this.infoGeneral).then(data => {
-          this.infoGeneral.id = data
+      this.actualizarInformacionGeneralAction({
+        ...this.infoGeneral,
+        fechaActualizacion: this.getFecha,
+        usuarioActualizacion: this.getUser
+      }).then(data => {
+        this.infoGeneral.id = data;
         this.$router.push({
           name: "medios",
           params: { id: this.encuestaID }
@@ -151,7 +181,11 @@ export default {
   },
 
   computed: {
-    ...mapGetters("informacionGeneral", ["getInformacionGeneralState"])
+    ...mapGetters("informacionGeneral", ["getInformacionGeneralState"]),
+    ...mapGetters("auth", ["getUser"]),
+    getFecha() {
+      return date.formatDate(new Date(), "YYYY-MM-DDTHH:mm:ss.SSSZ");
+    }
   }
 };
 </script>

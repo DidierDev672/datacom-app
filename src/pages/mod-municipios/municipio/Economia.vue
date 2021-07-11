@@ -2,7 +2,7 @@
   <div class="q-ma-sm">
     <div class="row">
       <div class="col-xs-12 col-sm-8 offset-sm-2">
-        <q-form ref="ubicacionForm">
+        <q-form ref="economiaForm">
           <p class="text-h6 q-mt-md q-mb-sm">15. Economía y Marca Propia</p>
 
           <q-card flat bordered class="my-card q-mb-md">
@@ -15,7 +15,12 @@
             <q-card-section>
               <div class="row">
                 <div class="col-xs-12 col-sm-6">
-                  <q-input dense v-model="infoGeneral.productoArtesanal" />
+                  <q-input
+                    dense
+                    v-model="infoGeneral.productoArtesanal"
+                    lazy-rules
+                    :rules="[val => !!val || 'Campo requerido']"
+                  />
                 </div>
               </div>
             </q-card-section>
@@ -31,7 +36,12 @@
             <q-card-section>
               <div class="row">
                 <div class="col-xs-12 col-sm-6">
-                  <q-input dense v-model="infoGeneral.riquesaNatural" />
+                  <q-input
+                    dense
+                    v-model="infoGeneral.riquesaNatural"
+                    lazy-rules
+                    :rules="[val => !!val || 'Campo requerido']"
+                  />
                 </div>
               </div>
             </q-card-section>
@@ -45,7 +55,12 @@
             <q-card-section>
               <div class="row">
                 <div class="col-xs-12 col-sm-6">
-                  <q-input dense v-model="infoGeneral.expresionCultural" />
+                  <q-input
+                    dense
+                    v-model="infoGeneral.expresionCultural"
+                    lazy-rules
+                    :rules="[val => !!val || 'Campo requerido']"
+                  />
                 </div>
               </div>
             </q-card-section>
@@ -59,13 +74,16 @@
             <q-card-section>
               <div class="row">
                 <div class="col-xs-12 col-sm-6">
-                  <q-input dense v-model="infoGeneral.expresionArtistica" />
+                  <q-input
+                    dense
+                    v-model="infoGeneral.expresionArtistica"
+                    lazy-rules
+                    :rules="[val => !!val || 'Campo requerido']"
+                  />
                 </div>
               </div>
             </q-card-section>
           </q-card>
-
-
         </q-form>
 
         <div class="flex justify-center">
@@ -108,7 +126,6 @@ export default {
     };
 
     this.buscarInformacionGeneralAction(this.encuestaID).then(data => {
-      console.log(data);
       if (data.id > 0) {
         this.infoGeneral = { ...data };
       }
@@ -121,12 +138,23 @@ export default {
       "actualizarInformacionGeneralAction"
     ]),
     onSubmit() {
-      this.actualizarInformacionGeneralAction(this.infoGeneral).then(data => {
-        this.infoGeneral.id = data;
-        this.$router.push({
-          name: "productos",
-          params: { id: this.encuestaID }
-        });
+      this.$refs.economiaForm.validate().then(success => {
+        if (success) {
+          this.actualizarInformacionGeneralAction(this.infoGeneral).then(
+            data => {
+              this.infoGeneral.id = data;
+              this.$router.push({
+                name: "productos",
+                params: { id: this.encuestaID }
+              });
+            }
+          );
+        } else {
+          this.$q.notify({
+            message: "Favor completar los campos correctamente",
+            color: "red"
+          });
+        }
       });
     }
   },
