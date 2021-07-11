@@ -512,7 +512,6 @@ export default {
   created() {
     this.encuestaID = this.$route.params.id;
     this.buscarEncuestaAction(this.encuestaID).then(data => {
-      console.log("Data: ", data.encuestaCerrada);
       if (data.encuestaCerrada) this.leftDrawerOpen = false;
     });
   },

@@ -270,7 +270,6 @@ export default {
     };
 
     this.buscarInformacionGeneralAction(this.encuestaID).then(data => {
-      console.log(data);
       if (data.id > 0) {
         this.infoGeneral = { ...data };
       }
