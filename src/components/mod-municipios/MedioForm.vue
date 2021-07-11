@@ -10,7 +10,9 @@
         <div class="text-h6">{{ mensajeBoton }} Medio de Comunicación</div>
       </q-card-section>
 
+
       <q-separator />
+
 
       <q-card-section style="max-height: 50vh" class="scroll">
         <q-form class="q-gutter-md">
@@ -22,6 +24,7 @@
                 option-label="nombre"
                 v-model="medio.tipoMedio"
                 :options="options"
+
                 label="Seleccione el tipo de medio de comunicación"
               />
             </div>
@@ -49,7 +52,9 @@
 
           <div class="row q-col-gutter-sm">
             <div class="col-xs-12">
+
               <q-input outlined v-model="medio.telefono" label="Teléfono" />
+
             </div>
           </div>
 
@@ -67,6 +72,7 @@
           <div class="row q-col-gutter-sm">
             <div class="col-xs-12">
               El medio es público?
+
               <q-option-group
                 :options="optionsCumple"
                 type="radio"
@@ -101,6 +107,7 @@
       </q-card-actions>
     </q-card>
   </q-dialog>
+
 </template>
 
 <script>
@@ -148,6 +155,7 @@ export default {
     }
 
     this.cargarListaParametroPorCategoriaAction(categorias).then(data => {
+
       this.options = data;
     });
   },
@@ -159,11 +167,13 @@ export default {
     ]),
     ...mapActions("parametros", ["cargarListaParametroPorCategoriaAction"]),
     onSubmit() {
+
       let info = {
         ...this.medio,
         encuesta: {
           id: this.encuestaID
         },
+
         fechaActualizacion: this.getFecha,
         usuarioActualizacion: this.getUser
       };
@@ -177,6 +187,7 @@ export default {
           });
         });
       } else {
+
         //Guardar
         this.registrarMedioAction(info).then(data => {
           this.medio.id = data;
@@ -188,6 +199,7 @@ export default {
     }
   },
   computed: {
+
     ...mapGetters("medio", ["getMedioState"]),
     mensajeBoton() {
       return this.medio.id > 0 ? "Actualizar" : "Guardar";
@@ -200,7 +212,9 @@ export default {
   beforeDestroy() {
     this.unsetMedioAction();
   }
+
 };
 </script>
 
 <style></style>
+

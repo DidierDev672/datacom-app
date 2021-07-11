@@ -139,7 +139,9 @@ export default {
           ...this.personalComiteEmergencia,
           comiteEmergencia: {
             id: comiteEmergenciaID
-          }
+          },
+          usuarioCreacion: this.getUser,
+          usuarioActualizacion: this.getUser
         };
 
         this.registrarPersonalComiteEmergenciaAction(info).then(data => {
@@ -161,7 +163,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('comiteEmergencia', ['getComiteEmergenciaState'])
+    ...mapGetters('comiteEmergencia', ['getComiteEmergenciaState']),
+    ...mapGetters('auth', ['getUser']),
   }
 }
 </script>

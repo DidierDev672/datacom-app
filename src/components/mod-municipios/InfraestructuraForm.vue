@@ -177,8 +177,10 @@ export default {
         usuarioActualizacion: this.getUser
       };
 
+
       if (info.id > 0) {
         //Actualizar
+        info.usuarioCreacion = this.getInfraestructuraState.objInfraestructura.usuarioCreacion
         this.actualizarInfraestructuraAction(info).then(() => {
           this.$q.notify({
             message: "Registro actualizado",
@@ -225,9 +227,11 @@ export default {
     }
   },
   computed: {
+
     ...mapGetters("infraestructura", ["getInfraestructuraState"]),
     mensajeBoton() {
       return this.infraestructura.id > 0 ? "Actualizar" : "Guardar";
+
     },
     correoErrors() {
       let msgError = "";

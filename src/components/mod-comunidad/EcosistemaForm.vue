@@ -1,7 +1,7 @@
 <template>
   <q-dialog
-    persistent 
-    transition-show="scale" 
+    persistent
+    transition-show="scale"
     transition-hide="scale"
     v-model="show">
       <q-card style="width: 700px;">
@@ -15,7 +15,7 @@
 
           <q-form
             class="q-gutter-md"
-          >          
+          >
 
           <p>Datos del Ecosistema</p>
 
@@ -28,17 +28,17 @@
                 v-model="ecosistema.tipoEcosistema"
                 :options="tipoEcosistemaOptions"
                 label="Seleccione el tipo de Ecosistema" />
-            </div>            
+            </div>
           </div>
 
           <div class="row q-col-gutter-sm">
             <div class="col-xs-12">
               <q-input outlined v-model="ecosistema.nombre" label="Nombre del Ecosistema" />
-            </div>            
-          </div>           
+            </div>
+          </div>
 
-          </q-form>      
-          
+          </q-form>
+
         </q-card-section>
 
         <q-separator />
@@ -68,6 +68,8 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import { CATEGORIAS } from '../../utils/config'
+import {getUser} from "src/store/module-auth/getters";
+import {getEcosistemaState} from "src/store/module-comunidad/ecosistema/getters";
 export default {
   data(){
     return {
@@ -94,23 +96,28 @@ export default {
     this.cargarListaParametroPorCategoriaAction(categorias).then(data => {
             this.tipoEcosistemaOptions = data
         })
-    
+
   },
   methods: {
     ...mapActions('ecosistema', ['registrarEcosistemaAction', 'actualizarEcosistemaAction','unsetEcosistemaAction']),
     ...mapActions('parametros', ['cargarListaParametroPorCategoriaAction']),
     onSubmit(){
-      
+
       let info = {
         ...this.ecosistema,
         encuesta: {
           id: this.encuestaID
-        }
+        },
+        usuarioCreacion: this.getUser,
+        usuarioActualizacion: this.getUser
       }
-           
+
       if(info.id > 0){
         //Actualizar
-        this.actualizarEcosistemaAction(info).then(() => {          
+        info.usuarioCreacion = this.getEcosistemaState.objEcosistema.usuarioCreacion
+        info.usuarioActualizacion= this.getUser
+        console.log(info)
+        this.actualizarEcosistemaAction(info).then(() => {
         })
       }else{
         //Guardar
@@ -122,17 +129,18 @@ export default {
     close(){
       this.$emit("close");
     }
-  },  
+  },
   computed: {
     ...mapGetters('ecosistema', ['getEcosistemaState']),
+    ...mapGetters('auth', ['getUser']),
     mensajeBoton(){
       return this.ecosistema.id > 0 ? 'Actualizar' : 'Guardar'
-    } 
+    }
   },
   beforeDestroy(){
     this.unsetEcosistemaAction()
   }
-  
+
 
 }
 </script>

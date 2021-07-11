@@ -1,10 +1,10 @@
-<template>  
+<template>
   <div class="q-ma-sm">
     <div class="row">
-      <div class="col-xs-12 col-sm-8 offset-sm-2">        
+      <div class="col-xs-12 col-sm-8 offset-sm-2">
 
         <div v-if="step==1">
-          <q-form ref="ubicacionForm">          
+          <q-form ref="ubicacionForm">
             <p class="text-h6 q-mt-md q-mb-sm">1. Datos de la Comunidad</p>
             <q-card
               flat
@@ -105,7 +105,7 @@
         </div>
 
         <div v-if="step==2">
-          <q-form ref="limitesForm"> 
+          <q-form ref="limitesForm">
             <p class="text-h6 q-mt-md q-mb-sm">1. Datos de la Comunidad</p>
               <q-card
                 flat
@@ -171,7 +171,7 @@
         </div>
 
         <div v-if="step == 3">
-          <q-form ref="otroForm">  
+          <q-form ref="otroForm">
             <p class="text-h6 q-mt-md q-mb-sm">Datos del Inspector</p>
               <q-card
                 flat
@@ -221,7 +221,7 @@
 
         </div>
 
-        
+
         <div class="flex justify-center">
             <q-btn v-if="step > 1" label="Anterior" no-caps color="primary" flat class="q-mr-sm" @click="anterior"/>
             <q-btn v-if="step < 3" label="Guardar y continuar" no-caps color="primary" @click="siguiente"/>
@@ -237,11 +237,11 @@
               <template v-slot:loading>
                 <q-spinner-facebook />
               </template>
-              
+
               </q-btn>
         </div>
 
-       
+
       </div>
     </div>
   </div>
@@ -306,7 +306,7 @@ export default {
     ...mapActions('informacionGeneral',['buscarInformacionGeneralAction','guardarInformacionGeneralAction']),
     ...mapActions('departamento', ['cargarListaDepartamentoAction', 'cargarListaMunicipiosDelDepartamentoAction']),
     ...mapActions('municipios', ['cargarListaComunidadesDelMunicipioAction']),
-    siguiente(){  
+    siguiente(){
 
       this.validarForm()
 
@@ -338,7 +338,7 @@ export default {
         })
       }
     },
-    onSubmit () {      
+    onSubmit () {
 
       this.$refs.otroForm.validate().then(success => {
             if (success) {
@@ -346,10 +346,12 @@ export default {
                 ...this.infoGeneral,
                 encuesta: {
                   id: this.encuestaID
-                }
+                },
+                usuarioCreacion: this.getUser,
+                usuarioActualizacion: this.getUser
               }).then(data => {
                 this.$router.push({name: 'c-poblacion', params: {id: this.encuestaID}})
-              })              
+              })
             }else{
               this.$q.notify({
                   message: 'Favor completar los campos correctamente',
@@ -369,10 +371,12 @@ export default {
                 ...this.infoGeneral,
                 encuesta: {
                   id: this.encuestaID
-                }
+                },
+                usuarioCreacion: this.getUser,
+                usuarioActualizacion: this.getUser
               }).then(data => {
                 this.infoGeneral.id = data
-                this.step++                
+                this.step++
               })
             }else{
               this.$q.notify({
@@ -390,9 +394,11 @@ export default {
                   ...this.infoGeneral,
                   encuesta: {
                     id: this.encuestaID
-                  }
+                  },
+                usuarioCreacion: this.getUser,
+                usuarioActualizacion: this.getUser
                 }).then(data => {
-                this.step++                
+                this.step++
               })
             }else{
               this.$q.notify({
@@ -401,7 +407,7 @@ export default {
               })
             }
           })
-          break      
+          break
         default:
           this.step++
           break;
@@ -433,7 +439,7 @@ export default {
   },
   computed: {
     ...mapGetters('informacionGeneral', ['getInformacionGeneralState']),
-
+    ...mapGetters('auth', ['getUser']),
   }
 }
 </script>

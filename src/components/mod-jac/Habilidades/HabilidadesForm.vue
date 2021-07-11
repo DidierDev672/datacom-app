@@ -103,10 +103,13 @@ export default {
         ...this.habilidadesDB,
         jac: {
           id: this.jacID
-        }
+        },
+        usuarioCreacion: this.getUser,
+        usuarioActualizacion: this.getUser
       }
 
       if(info.id > 0){
+        info.usuarioCreacion = this.getHabilidadesState.objHabilidades.usuarioCreacion
         this.actualizarHabilidadesAction(info).then(() => {
 
         })
@@ -122,6 +125,7 @@ export default {
   },
   computed: {
     ...mapGetters('habilidades', ['getHabilidadesState']),
+    ...mapGetters('auth', ['getUser']),
     mensajeBoton(){
       return this.habilidadesDB.id > 0 ? 'Actualizar' : 'Guardar'
     }

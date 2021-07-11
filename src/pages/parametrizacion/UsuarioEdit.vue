@@ -460,6 +460,7 @@ export default {
     onSubmit() {
       this.$refs.cuentaForm.validate().then(success => {
         if (success) {
+          this.usuario.usuarioActualizacion = this.getUser
           this.actualizarUsuarioAction(this.usuario).then(data => {
             this.$router.push({
               name: "UsuariosIndex"
@@ -510,7 +511,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters("usuario", ["getUsuarioState"])
+    ...mapGetters("usuario", ["getUsuarioState"]),
+    ...mapGetters('auth', ['getUser'])
   }
 };
 </script>

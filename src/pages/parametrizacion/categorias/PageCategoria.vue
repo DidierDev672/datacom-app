@@ -69,7 +69,9 @@ export default {
       this.objCategoria = {
         codigo: "",
         descripcion: "",
-        estado: true
+        estado: true,
+        usuarioCreacion: "",
+        usuarioActualizacion: ""
       };
     }
   },
@@ -80,6 +82,8 @@ export default {
     ]),
     onSubmit() {
       if (this.objCategoria.id > 0) {
+        this.objCategoria.usuarioActualizacion = this.getUser;
+        console.log(this.objCategoria);
         this.actualizarCategoriaAction(this.objCategoria).then(data => {
           this.$q.notify({
             message: "Registro actualizado correctamente.",
@@ -90,6 +94,8 @@ export default {
           });
         });
       } else {
+        this.objCategoria.usuarioActualizacion = this.getUser;
+        this.objCategoria.usuarioCreacion = this.getUser;
         this.registrarCategoriaAction(this.objCategoria)
           .then(data => {
             this.$q.notify({
@@ -124,6 +130,7 @@ export default {
   },
   computed: {
     ...mapGetters("categoria", ["getCategoriaState", "getCategoriaPorId"]),
+    ...mapGetters("auth", ["getUser"]),
     categoriaFormValid() {
       return this.$refs.categoriaForm.validate();
     },

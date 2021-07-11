@@ -1,10 +1,10 @@
 <template>
   <div class="q-ma-sm">
       <div class="row">
-          <div class="col-xs-12 col-sm-8 offset-sm-2">                
-              <q-form ref="calidadForm">          
+          <div class="col-xs-12 col-sm-8 offset-sm-2">
+              <q-form ref="calidadForm">
                     <p class="text-h6 q-mt-md q-mb-sm">Población del Sistema de Seguridad Social</p>
-                    
+
                     <q-card flat bordered class="my-card q-mb-md">
                         <q-card-section class="q-pb-none">
                             <div class="text-h6 q-mb-none">Población Régimen Subsidiado</div>
@@ -15,10 +15,10 @@
                                 <div class="col-xs-12 col-sm-6">
                                     <q-input
                                       dense
-                                      v-model.number="calidad.noPersonasSubsidiado" 
+                                      v-model.number="calidad.noPersonasSubsidiado"
                                       hint="Número de personas"
                                       type="number"
-                                        lazy-rules 
+                                        lazy-rules
                                         :rules="[
                                             val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
@@ -41,7 +41,7 @@
                                       v-model.number="calidad.noPersonasContributivo"
                                       hint="Número de personas"
                                       type="number"
-                                        lazy-rules 
+                                        lazy-rules
                                         :rules="[
                                             val => val !== null && val !== '' || 'Debe ingresar un valor ',
                                             val => val > -1 || 'El valor ingresado debe ser mayor a cero '
@@ -67,7 +67,7 @@
                 </div>
 
           </div>
-      </div>      
+      </div>
   </div>
 </template>
 
@@ -98,13 +98,15 @@ export default {
         onSubmit(){
 
             this.$refs.calidadForm.validate().then(success => {
-                if (success) {                    
+                if (success) {
                     console.log('Form valido', this.calidad);
                     this.registrarCalidadDeVidaAction({
                         ...this.calidad,
                         encuesta: {
                             id: this.encuestaID
-                        }
+                        },
+                      usuarioCreacion: this.getUser,
+                      usuarioActualizacion: this.getUser
                     }).then(data => {
                         this.calidad.id = data
                         this.$router.push({name: 'c-poblacion-infantil', params: {id: this.encuestaID}})
@@ -119,10 +121,11 @@ export default {
 
 
         }
-        
+
     },
     computed: {
-        ...mapGetters('calidadDeVida', ['getCalidadDeVidaState'])
+        ...mapGetters('calidadDeVida', ['getCalidadDeVidaState']),
+        ...mapGetters('auth', ['getUser']),
     }
 
 }

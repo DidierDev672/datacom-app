@@ -147,10 +147,12 @@
 </template>
 
 <script>
+
 import { mapGetters, mapActions } from "vuex";
 import { CATEGORIAS } from "../../utils/config";
 import { email, required, minLength } from "vuelidate/lib/validators";
 import { date } from "quasar";
+
 export default {
   data() {
     return {
@@ -205,12 +207,17 @@ export default {
         encuesta: {
           id: this.encuestaID
         },
+
         fechaActualizacion: this.getFecha,
         usuarioActualizacion: this.getUser
       };
 
+
       if (info.id > 0) {
         //Actualizar
+        console.log(info)
+        console.log( this.getOrganizacionState.objOrganizacion)
+        info.usuarioCreacion = this.getOrganizacionState.objOrganizacion.usuarioCreacion
         this.actualizarOrganizacionAction(info).then(() => {
           this.$q.notify({
             message: "Registro actualizado",
@@ -264,9 +271,11 @@ export default {
     }
   },
   computed: {
+
     ...mapGetters("organizacion", ["getOrganizacionState"]),
     mensajeBoton() {
       return this.organizacion.id > 0 ? "Actualizar" : "Guardar";
+
     },
     correoErrors() {
       let msgError = "";

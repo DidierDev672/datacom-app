@@ -53,6 +53,7 @@
 
 <script>
 import {mapActions, mapGetters} from "vuex";
+import {getComiteEmergenciaState} from "src/store/module-comunidad/comite-emergencia/getters";
 
 export default {
   name: "ComiteEmergenciaForm",
@@ -83,10 +84,13 @@ export default {
         ...this.comiteEmergencia,
         encuesta: {
           id: this.encuestaID
-        }
+        },
+        usuarioCreacion: this.getUser,
+        usuarioActualizacion: this.getUser
       }
 
       if(info.id > 0){
+        info.usuarioCreacion = getComiteEmergenciaState.usuarioCreacion
         this.actualizarComiteEmergenciaAction(info).then(() => {
         })
       }else{
@@ -101,6 +105,7 @@ export default {
   },
   computed: {
     ...mapGetters('comiteEmergencia', ['getComiteEmergenciaState']),
+    ...mapGetters('auth', ['getUser']),
     mensajeBoton(){
       return this.comiteEmergencia.id > 0 ? 'Actualizar' : 'Guardar'
     }

@@ -1,7 +1,7 @@
 <template>
   <q-dialog
-    persistent 
-    transition-show="scale" 
+    persistent
+    transition-show="scale"
     transition-hide="scale"
     v-model="show">
       <q-card style="width: 700px;">
@@ -15,7 +15,7 @@
 
           <q-form
             class="q-gutter-md"
-          >          
+          >
 
           <p>Datos de la Infraestructura</p>
 
@@ -28,35 +28,35 @@
                 v-model="infrasalud.tipoInfraestructura"
                 :options="tipoInfrasaludOptions"
                 label="Seleccione el tipo de Infrasalud" />
-            </div>            
+            </div>
           </div>
 
           <div class="row q-col-gutter-sm">
             <div class="col-xs-12">
               <q-input outlined v-model="infrasalud.areaConstruida" label="Área Construida" />
-            </div>            
+            </div>
           </div>
 
           <div class="row q-col-gutter-sm">
             <div class="col-xs-12">
               <q-input outlined v-model="infrasalud.areaTotal" label="Área Total" />
-            </div>            
+            </div>
           </div>
 
           <div class="row q-col-gutter-sm">
             <div class="col-xs-12">
               <q-input outlined v-model="infrasalud.telefono" label="Teléfono" />
-            </div>            
+            </div>
           </div>
-          
+
           <div class="row q-col-gutter-sm">
             <div class="col-xs-12">
               <q-input outlined v-model="infrasalud.celular" label="Celular" />
-            </div>            
-          </div>           
+            </div>
+          </div>
 
-          </q-form>      
-          
+          </q-form>
+
         </q-card-section>
 
         <q-separator />
@@ -120,23 +120,27 @@ export default {
     this.cargarListaParametroPorCategoriaAction(categorias).then(data => {
             this.tipoInfrasaludOptions = data
         })
-    
+
   },
   methods: {
     ...mapActions('infrasalud', ['registrarInfrasaludAction', 'actualizarInfrasaludAction','unsetInfrasaludAction']),
     ...mapActions('parametros', ['cargarListaParametroPorCategoriaAction']),
     onSubmit(){
-      
+
       let info = {
         ...this.infrasalud,
         encuesta: {
           id: this.encuestaID
-        }
+        },
+        usuarioCreacion: this.getUser,
+        usuarioActualizacion: this.getUser
+
       }
-           
+
       if(info.id > 0){
         //Actualizar
-        this.actualizarInfrasaludAction(info).then(() => {          
+        info.usuarioCreacion = this.getInfrasaludState.usuarioCreacion
+        this.actualizarInfrasaludAction(info).then(() => {
         })
       }else{
         //Guardar
@@ -148,17 +152,18 @@ export default {
     close(){
       this.$emit("close");
     }
-  },  
+  },
   computed: {
     ...mapGetters('infrasalud', ['getInfrasaludState']),
+    ...mapGetters('auth', ['getUser']),
     mensajeBoton(){
       return this.infrasalud.id > 0 ? 'Actualizar' : 'Guardar'
-    } 
+    }
   },
   beforeDestroy(){
     this.unsetInfrasaludAction()
   }
-  
+
 
 }
 </script>

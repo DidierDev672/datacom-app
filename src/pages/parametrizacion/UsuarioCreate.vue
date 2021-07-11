@@ -460,7 +460,9 @@ export default {
               departamento: this.usuario.tercero.departamento
                 .nombreDepartamento,
               ciudad: this.usuario.tercero.ciudad.nombreMunicipio
-            }
+            },
+            usuarioCreacion: this.getUser,
+            usuarioActualizacion: this.getUser
           };
           console.log("Info: ", info);
           this.registrarUsuarioAction(info).then(data => {
@@ -513,7 +515,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters("usuario", ["getUsuarioState"])
+    ...mapGetters("usuario", ["getUsuarioState"]),
+    ...mapGetters('auth', ['getUser'])
   }
 };
 </script>

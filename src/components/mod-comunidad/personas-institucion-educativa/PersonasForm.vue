@@ -1,4 +1,4 @@
-﻿<template>  
+﻿<template>
     <q-card>
 
       <q-card-section>
@@ -37,7 +37,7 @@
               />
             </div>
           </div>
-          
+
           <div class="row q-col-gutter-sm">
             <div class="col-xs-12">
               <q-input
@@ -47,7 +47,7 @@
               />
             </div>
           </div>
-          
+
           <div class="row q-col-gutter-sm">
             <div class="col-xs-12">
               <q-input
@@ -57,7 +57,7 @@
               />
             </div>
           </div>
-          
+
           <div class="row q-col-gutter-sm">
             <div class="col-xs-12">
               <q-input
@@ -67,7 +67,7 @@
               />
             </div>
           </div>
-          
+
         </q-form>
       </q-card-section>
 
@@ -119,7 +119,7 @@ export default {
       telefono: '',
       cargo: ''
     };
-    
+
     this.cargarListaParametroPorCategoriaAction(categorias).then(data => {
       this.cargosOptions = data;
     });
@@ -137,9 +137,11 @@ export default {
               ...this.persona,
               intitucionesEducativas: {
                 id: institucionID
-              }
+              },
+              usuarioCreacion: this.getUser,
+              usuarioActualizacion: this.getUser
             };
-      
+
             this.registrarPersonalInstitucionEducativaAction(info).then(data => {
                 this.loading = false
                 this.persona.id = data
@@ -158,7 +160,8 @@ export default {
     }
   },
   computed: {
-      ...mapGetters('programasEducativos', ['getProgramasEducativosState'])
+      ...mapGetters('programasEducativos', ['getProgramasEducativosState']),
+      ...mapGetters('auth', ['getUser']),
   }
 };
 </script>

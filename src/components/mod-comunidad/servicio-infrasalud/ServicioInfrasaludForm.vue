@@ -1,4 +1,4 @@
-﻿<template>  
+﻿<template>
     <q-card>
 
       <q-card-section>
@@ -30,7 +30,7 @@
               />
             </div>
           </div>
-          
+
         </q-form>
       </q-card-section>
 
@@ -79,7 +79,7 @@ export default {
       tipoServicio: '',
       frecuenciaServicio: ''
     };
-    
+
     this.cargarListaParametroPorCategoriaAction(categorias).then(data => {
       //this.tipoServiciosOptions = data;
       console.log(data);
@@ -105,9 +105,11 @@ export default {
               ...this.servicio,
               infraestructuraSalud: {
                 id: institucionID
-              }
+              },
+              usuarioCreacion: this.getUser,
+              usuarioActualizacion: this.getUser
             };
-      
+
             this.registrarServicioInfrasaludAction(info).then(data => {
                 this.loading = false
                 this.servicio.id = data
@@ -126,7 +128,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters("infrasalud", ["getInfrasaludState"])
+    ...mapGetters("infrasalud", ["getInfrasaludState"]),
+    ...mapGetters('auth', ['getUser'])
   }
 };
 </script>

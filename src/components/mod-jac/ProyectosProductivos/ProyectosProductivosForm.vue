@@ -74,6 +74,7 @@
 <script>
 import {mapActions, mapGetters} from "vuex";
 import {CATEGORIAS} from "src/utils/config";
+import {getProyectosProductivosState} from "src/store/module-jac/proyectos-productivos/getters";
 
 export default {
   name: "ProyectosProductivosForm",
@@ -115,10 +116,14 @@ export default {
         ...this.proyectosProductivosDB,
         jac: {
           id: this.jacID
-        }
+        },
+        usuarioCreacion: this.getUser,
+        usuarioActualizacion: this.getUser
+
       }
 
       if(info.id > 0){
+        info.usuarioCreacion = this.getProyectosProductivosState.objProyectosProductivos.usuarioCreacion
         this.actualizarProyectosProductivosAction(info).then(() => {
 
         })
@@ -134,6 +139,7 @@ export default {
   },
   computed: {
     ...mapGetters('proyectosProductivos', ['getProyectosProductivosState']),
+    ...mapGetters('auth', ['getUser']),
     mensajeBoton(){
       return this.proyectosProductivosDB.id > 0 ? 'Actualizar' : 'Guardar'
     }
