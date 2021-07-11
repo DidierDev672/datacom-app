@@ -6,7 +6,7 @@
     v-model="show">
     <q-card style="width: 700px;">
       <q-card-section>
-        <div class="text-h6">{{ mensajeBoton }} Cotratos Jac </div>
+        <div class="text-h6">{{ mensajeBoton }} Participacion </div>
       </q-card-section>
 
       <q-separator />
@@ -56,6 +56,9 @@
 <script>
 import {mapActions, mapGetters} from "vuex";
 import {CATEGORIAS} from "src/utils/config";
+import {getProgramasEducativosState} from "src/store/module-comunidad/programas-educativos/getters";
+import {getParticipacionCiudadanaState} from "src/store/module-comunidad/participacion-ciudadana/getters";
+import {getParticipacionState} from "src/store/module-jac/participacion/getters";
 
 export default {
   name: "ParticipacionForm",
@@ -92,10 +95,13 @@ export default {
         ...this.participacionDB,
         jac: {
           id: this.jacID
-        }
+        },
+        usuarioCreacion: this.getUser,
+        usuarioActualizacion: this.getUser
       }
 
       if(info.id > 0){
+        info.usuarioCreacion = this.getParticipacionState.objParticipacion.usuarioCreacion
         this.actualizarParticipacionAction(info).then(() => {
 
         })
@@ -111,6 +117,7 @@ export default {
   },
   computed: {
     ...mapGetters('participacion', ['getParticipacionState']),
+    ...mapGetters('auth', ['getUser']),
     mensajeBoton(){
       return this.participacionDB.id > 0 ? 'Actualizar' : 'Guardar'
     }

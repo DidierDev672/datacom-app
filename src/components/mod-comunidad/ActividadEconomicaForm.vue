@@ -57,6 +57,7 @@
 <script>
 import {mapActions, mapGetters} from "vuex";
 import {CATEGORIAS} from "src/utils/config";
+import {getActividadEconomicaState} from "src/store/module-comunidad/actividad-economica/getters";
 
 export default {
   name: "ActividadEconomicaForm",
@@ -98,8 +99,8 @@ export default {
       }
 
       if(info.id > 0){
+        this.info.usuarioCreacion = getActividadEconomicaState.usuarioCreacion
         this.actualizarActividadEconomicaAction(info).then(() => {
-
         })
       }else{
         this.registrarActividadEconomicaAction(info).then( data => {

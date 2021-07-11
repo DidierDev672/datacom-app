@@ -68,6 +68,8 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import { CATEGORIAS } from '../../utils/config'
+import {getUser} from "src/store/module-auth/getters";
+import {getEcosistemaState} from "src/store/module-comunidad/ecosistema/getters";
 export default {
   data(){
     return {
@@ -105,11 +107,16 @@ export default {
         ...this.ecosistema,
         encuesta: {
           id: this.encuestaID
-        }
+        },
+        usuarioCreacion: this.getUser,
+        usuarioActualizacion: this.getUser
       }
 
       if(info.id > 0){
         //Actualizar
+        info.usuarioCreacion = this.getEcosistemaState.objEcosistema.usuarioCreacion
+        info.usuarioActualizacion= this.getUser
+        console.log(info)
         this.actualizarEcosistemaAction(info).then(() => {
         })
       }else{

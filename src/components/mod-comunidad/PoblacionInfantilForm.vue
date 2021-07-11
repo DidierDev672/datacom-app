@@ -1,7 +1,7 @@
 <template>
   <q-dialog
-    persistent 
-    transition-show="scale" 
+    persistent
+    transition-show="scale"
     transition-hide="scale"
     v-model="show">
       <q-card style="width: 700px;">
@@ -15,7 +15,7 @@
 
           <q-form
             class="q-gutter-md"
-          >          
+          >
 
           <p>Datos generales</p>
 
@@ -28,29 +28,29 @@
                 v-model="poblacionInfantil.tipoPrograma"
                 :options="tipoPoblacionInfantilOptions"
                 label="Seleccione el tipo de Programa" />
-            </div>            
+            </div>
           </div>
 
           <div class="row q-col-gutter-sm">
             <div class="col-xs-12">
               <q-input outlined v-model="poblacionInfantil.noHogares" label="No. Hogares" />
-            </div>            
+            </div>
           </div>
 
           <div class="row q-col-gutter-sm">
             <div class="col-xs-12">
               <q-input outlined v-model="poblacionInfantil.noNina" label="No. Niñas" />
-            </div>            
+            </div>
           </div>
 
           <div class="row q-col-gutter-sm">
             <div class="col-xs-12">
               <q-input outlined v-model="poblacionInfantil.noNino" label="No. Niños" />
-            </div>            
-          </div>         
+            </div>
+          </div>
 
-          </q-form>      
-          
+          </q-form>
+
         </q-card-section>
 
         <q-separator />
@@ -105,29 +105,31 @@ export default {
       this.poblacionInfantil.noHogares = this.getPoblacionInfantilState.objPoblacionInfantil.noHogares;
       this.poblacionInfantil.noNina = this.getPoblacionInfantilState.objPoblacionInfantil.noNina;
       this.poblacionInfantil.noNino = this.getPoblacionInfantilState.objPoblacionInfantil.noNino;
-      
+
     }
 
     this.cargarListaParametroPorCategoriaAction(categorias).then(data => {
             this.tipoPoblacionInfantilOptions = data
         })
-    
+
   },
   methods: {
     ...mapActions('poblacionInfantil', ['registrarPoblacionInfantilAction', 'actualizarPoblacionInfantilAction','unsetPoblacionInfantilAction']),
     ...mapActions('parametros', ['cargarListaParametroPorCategoriaAction']),
     onSubmit(){
-      
+
       let info = {
         ...this.poblacionInfantil,
         encuesta: {
           id: this.encuestaID
-        }
+        },
+        usuarioCreacion: this.getUser,
+        usuarioActualizacion: this.getUser
       }
-           
+
       if(info.id > 0){
         //Actualizar
-        this.actualizarPoblacionInfantilAction(info).then(() => {          
+        this.actualizarPoblacionInfantilAction(info).then(() => {
         })
       }else{
         //Guardar
@@ -139,17 +141,18 @@ export default {
     close(){
       this.$emit("close");
     }
-  },  
+  },
   computed: {
     ...mapGetters('poblacionInfantil', ['getPoblacionInfantilState']),
+    ...mapGetters('auth', ['getUser']),
     mensajeBoton(){
       return this.poblacionInfantil.id > 0 ? 'Actualizar' : 'Guardar'
-    } 
+    }
   },
   beforeDestroy(){
     this.unsetPoblacionInfantilAction()
   }
-  
+
 
 }
 </script>

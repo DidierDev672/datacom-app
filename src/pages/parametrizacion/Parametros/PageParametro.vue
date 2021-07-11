@@ -87,6 +87,8 @@ export default {
          estado: true
        },
        estado: true
+       , usuarioCreacion: '',
+       usuarioActualizacion: ''
      }
    }
   },
@@ -97,6 +99,7 @@ export default {
     ...mapMutations('categoria', ['setCategoriaSuccess']),
     onSubmit () {
       if (this.objParametro.id > 0) {
+        this.objParametro.usuarioActualizacion = this.getUser
         this.actualizarParametroAction(this.objParametro).then(data => {
           this.$q.notify({
             message: 'Registro actualizado correctamente.',
@@ -107,6 +110,8 @@ export default {
           })
         })
       } else {
+        this.objParametro.usuarioCreacion = this.getUser
+        this.objParametro.usuarioActualizacion = this.getUser
         this.registrarParametroAction(this.objParametro)
           .then(data => {
             this.$q.notify({
@@ -143,6 +148,7 @@ export default {
   },
   computed: {
     ...mapGetters('parametros', ['getParametroState','getParametroPorId']),
+    ...mapGetters('auth', ['getUser']),
     categoriaFormValid () {
       return this.$refs.parametroForm.validate()
     }

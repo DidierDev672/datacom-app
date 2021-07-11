@@ -53,6 +53,7 @@
 
 <script>
 import {mapActions, mapGetters} from "vuex";
+import {getComiteEmergenciaState} from "src/store/module-comunidad/comite-emergencia/getters";
 
 export default {
   name: "ComiteEmergenciaForm",
@@ -84,10 +85,12 @@ export default {
         encuesta: {
           id: this.encuestaID
         },
-        usuarioCreacion: this.
+        usuarioCreacion: this.getUser,
+        usuarioActualizacion: this.getUser
       }
 
       if(info.id > 0){
+        info.usuarioCreacion = getComiteEmergenciaState.usuarioCreacion
         this.actualizarComiteEmergenciaAction(info).then(() => {
         })
       }else{

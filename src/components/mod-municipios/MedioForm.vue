@@ -1,7 +1,7 @@
 <template>
   <q-dialog
-    persistent 
-    transition-show="scale" 
+    persistent
+    transition-show="scale"
     transition-hide="scale"
     v-model="show">
       <q-card style="width: 700px;">
@@ -15,7 +15,7 @@
 
           <q-form
             class="q-gutter-md"
-          >                
+          >
 
           <div class="row q-col-gutter-sm">
             <div class="col-xs-12">
@@ -26,7 +26,7 @@
                 v-model="medio.tipoMedio"
                 :options="options"
                 label="Seleccione el tipo de medio de comunicación" />
-            </div>            
+            </div>
           </div>
 
           <div class="row q-col-gutter-sm">
@@ -35,8 +35,8 @@
                 outlined
                 v-model="medio.nombre"
                 label="Nombre del medio de comunicación"
-              /> 
-            </div>            
+              />
+            </div>
           </div>
 
           <div class="row q-col-gutter-sm">
@@ -45,8 +45,8 @@
                 outlined
                 v-model="medio.contacto"
                 label="Persona de Contacto"
-              /> 
-            </div>            
+              />
+            </div>
           </div>
 
 
@@ -56,8 +56,8 @@
                 outlined
                 v-model="medio.telefono"
                 label="Teléfono"
-              /> 
-            </div>            
+              />
+            </div>
           </div>
 
 
@@ -68,20 +68,20 @@
                 type="textarea"
                 v-model="medio.alcance"
                 label="Alcance que tiene el medio de comunicación"
-              /> 
-            </div>            
-          </div>   
+              />
+            </div>
+          </div>
 
           <div class="row q-col-gutter-sm">
             <div class="col-xs-12">
               El medio es público?
               <q-option-group :options="optionsCumple" type="radio" v-model="medio.publico" />
-            </div>            
+            </div>
           </div>
-                
 
-          </q-form>      
-          
+
+          </q-form>
+
         </q-card-section>
 
         <q-separator />
@@ -151,23 +151,26 @@ export default {
     this.cargarListaParametroPorCategoriaAction(categorias).then(data => {
             this.options = data
         })
-    
+
   },
   methods: {
     ...mapActions('medio', ['registrarMedioAction', 'actualizarMedioAction','unsetMedioAction']),
     ...mapActions('parametros', ['cargarListaParametroPorCategoriaAction']),
     onSubmit(){
-      
+
       let info = {
         ...this.medio,
         encuesta: {
           id: this.encuestaID
-        }
+        },
+        usuarioCreacion: this.getUser,
+        usuarioActualizacion: this.getUser
       }
-           
+
       if(info.id > 0){
         //Actualizar
-        this.actualizarMedioAction(info).then(() => {          
+        info.usuarioCreacion = this.getMedioState.objMedio.usuarioCreacion
+        this.actualizarMedioAction(info).then(() => {
         })
       }else{
         //Guardar
@@ -179,17 +182,18 @@ export default {
     close(){
       this.$emit("close");
     }
-  },  
+  },
   computed: {
     ...mapGetters('medio', ['getMedioState']),
+    ...mapGetters('auth', ['getUser']),
     mensajeBoton(){
       return this.medio.id > 0 ? 'Actualizar' : 'Guardar'
-    } 
+    }
   },
   beforeDestroy(){
     this.unsetMedioAction()
   }
-  
+
 
 }
 </script>

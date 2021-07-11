@@ -3,7 +3,7 @@
   flat
   bordered>
 
-  <q-form ref="jacForm">    
+  <q-form ref="jacForm">
 
   <q-card-section>
 
@@ -14,7 +14,7 @@
           <q-item-label>1. Información General</q-item-label>
         </q-item-section>
       </q-item>
-      
+
 
     <q-item>
 
@@ -45,7 +45,7 @@
       </q-item-section>
 
     </q-item>
-    
+
     <q-item>
 
       <q-item-section>
@@ -299,7 +299,7 @@
     </q-item>
 
     </q-list>
-    
+
   </q-card-section>
 
    <q-separator />
@@ -373,7 +373,7 @@ export default {
       autorecocimientoExpedidoPor: '',
       fechaExpedicionAutoreconocimiento: '',
       fechaActualizacionJac: ''
-    }    
+    }
 
     this.buscarJacInfoAction(this.jacID).then(data => {
       if(data.id > 0){
@@ -414,7 +414,9 @@ export default {
           console.log('Formulario: ', this.jacInfoDB);
           this.registrarJacInfoAction({
             ...this.jacInfoDB,
-              id: this.jacID
+              id: this.jacID,
+            usuarioCreacion: this.getUser,
+            usuarioActualizacion: this.getUser
           }).then(data => {
             this.$q.notify({
               message: 'Información actualizada correctamente',
@@ -445,6 +447,7 @@ export default {
   },
   computed: {
     ...mapGetters('jacInfo', ['getJacInfoState']),
+    ...mapGetters('auth', ['getUser']),
 
   }
 }

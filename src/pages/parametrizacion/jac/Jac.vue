@@ -198,6 +198,8 @@ export default {
       representanteLegal: '',
       areaInfluencia: true,
       comunidad: '',
+      usuarioCreacion: '',
+      usuarioActualizacion: ''
     }
     this.cargarListaDepartamentoAction().then(data => {
       this.departamentosList = data
@@ -242,6 +244,8 @@ export default {
       this.$refs.jacForm.validate().then(success => {
         if (success) {
           console.log("Form valido", this.jac);
+          this.jac.usuarioCreacion= this.getUser,
+          this.jac.usuarioActualizacion = this.getUser
           this.registrarJacAction(this.jac).then(data => {
             this.jac.id = data
             this.$q.notify({
@@ -272,7 +276,8 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("jac", ["getJacState"])
+    ...mapGetters("jac", ["getJacState"]),
+    ...mapGetters('auth', ['getUser'])
   }
 };
 </script>

@@ -1,7 +1,7 @@
 <template>
   <q-dialog
-    persistent 
-    transition-show="scale" 
+    persistent
+    transition-show="scale"
     transition-hide="scale"
     full-width
     v-model="show">
@@ -16,7 +16,7 @@
 
           <q-form
             class="q-gutter-md"
-          >          
+          >
 
           <p>Datos de la Institución</p>
 
@@ -40,31 +40,31 @@
                 v-model="programasEducativos.tipoInstitucion"
                 :options="tipoInstitucionOptions"
                 label="Seleccione si es pública o privada" />
-            </div>            
+            </div>
           </div>
 
           <div class="row q-col-gutter-sm">
             <div class="col-xs-12 col-sm-3">
               <q-input outlined v-model="programasEducativos.telefono" label="Teléfono" />
-            </div>  
+            </div>
             <div class="col-xs-12 col-sm-3">
               <q-input outlined v-model="programasEducativos.direccion" label="Dirección" />
             </div>
             <div class="col-xs-12 col-sm-6">
               <q-input outlined v-model="programasEducativos.email" label="Email" />
-            </div>            
-          </div>           
+            </div>
+          </div>
 
           <div class="row q-col-gutter-sm">
             <div class="col-xs-12 col-sm-2">
               <q-input outlined v-model="programasEducativos.noProfesores" label="No. Profesores" />
-            </div>  
+            </div>
             <div class="col-xs-12 col-sm-2">
               <q-input outlined v-model="programasEducativos.noAlumnos" label="No. Alumnos" />
             </div>
             <div class="col-xs-12 col-sm-2">
               <q-input outlined v-model="programasEducativos.noAulas" label="No. Aulas" />
-            </div>  
+            </div>
             <div class="col-xs-12 col-sm-2">
               <q-select
                 outlined
@@ -77,8 +77,8 @@
             </div>
             <div class="col-xs-12 col-sm-2">
               <q-input outlined v-model="programasEducativos.areaTotal" label="Área Total" />
-            </div>          
-          </div>           
+            </div>
+          </div>
 
           <div class="row q-col-gutter-sm">
             <div class="col-xs-12 col-sm-3">
@@ -89,14 +89,14 @@
                 v-model="programasEducativos.disposicionExcreta"
                 :options="disposicionExcretasOptions"
                 label="Disposición de Excretas" />
-            </div>         
-          </div>           
+            </div>
+          </div>
 
           <div class="row q-col-gutter-sm">
             <div class="col-xs-12 col-sm-3">
               <p class="text-caption">¿La institución cuenta con Restaurante Escolar?</p>
               <q-option-group :options="siNoOptions" type="radio" v-model="programasEducativos.restauranteEscolar" />
-            </div>    
+            </div>
             <div class="col-xs-12 col-sm-3">
               <p class="text-caption">¿La institución cuenta con Unidad Sanitaria?</p>
               <q-option-group :options="siNoOptions" type="radio" v-model="programasEducativos.unidadSanitaria" />
@@ -111,23 +111,23 @@
               <p class="text-caption">¿La institución cuenta con Auditorio?</p>
               <q-option-group :options="siNoOptions" type="radio" v-model="programasEducativos.auditorio" />
             </div>
-     
-          </div> 
-          
+
+          </div>
+
           <div class="row q-col-gutter-sm">
             <div class="col-xs-12 col-sm-3">
               <p class="text-caption">¿La institución cuenta con Servicio de Energía?</p>
               <q-option-group :options="siNoOptions" type="radio" v-model="programasEducativos.servicioEnergia" />
-            </div>    
+            </div>
             <div class="col-xs-12 col-sm-3">
               <p class="text-caption">¿La institución cuenta con Servicio de Acueducto?</p>
               <q-option-group :options="siNoOptions" type="radio" v-model="programasEducativos.servicioAcueducto" />
-            </div>     
-          </div> 
-          
+            </div>
+          </div>
 
-          </q-form>      
-          
+
+          </q-form>
+
         </q-card-section>
 
         <q-separator />
@@ -157,6 +157,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import { CATEGORIAS } from '../../utils/config'
+import {getProgramasEducativosState} from "src/store/module-comunidad/programas-educativos/getters";
 export default {
   data(){
     return {
@@ -230,25 +231,28 @@ export default {
           this.tipoNivelInstitucionesEducativasOptions.push(opt)
         }
       })
-      
+
     })
-    
+
   },
   methods: {
     ...mapActions('programasEducativos', ['registrarProgramasEducativosAction', 'actualizarProgramasEducativosAction','unsetProgramasEducativosAction']),
     ...mapActions('parametros', ['cargarListaParametroPorCategoriaAction']),
     onSubmit(){
-      
+
       let info = {
         ...this.programasEducativos,
         encuesta: {
           id: this.encuestaID
-        }
+        },
+        usuarioCreacion: this.getUser,
+        usuarioActualizacion: this.getUser
       }
-           
+
       if(info.id > 0){
         //Actualizar
-        this.actualizarProgramasEducativosAction(info).then(() => {          
+        info.usuarioCreacion = this.getProgramasEducativosState.objProgramasEducativos.usuarioCreacion
+        this.actualizarProgramasEducativosAction(info).then(() => {
         })
       }else{
         //Guardar
@@ -260,17 +264,18 @@ export default {
     close(){
       this.$emit("close");
     }
-  },  
+  },
   computed: {
     ...mapGetters('programasEducativos', ['getProgramasEducativosState']),
+    ...mapGetters('auth', ['getUser']),
     mensajeBoton(){
       return this.programasEducativos.id > 0 ? 'Actualizar' : 'Guardar'
-    } 
+    }
   },
   beforeDestroy(){
     this.unsetProgramasEducativosAction()
   }
-  
+
 
 }
 </script>

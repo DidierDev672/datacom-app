@@ -121,6 +121,7 @@
 <script>
 import {mapActions, mapGetters} from "vuex";
 import {CATEGORIAS, NIVEL_GERENCIAL} from "src/utils/config";
+import {getJuntaDirectivaState} from "src/store/module-jac/junta-directiva/getters";
 
 export default {
   name: "JuntaDirectivaForm",
@@ -178,10 +179,13 @@ export default {
         ...this.juntaDirectivaDB,
         jac: {
           id: this.jacID
-        }
+        },
+        usuarioCreacion: this.getUser,
+        usuarioActualizacion: this.getUser
       }
 
       if(info.id > 0){
+        info.usuarioCreacion = this.getJuntaDirectivaState.objJuntaDirectiva.usuarioCreacion
         this.actualizarJuntaDirectivaAction(info).then(() => {
 
         })
@@ -197,6 +201,7 @@ export default {
   },
   computed: {
     ...mapGetters('juntaDirectiva', ['getJuntaDirectivaState']),
+    ...mapGetters('auth', ['getUser']),
     mensajeBoton(){
       return this.juntaDirectivaDB.id > 0 ? 'Actualizar' : 'Guardar'
     }

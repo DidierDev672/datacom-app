@@ -4,7 +4,7 @@
       <div class="col-xs-12 col-sm-8 offset-sm-2">
         <div>
           <q-form ref="fiestasForm">
-            <p class="text-h6 q-mt-md q-mb-sm">Fiestas Tradicionales</p>            
+            <p class="text-h6 q-mt-md q-mb-sm">Fiestas Tradicionales</p>
 
             <q-card flat bordered class="my-card q-mb-md">
               <q-card-section class="q-pb-none">
@@ -33,11 +33,11 @@
                 </div>
               </q-card-section>
             </q-card>
-            
+
           </q-form>
         </div>
 
-        <div class="flex justify-center">           
+        <div class="flex justify-center">
           <q-btn
             label="Guardar y continuar"
             no-caps
@@ -62,7 +62,7 @@ export default {
   data() {
     return {
       encuestaID: 0,
-      infoGeneral: {}      
+      infoGeneral: {}
     };
   },
   created() {
@@ -88,7 +88,9 @@ export default {
             ...this.infoGeneral,
             encuesta: {
               id: this.encuestaID
-            }
+            },
+            usuarioCreacion: this.getUser,
+            usuarioActualizacion: this.getUser
           }).then(data => {
             this.$router.push({
               name: "c-fin-encuesta",
@@ -98,7 +100,8 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("informacionGeneral", ["getInformacionGeneralState"])
+    ...mapGetters("informacionGeneral", ["getInformacionGeneralState"]),
+    ...mapGetters('auth', ['getUser']),
   }
 };
 </script>

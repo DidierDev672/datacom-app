@@ -1,7 +1,7 @@
 <template>
   <q-dialog
-    persistent 
-    transition-show="scale" 
+    persistent
+    transition-show="scale"
     transition-hide="scale"
     v-model="show">
       <q-card style="width: 700px;">
@@ -15,7 +15,7 @@
 
           <q-form
             class="q-gutter-md"
-          >          
+          >
 
           <p>Datos de la Vía</p>
 
@@ -28,7 +28,7 @@
                 v-model="via.tipoVia"
                 :options="tipoViasOptions"
                 label="Seleccione el tipo de via" />
-            </div>            
+            </div>
           </div>
 
           <div class="row q-col-gutter-sm">
@@ -38,7 +38,7 @@
                 v-model="via.estadoVia"
                 :options="estadoViaOptions"
                 label="Seleccione el estado de la via" />
-            </div>            
+            </div>
           </div>
           <div class="row q-col-gutter-sm">
             <div class="col-xs-12">
@@ -47,11 +47,11 @@
                 :options="transitableOptions"
                 type="radio"
                 v-model="via.transitable" />
-            </div>            
-          </div>            
+            </div>
+          </div>
 
-          </q-form>      
-          
+          </q-form>
+
         </q-card-section>
 
         <q-separator />
@@ -118,23 +118,25 @@ export default {
     this.cargarListaParametroPorCategoriaAction(categorias).then(data => {
             this.tipoViasOptions = data
         })
-    
+
   },
   methods: {
     ...mapActions('vias', ['registrarViasAction', 'actualizarViasAction','unsetViasAction']),
     ...mapActions('parametros', ['cargarListaParametroPorCategoriaAction']),
     onSubmit(){
-      
+
       let info = {
         ...this.via,
         encuesta: {
           id: this.encuestaID
-        }
+        },
+        usuarioCreacion: this.getUser,
+        usuarioActualizacion: this.getUser
       }
-           
+
       if(info.id > 0){
         //Actualizar
-        this.actualizarViasAction(info).then(() => {          
+        this.actualizarViasAction(info).then(() => {
         })
       }else{
         //Guardar
@@ -146,17 +148,18 @@ export default {
     close(){
       this.$emit("close");
     }
-  },  
+  },
   computed: {
     ...mapGetters('vias', ['getViasState']),
+    ...mapGetters('auth', ['getUser']),
     mensajeBoton(){
       return this.via.id > 0 ? 'Actualizar' : 'Guardar'
-    } 
+    }
   },
   beforeDestroy(){
     this.unsetViasAction()
   }
-  
+
 
 }
 </script>

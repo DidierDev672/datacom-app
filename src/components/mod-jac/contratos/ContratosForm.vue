@@ -158,10 +158,13 @@ export default {
         ...this.contratosDB,
         jac: {
           id: this.jacID
-        }
+        },
+        usuarioCreacion: this.getUser,
+        usuarioActualizacion: this.getUser
       }
 
       if(info.id > 0){
+        info.usuarioCreacion = this.getContratosState.objContratos.usuarioCreacion
         this.actualizarContratosAction(info).then(() => {
 
         })
@@ -177,6 +180,7 @@ export default {
   },
   computed: {
     ...mapGetters('contratos', ['getContratosState']),
+    ...mapGetters('auth', ['getUser']),
     mensajeBoton(){
       return this.contratosDB.id > 0 ? 'Actualizar' : 'Guardar'
     }

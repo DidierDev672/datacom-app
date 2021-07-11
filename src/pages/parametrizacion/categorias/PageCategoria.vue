@@ -63,14 +63,18 @@ export default {
       this.objCategoria = {
         codigo: '',
         descripcion: '',
-        estado: true
+        estado: true,
+        usuarioCreacion: '',
+        usuarioActualizacion: ''
       }
     }
   },
   methods: {
     ...mapActions('categoria', ['registrarCategoriaAction', 'actualizarCategoriaAction']),
     onSubmit () {
-      if (this.objCategoria.id > 0) {        
+      if (this.objCategoria.id > 0) {
+        this.objCategoria.usuarioActualizacion = this.getUser
+        console.log(this.objCategoria)
         this.actualizarCategoriaAction(this.objCategoria).then(data => {
           this.$q.notify({
             message: 'Registro actualizado correctamente.',
@@ -80,7 +84,9 @@ export default {
             position: 'bottom-right'
           })
         })
-      } else {        
+      } else {
+        this.objCategoria.usuarioActualizacion = this.getUser
+        this.objCategoria.usuarioCreacion = this.getUser
         this.registrarCategoriaAction(this.objCategoria)
           .then(data => {
             this.$q.notify({
@@ -94,7 +100,7 @@ export default {
           })
           .catch(error => {
             if (!navigator.onLine && this.backgroundSyncSupported) {
-              //redirigir al listado de categorias              
+              //redirigir al listado de categorias
               this.$q.notify({
                 message: 'Categoria registrada offLine.',
                 icon: 'ti-check',
@@ -116,6 +122,7 @@ export default {
   },
   computed: {
     ...mapGetters('categoria', ['getCategoriaState', 'getCategoriaPorId']),
+    ...mapGetters('auth', ['getUser']),
     categoriaFormValid () {
       return this.$refs.categoriaForm.validate()
     },

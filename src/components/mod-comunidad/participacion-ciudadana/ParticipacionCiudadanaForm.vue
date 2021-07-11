@@ -6,7 +6,7 @@
     v-model="show">
     <q-card style="width: 700px;">
       <q-card-section>
-        <div class="text-h6">{{ mensajeBoton }} Actividad Economica </div>
+        <div class="text-h6">{{ mensajeBoton }} Participacion Ciudadana </div>
       </q-card-section>
 
       <q-separator />
@@ -15,7 +15,7 @@
         <q-form
           class="q-gutter-md"
         >
-          <p>Datos de la Actividad Economica </p>
+          <p>Datos de la   Participacion Ciudadana </p>
           <div class="row q-col-gutter-sm">
             <div class="col-xs-12">
               <q-select
@@ -65,6 +65,7 @@
 <script>
 import {CATEGORIAS} from "src/utils/config";
 import {mapActions, mapGetters} from "vuex";
+import {getParticipacionCiudadanaState} from "src/store/module-comunidad/participacion-ciudadana/getters";
 
 export default {
   name: "ParticipacionCiudadanaForm",
@@ -102,10 +103,13 @@ export default {
         ...this.participacionCiudadanaDB,
         encuesta: {
           id: this.encuestaID
-        }
+        },
+        usuarioCreacion: this.getUser,
+        usuarioActualizacion: this.getUser
       }
 
       if(info.id > 0){
+        info.usuarioCreacion = getParticipacionCiudadanaState.usuarioCreacion
         this.actualizarParticipacionCiudadanaAction(info).then(() => {
 
         })
@@ -121,6 +125,7 @@ export default {
   },
   computed: {
     ...mapGetters('participacionCiudadana', ['getParticipacionCiudadanaState']),
+    ...mapGetters('auth', ['getUser']),
     mensajeBoton(){
       return this.participacionCiudadanaDB.id > 0 ? 'Actualizar' : 'Guardar'
     }

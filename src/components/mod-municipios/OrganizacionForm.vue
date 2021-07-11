@@ -155,6 +155,7 @@
 import { mapGetters, mapActions } from 'vuex'
 import { CATEGORIAS } from '../../utils/config'
 import { email, required, minLength } from 'vuelidate/lib/validators'
+import {getOrganizacionState} from "src/store/module-municipios/organizaciones/getters";
 export default {
   data(){
     return {
@@ -202,11 +203,16 @@ export default {
         ...this.organizacion,
         encuesta: {
           id: this.encuestaID
-        }
+        },
+        usuarioCreacion: this.getUser,
+        usuarioActualizacion: this.getUser
       }
 
       if(info.id > 0){
         //Actualizar
+        console.log(info)
+        console.log( this.getOrganizacionState.objOrganizacion)
+        info.usuarioCreacion = this.getOrganizacionState.objOrganizacion.usuarioCreacion
         this.actualizarOrganizacionAction(info).then(() => {
           this.$q.notify({
                 message: 'Registro actualizado',
@@ -261,6 +267,7 @@ export default {
   },
   computed: {
     ...mapGetters('organizacion', ['getOrganizacionState']),
+    ...mapGetters('auth', ['getUser']),
     mensajeBoton(){
       return this.organizacion.id > 0 ? 'Actualizar' : 'Guardar'
     },

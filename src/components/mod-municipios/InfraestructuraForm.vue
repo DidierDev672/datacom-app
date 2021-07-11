@@ -168,11 +168,14 @@ export default {
         ...this.infraestructura,
         encuesta: {
           id: this.encuestaID
-        }
+        },
+        usuarioCreacion: this.getUser,
+        usuarioActualizacion: this.getUser
       }
 
       if(info.id > 0){
         //Actualizar
+        info.usuarioCreacion = this.getInfraestructuraState.objInfraestructura.usuarioCreacion
         this.actualizarInfraestructuraAction(info).then(() => {
           this.$q.notify({
               message: 'Registro actualizado',
@@ -220,6 +223,7 @@ export default {
   },
   computed: {
     ...mapGetters('infraestructura', ['getInfraestructuraState']),
+    ...mapGetters('auth', ['getUser']),  ...mapGetters('auth', ['getUser']),
     mensajeBoton(){
       return this.infraestructura.id > 0 ? 'Actualizar' : 'Guardar'
     },
