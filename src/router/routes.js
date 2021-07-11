@@ -75,6 +75,16 @@ const routes = [
           import("pages/parametrizacion/Parametros/PageParametro.vue")
       },
       {
+        path: "departamento",
+        name: "DepartamentoIndex",
+        component: () => import("pages/parametrizacion/DepartamentoIndex.vue")
+      },
+      {
+        path: "comunidad",
+        name: "ComunidadIndex",
+        component: () => import("pages/parametrizacion/ComunidadIndex.vue")
+      },
+      {
         path: "organizaciones-base",
         name: "nueva-organizacion",
         component: () => import("pages/parametrizacion/jac/Jac.vue")

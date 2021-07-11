@@ -3,7 +3,7 @@
     <q-header class="fondo-nav">
       <q-toolbar class="constrain">
         <q-btn
-          class="large-screen-only q-mr-sm"
+          class="q-mr-sm"
           flat
           dense
           round
@@ -19,7 +19,7 @@
     </q-header>
 
     <q-drawer
-      class="large-screen-only"
+      class=""
       v-model="leftDrawerOpen"
       show-if-above
       bordered
@@ -73,13 +73,13 @@
         </transition>
       </div>
       <q-tabs
-        dense
-        class="text-dark small-screen-only"
+        class="text-dark small-screen-only q-pt-sm"
         active-color="primary"
         indicator-color="transparent"
       >
-        <q-route-tab to="/" name="home" icon="ti-home" label="Inicio" />
+        <q-route-tab dense to="/" name="home" icon="ti-home" label="Inicio" />
         <q-route-tab
+          dense
           to="/encuestas"
           name="ecuestas"
           icon="ti-view-list"
@@ -91,6 +91,7 @@
           icon="ti-export"
           label="Reportes" /> -->
         <q-route-tab
+          dense
           to="/parametrizacion"
           name="parametrizacion"
           icon="ti-settings"
@@ -162,13 +163,13 @@ export default {
           caption: "",
           icon: "ti-settings",
           link: "/parametrizacion"
-        },
-        {
-          title: "Reportes",
-          caption: "",
-          icon: "ti-export",
-          link: "/reportes"
         }
+        // {
+        //   title: "Reportes",
+        //   caption: "",
+        //   icon: "ti-export",
+        //   link: "/reportes"
+        // }
       ]
     };
   },
@@ -210,6 +211,8 @@ export default {
 };
 </script>
 <style lang="sass">
+body
+  background-color: #fff
 .q-toolbar
   @media (min-width: $breakpoint-sm-min)
     height: 77px

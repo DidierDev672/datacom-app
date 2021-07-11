@@ -1,12 +1,11 @@
-<template>
+﻿<template>
   <div>
     <q-table
-      title="Municipios"
-      :data="lstMunicipios"
+      title="Comunidades"
+      :data="comunidadList"
       :columns="columns"
       row-key="codigo"
       wrap-cells
-      @row-click="seleccionar"
     >
       <q-td slot="body-cell-estado" slot-scope="props" :props="props">
         <q-badge v-if="props.row.estado" color="green" label="Activo" />
@@ -30,32 +29,29 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 export default {
-  name: "PageListaMunicipios",
+  name: "ComunidadIndex",
   data() {
     return {
-      lstMunicipios: [],
+      comunidadList: [],
       columns: [
-        {
-          name: "departamento",
-          align: "left",
-          label: "Departamento",
-          field: row => {
-            return (
-              row.departamento.codigo +
-              " - " +
-              row.departamento.nombreDepartamento
-            );
-          },
-          sortable: true
-        },
         {
           name: "municipio",
           align: "left",
           label: "Municipio",
           field: row => {
-            return row.codigoDane + " - " + row.nombreMunicipio;
+            return (
+              row.municipio.codigoDane + " - " + row.municipio.nombreMunicipio
+            );
           },
           sortable: true
+        },
+        {
+          name: "nombreComunidad",
+          align: "left",
+          label: "Comunidad",
+          field: row => {
+            return row.codigoDane + " " + row.nombreComunidad;
+          }
         },
         { name: "estado", label: "Estado", field: "estado" },
         { name: "usuarioCreacion", label: "Usuario", field: "usuarioCreacion" }
@@ -64,18 +60,15 @@ export default {
     };
   },
   created() {
-    this.cargarListaMunicipiosAction().then(data => {
-      this.lstMunicipios = data;
+    this.cargarListaComunidadAction().then(data => {
+      console.log("Comunidad: ", data);
+      this.comunidadList = data;
     });
   },
   methods: {
-    ...mapActions("municipios", ["cargarListaMunicipiosAction"]),
-    seleccionar(evt, row, index) {
-      // this.setCategoriaSuccess(row)
-      // this.$router.push({ name: 'categoria', params: { id: row.id } })
-    }
+    ...mapActions("comunidad", ["cargarListaComunidadAction"])
   }
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped></style>

@@ -1,128 +1,136 @@
 <template>
   <q-page class="q-pa-md">
-    <h6 class="q-mt-md">Formulario categoria</h6>
-    <q-form
-      @submit="onSubmit"
-      ref="categoriaForm"
-      class="q-gutter-md"
-    >
+    <h6 class="q-mt-md">Formulario categoría</h6>
+    <q-form @submit="onSubmit" ref="categoriaForm" class="q-gutter-md">
       <q-input
         filled
         v-model="objCategoria.codigo"
         label="Código *"
         lazy-rules
-        :rules="[ val => val && val.length > 0 || 'Por favor ingrese un código']"
+        :rules="[
+          val => (val && val.length > 0) || 'Por favor ingrese un código'
+        ]"
       />
 
       <q-input
         filled
         v-model="objCategoria.descripcion"
-        label="Categoria *"
+        label="Categoría *"
         lazy-rules
-        :rules="[ val => val && val.length > 0 || 'Por favor ingrese una descripción']"
+        :rules="[
+          val => (val && val.length > 0) || 'Por favor ingrese una descripción'
+        ]"
       />
 
       <q-toggle v-model="objCategoria.estado" label="Activo?" />
 
       <div class="flex justify-end">
-        <q-btn :to="{name: 'categorias'}" label="Cancelar" flat class="q-mr-sm" />
+        <q-btn
+          :to="{ name: 'categorias' }"
+          label="Cancelar"
+          flat
+          class="q-mr-sm"
+        />
         <q-btn
           :label="mensajeBoton"
           type="submit"
           color="primary"
           :loading="getCategoriaState.loading"
-          outline >
+          outline
+        >
           <template v-slot:loading>
             <q-spinner-facebook />
           </template>
-          </q-btn>
+        </q-btn>
       </div>
     </q-form>
   </q-page>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions } from "vuex";
 export default {
-  name: 'PageCategoria',
-  data () {
+  name: "PageCategoria",
+  data() {
     return {
       accept: true,
       age: 38,
       objCategoria: {},
-      mensajeBoton: 'Guardar'
-    }
+      mensajeBoton: "Guardar"
+    };
   },
-  created () {
+  created() {
     if (this.$route.params.id != null) {
       this.objCategoria = {
         ...this.getCategoriaPorId(this.$route.params.id)
-      }
-      this.mensajeBoton = 'Actualizar'
+      };
+      this.mensajeBoton = "Actualizar";
     } else {
       this.objCategoria = {
-        codigo: '',
-        descripcion: '',
+        codigo: "",
+        descripcion: "",
         estado: true
-      }
+      };
     }
   },
   methods: {
-    ...mapActions('categoria', ['registrarCategoriaAction', 'actualizarCategoriaAction']),
-    onSubmit () {
-      if (this.objCategoria.id > 0) {        
+    ...mapActions("categoria", [
+      "registrarCategoriaAction",
+      "actualizarCategoriaAction"
+    ]),
+    onSubmit() {
+      if (this.objCategoria.id > 0) {
         this.actualizarCategoriaAction(this.objCategoria).then(data => {
           this.$q.notify({
-            message: 'Registro actualizado correctamente.',
-            icon: 'ti-check',
-            textColor: 'white',
-            color: 'positive',
-            position: 'bottom-right'
-          })
-        })
-      } else {        
+            message: "Registro actualizado correctamente.",
+            icon: "ti-check",
+            textColor: "white",
+            color: "positive",
+            position: "bottom-right"
+          });
+        });
+      } else {
         this.registrarCategoriaAction(this.objCategoria)
           .then(data => {
             this.$q.notify({
-              message: 'Registro agregado correctamente.',
-              icon: 'ti-check',
-              textColor: 'white',
-              color: 'positive',
-              position: 'bottom-right'
-            })
-            this.$router.push({ name: 'categorias' })
+              message: "Registro agregado correctamente.",
+              icon: "ti-check",
+              textColor: "white",
+              color: "positive",
+              position: "bottom-right"
+            });
+            this.$router.push({ name: "categorias" });
           })
           .catch(error => {
             if (!navigator.onLine && this.backgroundSyncSupported) {
-              //redirigir al listado de categorias              
+              //redirigir al listado de categorias
               this.$q.notify({
-                message: 'Categoria registrada offLine.',
-                icon: 'ti-check',
-                textColor: 'white',
-                color: 'dark',
-                position: 'bottom-right'
-              })
-              this.$router.push({name: 'categorias'})
-            }
-            else {
+                message: "Categoria registrada offLine.",
+                icon: "ti-check",
+                textColor: "white",
+                color: "dark",
+                position: "bottom-right"
+              });
+              this.$router.push({ name: "categorias" });
+            } else {
               this.$q.dialog({
-                title: 'Alert',
-                message: 'Ha ocurrido un error al grabar el registro: ' + error
-              })
+                title: "Alert",
+                message: "Ha ocurrido un error al grabar el registro: " + error
+              });
             }
-          })
+          });
       }
     }
   },
   computed: {
-    ...mapGetters('categoria', ['getCategoriaState', 'getCategoriaPorId']),
-    categoriaFormValid () {
-      return this.$refs.categoriaForm.validate()
+    ...mapGetters("categoria", ["getCategoriaState", "getCategoriaPorId"]),
+    categoriaFormValid() {
+      return this.$refs.categoriaForm.validate();
     },
-    backgroundSyncSupported () {
-      if('serviceWorker' in navigator && 'SyncManager' in window) return true
-      return false
+    backgroundSyncSupported() {
+      if ("serviceWorker" in navigator && "SyncManager" in window) return true;
+      return false;
     }
   }
-}
+};
 </script>

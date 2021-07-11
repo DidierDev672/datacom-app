@@ -1,12 +1,11 @@
-<template>
+﻿<template>
   <div>
     <q-table
-      title="Municipios"
-      :data="lstMunicipios"
+      title="Departamentos"
+      :data="departamentosList"
       :columns="columns"
       row-key="codigo"
       wrap-cells
-      @row-click="seleccionar"
     >
       <q-td slot="body-cell-estado" slot-scope="props" :props="props">
         <q-badge v-if="props.row.estado" color="green" label="Activo" />
@@ -30,30 +29,17 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 export default {
-  name: "PageListaMunicipios",
+  name: "DepartamentoIndex",
   data() {
     return {
-      lstMunicipios: [],
+      departamentosList: [],
       columns: [
         {
           name: "departamento",
           align: "left",
           label: "Departamento",
           field: row => {
-            return (
-              row.departamento.codigo +
-              " - " +
-              row.departamento.nombreDepartamento
-            );
-          },
-          sortable: true
-        },
-        {
-          name: "municipio",
-          align: "left",
-          label: "Municipio",
-          field: row => {
-            return row.codigoDane + " - " + row.nombreMunicipio;
+            return row.codigo + " - " + row.nombreDepartamento;
           },
           sortable: true
         },
@@ -64,18 +50,14 @@ export default {
     };
   },
   created() {
-    this.cargarListaMunicipiosAction().then(data => {
-      this.lstMunicipios = data;
+    this.cargarListaDepartamentoAction().then(data => {
+      this.departamentosList = data;
     });
   },
   methods: {
-    ...mapActions("municipios", ["cargarListaMunicipiosAction"]),
-    seleccionar(evt, row, index) {
-      // this.setCategoriaSuccess(row)
-      // this.$router.push({ name: 'categoria', params: { id: row.id } })
-    }
+    ...mapActions("departamento", ["cargarListaDepartamentoAction"])
   }
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped></style>

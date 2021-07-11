@@ -1,42 +1,51 @@
-import axios from 'axios'
-import { URL_API } from '../../../utils/config'
+import axios from "axios";
+import { URL_API } from "../../../utils/config";
 
 // Acciones para la lista
-export function cargarListaParametroAction ({ commit }) {
-  console.log("prueba")
-  commit('inicializarAccion')
-  const urlService = 'parametro'
+export function cargarListaParametroAction({ commit }) {
+  commit("inicializarAccion");
+  const urlService = "parametro";
   return new Promise((resolve, reject) => {
-    axios.get(`${URL_API}/${urlService}/`)
+    axios
+      .get(`${URL_API}/${urlService}/`)
       .then(({ data }) => {
-        commit('setListaParametroSuccess', data)
-        resolve(data)
-      }).catch(error => {
-        console.log('Ocurrió un error al consultar las parametros: ', error.response)
-        commit('setActionFail', error.response)
-        reject(error.response)
+        commit("setListaParametroSuccess", data);
+        resolve(data);
       })
-  })
+      .catch(error => {
+        console.log(
+          "Ocurrió un error al consultar las parametros: ",
+          error.response
+        );
+        commit("setActionFail", error.response);
+        reject(error.response);
+      });
+  });
 }
 
-export function cargarListaParametroPorCategoriaAction ({ commit }, payload) {
-  commit('inicializarAccion')
-  const urlService = 'parametro'
+export function cargarListaParametroPorCategoriaAction({ commit }, payload) {
+  commit("inicializarAccion");
+  const urlService = "parametro";
   return new Promise((resolve, reject) => {
-    axios.get(`${URL_API}/${urlService}/categoria/${payload}`)
+    axios
+      .get(`${URL_API}/${urlService}/categoria/${payload}`)
       .then(({ data }) => {
-        commit('setListaParametroSuccess', data)
-        resolve(data)
-      }).catch(error => {
-        console.log('Ocurrió un error al consultar las parametros: ', error.response)
-        commit('setActionFail', error.response)
-        reject(error.response)
+        commit("setListaParametroSuccess", data);
+        resolve(data);
       })
-  })
+      .catch(error => {
+        console.log(
+          "Ocurrió un error al consultar las parametros: ",
+          error.response
+        );
+        commit("setActionFail", error.response);
+        reject(error.response);
+      });
+  });
 }
 
-export function unsetListaCategoriasAction ({ commit }) {
-  commit('unsetListaCategorias')
+export function unsetListaCategoriasAction({ commit }) {
+  commit("unsetListaCategorias");
 }
 
 // Acciones para un objeto Empresa
@@ -57,37 +66,39 @@ export function unsetListaCategoriasAction ({ commit }) {
 //   });
 // }
 
-export function registrarParametroAction ({ commit }, payload) {
-  commit('inicializarAccion')
-  const urlService = 'parametro'
+export function registrarParametroAction({ commit }, payload) {
+  commit("inicializarAccion");
+  const urlService = "parametro";
   return new Promise((resolve, reject) => {
-    axios.post(`${URL_API}/${urlService}/`, payload)
+    axios
+      .post(`${URL_API}/${urlService}/`, payload)
       .then(({ data }) => {
-        commit('agregarParametroState', data)
-        commit('setParametroSuccess', data)
-        resolve(data)
+        commit("agregarParametroState", data);
+        commit("setParametroSuccess", data);
+        resolve(data);
       })
       .catch(error => {
-        reject(error)
-      })
-  })
+        reject(error);
+      });
+  });
 }
 
-export function actualizarParametroAction ({ commit }, payload) {
-  commit('inicializarAccion')
-  const urlService = 'parametro'
+export function actualizarParametroAction({ commit }, payload) {
+  commit("inicializarAccion");
+  const urlService = "parametro";
   return new Promise((resolve, reject) => {
-    axios.put(`${URL_API}/${urlService}/${payload.id}`, payload)
+    axios
+      .put(`${URL_API}/${urlService}/${payload.id}`, payload)
       .then(({ data }) => {
-        commit('setParametroSuccess', data)
-        resolve(data)
+        commit("setParametroSuccess", data);
+        resolve(data);
       })
       .catch(error => {
-        console.log(error.response)
-        commit('setActionFail', error.response)
-        reject(error.response)
-      })
-  })
+        console.log(error.response);
+        commit("setActionFail", error.response);
+        reject(error.response);
+      });
+  });
 }
 
 // export function actualizarCategoriaAction({commit}, payload){

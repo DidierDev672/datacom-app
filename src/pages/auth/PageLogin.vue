@@ -1,6 +1,10 @@
 <template>
-  <q-page class="flex flex-center">
-    <q-card class="my-card" style="min-width: 400px; max-width: 450px">
+  <q-page class="">
+    <q-card
+      flat
+      class="my-card q-mx-auto"
+      style="min-width: 400px; max-width: 450px"
+    >
       <q-card-section class="flex flex-center">
         <q-img width="210px" src="/icons/logo.png" alt="datacom"></q-img>
       </q-card-section>
