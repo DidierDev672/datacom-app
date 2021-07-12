@@ -4,6 +4,8 @@
       title="Departamentos"
       :data="departamentosList"
       :columns="columns"
+      :loading="getDepartamentoState.loading"
+      loading-label="Cargando información, por favor espere"
       row-key="codigo"
       wrap-cells
     >
@@ -56,6 +58,9 @@ export default {
   },
   methods: {
     ...mapActions("departamento", ["cargarListaDepartamentoAction"])
+  },
+  computed: {
+    ...mapGetters("departamento", ["getDepartamentoState"])
   }
 };
 </script>

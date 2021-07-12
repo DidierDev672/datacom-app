@@ -24,7 +24,12 @@
     </div>
 
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
-      <q-btn fab icon="add" color="primary" @click="showComiteEmergenciaForm = true">
+      <q-btn
+        fab
+        icon="add"
+        color="primary"
+        @click="showComiteEmergenciaForm = true"
+      >
         <q-tooltip>
           Agregar nuevo registro
         </q-tooltip>
@@ -41,9 +46,9 @@
 <script>
 import ComiteEmergenciaCard from "src/components/mod-comunidad/ComiteEmergenciaCard.vue";
 import ComiteEmergenciaForm from "src/components/mod-comunidad/ComiteEmergenciaForm.vue";
-import {mapActions, mapGetters, mapMutations} from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 export default {
-  name: "ComiteEmergencia" ,
+  name: "ComiteEmergencia",
   components: { ComiteEmergenciaCard, ComiteEmergenciaForm },
   data() {
     return {
@@ -58,8 +63,15 @@ export default {
     }
   },
   methods: {
-    ...mapActions("comiteEmergencia", ["cargarListaComiteEmergenciaAction", "cargarListaComiteEmergencia"]),
-    ...mapMutations("comiteEmergencia", ["setComiteEmergenciaSuccess", "unsetListaComiteEmergencia", "unsetEcosistema"]),
+    ...mapActions("comiteEmergencia", [
+      "cargarListaComiteEmergenciaAction",
+      "cargarListaComiteEmergencia"
+    ]),
+    ...mapMutations("comiteEmergencia", [
+      "setComiteEmergenciaSuccess",
+      "unsetListaComiteEmergencia",
+      "unsetEcosistema"
+    ]),
     closeModal() {
       this.showComiteEmergenciaForm = false;
     },
@@ -68,7 +80,10 @@ export default {
       this.showComiteEmergenciaForm = true;
     },
     onSubmit() {
-      this.$router.push({ name: "c-salud", params: { id: this.encuestaID } });
+      this.$router.push({
+        name: "c-actividades-economicas",
+        params: { id: this.encuestaID }
+      });
     }
   },
   computed: {
@@ -77,10 +92,7 @@ export default {
       return this.getComiteEmergenciaState.lista.length > 0 ? true : false;
     }
   }
-
-}
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -5,6 +5,8 @@
       :data="lstMunicipios"
       :columns="columns"
       row-key="codigo"
+      :loading="getMunicipioState.loading"
+      loading-label="Cargando información, por favor espere"
       wrap-cells
       @row-click="seleccionar"
     >
@@ -74,6 +76,9 @@ export default {
       // this.setCategoriaSuccess(row)
       // this.$router.push({ name: 'categoria', params: { id: row.id } })
     }
+  },
+  computed: {
+    ...mapGetters("municipios", ["getMunicipioState"])
   }
 };
 </script>

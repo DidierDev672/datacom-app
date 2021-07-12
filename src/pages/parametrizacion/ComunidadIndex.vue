@@ -4,6 +4,8 @@
       title="Comunidades"
       :data="comunidadList"
       :columns="columns"
+      :loading="getComunidadState.loading"
+      loading-label="Cargando información, por favor espere"
       row-key="codigo"
       wrap-cells
     >
@@ -67,6 +69,9 @@ export default {
   },
   methods: {
     ...mapActions("comunidad", ["cargarListaComunidadAction"])
+  },
+  computed: {
+    ...mapGetters("comunidad", ["getComunidadState"])
   }
 };
 </script>
