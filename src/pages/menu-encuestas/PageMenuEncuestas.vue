@@ -65,7 +65,7 @@
             </q-item-section>
 
             <q-item-section>
-              <q-item-label lines="1">Ecuestas cerradas</q-item-label>
+              <q-item-label lines="1">Encuestas cerradas</q-item-label>
               <q-item-label caption
                 >Listado de encuestas finalizadas</q-item-label
               >
