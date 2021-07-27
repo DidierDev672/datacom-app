@@ -139,7 +139,7 @@ export default {
 
       if(info.id > 0){
         //Actualizar
-        info.usuarioCreacion = this.getInfrasaludState.usuarioCreacion
+        info.usuarioCreacion = this.getInfrasaludState.objInfrasalud.usuarioCreacion
         this.actualizarInfrasaludAction(info).then(() => {
         })
       }else{

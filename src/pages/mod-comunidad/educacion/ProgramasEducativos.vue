@@ -24,7 +24,12 @@
     </div>
 
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
-      <q-btn fab icon="add" color="primary" @click="showProgramasEducativosForm = true">
+      <q-btn
+        fab
+        icon="add"
+        color="primary"
+        @click="showProgramasEducativosForm = true"
+      >
         <q-tooltip>
           Agregar nuevo registro
         </q-tooltip>
@@ -57,7 +62,9 @@ export default {
     }
   },
   methods: {
-    ...mapActions("programasEducativos", ["cargarListaProgramasEducativosAction"]),
+    ...mapActions("programasEducativos", [
+      "cargarListaProgramasEducativosAction"
+    ]),
     ...mapMutations("programasEducativos", ["setProgramasEducativosSuccess"]),
     closeModal() {
       this.showProgramasEducativosForm = false;
@@ -67,7 +74,10 @@ export default {
       this.showProgramasEducativosForm = true;
     },
     onSubmit() {
-      this.$router.push({ name: "c-salud", params: { id: this.encuestaID } });
+      this.$router.push({
+        name: "c-fiestas-tradicionales",
+        params: { id: this.encuestaID }
+      });
     }
   },
   computed: {

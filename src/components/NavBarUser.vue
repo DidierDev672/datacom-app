@@ -1,6 +1,7 @@
 ﻿<template>
   <q-btn
     dense
+    class="v-step-4"
     flat
     icon-right="logout"
     @click="logout"

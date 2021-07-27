@@ -121,7 +121,6 @@
 <script>
 import {mapActions, mapGetters} from "vuex";
 import {CATEGORIAS, NIVEL_GERENCIAL} from "src/utils/config";
-import {getJuntaDirectivaState} from "src/store/module-jac/junta-directiva/getters";
 
 export default {
   name: "JuntaDirectivaForm",

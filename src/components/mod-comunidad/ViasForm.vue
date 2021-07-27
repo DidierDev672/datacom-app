@@ -136,6 +136,7 @@ export default {
 
       if(info.id > 0){
         //Actualizar
+        info.usuarioCreacion = this.getViasState.objVias.usuarioCreacion
         this.actualizarViasAction(info).then(() => {
         })
       }else{

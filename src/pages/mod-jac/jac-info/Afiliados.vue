@@ -1,193 +1,149 @@
 ﻿<template>
-<q-card
-  flat
-  bordered>
+  <div class="q-ma-sm">
+    <q-form ref="afiliadosForm">
+      <p class="text-h6">3. Datos de los Afiliados</p>
 
-  <q-form ref="afiliadosForm">    
+      <div class="row q-col-gutter-sm">
+        <div class="col-xs-12 col-md-4">
+          <p class="text-h6">No. Hombres</p>
+          <q-input
+            outlined
+            v-model="jacInfoDB.noHombres"
+            lazy-rules
+            :rules="[val => !!val || 'Campo requerido']"
+          />
+        </div>
+        <div class="col-xs-12 col-md-4">
+          <p class="text-h6">No. Mujeres</p>
+          <q-input
+            outlined
+            v-model="jacInfoDB.noMujeres"
+            lazy-rules
+            :rules="[val => !!val || 'Campo requerido']"
+          />
+        </div>
+        <div class="col-xs-12 col-md-4">
+          <p class="text-h6">No. Afros</p>
+          <q-input
+            outlined
+            v-model="jacInfoDB.noAfros"
+            lazy-rules
+            :rules="[val => !!val || 'Campo requerido']"
+          />
+        </div>
+      </div>
 
-  <q-card-section>
+      <div class="row q-col-gutter-sm">
+        <div class="col-xs-12 col-md-4">
+          <p class="text-h6">No. Indígenas</p>
+          <q-input
+            outlined
+            v-model="jacInfoDB.noIndigenas"
+            lazy-rules
+            :rules="[val => !!val || 'Campo requerido']"
+          />
+        </div>
+        <div class="col-xs-12 col-md-4">
+          <p class="text-h6">No. Población Discapacitada</p>
+          <q-input
+            outlined
+            v-model="jacInfoDB.noPoblacionDiscapacitada"
+            lazy-rules
+            :rules="[val => !!val || 'Campo requerido']"
+          />
+        </div>
+        <div class="col-xs-12 col-md-4">
+          <p class="text-h6">Pob. Entre 14 y 28 años</p>
+          <q-input
+            outlined
+            v-model="jacInfoDB.noPoblacionEntre14y28"
+            lazy-rules
+            :rules="[val => !!val || 'Campo requerido']"
+          />
+        </div>
+      </div>
 
-    <q-list class="report-list">
+      <div class="row q-col-gutter-sm">
+        <div class="col-xs-12 col-md-6">
+          <p class="text-h6">No. Hombres Jóvenes</p>
+          <q-input
+            outlined
+            v-model="jacInfoDB.noHombresJovenes"
+            lazy-rules
+            :rules="[val => !!val || 'Campo requerido']"
+          />
+        </div>
+        <div class="col-xs-12 col-md-6">
+          <p class="text-h6">No. Mujeres Jóvenes</p>
+          <q-input
+            outlined
+            v-model="jacInfoDB.noMujeresJovenes"
+            lazy-rules
+            :rules="[val => !!val || 'Campo requerido']"
+          />
+        </div>
+      </div>
 
-        <q-item>
-            <q-item-section>
-            <q-item-label>3. Datos de los Afiliados</q-item-label>
-            </q-item-section>
-        </q-item>      
-
-        <q-item>
-
-            <q-item-section>
-                <q-item-label>No. Hombres</q-item-label>
-                <q-item-label caption>
-                    <q-input
-                        outlined
-                        v-model="jacInfoDB.noHombres"
-                        lazy-rules
-                        :rules="[val => !!val || 'Campo requerido']" />
-                </q-item-label>
-            </q-item-section>
-
-            <q-item-section>
-                <q-item-label>No. Mujeres</q-item-label>
-                <q-item-label caption>
-                    <q-input
-                        outlined
-                        v-model="jacInfoDB.noMujeres"
-                        lazy-rules
-                        :rules="[val => !!val || 'Campo requerido']" />
-                </q-item-label>
-            </q-item-section>
-
-            <q-item-section>
-                <q-item-label>No. Afros</q-item-label>
-                <q-item-label caption>
-                    <q-input
-                        outlined
-                        v-model="jacInfoDB.noAfros"
-                        lazy-rules
-                        :rules="[val => !!val || 'Campo requerido']" />
-                </q-item-label>
-            </q-item-section>
-
-        </q-item>
-
-        <q-item>
-
-            <q-item-section>
-                <q-item-label>No. Indígenas</q-item-label>
-                <q-item-label caption>
-                    <q-input
-                        outlined
-                        v-model="jacInfoDB.noIndigenas"
-                        lazy-rules
-                        :rules="[val => !!val || 'Campo requerido']" />
-                </q-item-label>
-            </q-item-section>
-
-            <q-item-section>
-                <q-item-label>No. Población Discapacitada</q-item-label>
-                <q-item-label caption>
-                    <q-input
-                        outlined
-                        v-model="jacInfoDB.noPoblacionDiscapacitada"
-                        lazy-rules
-                        :rules="[val => !!val || 'Campo requerido']" />
-                </q-item-label>
-            </q-item-section>
-
-            <q-item-section>
-                <q-item-label>Pob. Entre 14 y 28 años</q-item-label>
-                <q-item-label caption>
-                    <q-input
-                        outlined
-                        v-model="jacInfoDB.noPoblacionEntre14y28"
-                        lazy-rules
-                        :rules="[val => !!val || 'Campo requerido']" />
-                </q-item-label>
-            </q-item-section>
-
-        </q-item>
-
-        <q-item>
-
-            <q-item-section>
-                <q-item-label>No. Hombres Jóvenes</q-item-label>
-                <q-item-label caption>
-                    <q-input
-                        outlined
-                        v-model="jacInfoDB.noHombresJovenes"
-                        lazy-rules
-                        :rules="[val => !!val || 'Campo requerido']" />
-                </q-item-label>
-            </q-item-section>
-
-            <q-item-section>
-                <q-item-label>No. Mujeres Jóvenes</q-item-label>
-                <q-item-label caption>
-                    <q-input
-                        outlined
-                        v-model="jacInfoDB.noMujeresJovenes"
-                        lazy-rules
-                        :rules="[val => !!val || 'Campo requerido']" />
-                </q-item-label>
-            </q-item-section>
-
-        </q-item>
-
-    </q-list>
-    
-  </q-card-section>
-
-   <q-separator />
-
-  <q-card-actions align="right">
-    <q-btn @click="onSubmit" color="primary">Actualizar</q-btn>
-  </q-card-actions>
-
-  </q-form>
-
-</q-card>
+      <div align="right">
+        <q-btn @click="onSubmit" color="primary">Actualizar</q-btn>
+      </div>
+    </q-form>
+  </div>
 </template>
 
 <script>
-import {mapActions, mapGetters} from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "JacInfo",
-  data () {
+  data() {
     return {
       jacInfoDB: {}
-    }
+    };
   },
   created() {
-
     this.jacInfoDB = {
       id: this.$route.params.id,
-      noHombres: '',
-      noMujeres: '',
-      noAfros: '',
-      noIndigenas: '',
-      noPoblacionDiscapacitada: '',
-      noPoblacionEntre14y28: '',
-      noHombresJovenes: '',
-      noMujeresJovenes: ''
-    }    
+      noHombres: "",
+      noMujeres: "",
+      noAfros: "",
+      noIndigenas: "",
+      noPoblacionDiscapacitada: "",
+      noPoblacionEntre14y28: "",
+      noHombresJovenes: "",
+      noMujeresJovenes: ""
+    };
 
     this.buscarJacInfoAction(this.jacInfoDB.id).then(data => {
-      if(data.id > 0){
-        this.jacInfoDB = {...data}
+      if (data.id > 0) {
+        this.jacInfoDB = { ...data };
       }
-    })
+    });
   },
   methods: {
-    ...mapActions('jacInfo',['buscarJacInfoAction','registrarJacInfoAction']),  
-    onSubmit () {
-
+    ...mapActions("jacInfo", ["buscarJacInfoAction", "registrarJacInfoAction"]),
+    onSubmit() {
       this.$refs.afiliadosForm.validate().then(success => {
         if (success) {
           this.registrarJacInfoAction(this.jacInfoDB).then(data => {
             this.$q.notify({
-              message: 'Información actualizada correctamente',
-              color: 'positive'
-            })
-          })
-        }else{
+              message: "Información actualizada correctamente",
+              color: "positive"
+            });
+          });
+        } else {
           this.$q.notify({
-            message: 'Favor completar los campos correctamente',
-            color: 'red'
-          })
+            message: "Favor completar los campos correctamente",
+            color: "red"
+          });
         }
-      })
+      });
     }
   },
   computed: {
-    ...mapGetters('jacInfo', ['getJacInfoState']),
-
+    ...mapGetters("jacInfo", ["getJacInfoState"])
   }
-}
+};
 </script>
 
-<style lang="sass">
-
-</style>
+<style lang="sass"></style>

@@ -1,12 +1,11 @@
-export default function () {
-    return {
-      comunida: {
-        lista: [],
-        objComunidad: {},
-        loading: false,
-        loaded: false,
-        error: null
-      }
+export default function() {
+  return {
+    comunidad: {
+      lista: [],
+      objComunidad: {},
+      loading: false,
+      loaded: false,
+      error: null
     }
-  }
-  
+  };
+}

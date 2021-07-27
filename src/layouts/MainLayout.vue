@@ -3,7 +3,7 @@
     <q-header class="fondo-nav">
       <q-toolbar class="constrain">
         <q-btn
-          class="q-mr-sm"
+          class="q-mr-sm v-step-0"
           flat
           dense
           round
@@ -105,14 +105,15 @@
         <router-view />
       </keep-alive>
     </q-page-container>
+    <tour></tour>
   </q-layout>
 </template>
 
 <script>
 // import { exportFile } from 'quasar'
-
 import EssentialLink from "components/EssentialLink";
 import NavBarUser from "components/NavBarUser";
+import Tour from "components/Tour/Tour";
 // Initialize deferredPrompt for use later to show browser install prompt.
 let deferredPrompt;
 export default {
@@ -120,7 +121,8 @@ export default {
 
   components: {
     EssentialLink,
-    NavBarUser
+    NavBarUser,
+    Tour
   },
 
   data() {
@@ -192,6 +194,7 @@ export default {
     }
   },
   mounted() {
+    this.$tours["datacomTour"].start();
     // const status = exportFile('important.pdf', 'Some important content', 'application/pdf')
 
     const neverShowAppInstallBanner = this.$q.localStorage.getItem(

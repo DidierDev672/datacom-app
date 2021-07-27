@@ -99,7 +99,6 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import { CATEGORIAS } from "../../../utils/config";
-import {getUser} from "src/store/module-auth/getters";
 export default {
   data() {
     return {

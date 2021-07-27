@@ -27,6 +27,18 @@
         <q-btn flat round icon="ti-check" />
       </q-td>
     </q-table>
+    <q-page-sticky position="bottom-right" :offset="[18, 18]">
+      <q-btn
+        fab
+        icon="add"
+        color="primary"
+        :to="{ name: 'nueva-encuesta', params: { id: encuestaTipoICO } }"
+      >
+        <q-tooltip>
+          Agregar Ico
+        </q-tooltip>
+      </q-btn>
+    </q-page-sticky>
   </div>
 </template>
 
@@ -37,13 +49,36 @@ export default {
   data() {
     return {
       encuestas: [],
+      encuestaTipoICO: 4,
       columns: [
         { name: "id", align: "left", label: "#", field: "id", sortable: true },
-        { name: "comunidad", align: "left", label: "Comunidad", field: "comunidad", sortable: true },
+        {
+          name: "comunidad",
+          align: "left",
+          label: "Comunidad",
+          field: "comunidad",
+          sortable: true
+        },
         { name: "rut", align: "left", label: "Nit", field: "rut" },
-        { name: "organizacion", align: "left", label: "Organización", field: "organizacion", sortable: true },
-        { name: "puntaje", align: "left", label: "Calificación", field: "calificacion" },
-        { name: "fecha", align: "left", label: "Fecha Evaluación", field: "fecha" },
+        {
+          name: "organizacion",
+          align: "left",
+          label: "Organización",
+          field: "organizacion",
+          sortable: true
+        },
+        {
+          name: "puntaje",
+          align: "left",
+          label: "Calificación",
+          field: "calificacion"
+        },
+        {
+          name: "fecha",
+          align: "left",
+          label: "Fecha Evaluación",
+          field: "fecha"
+        },
         { name: "acciones", label: "", field: "acciones" }
       ]
     };
@@ -55,10 +90,12 @@ export default {
   },
   methods: {
     ...mapActions("encuesta", ["cargarListaEncuestaPorTipoAction"]),
-    ...mapMutations('detalleAutoevaluacion', ['setDetalleAutoevaluacionSuccess']),
+    ...mapMutations("detalleAutoevaluacion", [
+      "setDetalleAutoevaluacionSuccess"
+    ]),
     seleccionar(evt, row, index) {
-      this.setDetalleAutoevaluacionSuccess(row)
-      this.$router.push({name: 'icos-view', params: {id: row.id}})
+      this.setDetalleAutoevaluacionSuccess(row);
+      this.$router.push({ name: "icos-view", params: { id: row.id } });
     }
   },
   computed: {

@@ -5,10 +5,26 @@
       :data="comunidadList"
       :columns="columns"
       :loading="getComunidadState.loading"
+      :pagination.sync="pagination"
+      @request="onRequest"
+      :filter="filter"
       loading-label="Cargando información, por favor espere"
       row-key="codigo"
       wrap-cells
     >
+      <template v-slot:top-right>
+        <q-input
+          borderless
+          dense
+          debounce="300"
+          v-model="filter"
+          placeholder="Filtrar"
+        >
+          <template v-slot:append>
+            <q-icon name="search" />
+          </template>
+        </q-input>
+      </template>
       <q-td slot="body-cell-estado" slot-scope="props" :props="props">
         <q-badge v-if="props.row.estado" color="green" label="Activo" />
         <q-badge v-else color="red" label="Inactivo" />
@@ -25,6 +41,13 @@
       </q-btn>
     </q-td> -->
     </q-table>
+    <q-page-sticky position="bottom-right" :offset="[18, 18]">
+      <q-btn fab icon="add" color="primary" :to="{ name: 'ComunidadCreate' }">
+        <q-tooltip>
+          Agregar comunidad
+        </q-tooltip>
+      </q-btn>
+    </q-page-sticky>
   </div>
 </template>
 
@@ -34,6 +57,14 @@ export default {
   name: "ComunidadIndex",
   data() {
     return {
+      filter: "",
+      pagination: {
+        sortBy: "id",
+        descending: false,
+        page: 1,
+        rowsPerPage: 7,
+        rowsNumber: 10
+      },
       comunidadList: [],
       columns: [
         {
@@ -44,8 +75,7 @@ export default {
             return (
               row.municipio.codigoDane + " - " + row.municipio.nombreMunicipio
             );
-          },
-          sortable: true
+          }
         },
         {
           name: "nombreComunidad",
@@ -62,13 +92,48 @@ export default {
     };
   },
   created() {
-    this.cargarListaComunidadAction().then(data => {
-      console.log("Comunidad: ", data);
-      this.comunidadList = data;
+    this.onRequest({
+      pagination: this.pagination,
+      filter: ""
     });
   },
   methods: {
-    ...mapActions("comunidad", ["cargarListaComunidadAction"])
+    ...mapActions("comunidad", ["cargarListaComunidadAction"]),
+    onRequest(props) {
+      const { page, rowsPerPage, sortBy, descending } = props.pagination;
+      const filter = props.filter;
+
+      // get all rows if "All" (0) is selected
+      const fetchCount =
+        rowsPerPage === 0 ? this.pagination.rowsNumber : rowsPerPage;
+
+      // calculate starting row of data
+      // const startRow = (page - 1) * rowsPerPage;
+      const startRow = page - 1;
+
+      // fetch data from "server"
+      this.cargarListaComunidadAction({
+        page: startRow,
+        rowsPerPage: fetchCount,
+        filter: filter
+        // sort: `${sortBy},${descending ? "desc" : "asc"}`
+      }).then(response => {
+        // update rowsCount with appropriate value
+        this.pagination.rowsNumber = response.data.totalElements;
+        // clear out existing data and add new
+        this.comunidadList.splice(
+          0,
+          this.comunidadList.length,
+          ...response.data.content
+        );
+      });
+
+      // don't forget to update local pagination object
+      this.pagination.page = page;
+      this.pagination.rowsPerPage = rowsPerPage;
+      this.pagination.sortBy = sortBy;
+      this.pagination.descending = descending;
+    }
   },
   computed: {
     ...mapGetters("comunidad", ["getComunidadState"])

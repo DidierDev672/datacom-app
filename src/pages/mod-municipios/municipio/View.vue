@@ -733,157 +733,160 @@
           </q-item>
 
           <!-- Educación -->
-          <q-item>
-            <q-item-section>
-              <q-item-label
-                >4. Educación ({{ encuesta.educacion.ano }})</q-item-label
-              >
-            </q-item-section>
-          </q-item>
+          <div v-if="encuesta.educacion">
+            <q-item>
+              <q-item-section>
+                <q-item-label
+                  >4. Educación ({{ encuesta.educacion.ano }})</q-item-label
+                >
+              </q-item-section>
+            </q-item>
 
-          <q-item>
-            <q-item-section>
-              <q-item-label>Cobertura neta transición</q-item-label>
-              <q-item-label caption
-                >{{
-                  encuesta.educacion.coberturaNetaTransicion
-                }}
-                %</q-item-label
-              >
-            </q-item-section>
+            <q-item>
+              <q-item-section>
+                <q-item-label>Cobertura neta transición</q-item-label>
+                <q-item-label caption
+                  >{{
+                    encuesta.educacion.coberturaNetaTransicion
+                  }}
+                  %</q-item-label
+                >
+              </q-item-section>
 
-            <q-item-section>
-              <q-item-label>Cobertura neta básica primaria</q-item-label>
-              <q-item-label caption
-                >{{
-                  encuesta.educacion.coberturaNetaBasicaPrimaria
-                }}
-                %</q-item-label
-              >
-            </q-item-section>
+              <q-item-section>
+                <q-item-label>Cobertura neta básica primaria</q-item-label>
+                <q-item-label caption
+                  >{{
+                    encuesta.educacion.coberturaNetaBasicaPrimaria
+                  }}
+                  %</q-item-label
+                >
+              </q-item-section>
 
-            <q-item-section>
-              <q-item-label>Cobertura neta básica secundaria</q-item-label>
-              <q-item-label caption
-                >{{
-                  encuesta.educacion.coberturaNetaBasicaSecundaria
-                }}
-                %</q-item-label
-              >
-            </q-item-section>
-          </q-item>
+              <q-item-section>
+                <q-item-label>Cobertura neta básica secundaria</q-item-label>
+                <q-item-label caption
+                  >{{
+                    encuesta.educacion.coberturaNetaBasicaSecundaria
+                  }}
+                  %</q-item-label
+                >
+              </q-item-section>
+            </q-item>
 
-          <q-item>
-            <q-item-section>
-              <q-item-label>Cobertura neta media</q-item-label>
-              <q-item-label caption
-                >{{
-                  encuesta.educacion.coberturaNetaEducacionMedia
-                }}
-                %</q-item-label
-              >
-            </q-item-section>
+            <q-item>
+              <q-item-section>
+                <q-item-label>Cobertura neta media</q-item-label>
+                <q-item-label caption
+                  >{{
+                    encuesta.educacion.coberturaNetaEducacionMedia
+                  }}
+                  %</q-item-label
+                >
+              </q-item-section>
 
-            <q-item-section>
-              <q-item-label>Cobertura neta total</q-item-label>
-              <q-item-label caption
-                >{{ encuesta.educacion.coberturaNetaTotal }} %</q-item-label
-              >
-            </q-item-section>
-          </q-item>
+              <q-item-section>
+                <q-item-label>Cobertura neta total</q-item-label>
+                <q-item-label caption
+                  >{{ encuesta.educacion.coberturaNetaTotal }} %</q-item-label
+                >
+              </q-item-section>
+            </q-item>
 
-          <q-item>
-            <q-item-section>
-              <q-item-label>Cobertura bruta transición</q-item-label>
-              <q-item-label caption
-                >{{
-                  encuesta.educacion.coberturaBrutaTransicion
-                }}
-                %</q-item-label
-              >
-            </q-item-section>
+            <q-item>
+              <q-item-section>
+                <q-item-label>Cobertura bruta transición</q-item-label>
+                <q-item-label caption
+                  >{{
+                    encuesta.educacion.coberturaBrutaTransicion
+                  }}
+                  %</q-item-label
+                >
+              </q-item-section>
 
-            <q-item-section>
-              <q-item-label>Cobertura bruta básica primaria</q-item-label>
-              <q-item-label caption
-                >{{
-                  encuesta.educacion.coberturaBrutaBasicaPrimaria
-                }}
-                %</q-item-label
-              >
-            </q-item-section>
+              <q-item-section>
+                <q-item-label>Cobertura bruta básica primaria</q-item-label>
+                <q-item-label caption
+                  >{{
+                    encuesta.educacion.coberturaBrutaBasicaPrimaria
+                  }}
+                  %</q-item-label
+                >
+              </q-item-section>
 
-            <q-item-section>
-              <q-item-label>Cobertura bruta básica secundaria</q-item-label>
-              <q-item-label caption
-                >{{
-                  encuesta.educacion.coberturaBrutaBasicaSecundaria
-                }}
-                %</q-item-label
-              >
-            </q-item-section>
-          </q-item>
+              <q-item-section>
+                <q-item-label>Cobertura bruta básica secundaria</q-item-label>
+                <q-item-label caption
+                  >{{
+                    encuesta.educacion.coberturaBrutaBasicaSecundaria
+                  }}
+                  %</q-item-label
+                >
+              </q-item-section>
+            </q-item>
 
-          <q-item>
-            <q-item-section>
-              <q-item-label>Cobertura bruta media</q-item-label>
-              <q-item-label caption
-                >{{
-                  encuesta.educacion.coberturaBrutaEducacionMedia
-                }}
-                %</q-item-label
-              >
-            </q-item-section>
+            <q-item>
+              <q-item-section>
+                <q-item-label>Cobertura bruta media</q-item-label>
+                <q-item-label caption
+                  >{{
+                    encuesta.educacion.coberturaBrutaEducacionMedia
+                  }}
+                  %</q-item-label
+                >
+              </q-item-section>
 
-            <q-item-section>
-              <q-item-label>Cobertura bruta total</q-item-label>
-              <q-item-label caption
-                >{{ encuesta.educacion.coberturaBrutaTotal }} %</q-item-label
-              >
-            </q-item-section>
-          </q-item>
+              <q-item-section>
+                <q-item-label>Cobertura bruta total</q-item-label>
+                <q-item-label caption
+                  >{{ encuesta.educacion.coberturaBrutaTotal }} %</q-item-label
+                >
+              </q-item-section>
+            </q-item>
 
-          <q-item>
-            <q-item-section>
-              <q-item-label>Tasa de analfabetismo urbano</q-item-label>
-              <q-item-label caption
-                >{{
-                  encuesta.educacion.tasaDeAnalfabestismoUrbano
-                }}
-                %</q-item-label
-              >
-            </q-item-section>
+            <q-item>
+              <q-item-section>
+                <q-item-label>Tasa de analfabetismo urbano</q-item-label>
+                <q-item-label caption
+                  >{{
+                    encuesta.educacion.tasaDeAnalfabestismoUrbano
+                  }}
+                  %</q-item-label
+                >
+              </q-item-section>
 
-            <q-item-section>
-              <q-item-label>Tasa de analfabetismo rural</q-item-label>
-              <q-item-label caption
-                >{{
-                  encuesta.educacion.tasaDeAnalfabestismoRural
-                }}
-                %</q-item-label
-              >
-            </q-item-section>
-          </q-item>
+              <q-item-section>
+                <q-item-label>Tasa de analfabetismo rural</q-item-label>
+                <q-item-label caption
+                  >{{
+                    encuesta.educacion.tasaDeAnalfabestismoRural
+                  }}
+                  %</q-item-label
+                >
+              </q-item-section>
+            </q-item>
 
-          <q-item>
-            <q-item-section>
-              <q-item-label
-                >Puntaje promedio prueba saber 11 matemáticas</q-item-label
-              >
-              <q-item-label caption>{{
-                encuesta.educacion.puntajePromedioSaberMatematica
-              }}</q-item-label>
-            </q-item-section>
+            <q-item>
+              <q-item-section>
+                <q-item-label
+                  >Puntaje promedio prueba saber 11 matemáticas</q-item-label
+                >
+                <q-item-label caption>{{
+                  encuesta.educacion.puntajePromedioSaberMatematica
+                }}</q-item-label>
+              </q-item-section>
 
-            <q-item-section>
-              <q-item-label
-                >Puntaje promedio prueba saber 11 lectura crítica</q-item-label
-              >
-              <q-item-label caption>{{
-                encuesta.educacion.puntajePromedioSaberLectura
-              }}</q-item-label>
-            </q-item-section>
-          </q-item>
+              <q-item-section>
+                <q-item-label
+                  >Puntaje promedio prueba saber 11 lectura
+                  crítica</q-item-label
+                >
+                <q-item-label caption>{{
+                  encuesta.educacion.puntajePromedioSaberLectura
+                }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </div>
 
           <!-- Vivienda -->
           <q-item>
@@ -1384,44 +1387,45 @@
           </q-item>
 
           <q-separator />
+          <div v-if="encuesta.finanzas">
+            <div v-for="finanza in encuesta.finanzas" :key="finanza.id">
+              <q-item>
+                <q-item-section>
+                  <q-item-label>{{
+                    finanza.tipoIndicadorFinanza.nombre
+                  }}</q-item-label>
+                </q-item-section>
+              </q-item>
 
-          <div v-for="finanza in encuesta.finanzas" :key="finanza.id">
-            <q-item>
-              <q-item-section>
-                <q-item-label>{{
-                  finanza.tipoIndicadorFinanza.nombre
-                }}</q-item-label>
-              </q-item-section>
-            </q-item>
+              <q-separator />
 
-            <q-separator />
+              <q-item>
+                <q-item-section>
+                  <q-item-label>Monto (en pesos)</q-item-label>
+                  <q-item-label caption
+                    >${{
+                      new Intl.NumberFormat().format(finanza.valor)
+                    }}</q-item-label
+                  >
+                </q-item-section>
 
-            <q-item>
-              <q-item-section>
-                <q-item-label>Monto (en pesos)</q-item-label>
-                <q-item-label caption
-                  >${{
-                    new Intl.NumberFormat().format(finanza.valor)
-                  }}</q-item-label
-                >
-              </q-item-section>
+                <q-item-section>
+                  <q-item-label>Periodo</q-item-label>
+                  <q-item-label caption>{{ finanza.periodo }}</q-item-label>
+                </q-item-section>
+              </q-item>
 
-              <q-item-section>
-                <q-item-label>Periodo</q-item-label>
-                <q-item-label caption>{{ finanza.periodo }}</q-item-label>
-              </q-item-section>
-            </q-item>
+              <q-separator />
 
-            <q-separator />
+              <q-item>
+                <q-item-section>
+                  <q-item-label>Observación</q-item-label>
+                  <q-item-label caption>{{ finanza.observacion }}</q-item-label>
+                </q-item-section>
+              </q-item>
 
-            <q-item>
-              <q-item-section>
-                <q-item-label>Observación</q-item-label>
-                <q-item-label caption>{{ finanza.observacion }}</q-item-label>
-              </q-item-section>
-            </q-item>
-
-            <q-separator />
+              <q-separator />
+            </div>
           </div>
 
           <!-- Indicadores -->
@@ -1430,76 +1434,76 @@
               <q-item-label>11. Indicadores de Gestión</q-item-label>
             </q-item-section>
           </q-item>
+          <div v-if="encuesta.indicadores">
+            <q-item>
+              <q-item-section>
+                <q-item-label>Índice de desempeño fiscal</q-item-label>
+                <q-item-label caption>{{
+                  encuesta.indicadores.indiceDeDesempenoFiscal
+                }}</q-item-label>
+              </q-item-section>
 
-          <q-item>
-            <q-item-section>
-              <q-item-label>Índice de desempeño fiscal</q-item-label>
-              <q-item-label caption>{{
-                encuesta.indicadores.indiceDeDesempenoFiscal
-              }}</q-item-label>
-            </q-item-section>
+              <q-item-section>
+                <q-item-label>Nivel</q-item-label>
+                <q-item-label caption>{{
+                  encuesta.indicadores.nivelDeDesempeño
+                }}</q-item-label>
+              </q-item-section>
+            </q-item>
 
-            <q-item-section>
-              <q-item-label>Nivel</q-item-label>
-              <q-item-label caption>{{
-                encuesta.indicadores.nivelDeDesempeño
-              }}</q-item-label>
-            </q-item-section>
-          </q-item>
+            <q-item>
+              <q-item-section>
+                <q-item-label>Índice de funcionamiento</q-item-label>
+                <q-item-label caption>{{
+                  encuesta.indicadores.indiceDeFuncionamiento
+                }}</q-item-label>
+              </q-item-section>
 
-          <q-item>
-            <q-item-section>
-              <q-item-label>Índice de funcionamiento</q-item-label>
-              <q-item-label caption>{{
-                encuesta.indicadores.indiceDeFuncionamiento
-              }}</q-item-label>
-            </q-item-section>
+              <q-item-section>
+                <q-item-label>¿Cumple límite de ley 617 de 2000?</q-item-label>
+                <q-item-label caption>{{
+                  encuesta.indicadores.cumpleLimiteDeley ? "Si" : "No"
+                }}</q-item-label>
+              </q-item-section>
 
-            <q-item-section>
-              <q-item-label>¿Cumple límite de ley 617 de 2000?</q-item-label>
-              <q-item-label caption>{{
-                encuesta.indicadores.cumpleLimiteDeley ? "Si" : "No"
-              }}</q-item-label>
-            </q-item-section>
+              <q-item-section>
+                <q-item-label>Dependencia de transferencia</q-item-label>
+                <q-item-label caption>{{
+                  encuesta.indicadores.dependenciaDetransferencia
+                }}</q-item-label>
+              </q-item-section>
+            </q-item>
 
-            <q-item-section>
-              <q-item-label>Dependencia de transferencia</q-item-label>
-              <q-item-label caption>{{
-                encuesta.indicadores.dependenciaDetransferencia
-              }}</q-item-label>
-            </q-item-section>
-          </q-item>
+            <q-item>
+              <q-item-section>
+                <q-item-label>Índice de gestión y transparencia</q-item-label>
+                <q-item-label caption>{{
+                  encuesta.indicadores.indiceDeGestionYTransferencia
+                }}</q-item-label>
+              </q-item-section>
 
-          <q-item>
-            <q-item-section>
-              <q-item-label>Índice de gestión y transparencia</q-item-label>
-              <q-item-label caption>{{
-                encuesta.indicadores.indiceDeGestionYTransferencia
-              }}</q-item-label>
-            </q-item-section>
+              <q-item-section>
+                <q-item-label>Índice de resultados</q-item-label>
+                <q-item-label caption>{{
+                  encuesta.indicadores.indiceDeResultado
+                }}</q-item-label>
+              </q-item-section>
 
-            <q-item-section>
-              <q-item-label>Índice de resultados</q-item-label>
-              <q-item-label caption>{{
-                encuesta.indicadores.indiceDeResultado
-              }}</q-item-label>
-            </q-item-section>
+              <q-item-section>
+                <q-item-label>Medidor de desempeño municipal</q-item-label>
+                <q-item-label caption>{{
+                  encuesta.indicadores.medidorDesempenoMunicipal
+                }}</q-item-label>
+              </q-item-section>
 
-            <q-item-section>
-              <q-item-label>Medidor de desempeño municipal</q-item-label>
-              <q-item-label caption>{{
-                encuesta.indicadores.medidorDesempenoMunicipal
-              }}</q-item-label>
-            </q-item-section>
-
-            <q-item-section>
-              <q-item-label>Nivel</q-item-label>
-              <q-item-label caption>{{
-                encuesta.indicadores.nivelDesempenoMunicipal
-              }}</q-item-label>
-            </q-item-section>
-          </q-item>
-
+              <q-item-section>
+                <q-item-label>Nivel</q-item-label>
+                <q-item-label caption>{{
+                  encuesta.indicadores.nivelDesempenoMunicipal
+                }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </div>
           <!-- Territorio -->
           <q-item>
             <q-item-section>

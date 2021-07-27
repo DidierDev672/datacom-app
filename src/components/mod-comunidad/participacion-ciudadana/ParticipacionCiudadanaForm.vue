@@ -109,7 +109,7 @@ export default {
       }
 
       if(info.id > 0){
-        info.usuarioCreacion = getParticipacionCiudadanaState.usuarioCreacion
+        info.usuarioCreacion = this.getParticipacionCiudadanaState.objParticipacionCiudadana.usuarioCreacion
         this.actualizarParticipacionCiudadanaAction(info).then(() => {
 
         })

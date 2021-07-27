@@ -74,7 +74,7 @@
 <script>
 import {mapActions, mapGetters} from "vuex";
 import {CATEGORIAS} from "src/utils/config";
-import {getProyectosProductivosState} from "src/store/module-jac/proyectos-productivos/getters";
+
 
 export default {
   name: "ProyectosProductivosForm",

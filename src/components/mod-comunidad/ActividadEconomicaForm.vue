@@ -103,7 +103,7 @@ export default {
       };
 
       if (info.id > 0) {
-        this.info.usuarioCreacion = this.getActividadEconomicaState.objActividadEconomica.usuarioCreacion;
+        info.usuarioCreacion = this.getActividadEconomicaState.objActividadEconomica.usuarioCreacion;
         this.actualizarActividadEconomicaAction(info).then(() => {});
       } else {
         this.registrarActividadEconomicaAction(info).then(data => {

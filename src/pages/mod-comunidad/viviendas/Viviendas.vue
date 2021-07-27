@@ -57,7 +57,6 @@
             </q-card-section>
           </q-card>
         </q-form>
-
         <div class="flex justify-center">
           <q-btn
             label="Guardar y continuar"
@@ -112,7 +111,9 @@ export default {
             ...this.vivienda,
             encuesta: {
               id: this.encuestaID
-            }
+            },
+            usuarioCreacion: this.getUser,
+            usuarioActualizacion: this.getUser
           }).then(data => {
             this.vivienda.id = data;
             this.$router.push({
@@ -130,7 +131,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters("viviendas", ["getViviendaState"])
+    ...mapGetters("viviendas", ["getViviendaState"]),
+    ...mapGetters("auth", ["getUser"])
   }
 };
 </script>

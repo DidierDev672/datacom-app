@@ -1,147 +1,108 @@
 ﻿<template>
-<q-card
-  flat
-  bordered>
-
-  <q-form ref="fiscalForm">    
-
-  <q-card-section>
-
-    <q-list class="report-list">
-
-      <q-item>
-        <q-item-section>
-          <q-item-label>Datos del Fiscal</q-item-label>
-        </q-item-section>
-      </q-item>
-      
-
-    <q-item>
-
-      <q-item-section>
-        <q-item-label>Nombre completo</q-item-label>
-        <q-item-label caption>
+  <div class="q-ma-sm">
+    <q-form ref="fiscalForm">
+      <p class="text-h">5. Datos del Fiscal</p>
+      <div class="row q-col-gutter-sm">
+        <div class="col-xs-12 col-md-8">
+          <p class="text-h6">Nombre completo</p>
           <q-input
             outlined
             v-model="jacInfoDB.fiscal"
             lazy-rules
-            :rules="[val => !!val || 'Campo requerido']" />
-        </q-item-label>
-      </q-item-section>
-
-    </q-item>
-    
-    <q-item>
-
-      <q-item-section>
-        <q-item-label>Número de Documento</q-item-label>
-        <q-item-label caption>
+            :rules="[val => !!val || 'Campo requerido']"
+          />
+        </div>
+      </div>
+      <div class="row q-col-gutter-sm">
+        <div class="col-xs-12 col-md-4">
+          <p class="text-h6">Número de Documento</p>
           <q-input
             outlined
             v-model="jacInfoDB.noIdentificacionFiscal"
             lazy-rules
-            :rules="[val => !!val || 'Campo requerido']" />
-        </q-item-label>
-      </q-item-section>
+            :rules="[val => !!val || 'Campo requerido']"
+          />
+        </div>
+        <div class="col-xs-12 col-md-4">
+          <p class="text-h6">Celular</p>
+          <q-input
+            outlined
+            v-model="jacInfoDB.celularFiscal"
+            lazy-rules
+            :rules="[val => !!val || 'Campo requerido']"
+          />
+        </div>
+        <div class="col-xs-12 col-md-4">
+          <p class="text-h6">Email</p>
+          <q-input
+            outlined
+            v-model="jacInfoDB.emailFiscal"
+            lazy-rules
+            :rules="[val => !!val || 'Campo requerido']"
+          />
+        </div>
+      </div>
 
-        <q-item-section>
-            <q-item-label>Celular</q-item-label>
-            <q-item-label caption>
-            <q-input
-                outlined
-                v-model="jacInfoDB.celularFiscal"
-                lazy-rules
-                :rules="[val => !!val || 'Campo requerido']" />
-            </q-item-label>
-        </q-item-section>        
-
-        <q-item-section>
-            <q-item-label>Email</q-item-label>
-            <q-item-label caption>
-            <q-input
-                outlined
-                v-model="jacInfoDB.emailFiscal"
-                lazy-rules
-                :rules="[val => !!val || 'Campo requerido']" />
-            </q-item-label>
-        </q-item-section>
-
-    </q-item>
-
-
-    </q-list>
-    
-  </q-card-section>
-
-   <q-separator />
-
-  <q-card-actions align="right">
-    <q-btn @click="onSubmit" color="primary">Actualizar</q-btn>
-  </q-card-actions>
-
-  </q-form>
-
-</q-card>
+      <div align="right">
+        <q-btn @click="onSubmit" color="primary">Actualizar</q-btn>
+      </div>
+    </q-form>
+  </div>
 </template>
 
 <script>
-import {mapActions, mapGetters} from "vuex";
-import {CATEGORIAS} from "src/utils/config";
+import { mapActions, mapGetters } from "vuex";
+import { CATEGORIAS } from "src/utils/config";
 
 export default {
   name: "JacInfo",
-  data () {
+  data() {
     return {
       jacID: 0,
-      jacInfoDB: {},
-    }
+      jacInfoDB: {}
+    };
   },
   created() {
-
-    this.jacID = this.$route.params.id
+    this.jacID = this.$route.params.id;
 
     this.jacInfoDB = {
       id: this.$route.params.id,
-      fiscal: '',
-      noIdentificacionFiscal: '',
-      celularFiscal: '',
-      emailFiscal: ''
-    }    
+      fiscal: "",
+      noIdentificacionFiscal: "",
+      celularFiscal: "",
+      emailFiscal: ""
+    };
 
     this.buscarJacInfoAction(this.jacID).then(data => {
-      if(data.id > 0){
-        this.jacInfoDB = {...data}
+      if (data.id > 0) {
+        this.jacInfoDB = { ...data };
       }
-    })
+    });
   },
   methods: {
-    ...mapActions('jacInfo',['buscarJacInfoAction','registrarJacInfoAction']),  
-    onSubmit () {
-
+    ...mapActions("jacInfo", ["buscarJacInfoAction", "registrarJacInfoAction"]),
+    onSubmit() {
       this.$refs.fiscalForm.validate().then(success => {
         if (success) {
           this.registrarJacInfoAction(this.jacInfoDB).then(data => {
             this.$q.notify({
-              message: 'Información actualizada correctamente',
-              color: 'positive'
-            })
-          })
-        }else{
+              message: "Información actualizada correctamente",
+              color: "positive"
+            });
+          });
+        } else {
           this.$q.notify({
-            message: 'Favor completar los campos correctamente',
-            color: 'red'
-          })
+            message: "Favor completar los campos correctamente",
+            color: "red"
+          });
         }
-      })
+      });
     }
   },
   computed: {
-    ...mapGetters('jacInfo', ['getJacInfoState']),
-
+    ...mapGetters("jacInfo", ["getJacInfoState"])
   }
-}
+};
 </script>
 
-<style lang="sass">
-
-</style>
+<style lang="sass"></style>

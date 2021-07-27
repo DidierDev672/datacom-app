@@ -129,6 +129,7 @@ export default {
 
       if(info.id > 0){
         //Actualizar
+        info.usuarioCreacion = this.getPoblacionInfantilState.objPoblacionInfantil.usuarioCreacion
         this.actualizarPoblacionInfantilAction(info).then(() => {
         })
       }else{

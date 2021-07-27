@@ -1,45 +1,38 @@
 ﻿<template>
-<q-card
-  flat
-  bordered>
+  <div class="q-ma-sm">
+    <q-form ref="fiscalForm">
+      <p class="text-h6">8. Nivel administrativo y financiero</p>
 
-  <q-form ref="fiscalForm">    
-
-  <q-card-section>
-
-    <q-list class="report-list">
-
-      <q-item>
-        <q-item-section>
-          <q-item-label>Nivel administrativo y financiero</q-item-label>
-        </q-item-section>
-      </q-item>
-      
-
-    <q-item>
-
-      <q-item-section>
-        <q-item-label>¿Estatutos vigentes?</q-item-label>
-        <q-item-label caption>
+      <div class="row q-col-gutter-sm">
+        <div class="col-xs-12 col-md-6">
+          <p class="text-h6">¿Estatutos vigentes?</p>
           <q-option-group
-             inline
-             :options="options"
-             type="radio"
-             v-model="jacInfoDB.estatutosVigentes" />
-        </q-item-label>
-      </q-item-section>    
+            inline
+            :options="options"
+            type="radio"
+            v-model="jacInfoDB.estatutosVigentes"
+          />
+        </div>
+      </div>
 
-    </q-item>
-
-    <q-item v-if="jacInfoDB.estatutosVigentes">
-
-      <q-item-section class="col-xs-12 col-sm-3 ">
-        <q-item-label>Fecha de actualización</q-item-label>
-        <q-item-label caption>
-          <q-input outlined v-model="jacInfoDB.fechaActualizacionEstatutos" mask="date">
+      <div
+        class="row q-col-gutter-sm q-mt-sm"
+        v-if="jacInfoDB.estatutosVigentes"
+      >
+        <div class="col-xs-12 col-md-6">
+          <p class="text-h6">Fecha de actualización</p>
+          <q-input
+            outlined
+            v-model="jacInfoDB.fechaActualizacionEstatutos"
+            mask="date"
+          >
             <template v-slot:append>
               <q-icon name="event" class="cursor-pointer">
-                <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
+                <q-popup-proxy
+                  ref="qDateProxy"
+                  transition-show="scale"
+                  transition-hide="scale"
+                >
                   <q-date v-model="jacInfoDB.fechaActualizacionEstatutos">
                     <div class="row items-center justify-end">
                       <q-btn v-close-popup label="Close" color="primary" flat />
@@ -49,35 +42,38 @@
               </q-icon>
             </template>
           </q-input>
-        </q-item-label>
-      </q-item-section>      
+        </div>
+      </div>
 
-    </q-item>
-
-    <q-item>
-
-      <q-item-section>
-        <q-item-label>¿Tiene reglamento interno?</q-item-label>
-        <q-item-label caption>
+      <div class="row q-col-gutter-sm q-mt-md">
+        <div class="col-xs-12 col-md-6">
+          <p class="text-h6">¿Tienen reglamento interno?</p>
           <q-option-group
-             inline
-             :options="options"
-             type="radio"
-             v-model="jacInfoDB.reglamentoInterno" />
-        </q-item-label>
-      </q-item-section>    
-
-    </q-item>
-
-    <q-item v-if="jacInfoDB.reglamentoInterno" >
-
-      <q-item-section class="col-xs-12 col-sm-3 ">
-        <q-item-label>Fecha de actualización</q-item-label>
-        <q-item-label caption>
-          <q-input outlined v-model="jacInfoDB.fechaActualizacionReglamento" mask="date">
+            inline
+            :options="options"
+            type="radio"
+            v-model="jacInfoDB.reglamentoInterno"
+          />
+        </div>
+      </div>
+      <div
+        class="row q-col-gutter-sm q-mt-md"
+        v-if="jacInfoDB.reglamentoInterno"
+      >
+        <div class="col-xs-12 col-md-6">
+          <p class="text-h6">Fecha de actualización</p>
+          <q-input
+            outlined
+            v-model="jacInfoDB.fechaActualizacionReglamento"
+            mask="date"
+          >
             <template v-slot:append>
               <q-icon name="event" class="cursor-pointer">
-                <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
+                <q-popup-proxy
+                  ref="qDateProxy"
+                  transition-show="scale"
+                  transition-hide="scale"
+                >
                   <q-date v-model="jacInfoDB.fechaActualizacionReglamento">
                     <div class="row items-center justify-end">
                       <q-btn v-close-popup label="Close" color="primary" flat />
@@ -87,35 +83,32 @@
               </q-icon>
             </template>
           </q-input>
-        </q-item-label>
-      </q-item-section>      
+        </div>
+      </div>
 
-    </q-item>
-
-    <q-item>
-
-      <q-item-section>
-        <q-item-label>¿Llevan libro de actas?</q-item-label>
-        <q-item-label caption>
+      <div class="row q-col-gutter-sm q-mt-md">
+        <div class="col-xs-12 col-md-6">
+          <p class="text-h6">¿Llevan libro de actas?</p>
           <q-option-group
-             inline
-             :options="options"
-             type="radio"
-             v-model="jacInfoDB.libroActas" />
-        </q-item-label>
-      </q-item-section>    
+            inline
+            :options="options"
+            type="radio"
+            v-model="jacInfoDB.libroActas"
+          />
+        </div>
+      </div>
 
-    </q-item>
-
-    <q-item v-if="jacInfoDB.libroActas">
-
-      <q-item-section class="col-xs-12 col-sm-3 ">
-        <q-item-label>Fecha del Último registro</q-item-label>
-        <q-item-label caption>
+      <div class="row q-col-gutter-sm q-mt-md" v-if="jacInfoDB.libroActas">
+        <div class="col-xs-12 col-md-6">
+          <p class="text-h6">Fecha del Último registro</p>
           <q-input outlined v-model="jacInfoDB.fechaUltimoRegistro" mask="date">
             <template v-slot:append>
               <q-icon name="event" class="cursor-pointer">
-                <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
+                <q-popup-proxy
+                  ref="qDateProxy"
+                  transition-show="scale"
+                  transition-hide="scale"
+                >
                   <q-date v-model="jacInfoDB.fechaUltimoRegistro">
                     <div class="row items-center justify-end">
                       <q-btn v-close-popup label="Close" color="primary" flat />
@@ -125,35 +118,36 @@
               </q-icon>
             </template>
           </q-input>
-        </q-item-label>
-      </q-item-section>      
+        </div>
+      </div>
 
-    </q-item>
-
-    <q-item>
-
-      <q-item-section>
-        <q-item-label>¿Llevan libro de afiliados?</q-item-label>
-        <q-item-label caption>
+      <div class="row q-col-gutter-sm q-mt-md">
+        <div class="col-xs-12 col-md-6">
+          <p class="text-h6">¿Llevan libro de afiliados?</p>
           <q-option-group
-             inline
-             :options="options"
-             type="radio"
-             v-model="jacInfoDB.librosAfiliados" />
-        </q-item-label>
-      </q-item-section>    
+            inline
+            :options="options"
+            type="radio"
+            v-model="jacInfoDB.librosAfiliados"
+          />
+        </div>
+      </div>
 
-    </q-item>
-
-    <q-item v-if="jacInfoDB.libroAfiliados">
-
-      <q-item-section class="col-xs-12 col-sm-3 ">
-        <q-item-label>Fecha de actualización</q-item-label>
-        <q-item-label caption>
-          <q-input outlined v-model="jacInfoDB.fechaActualizacionAfiliados" mask="date">
+      <div class="row q-col-gutter-sm q-mt-md" v-if="jacInfoDB.librosAfiliados">
+        <div class="col-xs-12 col-md-6">
+          <p class="text-h6">Fecha de actualización</p>
+          <q-input
+            outlined
+            v-model="jacInfoDB.fechaActualizacionAfiliados"
+            mask="date"
+          >
             <template v-slot:append>
               <q-icon name="event" class="cursor-pointer">
-                <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
+                <q-popup-proxy
+                  ref="qDateProxy"
+                  transition-show="scale"
+                  transition-hide="scale"
+                >
                   <q-date v-model="jacInfoDB.fechaActualizacionAfiliados">
                     <div class="row items-center justify-end">
                       <q-btn v-close-popup label="Close" color="primary" flat />
@@ -163,343 +157,287 @@
               </q-icon>
             </template>
           </q-input>
-        </q-item-label>
-      </q-item-section>      
+        </div>
+      </div>
 
-    </q-item>
-
-    <q-item>
-
-      <q-item-section>
-        <q-item-label>¿Llevan libro de registros financieros?</q-item-label>
-        <q-item-label caption>
+      <div class="row q-col-gutter-sm q-mt-md">
+        <div class="col-xs-12 col-md-6">
+          <p class="text-h6">¿Llevan libro de registros financieros?</p>
           <q-option-group
-             inline
-             :options="options"
-             type="radio"
-             v-model="jacInfoDB.libroRegistrosFinancieros" />
-        </q-item-label>
-      </q-item-section>    
+            inline
+            :options="options"
+            type="radio"
+            v-model="jacInfoDB.libroRegistrosFinancieros"
+          />
+        </div>
+      </div>
 
-    </q-item>
-
-    <q-item v-if="jacInfoDB.libroRegistrosFinancieros">
-
-        <q-item-section>
-            <q-item-label>¿Los registros están actualizados?</q-item-label>
-            <q-item-label caption>
-            <q-option-group
-                inline
-                :options="options"
-                type="radio"
-                v-model="jacInfoDB.registrosActualizados" />
-            </q-item-label>
-        </q-item-section>           
-
-    </q-item>
-
-    <q-item>
-
-      <q-item-section>
-        <q-item-label>¿Llevan libro de registros de inventarios?</q-item-label>
-        <q-item-label caption>
+      <div
+        class="row q-col-gutter-sm q-mt-md"
+        v-if="jacInfoDB.libroRegistrosFinancieros"
+      >
+        <div class="col-xs-12 col-md-6">
+          <p class="text-h6">¿Los registros están actualizados?</p>
           <q-option-group
-             inline
-             :options="options"
-             type="radio"
-             v-model="jacInfoDB.libroInventario" />
-        </q-item-label>
-      </q-item-section>    
+            inline
+            :options="options"
+            type="radio"
+            v-model="jacInfoDB.registrosActualizados"
+          />
+        </div>
+      </div>
 
-    </q-item>
-
-    <q-item v-if="jacInfoDB.libroInventario">
-
-        <q-item-section>
-            <q-item-label>¿El inventario está actualizado?</q-item-label>
-            <q-item-label caption>
-            <q-option-group
-                inline
-                :options="options"
-                type="radio"
-                v-model="jacInfoDB.inventarioActualizados" />
-            </q-item-label>
-        </q-item-section>           
-
-    </q-item>
-
-    <q-item>
-
-      <q-item-section>
-        <q-item-label>¿Manejan caja menor?</q-item-label>
-        <q-item-label caption>
+      <div class="row q-col-gutter-sm q-mt-md">
+        <div class="col-xs-12 col-md-6">
+          <p class="text-h6">¿Llevan libro de registros de inventarios?</p>
           <q-option-group
-             inline
-             :options="options"
-             type="radio"
-             v-model="jacInfoDB.cajaMenor" />
-        </q-item-label>
-      </q-item-section>    
+            inline
+            :options="options"
+            type="radio"
+            v-model="jacInfoDB.libroInventario"
+          />
+        </div>
+      </div>
 
-    </q-item>
-
-    <q-item v-if="jacInfoDB.cajaMenor">
-
-        <q-item-section class="col-xs-12 col-sm-3">
-            <q-item-label>Monto aprobado</q-item-label>
-            <q-item-label caption>
-            <q-input
-                outlined
-                v-model="jacInfoDB.montoAprobado" />
-            </q-item-label>
-        </q-item-section>           
-
-    </q-item>
-
-    <q-item>
-
-      <q-item-section>
-        <q-item-label>¿Tienen cuenta bancaria?</q-item-label>
-        <q-item-label caption>
+      <div class="row q-col-gutter-sm q-mt-md" v-if="jacInfoDB.libroInventario">
+        <div class="col-xs-12 col-md-6">
+          <p class="text-h6">¿El inventario está actualizado?</p>
           <q-option-group
-             inline
-             :options="options"
-             type="radio"
-             v-model="jacInfoDB.cuentaBancaria" />
-        </q-item-label>
-      </q-item-section>    
+            inline
+            :options="options"
+            type="radio"
+            v-model="jacInfoDB.inventarioActualizados"
+          />
+        </div>
+      </div>
 
-    </q-item>
-
-    <q-item v-if="jacInfoDB.cuentaBancaria">
-
-        <q-item-section class="col-xs-12 col-sm-3">
-            <q-item-label>Tipo</q-item-label>
-            <q-item-label caption>
-            <q-select
-                :options="tipoCuentaOptions"
-                outlined
-                v-model="jacInfoDB.tipoCuentaBancaria" />
-            </q-item-label>
-        </q-item-section>           
-
-        <q-item-section class="col-xs-12 col-sm-5">
-            <q-item-label>No. Cuenta Bancaria</q-item-label>
-            <q-item-label caption>
-            <q-input
-                outlined
-                v-model="jacInfoDB.numeroCuentaBancaria" />
-            </q-item-label>
-        </q-item-section>           
-
-        <q-item-section class="col-xs-12 col-sm-3">
-            <q-item-label>Entidad / Banco</q-item-label>
-            <q-item-label caption>
-            <q-select
-                outlined
-                ref="comunidad"
-                v-model="jacInfoDB.entidadCuentaBancaria"
-                option-label="nombre"
-                option-value="id"
-                :options="bancosOptions"
-                lazy-rules
-                :rules="[ val => val != null && val.id > 0 || 'Debe elegir una comunidad']" />
-            </q-item-label>
-        </q-item-section>           
-
-    </q-item>
-
-    <q-item>
-
-      <q-item-section>
-        <q-item-label>¿Tienen resolución de facturación?</q-item-label>
-        <q-item-label caption>
+      <div class="row q-col-gutter-sm q-mt-md">
+        <div class="col-xs-12 col-md-6">
+          <p class="text-h6">¿Manejan caja menor?</p>
           <q-option-group
-             inline
-             :options="options"
-             type="radio"
-             v-model="jacInfoDB.resolucionFacturacion" />
-        </q-item-label>
-      </q-item-section>    
+            inline
+            :options="options"
+            type="radio"
+            v-model="jacInfoDB.cajaMenor"
+          />
+        </div>
+      </div>
 
-    </q-item>
+      <div class="row q-col-gutter-sm q-mt-md" v-if="jacInfoDB.cajaMenor">
+        <div class="col-xs-12 col-md-6">
+          <p class="text-h6">Monto aprobado</p>
+          <q-input outlined v-model="jacInfoDB.montoAprobado" />
+        </div>
+      </div>
 
-    <q-item v-if="jacInfoDB.resolucionFacturacion">
-        <q-item-section class="col-xs-12 col-sm-5">
-            <q-item-label>Rango de facturación</q-item-label>
-            <q-item-label caption>
-            <q-input
-                outlined
-                v-model="jacInfoDB.numeroCuentaBancaria" />
-            </q-item-label>
-        </q-item-section>   
-    </q-item>
-
-    <q-item>
-
-      <q-item-section>
-        <q-item-label>¿Manejan factura electrónica?</q-item-label>
-        <q-item-label caption>
+      <div class="row q-col-gutter-sm q-mt-md">
+        <div class="col-xs-12 col-md-6">
+          <p class="text-h6">¿Tienen cuenta bancaria?</p>
           <q-option-group
-             inline
-             :options="options"
-             type="radio"
-             v-model="jacInfoDB.facturaElectronica" />
-        </q-item-label>
-      </q-item-section>    
+            inline
+            :options="options"
+            type="radio"
+            v-model="jacInfoDB.cuentaBancaria"
+          />
+        </div>
+      </div>
 
-    </q-item>
+      <div class="row q-col-gutter-sm q-mt-md" v-if="jacInfoDB.cuentaBancaria">
+        <div class="col-xs-12 col-md-4">
+          <p class="text-h6">Tipo</p>
+          <q-select
+            :options="tipoCuentaOptions"
+            behavior="dialog"
+            outlined
+            v-model="jacInfoDB.tipoCuentaBancaria"
+          />
+        </div>
+        <div class="col-xs-12 col-md-4">
+          <p class="text-h6">No. Cuenta Bancaria</p>
+          <q-input outlined v-model="jacInfoDB.numeroCuentaBancaria" />
+        </div>
+        <div class="col-xs-12 col-md-4">
+          <p class="text-h6">Entidad / Banco</p>
+          <q-select
+            outlined
+            ref="banco"
+            v-model="jacInfoDB.entidadCuentaBancaria"
+            option-label="nombre"
+            option-value="id"
+            :options="bancosOptions"
+            behavior="dialog"
+            lazy-rules
+            :rules="[
+              val => (val != null && val.id > 0) || 'Debe elegir una comunidad'
+            ]"
+          />
+        </div>
+      </div>
 
-    <q-item>
-
-      <q-item-section>
-        <q-item-label>¿Realizan balances contables?</q-item-label>
-        <q-item-label caption>
+      <div class="row q-col-gutter-sm q-mt-md">
+        <div class="col-xs-12 col-md-6">
+          <p class="text-h6">¿Tienen resolución de facturación?</p>
           <q-option-group
-             inline
-             :options="options"
-             type="radio"
-             v-model="jacInfoDB.balanceContable" />
-        </q-item-label>
-      </q-item-section>    
+            inline
+            :options="options"
+            type="radio"
+            v-model="jacInfoDB.resolucionFacturacion"
+          />
+        </div>
+      </div>
 
-    </q-item>
+      <div
+        class="row q-col-gutter-sm q-mt-md"
+        v-if="jacInfoDB.resolucionFacturacion"
+      >
+        <div class="col-xs-12 col-md-6">
+          <p class="text-h6">Rango de facturación</p>
+          <q-input outlined v-model="jacInfoDB.rangoFacturacion" />
+        </div>
+      </div>
 
-    <q-item>
-
-      <q-item-section>
-        <q-item-label>¿Cuentan con capital de trabajo?</q-item-label>
-        <q-item-label caption>
+      <div class="row q-col-gutter-sm q-mt-md">
+        <div class="col-xs-12 col-md-6">
+          <p class="text-h6">¿Manejan factura electrónica?</p>
           <q-option-group
-             inline
-             :options="options"
-             type="radio"
-             v-model="jacInfoDB.capitalTrabajo" />
-        </q-item-label>
-      </q-item-section>    
+            inline
+            :options="options"
+            type="radio"
+            v-model="jacInfoDB.facturaElectronica"
+          />
+        </div>
+      </div>
 
-    </q-item>
+      <div class="row q-col-gutter-sm q-mt-md">
+        <div class="col-xs-12 col-md-6">
+          <p class="text-h6">¿Realizan balances contables?</p>
+          <q-option-group
+            inline
+            :options="options"
+            type="radio"
+            v-model="jacInfoDB.balanceContable"
+          />
+        </div>
+      </div>
 
-    <q-item v-if="jacInfoDB.capitalTrabajo">
-        <q-item-section class="col-xs-12 col-sm-5">
-            <q-item-label>Monto</q-item-label>
-            <q-item-label caption>
-            <q-input
-                outlined
-                v-model="jacInfoDB.montoCapitalTrabajo" />
-            </q-item-label>
-        </q-item-section>   
-    </q-item>
+      <div class="row q-col-gutter-sm q-mt-md">
+        <div class="col-xs-12 col-md-6">
+          <p class="text-h6">¿Cuentan con capital de trabajo?</p>
+          <q-option-group
+            inline
+            :options="options"
+            @input="onChangeCapitalTrabajo"
+            type="radio"
+            v-model="jacInfoDB.capitalTrabajo"
+          />
+        </div>
+      </div>
 
+      <div class="row q-col-gutter-sm q-my-md" v-if="jacInfoDB.capitalTrabajo">
+        <div class="col-xs-12 col-md-6">
+          <p class="text-h6">Monto</p>
+          <q-input outlined v-model="jacInfoDB.montoCapitalTrabajo" />
+        </div>
+      </div>
 
-    </q-list>
-    
-  </q-card-section>
-
-   <q-separator />
-
-  <q-card-actions align="right">
-    <q-btn @click="onSubmit" color="primary">Actualizar</q-btn>
-  </q-card-actions>
-
-  </q-form>
-
-</q-card>
+      <div align="right">
+        <q-btn @click="onSubmit" color="primary">Actualizar</q-btn>
+      </div>
+    </q-form>
+  </div>
 </template>
 
 <script>
-import {mapActions, mapGetters} from "vuex";
-import {CATEGORIAS} from "src/utils/config";
+import { mapActions, mapGetters } from "vuex";
+import { CATEGORIAS } from "src/utils/config";
 
 export default {
   name: "JacInfo",
-  data () {
+  data() {
     return {
       jacID: 0,
       jacInfoDB: {},
       options: [
-        { label: 'Si', value: true },
-        { label: 'No', value: false }
+        { label: "Si", value: true },
+        { label: "No", value: false }
       ],
-      tipoCuentaOptions: ['Ahorro', 'Corriente'],
+      tipoCuentaOptions: ["Ahorro", "Corriente"],
       bancosOptions: []
-    }
+    };
   },
   created() {
-
-    this.jacID = this.$route.params.id
+    this.jacID = this.$route.params.id;
 
     this.jacInfoDB = {
       id: this.$route.params.id,
       estatutosVigentes: false,
-      fechaActualizacionEstatutos: '',
+      fechaActualizacionEstatutos: "",
       reglamentoInterno: false,
-      fechaActualizacionReglamento: '',
+      fechaActualizacionReglamento: "",
       libroActas: false,
-      fechaUltimoRegistro: '',
+      fechaUltimoRegistro: "",
       librosAfiliados: false,
-        fechaActualizacionAfiliados: '',
+      fechaActualizacionAfiliados: "",
       libroRegistrosFinancieros: false,
       registrosActualizados: false,
-        libroInventario: false,
-        inventarioActualizados: false,
-        cajaMenor: false,
-        montoAprobado: '',
-        cuentaBancaria: false,
-        tipoCuentaBancaria: '',
-        numeroCuentaBancaria: '',
-        entidadCuentaBancaria: '',
-        resolucionFacturacion: false,
-        rangoFacturacion: '',
-        facturaElectronica: false,
-        balanceContable: false,
-        capitalTrabajo: false,
-        montoCapitalTrabajo: '',
-    }
+      libroInventario: false,
+      inventarioActualizados: false,
+      cajaMenor: false,
+      montoAprobado: "",
+      cuentaBancaria: false,
+      tipoCuentaBancaria: "",
+      numeroCuentaBancaria: "",
+      entidadCuentaBancaria: "",
+      resolucionFacturacion: false,
+      rangoFacturacion: "",
+      facturaElectronica: false,
+      balanceContable: false,
+      capitalTrabajo: false,
+      montoCapitalTrabajo: ""
+    };
 
-    let categorias = [CATEGORIAS.BANCO]
+    let categorias = [CATEGORIAS.BANCO];
 
     this.cargarListaParametroPorCategoriaAction(categorias).then(data => {
-      this.bancosOptions = data
-    })
-
+      this.bancosOptions = data;
+    });
 
     this.buscarJacInfoAction(this.jacID).then(data => {
-      if(data.id > 0){
-        this.jacInfoDB = {...data}
+      if (data.id > 0) {
+        this.jacInfoDB = { ...data };
       }
-    })
-
+    });
   },
   methods: {
-    ...mapActions('jacInfo',['buscarJacInfoAction','registrarJacInfoAction']),
-    ...mapActions('parametros', ['cargarListaParametroPorCategoriaAction']), 
-    onSubmit () {
-
+    ...mapActions("jacInfo", ["buscarJacInfoAction", "registrarJacInfoAction"]),
+    ...mapActions("parametros", ["cargarListaParametroPorCategoriaAction"]),
+    onSubmit() {
       this.$refs.fiscalForm.validate().then(success => {
         if (success) {
           this.registrarJacInfoAction(this.jacInfoDB).then(data => {
             this.$q.notify({
-              message: 'Información actualizada correctamente',
-              color: 'positive'
-            })
-          })
-        }else{
+              message: "Información actualizada correctamente",
+              color: "positive"
+            });
+          });
+        } else {
           this.$q.notify({
-            message: 'Favor completar los campos correctamente',
-            color: 'red'
-          })
+            message: "Favor completar los campos correctamente",
+            color: "red"
+          });
         }
-      })
+      });
+    },
+    onChangeCapitalTrabajo(value) {
+      if (!value) {
+        this.jacInfoDB.montoCapitalTrabajo = 0;
+      }
     }
   },
   computed: {
-    ...mapGetters('jacInfo', ['getJacInfoState']),
-
+    ...mapGetters("jacInfo", ["getJacInfoState"])
   }
-}
+};
 </script>
 
-<style lang="sass">
-
-</style>
+<style lang="sass"></style>

@@ -10,7 +10,9 @@
       loading-label="Cargando información, por favor espere"
     >
       <template v-slot:top="props">
-        <div class="col-8 q-table__title">Relación de contratos y/o proyectos</div>
+        <div class="col-8 q-table__title">
+          10. Relación de contratos y/o proyectos
+        </div>
 
         <q-space />
         <q-btn
@@ -36,63 +38,92 @@
       </q-btn>
     </q-page-sticky>
 
-    <contratos-form v-if="showContratoForm" @close="closeModal"></contratos-form>
-
+    <contratos-form
+      v-if="showContratoForm"
+      @close="closeModal"
+    ></contratos-form>
   </div>
 </template>
 
 <script>
 // import ContratosCard from "components/mod-jac/contratos/ContratosCard";
 import ContratosForm from "components/mod-jac/contratos/ContratosForm";
-import {mapActions, mapGetters, mapMutations} from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 export default {
   name: "Contratos",
-  components: {ContratosForm},
+  components: { ContratosForm },
   data() {
     return {
       jacID: 0,
       showContratoForm: false,
       columns: [
-        { name: "tipoContrato", align: "left", label: "Tipo", field: row => row.tipoContrato.nombre, sortable: true },
-        { name: "descripcion", align: "left", label: "Nombre Proyecto/Contrato", field: 'descripcion', sortable: true },
-        { name: "fechaEjecucion",  align: "left", label: "Fecha", field: "fechaEjecucion" },        
-        { name: "valor",  align: "left", label: "Valor", field: "valor" },        
-        { name: "entidad",  align: "left", label: "Entidad", field: "entidad" },        
-        { name: "montoExcedente",  align: "left", label: "Monto excedente", field: "montoExcedente" },        
-        { name: "montoInversion",  align: "left", label: "Monto inversión", field: "montoInversion" },        
+        {
+          name: "tipoContrato",
+          align: "left",
+          label: "Tipo",
+          field: row => row.tipoContrato.nombre,
+          sortable: true
+        },
+        {
+          name: "descripcion",
+          align: "left",
+          label: "Nombre Proyecto/Contrato",
+          field: "descripcion",
+          sortable: true
+        },
+        {
+          name: "fechaEjecucion",
+          align: "left",
+          label: "Fecha",
+          field: "fechaEjecucion"
+        },
+        { name: "valor", align: "left", label: "Valor", field: "valor" },
+        { name: "entidad", align: "left", label: "Entidad", field: "entidad" },
+        {
+          name: "montoExcedente",
+          align: "left",
+          label: "Monto excedente",
+          field: "montoExcedente"
+        },
+        {
+          name: "montoInversion",
+          align: "left",
+          label: "Monto inversión",
+          field: "montoInversion"
+        },
         { name: "acciones", label: "", field: "acciones" }
       ]
-    }
-  }, created() {
-    this.jacID = this.$route.params.id
+    };
+  },
+  created() {
+    this.jacID = this.$route.params.id;
 
-    if(this.jacID > 0){
-      this.cargarListaContratosAction(this.jacID)
+    if (this.jacID > 0) {
+      this.cargarListaContratosAction(this.jacID);
     }
-  },methods: {
-    ...mapActions('contratos', ['cargarListaContratosAction']),
-    ...mapActions('parametros', ['cargarListaParametroPorCategoriaAction']),
-    ...mapMutations('contratos', ['setContratosSuccess']),
-    closeModal(){
-      this.showContratoForm = false
+  },
+  methods: {
+    ...mapActions("contratos", ["cargarListaContratosAction"]),
+    ...mapActions("parametros", ["cargarListaParametroPorCategoriaAction"]),
+    ...mapMutations("contratos", ["setContratosSuccess"]),
+    closeModal() {
+      this.showContratoForm = false;
     },
-    seleccionar(evt, row, index){
-      this.setContratosSuccess(row)
-      this.showContratoForm = true
+    seleccionar(evt, row, index) {
+      this.setContratosSuccess(row);
+      this.showContratoForm = true;
     },
-    onSubmit(){
-      this.$router.push({name: 'c-salud', params: {id: this.jacID}})
+    onSubmit() {
+      this.$router.push({ name: "c-salud", params: { id: this.jacID } });
     }
   },
   computed: {
-    ...mapGetters('contratos', ['getContratosState']),
-    showBtnContinuar(){
-      return this.getContratosState.lista.length > 0 ? true : false
+    ...mapGetters("contratos", ["getContratosState"]),
+    showBtnContinuar() {
+      return this.getContratosState.lista.length > 0 ? true : false;
     }
   }
-}
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

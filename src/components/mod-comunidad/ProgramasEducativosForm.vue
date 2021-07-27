@@ -157,7 +157,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import { CATEGORIAS } from '../../utils/config'
-import {getProgramasEducativosState} from "src/store/module-comunidad/programas-educativos/getters";
+
 export default {
   data(){
     return {

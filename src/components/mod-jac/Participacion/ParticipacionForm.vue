@@ -56,9 +56,6 @@
 <script>
 import {mapActions, mapGetters} from "vuex";
 import {CATEGORIAS} from "src/utils/config";
-import {getProgramasEducativosState} from "src/store/module-comunidad/programas-educativos/getters";
-import {getParticipacionCiudadanaState} from "src/store/module-comunidad/participacion-ciudadana/getters";
-import {getParticipacionState} from "src/store/module-jac/participacion/getters";
 
 export default {
   name: "ParticipacionForm",

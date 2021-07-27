@@ -2,14 +2,18 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import money from "v-money";
 import VueJWT from "vuejs-jwt";
+import VueTour from "vue-tour";
 
 import routes from "./routes";
+
+require("vue-tour/dist/vue-tour.css");
 
 Vue.use(VueRouter);
 
 Vue.use(money, { precision: 4 });
 
 Vue.use(VueJWT, { keyName: "token" });
+Vue.use(VueTour);
 /*
  * If not building with SSR mode, you can
  * directly export the Router instantiation;
@@ -33,6 +37,10 @@ export default function(/* { store, ssrContext } */) {
 
   Router.beforeEach((to, from, next) => {
     const loggedIn = localStorage.getItem("token");
+
+    // const payload = VueJWT.jwt.decode();
+
+    // console.log("TokenInfo: " + payload);
 
     //Validar fecha de caducidad del token
 

@@ -96,19 +96,14 @@
             <q-card flat bordered class="my-card q-mb-md">
               <q-card-section class="q-pb-none">
                 <div class="text-h6 q-mb-none">
-                  Segundo Apellido *
+                  Segundo Apellido
                 </div>
               </q-card-section>
 
               <q-card-section>
                 <div class="row">
                   <div class="col-xs-12 col-sm-6">
-                    <q-input
-                      dense
-                      v-model="usuario.tercero.segundoApellido"
-                      lazy-rules
-                      :rules="[val => !!val || 'Campo requerido']"
-                    />
+                    <q-input dense v-model="usuario.tercero.segundoApellido" />
                   </div>
                 </div>
               </q-card-section>
@@ -455,12 +450,6 @@ export default {
         if (success) {
           let info = {
             ...this.usuario,
-            tercero: {
-              ...this.usuario.tercero,
-              departamento: this.usuario.tercero.departamento
-                .nombreDepartamento,
-              ciudad: this.usuario.tercero.ciudad.nombreMunicipio
-            },
             usuarioCreacion: this.getUser,
             usuarioActualizacion: this.getUser
           };
@@ -516,7 +505,7 @@ export default {
   },
   computed: {
     ...mapGetters("usuario", ["getUsuarioState"]),
-    ...mapGetters('auth', ['getUser'])
+    ...mapGetters("auth", ["getUser"])
   }
 };
 </script>

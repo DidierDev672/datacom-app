@@ -87,6 +87,7 @@ export default {
     },
     getOfflineCategorias() {
       let db = openDB("workbox-background-sync").then(db => {
+        console.log("DB: ", db);
         db.getAll("requests")
           .then(failedRequests => {
             failedRequests.forEach(failedRequest => {

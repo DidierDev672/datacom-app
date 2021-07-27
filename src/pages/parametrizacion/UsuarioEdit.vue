@@ -96,19 +96,14 @@
             <q-card flat bordered class="my-card q-mb-md">
               <q-card-section class="q-pb-none">
                 <div class="text-h6 q-mb-none">
-                  Segundo Apellido *
+                  Segundo Apellido
                 </div>
               </q-card-section>
 
               <q-card-section>
                 <div class="row">
                   <div class="col-xs-12 col-sm-6">
-                    <q-input
-                      dense
-                      v-model="usuario.tercero.segundoApellido"
-                      lazy-rules
-                      :rules="[val => !!val || 'Campo requerido']"
-                    />
+                    <q-input dense v-model="usuario.tercero.segundoApellido" />
                   </div>
                 </div>
               </q-card-section>
@@ -460,7 +455,7 @@ export default {
     onSubmit() {
       this.$refs.cuentaForm.validate().then(success => {
         if (success) {
-          this.usuario.usuarioActualizacion = this.getUser
+          this.usuario.usuarioActualizacion = this.getUser;
           this.actualizarUsuarioAction(this.usuario).then(data => {
             this.$router.push({
               name: "UsuariosIndex"
@@ -512,7 +507,7 @@ export default {
   },
   computed: {
     ...mapGetters("usuario", ["getUsuarioState"]),
-    ...mapGetters('auth', ['getUser'])
+    ...mapGetters("auth", ["getUser"])
   }
 };
 </script>

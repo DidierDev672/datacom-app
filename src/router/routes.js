@@ -4,7 +4,11 @@ const routes = [
     component: () => import("layouts/MainLayout.vue"),
     meta: { requiresAuth: true },
     children: [
-      // { path: '', component: () => import('pages/PageHome.vue') },
+      { path: "", component: () => import("pages/PageHome.vue") },
+      {
+        path: "paginacion",
+        component: () => import("pages/Paginacion.vue")
+      },
       {
         path: "encuestas",
         component: () => import("pages/menu-encuestas/PageMenuEncuestas.vue")
@@ -83,6 +87,11 @@ const routes = [
         path: "comunidad",
         name: "ComunidadIndex",
         component: () => import("pages/parametrizacion/ComunidadIndex.vue")
+      },
+      {
+        path: "comunidad/crear",
+        name: "ComunidadCreate",
+        component: () => import("pages/parametrizacion/ComunidadCreate.vue")
       },
       {
         path: "organizaciones-base",
@@ -456,7 +465,7 @@ const routes = [
         component: () => import("pages/mod-jac/jac-info/Afiliados.vue")
       },
       {
-        path: "cotratos",
+        path: "contratos",
         name: "j-contratos",
         component: () => import("pages/mod-jac/Contratos/Contratos.vue")
       },
