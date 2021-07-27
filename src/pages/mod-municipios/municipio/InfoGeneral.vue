@@ -292,25 +292,6 @@
 
             <q-card flat bordered class="my-card q-mb-md">
               <q-card-section class="q-pb-none">
-                <div class="text-h6 q-mb-none">Categoría</div>
-              </q-card-section>
-
-              <q-card-section>
-                <div class="row">
-                  <div class="col-xs-12 col-sm-6">
-                    <q-input
-                      dense
-                      v-model="infoGeneral.categoria"
-                      lazy-rules
-                      :rules="[val => !!val || 'Campo requerido']"
-                    />
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
-
-            <q-card flat bordered class="my-card q-mb-md">
-              <q-card-section class="q-pb-none">
                 <div class="text-h6 q-mb-none">Emblema</div>
               </q-card-section>
 
@@ -347,397 +328,26 @@
                   </div>
                 </div>
               </q-card-section>
+
+              <q-card flat bordered class="my-card q-mb-md">
+                <q-card-section class="q-pb-none">
+                  <div class="text-h6 q-mb-none">Fuente de la Información</div>
+                </q-card-section>
+
+                <q-card-section>
+                  <div class="row">
+                    <div class="col-xs-12 col-sm-6">
+                      <q-input
+                        dense
+                        v-model="infoGeneral.fuenteInfoGeneral"
+                        hint="Ingrese la fuente de donde obtuvo esta información"
+                      />
+                    </div>
+                  </div>
+                </q-card-section>
+              </q-card>
             </q-card>
           </q-form>
-        </div>
-
-        <div v-if="step == 4">
-          <q-form ref="demografiaForm">
-            <p class="text-h6 q-mt-md q-mb-sm">2. Demografía</p>
-
-            <q-card flat bordered class="my-card q-mb-md">
-              <q-card-section class="q-pb-none">
-                <div class="text-h6 q-mb-none">Población urbana</div>
-              </q-card-section>
-
-              <q-card-section>
-                <div class="row">
-                  <div class="col-xs-12 col-sm-6">
-                    <!-- <q-input
-                        dense
-                        type="number"
-                        v-model.number="infoGeneral.poblacionUrbana"
-                        lazy-rules
-                        :rules="[
-                          val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero ',
-                          val => val > 0 || 'El valor ingresado debe ser mayor a cero '
-                        ]" /> -->
-
-                    <q-field v-model="infoGeneral.poblacionUrbana" hint="#,###">
-                      <template
-                        v-slot:control="{ id, floatingLabel, value, emitValue }"
-                      >
-                        <money
-                          :id="id"
-                          class="q-field__input"
-                          :value="value"
-                          @input="emitValue"
-                          v-bind="numero"
-                          v-show="floatingLabel"
-                        />
-                      </template>
-                    </q-field>
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
-
-            <q-card flat bordered class="my-card q-mb-md">
-              <q-card-section class="q-pb-none">
-                <div class="text-h6 q-mb-none">Población rural</div>
-              </q-card-section>
-
-              <q-card-section>
-                <div class="row">
-                  <div class="col-xs-12 col-sm-6">
-                    <!-- <q-input
-                        dense
-                        type="number"
-                        v-model.number="infoGeneral.poblacionRural"
-                        lazy-rules
-                        :rules="[
-                          val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero ',
-                          val => val > 0 || 'El valor ingresado debe ser mayor a cero '
-                        ]" /> -->
-                    <q-field v-model="infoGeneral.poblacionRural" hint="#,###">
-                      <template
-                        v-slot:control="{ id, floatingLabel, value, emitValue }"
-                      >
-                        <money
-                          :id="id"
-                          class="q-field__input"
-                          :value="value"
-                          @input="emitValue"
-                          v-bind="numero"
-                          v-show="floatingLabel"
-                        />
-                      </template>
-                    </q-field>
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
-
-            <q-card flat bordered class="my-card q-mb-md">
-              <q-card-section class="q-pb-none">
-                <div class="text-h6 q-mb-none">No. Hombres</div>
-              </q-card-section>
-
-              <q-card-section>
-                <div class="row">
-                  <div class="col-xs-12 col-sm-6">
-                    <!-- <q-input
-                        dense
-                        type="number"
-                        v-model.number="infoGeneral.noHombres"
-                        lazy-rules
-                        :rules="[
-                          val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero ',
-                          val => val > 0 || 'El valor ingresado debe ser mayor a cero '
-                        ]" /> -->
-                    <q-field v-model="infoGeneral.noHombres" hint="#,###">
-                      <template
-                        v-slot:control="{ id, floatingLabel, value, emitValue }"
-                      >
-                        <money
-                          :id="id"
-                          class="q-field__input"
-                          :value="value"
-                          @input="emitValue"
-                          v-bind="numero"
-                          v-show="floatingLabel"
-                        />
-                      </template>
-                    </q-field>
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
-
-            <q-card flat bordered class="my-card q-mb-md">
-              <q-card-section class="q-pb-none">
-                <div class="text-h6 q-mb-none">No. Mujeres</div>
-              </q-card-section>
-
-              <q-card-section>
-                <div class="row">
-                  <div class="col-xs-12 col-sm-6">
-                    <!-- <q-input
-                        dense
-                        type="number"
-                        v-model.number="infoGeneral.noMujeres"
-                        lazy-rules
-                        :rules="[
-                          val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero ',
-                          val => val > 0 || 'El valor ingresado debe ser mayor a cero '
-                        ]"/> -->
-                    <q-field v-model="infoGeneral.noMujeres" hint="#,###">
-                      <template
-                        v-slot:control="{ id, floatingLabel, value, emitValue }"
-                      >
-                        <money
-                          :id="id"
-                          class="q-field__input"
-                          :value="value"
-                          @input="emitValue"
-                          v-bind="numero"
-                          v-show="floatingLabel"
-                        />
-                      </template>
-                    </q-field>
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
-
-            <q-card flat bordered class="my-card q-mb-md">
-              <q-card-section class="q-pb-none">
-                <div class="text-h6 q-mb-none">No. Indígenas</div>
-              </q-card-section>
-
-              <q-card-section>
-                <div class="row">
-                  <div class="col-xs-12 col-sm-6">
-                    <!-- <q-input
-                        dense
-                        type="number"
-                        v-model.number="infoGeneral.noIndigenas"
-                        lazy-rules
-                        :rules="[
-                          val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero ',
-                          val => val > 0 || 'El valor ingresado debe ser mayor a cero '
-                        ]" /> -->
-                    <q-field v-model="infoGeneral.noIndigenas" hint="#,###">
-                      <template
-                        v-slot:control="{ id, floatingLabel, value, emitValue }"
-                      >
-                        <money
-                          :id="id"
-                          class="q-field__input"
-                          :value="value"
-                          @input="emitValue"
-                          v-bind="numero"
-                          v-show="floatingLabel"
-                        />
-                      </template>
-                    </q-field>
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
-
-            <q-card flat bordered class="my-card q-mb-md">
-              <q-card-section class="q-pb-none">
-                <div class="text-h6 q-mb-none">No. Afro</div>
-              </q-card-section>
-
-              <q-card-section>
-                <div class="row">
-                  <div class="col-xs-12 col-sm-6">
-                    <!-- <q-input
-                        dense
-                        type="number"
-                        v-model.number="infoGeneral.noAfro"
-                         lazy-rules
-                        :rules="[
-                          val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero ',
-                          val => val > 0 || 'El valor ingresado debe ser mayor a cero '
-                        ]"/> -->
-                    <q-field v-model="infoGeneral.noAfro" hint="#,###">
-                      <template
-                        v-slot:control="{ id, floatingLabel, value, emitValue }"
-                      >
-                        <money
-                          :id="id"
-                          class="q-field__input"
-                          :value="value"
-                          @input="emitValue"
-                          v-bind="numero"
-                          v-show="floatingLabel"
-                        />
-                      </template>
-                    </q-field>
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
-
-            <q-card flat bordered class="my-card q-mb-md">
-              <q-card-section class="q-pb-none">
-                <div class="text-h6 q-mb-none">Tasa de Fecundidad</div>
-              </q-card-section>
-
-              <q-card-section>
-                <div class="row">
-                  <div class="col-xs-12 col-sm-6">
-                    <q-input
-                      dense
-                      v-model="infoGeneral.tasaFecundidad"
-                      lazy-rules
-                      :rules="[val => !!val || 'Campo requerido']"
-                    />
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
-
-            <q-card flat bordered class="my-card q-mb-md">
-              <q-card-section class="q-pb-none">
-                <div class="text-h6 q-mb-none">Tasa de Natalidad</div>
-              </q-card-section>
-
-              <q-card-section>
-                <div class="row">
-                  <div class="col-xs-12 col-sm-6">
-                    <q-input
-                      dense
-                      v-model="infoGeneral.tasaNatalidad"
-                      lazy-rules
-                      :rules="[val => !!val || 'Campo requerido']"
-                    />
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
-
-            <q-card flat bordered class="my-card q-mb-md">
-              <q-card-section class="q-pb-none">
-                <div class="text-h6 q-mb-none">Densidad</div>
-              </q-card-section>
-
-              <q-card-section>
-                <div class="row">
-                  <div class="col-xs-12 col-sm-6">
-                    <!-- <q-input
-                        dense
-                        v-model.number="infoGeneral.densidad"
-                        type="number"
-                         lazy-rules
-                        :rules="[
-                          val => Number.isInteger(val) || 'El valor ingresado debe ser un número entero ',
-                          val => val > 0 || 'El valor ingresado debe ser mayor a cero '
-                        ]"/> -->
-                    <q-field v-model="infoGeneral.densidad" hint="#,###">
-                      <template
-                        v-slot:control="{ id, floatingLabel, value, emitValue }"
-                      >
-                        <money
-                          :id="id"
-                          class="q-field__input"
-                          :value="value"
-                          @input="emitValue"
-                          v-bind="numero"
-                          v-show="floatingLabel"
-                        />
-                      </template>
-                    </q-field>
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
-          </q-form>
-        </div>
-
-        <div v-if="step == 5">
-          <p class="text-h6 q-mt-md q-mb-sm">Resumen</p>
-          <q-card flat bordered class="my-card q-mb-md">
-            <q-card-section>
-              <div v-if="infoGeneral.id > 0" class="text-h6">
-                Los datos registrados en esta sección son los siguientes
-              </div>
-              <div v-else class="text-h6">
-                ¿Está seguro que los datos suministrados a continuación está
-                correctos?
-              </div>
-            </q-card-section>
-
-            <q-card-section>
-              <div class="row">
-                <div class="col-xs-12">
-                  <p>
-                    <strong>Departamento: </strong>{{ departamento.codigo }} -
-                    {{ departamento.nombreDepartamento }}
-                  </p>
-                  <p>
-                    <strong>Municipio: </strong
-                    >{{ infoGeneral.municipio.codigoDane }} -
-                    {{ infoGeneral.municipio.nombreMunicipio }}
-                  </p>
-                  <p><strong>Región: </strong>{{ infoGeneral.region }}</p>
-                  <p><strong>Extensión: </strong>{{ infoGeneral.extension }}</p>
-                  <p>
-                    <strong>Limite Norte: </strong>{{ infoGeneral.limiteNorte }}
-                  </p>
-                  <p>
-                    <strong>Limite Sur: </strong>{{ infoGeneral.limiteSur }}
-                  </p>
-                  <p>
-                    <strong>Limite Oriente: </strong
-                    >{{ infoGeneral.limiteOriente }}
-                  </p>
-                  <p>
-                    <strong>Limite Occidente: </strong
-                    >{{ infoGeneral.limiteOccidente }}
-                  </p>
-                  <p>
-                    <strong>Composición: </strong>{{ infoGeneral.composicion }}
-                  </p>
-                  <p><strong>Altitud: </strong>{{ infoGeneral.altitud }}</p>
-                  <p>
-                    <strong>Gentilicio: </strong>{{ infoGeneral.gentilicio }}
-                  </p>
-                  <p>
-                    <strong>Fecha de Fundación: </strong
-                    >{{ infoGeneral.fechaFundacion }}
-                  </p>
-                  <p><strong>Categoria: </strong>{{ infoGeneral.categoria }}</p>
-                  <p><strong>Emblema: </strong>{{ infoGeneral.emblema }}</p>
-                  <p>
-                    <strong>Personaje Representativo: </strong
-                    >{{ infoGeneral.personajeRepresentativo }}
-                  </p>
-                  <p>
-                    <strong>Población Urbana: </strong
-                    >{{ infoGeneral.poblacionUrbana }}
-                  </p>
-                  <p>
-                    <strong>Población Rural: </strong
-                    >{{ infoGeneral.poblacionRural }}
-                  </p>
-                  <p>
-                    <strong>No. Hombres: </strong>{{ infoGeneral.noHombres }}
-                  </p>
-                  <p>
-                    <strong>No. Mujeres: </strong>{{ infoGeneral.noMujeres }}
-                  </p>
-                  <p>
-                    <strong>No. Indígenas: </strong
-                    >{{ infoGeneral.noIndigenas }}
-                  </p>
-                  <p><strong>No. Afros: </strong>{{ infoGeneral.noAfro }}</p>
-                  <p>
-                    <strong>Tasa de Fecundidad: </strong
-                    >{{ infoGeneral.tasaFecundidad }}
-                  </p>
-                  <p>
-                    <strong>Tasa de natalidad: </strong
-                    >{{ infoGeneral.tasaNatalidad }}
-                  </p>
-                  <p><strong>Densidad: </strong>{{ infoGeneral.densidad }}</p>
-                </div>
-              </div>
-            </q-card-section>
-          </q-card>
         </div>
 
         <div class="flex justify-center">
@@ -751,7 +361,7 @@
             @click="anterior"
           />
           <q-btn
-            v-if="step < 5"
+            v-if="step < 3"
             label="Siguiente"
             no-caps
             color="primary"
@@ -857,7 +467,8 @@ export default {
       fechaActualizacion: fecha,
       usuarioActualizacion: this.getUser,
       fechaCreacion: fecha,
-      usuarioCreacion: this.getUser
+      usuarioCreacion: this.getUser,
+      fuenteInfoGeneral: ""
     };
     this.encuestaID = this.$route.params.id;
     this.cargarListaDepartamentoAction().then(data => {
@@ -907,16 +518,26 @@ export default {
       }
     },
     onSubmit() {
-      this.guardarInformacionGeneralAction({
-        ...this.infoGeneral,
-        encuesta: {
-          id: this.encuestaID
+      this.$refs.otroForm.validate().then(success => {
+        if (success) {
+          this.guardarInformacionGeneralAction({
+            ...this.infoGeneral,
+            encuesta: {
+              id: this.encuestaID
+            },
+            usuarioActualizacion: this.getUser
+          }).then(data => {
+            this.$router.push({
+              name: "demografia",
+              params: { id: this.encuestaID }
+            });
+          });
+        } else {
+          this.$q.notify({
+            message: "Favor completar los campos correctamente",
+            color: "red"
+          });
         }
-      }).then(data => {
-        this.$router.push({
-          name: "poblacion",
-          params: { id: this.encuestaID }
-        });
       });
     },
     validarForm() {
@@ -965,49 +586,6 @@ export default {
             }
           });
           break;
-        case 3:
-          //validar FormLimites
-          this.$refs.otroForm.validate().then(success => {
-            if (success) {
-              this.guardarInformacionGeneralAction({
-                ...this.infoGeneral,
-                encuesta: {
-                  id: this.encuestaID
-                },
-                usuarioActualizacion: this.getUser
-              }).then(data => {
-                this.step++;
-              });
-            } else {
-              this.$q.notify({
-                message: "Favor completar los campos correctamente",
-                color: "red"
-              });
-            }
-          });
-          break;
-        case 4:
-          //validar FormLimites
-          this.$refs.demografiaForm.validate().then(success => {
-            if (success) {
-              this.guardarInformacionGeneralAction({
-                ...this.infoGeneral,
-                encuesta: {
-                  id: this.encuestaID
-                },
-                usuarioActualizacion: this.getUser
-              }).then(data => {
-                this.step++;
-              });
-            } else {
-              this.$q.notify({
-                message: "Favor completar los campos correctamente",
-                color: "red"
-              });
-            }
-          });
-          break;
-
         default:
           this.step++;
           break;

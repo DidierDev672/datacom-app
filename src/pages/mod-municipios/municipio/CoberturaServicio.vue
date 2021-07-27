@@ -403,6 +403,23 @@
               </div>
             </q-card-section>
           </q-card>
+          <q-card flat bordered class="my-card q-mb-md">
+            <q-card-section class="q-pb-none">
+              <div class="text-h6 q-mb-none">Fuente de la Información</div>
+            </q-card-section>
+
+            <q-card-section>
+              <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                  <q-input
+                    dense
+                    v-model="cobertura.fuente"
+                    hint="Ingrese la fuente de donde obtuvo esta información"
+                  />
+                </div>
+              </div>
+            </q-card-section>
+          </q-card>
         </q-form>
 
         <div class="flex justify-center">
@@ -445,6 +462,7 @@ export default {
     this.encuestaID = this.$route.params.id;
     this.cobertura = {
       id: 0,
+      fuente: "",
       ano: "",
       energiaElectricaUrbana: "",
       energiaElectricaRural: "",

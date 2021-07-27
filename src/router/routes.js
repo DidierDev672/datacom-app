@@ -224,6 +224,11 @@ const routes = [
           import("pages/mod-municipios/municipio/InfoGeneral.vue")
       },
       {
+        path: "demografia",
+        name: "demografia",
+        component: () => import("pages/mod-municipios/municipio/Demografia.vue")
+      },
+      {
         path: "view",
         name: "ver-encuesta",
         component: () => import("pages/mod-municipios/municipio/View.vue")

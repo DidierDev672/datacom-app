@@ -76,6 +76,20 @@
 
         <q-item
           clickable
+          :to="{ name: 'demografia', params: { id: encuestaID } }"
+          exact
+        >
+          <q-item-section avatar>
+            <q-icon size="14px" name="ti-angle-right" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Demografía</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-item
+          clickable
           :to="{ name: 'poblacion', params: { id: encuestaID } }"
           exact
         >
