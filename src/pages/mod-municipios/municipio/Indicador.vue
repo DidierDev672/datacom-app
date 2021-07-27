@@ -4,6 +4,26 @@
       <div class="col-xs-12 col-sm-8 offset-sm-2">
         <q-form ref="indicadorForm">
           <p class="text-h6 q-mt-md q-mb-sm">11. Indicadores de Gestión</p>
+
+          <q-card flat bordered class="my-card q-mb-md">
+            <q-card-section class="q-pb-none">
+              <div class="text-h6 q-mb-none">Categoría</div>
+            </q-card-section>
+
+            <q-card-section>
+              <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                  <q-input
+                    dense
+                    v-model="indicador.categoria"
+                    lazy-rules
+                    :rules="[val => !!val || 'Campo requerido']"
+                  />
+                </div>
+              </div>
+            </q-card-section>
+          </q-card>
+
           <q-card flat bordered class="my-card q-mb-md">
             <q-card-section class="q-pb-none">
               <div class="text-h6 q-mb-none">Indice de desempeño Fiscal</div>
@@ -374,6 +394,7 @@ export default {
     this.indicador = {
       id: 0,
       fuente: "",
+      categoria: "",
       indiceDeDesempenoFiscal: "",
       nivelDeDesempeno: "",
       indiceDeFuncionamiento: "",
