@@ -1,8 +1,8 @@
 <template>
   <q-page>
     <div class="row">
-      <div class="col-sm-8 offset-sm-2">
-        <h5 class="q-px-md">Parametrización</h5>
+      <div class="col-xs-12 col-sm-6 offset-sm-3">
+        <div class="text-h6 q-px-xs q-py-md ">Parametrización</div>
         <q-list bordered>
           <q-item
             clickable
@@ -14,7 +14,7 @@
               <q-icon name="ti-agenda" />
             </q-item-section>
             <q-item-section>
-              <q-item-label>Categorias</q-item-label>
+              <q-item-label>Categorías</q-item-label>
               <q-item-label caption
                 >Categorías de parametrización.</q-item-label
               >

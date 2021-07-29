@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Notify } from "quasar";
 
 export function someMutation(/* state */) {}
 
@@ -10,6 +11,11 @@ export function SET_TOKEN_INFO(state, tokenInfo) {
   axios.defaults.headers.common[
     "Authorization"
   ] = `Bearer ${tokenInfo.access_token}`;
+  Notify.create({
+    type: "positive",
+    position: "top-right",
+    message: "Bienvenido a Datacom"
+  });
 }
 
 export function SET_USER_DATA(state, userData) {
@@ -35,6 +41,10 @@ export function SET_ERROR(state, payload) {
   localStorage.removeItem("token");
   localStorage.removeItem("user");
   axios.defaults.headers.common["Authorization"] = "";
+  Notify.create({
+    type: "negative",
+    message: "Usuario y/o contraseña incorrecto"
+  });
 }
 
 export function INICIALIZAR(state) {

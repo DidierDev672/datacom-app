@@ -45,6 +45,7 @@ export default function(/* { store, ssrContext } */) {
     //Validar fecha de caducidad del token
 
     if (to.matched.some(record => record.meta.requiresAuth) && !loggedIn) {
+      console.log("Pasa por el guard");
       next("/auth");
     } else {
       next();

@@ -5,21 +5,23 @@
       class="my-card q-mx-auto"
       style="min-width: 400px; max-width: 450px"
     >
-      <q-card-section class="flex flex-center">
-        <q-img width="210px" src="/icons/logo.png" alt="datacom"></q-img>
-      </q-card-section>
-      <q-card-section v-if="getError">
-        <q-banner inline-actions class="text-white bg-red">
-          {{ getError }}
-        </q-banner>
-      </q-card-section>
       <q-card-section>
+        <div>
+          <q-img width="210px" src="/icons/logo.png" alt="datacom"></q-img>
+        </div>
         <div class="q-pa-md">
-          <q-form @submit="onSubmit" class="q-gutter-md">
+          <div class="text-h5 q-mb-md text-primary text-weight-bold">
+            Iniciar sesión
+          </div>
+          <q-form @submit="onSubmit" class="q-gutter-xs">
+            <p class="text-subtitle2 text-weight-bold text-dark">
+              Nombre de usuario
+            </p>
             <q-input
               color="secondary"
+              outlined
+              dense
               v-model="username"
-              label="Nombre de usuario *"
               lazy-rules
               :rules="[
                 val =>
@@ -28,10 +30,13 @@
               ]"
             />
 
+            <p class="text-subtitle2 text-weight-bold text-dark">Contraseña</p>
+
             <q-input
               v-model="password"
+              outlined
+              dense
               color="secondary"
-              label="Contraseña *"
               :type="isPwd ? 'password' : 'text'"
               lazy-rules
               :rules="[
@@ -58,10 +63,11 @@
             <div>
               <q-btn
                 class="full-width"
-                label="Inicia Sesión"
+                rounded
+                label="Inicia sesión"
                 type="submit"
-                color="secondary"
-                icon="face"
+                color="primary"
+                no-caps
                 :disabled="getLoading"
                 :loading="getLoading"
               >

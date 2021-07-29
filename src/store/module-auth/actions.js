@@ -45,7 +45,7 @@ export function registerAction({ dispatch }, credentials) {
   }
 }
 
-export function loginAction({ commit, dispatch }, credentials) {
+export function loginAction({ commit }, credentials) {
   const url_service = "/oauth/token";
 
   const body = `grant_type=password&username=${encodeURIComponent(
@@ -68,13 +68,7 @@ export function loginAction({ commit, dispatch }, credentials) {
         resolve(data);
       })
       .catch(error => {
-        // console.log("Error: ", error);
-        // console.log("Error Response: ", error.response["data"]);
         commit("SET_ERROR", error.response);
-        Notify.create({
-          type: "negative",
-          message: "Usuario y/o contraseña incorrecto"
-        });
         reject(error);
       });
   });
