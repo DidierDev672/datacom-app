@@ -13,7 +13,7 @@ export function SET_TOKEN_INFO(state, tokenInfo) {
   ] = `Bearer ${tokenInfo.access_token}`;
   Notify.create({
     type: "positive",
-    position: "top-right",
+    position: "bottom-right",
     message: "Bienvenido a Datacom"
   });
 }
@@ -43,6 +43,7 @@ export function SET_ERROR(state, payload) {
   axios.defaults.headers.common["Authorization"] = "";
   Notify.create({
     type: "negative",
+    position: "bottom-right",
     message: "Usuario y/o contraseña incorrecto"
   });
 }
