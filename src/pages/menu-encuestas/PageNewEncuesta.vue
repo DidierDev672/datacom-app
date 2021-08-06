@@ -22,7 +22,6 @@
                     option-label="nombre"
                     v-model="nuevaEncuesta.tipoEstudio"
                     :options="lstTiposDeEstudios"
-                    behavior="dialog"
                     label="Seleccione un estudio"
                     lazy-rules
                     :rules="[

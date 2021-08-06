@@ -118,7 +118,7 @@
             <q-item-section>
               <q-item-label>Categoria</q-item-label>
               <q-item-label caption>{{
-                encuesta.informacionGeneral.categoria
+                encuesta.indicadores.categoria
               }}</q-item-label>
             </q-item-section>
           </q-item>
