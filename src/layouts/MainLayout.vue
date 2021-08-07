@@ -14,26 +14,33 @@
         <q-toolbar-title>
           Datacom
         </q-toolbar-title>
-        <nav-bar-user />
+        <!-- <nav-bar-user /> -->
       </q-toolbar>
     </q-header>
 
     <q-drawer
-      class=""
+      class="bg-sidebar"
       v-model="leftDrawerOpen"
       show-if-above
       bordered
-      content-class="bg-grey-1"
     >
+      <div class="logo-sidebar">
+        <img width="170px" src="/icons/logo-sidebar.png" alt="" />
+      </div>
       <q-list>
-        <q-item-label header class="text-grey-8">
-          Opciones de acceso
-        </q-item-label>
         <EssentialLink
           v-for="link in essentialLinks"
           :key="link.title"
           v-bind="link"
         />
+        <q-separator />
+        <q-item clickable v-ripple @click="logout">
+          <q-item-section avatar>
+            <q-icon name="logout" />
+          </q-item-section>
+
+          <q-item-section>Cerrar sesión</q-item-section>
+        </q-item>
       </q-list>
     </q-drawer>
     <q-footer class="bg-white" bordered>
@@ -111,8 +118,9 @@
 
 <script>
 // import { exportFile } from 'quasar'
+import { mapActions } from "vuex";
 import EssentialLink from "components/EssentialLink";
-import NavBarUser from "components/NavBarUser";
+// import NavBarUser from "components/NavBarUser";
 import Tour from "components/Tour/Tour";
 // Initialize deferredPrompt for use later to show browser install prompt.
 let deferredPrompt;
@@ -121,7 +129,7 @@ export default {
 
   components: {
     EssentialLink,
-    NavBarUser,
+    // NavBarUser,
     Tour
   },
 
@@ -176,6 +184,10 @@ export default {
     };
   },
   methods: {
+    ...mapActions("auth", ["logoutAction"]),
+    logout() {
+      this.logoutAction();
+    },
     installApp() {
       this.showAppInstallBanner = false;
       deferredPrompt.prompt();
@@ -216,6 +228,27 @@ export default {
 <style lang="sass">
 body
   background-color: #fff
+
+.q-separator
+  background-color: rgba(255,255,255,0.13)
+  align-items: center
+
+.logo-sidebar
+  display: flex
+  align-items: center
+  margin-top: 30px
+  margin-bottom: 30px
+
+.logo-sidebar
+  img
+    margin: 0 auto
+
+.bg-sidebar
+ aside
+  background-color: #333333
+  color: #fff
+
+
 .q-toolbar
   @media (min-width: $breakpoint-sm-min)
     height: 77px
