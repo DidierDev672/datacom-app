@@ -1,7 +1,7 @@
 <template>
   <div class="q-ma-sm">
     <div class="row">
-      <div class="col-xs-12 col-sm-8 offset-sm-2">
+      <div class="col-xs-12 col-sm-6 offset-sm-3">
         <q-form ref="indicadorForm">
           <p class="text-h6 q-mt-md q-mb-sm">11. Indicadores de Gestión</p>
 
@@ -12,7 +12,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <q-input
                     dense
                     v-model="indicador.categoria"
@@ -31,7 +31,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input
                           dense
                           v-model.number="indicador.indiceDeDesempenoFiscal"
@@ -71,7 +71,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <q-select
                     dense
                     v-model="indicador.nivelDeDesempeno"
@@ -90,7 +90,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input
                           dense
                           v-model.number="indicador.indiceDeFuncionamiento"
@@ -132,7 +132,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <q-option-group
                     :options="optionsCumple"
                     type="radio"
@@ -150,7 +150,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input
                           dense
                           v-model.number="indicador.dependenciaDetransferencia"
@@ -192,7 +192,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input
                           dense
                           v-model.number="indicador.indiceDeGestionYTransferencia"
@@ -232,7 +232,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input
                           dense
                           v-model.number="indicador.indiceDeResultado"
@@ -271,7 +271,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input
                           dense
                           v-model.number="indicador.medidorDesempenoMunicipal"
@@ -311,7 +311,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <q-select
                     dense
                     v-model="indicador.nivelDesempenoMunicipal"
@@ -329,7 +329,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <q-input
                     dense
                     v-model="indicador.fuente"

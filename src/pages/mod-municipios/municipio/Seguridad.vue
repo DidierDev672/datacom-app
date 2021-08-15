@@ -1,7 +1,7 @@
 <template>
   <div class="q-ma-sm">
     <div class="row">
-      <div class="col-xs-12 col-sm-8 offset-sm-2">
+      <div class="col-xs-12 col-sm-6 offset-sm-3">
         <q-form ref="seguridadForm">
           <p class="text-h6 q-mt-md q-mb-sm">6. Seguridad</p>
           <q-card flat bordered class="my-card q-mb-md">
@@ -11,7 +11,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <q-input
                     dense
                     v-model="seguridad.ano"
@@ -30,7 +30,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input
                           dense
                           v-model.number="seguridad.homicidiosPorAno"
@@ -67,7 +67,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input
                           dense
                           v-model.number="seguridad.tasaHomicidios"
@@ -106,7 +106,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input
                           dense
                           v-model.number="seguridad.poblacionVictimaDelConflicto"

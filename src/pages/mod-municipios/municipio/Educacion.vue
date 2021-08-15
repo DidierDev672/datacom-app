@@ -1,7 +1,7 @@
 <template>
   <div class="q-ma-sm">
     <div class="row">
-      <div class="col-xs-12 col-sm-8 offset-sm-2">
+      <div class="col-xs-12 col-sm-6 offset-sm-3">
         <q-form ref="educacionForm">
           <p class="text-h6 q-mt-md q-mb-sm">4. Educación</p>
           <q-card flat bordered class="my-card q-mb-md">
@@ -11,7 +11,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <q-input
                     dense
                     v-model="educacion.ano"
@@ -32,7 +32,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input
                           dense
                           v-model.number="educacion.coberturaNetaTransicion"
@@ -71,7 +71,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input
                           dense
                           v-model.number="educacion.coberturaNetaBasicaPrimaria"
@@ -110,7 +110,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input
                           dense
                           v-model.number="educacion.coberturaNetaBasicaSecundaria"
@@ -150,7 +150,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input
                           dense
                           v-model.number="educacion.coberturaNetaEducacionMedia"
@@ -189,7 +189,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input
                           dense
                           v-model.number="educacion.coberturaNetaTotal"
@@ -228,7 +228,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input
                           dense
                           v-model.number="educacion.coberturaBrutaTransicion"
@@ -268,7 +268,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input
                           dense
                           v-model.number="educacion.coberturaBrutaBasicaPrimaria"
@@ -308,7 +308,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input
                           dense
                           v-model.number="educacion.coberturaBrutaBasicaSecundaria"
@@ -348,7 +348,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input
                           dense
                           v-model.number="educacion.coberturaBrutaEducacionMedia"
@@ -388,7 +388,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input
                           dense
                           v-model.number="educacion.coberturaBrutaTotal"
@@ -427,7 +427,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input
                           dense
                           v-model.number="educacion.tasaDeAnalfabestismoUrbano"
@@ -467,7 +467,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input
                           dense
                           v-model.number="educacion.tasaDeAnalfabestismoRural"
@@ -509,7 +509,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input
                           dense
                           v-model.number="educacion.puntajePromedioSaberMatematica"
@@ -549,7 +549,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input
                           dense
                           v-model.number="educacion.puntajePromedioSaberLectura"
@@ -588,7 +588,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <q-input
                     dense
                     v-model="educacion.fuente"

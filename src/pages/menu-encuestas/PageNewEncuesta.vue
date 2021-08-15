@@ -1,7 +1,7 @@
 ﻿<template>
   <div class="q-ma-sm">
     <div class="row">
-      <div class="col-xs-12 col-sm-8 offset-sm-2">
+      <div class="col-xs-12 col-sm-6 offset-sm-3">
         <q-form ref="encuestaForm">
           <p class="text-h6 q-mt-md">
             Nueva encuesta de {{ tipoEncuesta ? tipoEncuesta.title : "" }}
@@ -14,7 +14,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12">
                   <!-- <q-input v-model="nuevaEncuesta.tipoEstudio" placeholder="Estudio" /> -->
                   <q-select
                     outlined
@@ -41,8 +41,10 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12">
                   <q-input
+                    outlined
+                    type="textarea"
                     v-model="nuevaEncuesta.descripcion"
                     placeholder="Agregue una descripción a la encuesta que va a registrar"
                   />
@@ -58,7 +60,7 @@
 
             <q-card-section>
               <div class="row q-col-gutter-sm">
-                <div class="col-xs-12 col-sm-4 col-md-3">
+                <div class="col-xs-12 col-sm-6">
                   <q-input
                     outlined
                     type="number"
@@ -68,7 +70,7 @@
                     :rules="[val => val || 'Digite el año']"
                   />
                 </div>
-                <div class="col-xs-12 col-sm-3 col-md-2">
+                <div class="col-xs-12 col-sm-3">
                   <q-input
                     outlined
                     v-model="nuevaEncuesta.mes"
@@ -81,7 +83,7 @@
                     ]"
                   />
                 </div>
-                <div class="col-xs-12 col-sm-3 col-md-2">
+                <div class="col-xs-12 col-sm-3">
                   <q-input
                     outlined
                     v-model="nuevaEncuesta.dia"

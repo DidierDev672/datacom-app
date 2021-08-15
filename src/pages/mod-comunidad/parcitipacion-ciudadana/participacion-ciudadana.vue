@@ -1,7 +1,7 @@
 <template>
   <div class="q-ma-sm">
     <div class="row">
-      <div class="col-xs-12 col-sm-8 offset-sm-2">
+      <div class="col-xs-12 col-sm-6 offset-sm-3">
         <p class="text-h6 q-mt-md q-mb-sm">Participación Ciudadana</p>
 
         <participacion-ciudadana-card

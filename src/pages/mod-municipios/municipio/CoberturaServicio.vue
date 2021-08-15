@@ -1,7 +1,7 @@
 <template>
   <div class="q-ma-sm">
     <div class="row">
-      <div class="col-xs-12 col-sm-8 offset-sm-2">
+      <div class="col-xs-12 col-sm-6 offset-sm-3">
         <q-form ref="coberturaForm">
           <p class="text-h6 q-mt-md q-mb-sm">
             5.1. Cobertura Servicios Público
@@ -14,7 +14,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <q-input
                     dense
                     v-model="cobertura.ano"
@@ -33,7 +33,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input
                           dense
                           v-model.number="cobertura.energiaElectricaUrbana"
@@ -73,7 +73,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input
                           dense
                           v-model.number="cobertura.energiaElectricaRural"
@@ -113,7 +113,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input
                           dense
                           v-model.number="cobertura.acueductoUrbano"
@@ -150,7 +150,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input
                           dense
                           v-model.number="cobertura.acueductoRural"
@@ -187,7 +187,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input
                           dense
                           v-model.number="cobertura.alcantarilladoUrbana"
@@ -227,7 +227,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input
                           dense
                           v-model.number="cobertura.alcantarilladoRural"
@@ -264,7 +264,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input
                           dense
                           v-model.number="cobertura.gasNaturalUrbana"
@@ -301,7 +301,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input
                           dense
                           v-model.number="cobertura.gasNaturalRural"
@@ -338,7 +338,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input
                           dense
                           v-model.number="cobertura.internetUrbana"
@@ -374,7 +374,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input
                           dense
                           v-model.number="cobertura.internetRural"
@@ -410,7 +410,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <q-input
                     dense
                     v-model="cobertura.fuente"
@@ -526,4 +526,3 @@ export default {
 </script>
 
 <style></style>
-ViviendaCard
