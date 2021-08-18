@@ -1,7 +1,7 @@
 ﻿<template>
   <div class="q-ma-sm">
     <div class="row">
-      <div class="col-xs-12 col-sm-8 offset-sm-2">
+      <div class="col-xs-12 col-sm-6 offset-sm-3">
         <p class="text-h6 q-mt-md">Agregar Persona</p>
         <div v-if="step === 1">
           <q-form ref="infoPersonal">
@@ -14,7 +14,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <q-select
                       dense
                       v-model="persona.tipoDocumento"
@@ -41,7 +41,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <q-input
                       dense
                       v-model="persona.noDocumento"
@@ -65,7 +65,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <q-input
                       dense
                       v-model="persona.nombre"
@@ -90,7 +90,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <q-input
                       dense
                       v-model="persona.primerApellido"
@@ -114,7 +114,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <q-input dense v-model="persona.segundoApellido" />
                   </div>
                 </div>
@@ -124,13 +124,13 @@
             <q-card flat bordered class="my-card q-mb-md">
               <q-card-section>
                 <div class="text-h6">
-                  Sexo
+                  Género
                 </div>
               </q-card-section>
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <q-select
                       dense
                       v-model="persona.sexo"
@@ -157,7 +157,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <q-select
                       dense
                       v-model="persona.parentescoJefeDeHogar"
@@ -188,7 +188,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <q-input
                       outlined
                       v-model="persona.fechaNacimiento"
@@ -229,7 +229,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <q-input
                       dense
                       v-model="persona.edad"
@@ -250,7 +250,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <q-select
                       dense
                       v-model="persona.nivelEducativo"
@@ -277,7 +277,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <q-select
                       dense
                       v-model="persona.etnia"
@@ -304,7 +304,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <q-select
                       dense
                       v-model="persona.ocupacion"
@@ -335,7 +335,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <q-select
                       dense
                       v-model="persona.seguridadSocial"
@@ -362,7 +362,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <q-select
                       dense
                       v-model="persona.nivelIngreso"
@@ -390,35 +390,35 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <q-checkbox
                       v-model="persona.discapacidadVisual"
                       label="Discapacidad Visual"
                     />
                   </div>
 
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <q-checkbox
                       v-model="persona.discapacidadMental"
                       label="Discapacidad Mental"
                     />
                   </div>
 
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <q-checkbox
                       v-model="persona.discapacidadFisica"
                       label="Discapacidad Física"
                     />
                   </div>
 
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <q-checkbox
                       v-model="persona.discapacidadAuditiva"
                       label="Discapacidad Auditiva"
                     />
                   </div>
 
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <q-checkbox
                       v-model="persona.discapacidadNoPresenta"
                       label="No presenta discapacidad"
@@ -438,35 +438,35 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <q-checkbox
                       v-model="persona.programaFamiliasEnAccion"
                       label="Familias en Acción"
                     />
                   </div>
 
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <q-checkbox
                       v-model="persona.programaDesplazadoVictima"
                       label="Programa desplazados / víctima"
                     />
                   </div>
 
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <q-checkbox
                       v-model="persona.programaJovenesEnAccion"
                       label="Jóvenes en Acción"
                     />
                   </div>
 
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <q-checkbox
                       v-model="persona.programaIngresoSolidario"
                       label="Ingreso Solidario"
                     />
                   </div>
 
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <q-checkbox
                       v-model="persona.programaAdultoMayor"
                       label="Adulto Mayor"

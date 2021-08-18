@@ -1,8 +1,9 @@
 <template>
   <q-page class="q-ma-sm">
     <div class="row">
-      <div class="col-xs-12 col-sm-8 offset-sm-2">
-        <q-list padding class="bg-white">
+      <div class="col-xs-12 col-sm-6 offset-sm-3">
+        <div class="text-h6 q-px-xs q-py-md ">Opciones de encuestas</div>
+        <q-list padding bordered class="bg-white">
           <q-item
             clickable
             v-ripple

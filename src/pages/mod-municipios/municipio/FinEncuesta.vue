@@ -73,7 +73,7 @@ export default {
     ]),
     onSubmit() {
       this.actualizarEncuestaAction(this.encuesta).then(data => {
-        this.$router.push("/");
+        this.$router.push("/encuestas");
       });
     }
   },

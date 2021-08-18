@@ -1,7 +1,7 @@
 ﻿<template>
   <div class="q-ma-sm">
     <div class="row">
-      <div class="col-xs-12 col-sm-8 offset-sm-2">
+      <div class="col-xs-12 col-sm-6 offset-sm-3">
         <q-card flat bordered class="my-card q-mb-md">
           <q-card-section class="q-pb-none">
             <div class="text-h6 q-mb-none">Felicitaciones!!</div>
@@ -11,8 +11,9 @@
             <div class="row">
               <div class="col-xs-12">
                 <p>
-                  Ha completado la autoevaluacion para la organización seleccionada, haga click en el boton finalizar para
-                  regresar al menu principal
+                  Ha completado la autoevaluacion para la organización
+                  seleccionada, haga click en el boton finalizar para regresar
+                  al menu principal
                 </p>
                 <p class="text-caption">
                   Marque la casilla para indicar que la encuesta ha sido
@@ -72,7 +73,7 @@ export default {
     ]),
     onSubmit() {
       this.actualizarEncuestaAction(this.encuesta).then(data => {
-        this.$router.push("/");
+        this.$router.push("/encuestas");
       });
     }
   },
