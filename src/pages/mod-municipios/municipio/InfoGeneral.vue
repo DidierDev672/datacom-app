@@ -1,7 +1,7 @@
 <template>
   <div class="q-ma-sm">
     <div class="row">
-      <div class="col-xs-12 col-sm-8 offset-sm-2">
+      <div class="col-xs-12 col-sm-6 offset-sm-3">
         <div v-if="step == 1">
           <q-form ref="ubicacionForm">
             <p class="text-h6 q-mt-md q-mb-sm">1. Ubicación del Municipio</p>
@@ -12,7 +12,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12">
                     <q-select
                       dense
                       use-input
@@ -42,7 +42,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12">
                     <q-select
                       dense
                       ref="municipio"
@@ -72,7 +72,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12">
                     <q-input
                       dense
                       v-model="infoGeneral.region"
@@ -91,7 +91,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12">
                     <!-- <q-input dense v-model="infoGeneral.extension" /> -->
                     <q-field
                       v-model="infoGeneral.extension"
@@ -129,7 +129,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12">
                     <q-input
                       dense
                       v-model="infoGeneral.limiteNorte"
@@ -148,7 +148,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12">
                     <q-input
                       dense
                       v-model="infoGeneral.limiteSur"
@@ -167,7 +167,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12">
                     <q-input
                       dense
                       v-model="infoGeneral.limiteOriente"
@@ -186,7 +186,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12">
                     <q-input
                       dense
                       v-model="infoGeneral.limiteOccidente"
@@ -210,7 +210,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12">
                     <q-input
                       hint="No. de veredas"
                       dense
@@ -230,7 +230,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12">
                     <!-- <q-input dense v-model="infoGeneral.altitud"/> -->
                     <q-field v-model="infoGeneral.altitud" hint="#,###">
                       <template
@@ -258,7 +258,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12">
                     <q-input
                       dense
                       v-model="infoGeneral.gentilicio"
@@ -277,7 +277,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12">
                     <q-input
                       type="date"
                       dense
@@ -297,7 +297,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12">
                     <q-input
                       type="textarea"
                       dense
@@ -317,7 +317,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12">
                     <q-input
                       type="textarea"
                       dense
@@ -336,7 +336,7 @@
 
                 <q-card-section>
                   <div class="row">
-                    <div class="col-xs-12 col-sm-6">
+                    <div class="col-xs-12">
                       <q-input
                         dense
                         v-model="infoGeneral.fuenteInfoGeneral"

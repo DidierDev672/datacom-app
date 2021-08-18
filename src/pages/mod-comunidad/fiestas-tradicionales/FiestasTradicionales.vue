@@ -1,7 +1,7 @@
 ﻿<template>
   <div class="q-ma-sm">
     <div class="row">
-      <div class="col-xs-12 col-sm-8 offset-sm-2">
+      <div class="col-xs-12 col-sm-6 offset-sm-3">
         <div>
           <q-form ref="fiestasForm">
             <p class="text-h6 q-mt-md q-mb-sm">Fiestas Tradicionales</p>
@@ -14,7 +14,11 @@
               <q-card-section>
                 <div class="row">
                   <div class="col-xs-12">
-                    <q-input type="textarea" dense v-model="infoGeneral.expresionCultural" />
+                    <q-input
+                      type="textarea"
+                      dense
+                      v-model="infoGeneral.expresionCultural"
+                    />
                   </div>
                 </div>
               </q-card-section>
@@ -28,12 +32,15 @@
               <q-card-section>
                 <div class="row">
                   <div class="col-xs-12">
-                    <q-input type="textarea" dense v-model="infoGeneral.expresionArtistica" />
+                    <q-input
+                      type="textarea"
+                      dense
+                      v-model="infoGeneral.expresionArtistica"
+                    />
                   </div>
                 </div>
               </q-card-section>
             </q-card>
-
           </q-form>
         </div>
 
@@ -85,23 +92,23 @@ export default {
     ]),
     onSubmit() {
       this.guardarInformacionGeneralAction({
-            ...this.infoGeneral,
-            encuesta: {
-              id: this.encuestaID
-            },
-            usuarioCreacion: this.getUser,
-            usuarioActualizacion: this.getUser
-          }).then(data => {
-            this.$router.push({
-              name: "c-fin-encuesta",
-              params: { id: this.encuestaID }
-            });
-          });
-    },
+        ...this.infoGeneral,
+        encuesta: {
+          id: this.encuestaID
+        },
+        usuarioCreacion: this.getUser,
+        usuarioActualizacion: this.getUser
+      }).then(data => {
+        this.$router.push({
+          name: "c-fin-encuesta",
+          params: { id: this.encuestaID }
+        });
+      });
+    }
   },
   computed: {
     ...mapGetters("informacionGeneral", ["getInformacionGeneralState"]),
-    ...mapGetters('auth', ['getUser']),
+    ...mapGetters("auth", ["getUser"])
   }
 };
 </script>

@@ -1,7 +1,7 @@
 ﻿<template>
   <div class="q-ma-sm">
     <div class="row">
-      <div class="col-xs-12 col-sm-8 offset-sm-2">
+      <div class="col-xs-12 col-sm-6 offset-sm-3">
         <q-form ref="ubicacionForm">
           <p class="text-h6 q-mt-md q-mb-sm">13. Participación</p>
 
@@ -14,7 +14,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input dense v-model="infoGeneral.porcentajeElecciones" /> -->
                   <q-field
                     v-model="infoGeneral.porcentajeElecciones"
@@ -47,7 +47,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input dense v-model="infoGeneral.totalVotosAlcalde" /> -->
                   <q-field v-model="infoGeneral.totalVotosAlcalde" hint="#,###">
                     <template
@@ -75,7 +75,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input dense v-model="infoGeneral.porcentajeVotos" /> -->
                   <q-field v-model="infoGeneral.porcentajeVotos" hint="#,###">
                     <template
@@ -102,7 +102,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <q-input
                     dense
                     v-model="infoGeneral.fuenteInfoParticipacion"

@@ -1,7 +1,7 @@
 ﻿<template>
   <div class="q-ma-sm">
     <div class="row">
-      <div class="col-xs-12 col-sm-8 offset-sm-2">
+      <div class="col-xs-12 col-sm-6 offset-sm-3">
         <p class="text-h6 q-mt-md q-mb-sm">15.1. Productos</p>
 
         <producto-card
@@ -24,22 +24,14 @@
     </div>
 
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
-      <q-btn
-        fab
-        icon="add"
-        color="primary"
-        @click="showProductoForm = true"
-      >
+      <q-btn fab icon="add" color="primary" @click="showProductoForm = true">
         <q-tooltip>
           Agregar nuevo registro
         </q-tooltip>
       </q-btn>
     </q-page-sticky>
 
-    <producto-form
-      v-if="showProductoForm"
-      @close="closeModal"
-    ></producto-form>
+    <producto-form v-if="showProductoForm" @close="closeModal"></producto-form>
   </div>
 </template>
 

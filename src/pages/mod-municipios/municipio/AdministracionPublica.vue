@@ -1,7 +1,7 @@
 ﻿<template>
   <div class="q-ma-sm">
     <div class="row">
-      <div class="col-xs-12 col-sm-8 offset-sm-2">
+      <div class="col-xs-12 col-sm-6 offset-sm-3">
         <q-form ref="administracionForm">
           <p class="text-h6 q-mt-md q-mb-sm">7. Administración Pública</p>
 
@@ -12,7 +12,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <q-input
                     dense
                     v-model="infoGeneral.direccionAlcaldia"
@@ -33,7 +33,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <q-input
                     dense
                     v-model="infoGeneral.numeroFuncionarios"
@@ -52,7 +52,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <q-input
                     dense
                     v-model="infoGeneral.telefono"
@@ -71,7 +71,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <q-input
                     dense
                     v-model="infoGeneral.horarioDeAtencion"
@@ -90,7 +90,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <q-input
                     dense
                     v-model="infoGeneral.correo"
@@ -109,7 +109,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <q-input
                     dense
                     v-model="infoGeneral.paginaWeb"
@@ -128,7 +128,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <q-input
                     dense
                     v-model="infoGeneral.paginaDeFacebook"
@@ -149,7 +149,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <q-input
                     dense
                     v-model="infoGeneral.alcalde"
@@ -168,7 +168,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <q-input
                     dense
                     v-model="infoGeneral.partidoPolitico"
@@ -187,7 +187,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <q-input
                     dense
                     v-model="infoGeneral.telefonoAlcalde"
@@ -206,7 +206,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <q-input
                     dense
                     v-model="infoGeneral.correoAlcalde"
@@ -225,7 +225,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <q-input
                     dense
                     v-model="infoGeneral.fuenteInfoAlcaldia"

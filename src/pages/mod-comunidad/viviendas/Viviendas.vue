@@ -1,7 +1,7 @@
 <template>
   <div class="q-ma-sm">
     <div class="row">
-      <div class="col-xs-12 col-sm-8 offset-sm-2">
+      <div class="col-xs-12 col-sm-6 offset-sm-3">
         <q-form ref="viviendaForm">
           <p class="text-h6 q-mt-md q-mb-sm">Viviendas</p>
 
@@ -12,7 +12,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <q-input
                     dense
                     v-model.number="vivienda.numeroDeViviendasUrbanas"
@@ -38,7 +38,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <q-input
                     dense
                     v-model.number="vivienda.numeroDeHogaresUrbanos"

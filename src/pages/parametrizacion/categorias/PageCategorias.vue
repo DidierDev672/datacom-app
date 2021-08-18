@@ -7,12 +7,6 @@
       row-key="name"
       @row-click="seleccionar"
     >
-      <!-- <template v-slot:top>
-      <div class="col-2 q-table__title">Categorias</div>
-      <q-space />
-      <q-btn icon="ti-plus" color="primary" label="Nuevo" :to="{name: 'nueva-categoria'}" />
-    </template> -->
-
       <q-td slot="body-cell-descripcion" slot-scope="props" :props="props">
         {{ props.row.descripcion }}
         <q-badge v-if="props.row.offline" color="orange" label="OffLine" />

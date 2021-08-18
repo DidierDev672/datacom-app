@@ -1,7 +1,7 @@
 ﻿<template>
   <div class="q-ma-sm">
     <div class="row">
-      <div class="col-xs-12 col-sm-8 offset-sm-2">
+      <div class="col-xs-12 col-sm-6 offset-sm-3">
         <div>
           <q-form ref="estadoViviendaForm">
             <p class="text-h6 q-mt-md">Saneamiento Básico</p>
@@ -15,7 +15,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <q-select
                       dense
                       v-model="datosVivienda.excretas"
@@ -43,7 +43,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <q-select
                       dense
                       v-model="datosVivienda.residuos"
@@ -71,52 +71,54 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <q-checkbox
                       v-model="datosVivienda.riesgoInundacion"
                       label="Inundación"
                     />
                   </div>
 
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <q-checkbox
                       v-model="datosVivienda.riesgoAvalancha"
                       label="Avalancha"
                     />
                   </div>
 
-                  <div class="col-xs-12 col-sm-6">
-                    <q-checkbox v-model="datosVivienda.riesgoDeslizamiento" label="Deslizamiento" />
+                  <div class="col-xs-12 ">
+                    <q-checkbox
+                      v-model="datosVivienda.riesgoDeslizamiento"
+                      label="Deslizamiento"
+                    />
                   </div>
 
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <q-checkbox
                       v-model="datosVivienda.riesgoVendaval"
                       label="Vendaval"
                     />
                   </div>
 
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <q-checkbox
                       v-model="datosVivienda.riesgoElectrico"
                       label="Condición inadecuada de instalaciones eléctricas"
                     />
                   </div>
 
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <q-checkbox
                       v-model="datosVivienda.riesgoIncendio"
                       label="Incendios"
                     />
                   </div>
 
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <q-checkbox
                       v-model="datosVivienda.riesgoDuctos"
                       label="Presencia de ductos y/o redes eléctricas"
                     />
                   </div>
-
                 </div>
               </q-card-section>
             </q-card>
@@ -130,8 +132,11 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
-                    <q-input v-model="datosVivienda.noFamilias" label="Número de Familias"   />
+                  <div class="col-xs-12 ">
+                    <q-input
+                      v-model="datosVivienda.noFamilias"
+                      label="Número de Familias"
+                    />
                   </div>
                 </div>
               </q-card-section>
@@ -146,13 +151,15 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
-                    <q-input v-model.number="datosVivienda.noPersonas" label="Número de Personas"   />
+                  <div class="col-xs-12 ">
+                    <q-input
+                      v-model.number="datosVivienda.noPersonas"
+                      label="Número de Personas"
+                    />
                   </div>
                 </div>
               </q-card-section>
             </q-card>
-
           </q-form>
         </div>
         <div class="flex justify-center">
@@ -231,8 +238,12 @@ export default {
   },
   methods: {
     ...mapActions("parametros", ["cargarListaParametroPorCategoriaAction"]),
-    ...mapActions("datosVivienda", ["buscarDatosViviendaAction", "registrarDatosViviendaAction", "actualizarDatosViviendaAction"]),
-    ...mapMutations('persona', ['setListaPersonaSuccess']),
+    ...mapActions("datosVivienda", [
+      "buscarDatosViviendaAction",
+      "registrarDatosViviendaAction",
+      "actualizarDatosViviendaAction"
+    ]),
+    ...mapMutations("persona", ["setListaPersonaSuccess"]),
     onSubmit() {
       // console.log(this.datosVivienda);
       let info = {
@@ -243,21 +254,21 @@ export default {
       };
       if (this.datosVivienda.id > 0) {
         this.actualizarDatosViviendaAction(info).then(data => {
-          let personas = []
-          for(var i = 1; i <= this.datosVivienda.noPersonas; i++){
+          let personas = [];
+          for (var i = 1; i <= this.datosVivienda.noPersonas; i++) {
             personas.push({
               id: 0,
-              nombre: 'Integrante No. ' + i,
-              parentesco: 'Por definir',
+              nombre: "Integrante No. " + i,
+              parentesco: "Por definir",
               noOrden: i,
               persistido: false,
               encuesta: {
                 id: this.encuestaID
               }
-            })
+            });
           }
-          this.setListaPersonaSuccess(personas)
-        })
+          this.setListaPersonaSuccess(personas);
+        });
       } else {
         this.registrarDatosViviendaAction(info).then(data => {
           this.datosVivienda.id = data;

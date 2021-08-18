@@ -1,7 +1,7 @@
 <template>
   <div class="q-ma-sm">
     <div class="row">
-      <div class="col-xs-12 col-sm-8 offset-sm-2">
+      <div class="col-xs-12 col-sm-6 offset-sm-3">
         <div>
           <q-form ref="ubicacionForm">
             <p class="text-h6 q-mt-md q-mb-sm">Ubicación de la Vivienda</p>
@@ -12,7 +12,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <q-select
                       dense
                       use-input
@@ -42,7 +42,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <q-select
                       dense
                       ref="municipio"
@@ -73,7 +73,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <q-select
                       dense
                       ref="area"
@@ -99,7 +99,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <q-select
                       dense
                       ref="comunidad"
@@ -126,7 +126,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <q-input dense v-model="infoGeneral.direccionVivienda" />
                   </div>
                 </div>

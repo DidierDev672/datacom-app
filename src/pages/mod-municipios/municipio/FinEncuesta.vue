@@ -1,7 +1,7 @@
 ﻿<template>
   <div class="q-ma-sm">
     <div class="row">
-      <div class="col-xs-12 col-sm-8 offset-sm-2">
+      <div class="col-xs-12 col-sm-6 offset-sm-3">
         <q-card flat bordered class="my-card q-mb-md">
           <q-card-section class="q-pb-none">
             <div class="text-h6 q-mb-none">Felicitaciones!!</div>
@@ -73,7 +73,7 @@ export default {
     ]),
     onSubmit() {
       this.actualizarEncuestaAction(this.encuesta).then(data => {
-        this.$router.push({ name: "encuesta-proceso" });
+        this.$router.push("/encuestas");
       });
     }
   },

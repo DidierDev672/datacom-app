@@ -1,7 +1,7 @@
 <template>
   <div class="q-ma-sm">
     <div class="row">
-      <div class="col-xs-12 col-sm-8 offset-sm-2">
+      <div class="col-xs-12 col-sm-6 offset-sm-3">
         <q-form ref="ubicacionForm">
           <p class="text-h6 q-mt-md q-mb-sm">12. Territorio</p>
           <q-card flat bordered class="my-card q-mb-md">
@@ -13,7 +13,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <q-option-group
                     :options="optionsCumple"
                     @input="changePot"
@@ -64,7 +64,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <q-option-group
                     :options="optionsCumple"
                     @input="changePga"
@@ -115,7 +115,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <q-option-group
                     :options="optionsCumple"
                     @input="changeDap"
@@ -170,7 +170,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <q-option-group
                     :options="optionsCumple"
                     @input="changePoc"
@@ -228,7 +228,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <q-option-group
                     :options="optionsCumple"
                     @input="changeZfp"
@@ -279,7 +279,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <q-option-group
                     :options="optionsCumple"
                     type="radio"
@@ -311,7 +311,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <q-option-group
                     :options="optionsCumple"
                     @input="changeCac"
@@ -360,7 +360,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <q-input
                     dense
                     v-model="territorio.fuente"

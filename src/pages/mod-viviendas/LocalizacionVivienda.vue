@@ -1,7 +1,7 @@
 <template>
   <div class="q-ma-sm">
     <div class="row">
-      <div class="col-xs-12 col-sm-8 offset-sm-2">
+      <div class="col-xs-12 col-sm-6 offset-sm-3">
         <div>
           <q-form ref="estadoViviendaForm">
             <h6 class="q-mt-sm q-mb-md">Información de la Vivienda</h6>
@@ -13,7 +13,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <!-- <q-option-group
                       :options="tenenciaOptions"
                       type="radio"
@@ -47,7 +47,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <q-field v-model="datosVivienda.noHabitaciones">
                       <template
                         v-slot:control="{ id, floatingLabel, value, emitValue }"
@@ -76,7 +76,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <!-- <q-option-group
                       :options="tenenciaOptions"
                       type="radio"
@@ -109,7 +109,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <!-- <q-option-group
                       :options="tenenciaOptions"
                       type="radio"
@@ -142,7 +142,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <!-- <q-option-group
                       :options="tenenciaOptions"
                       type="radio"
@@ -173,7 +173,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <q-select
                       dense
                       v-model="datosVivienda.estadoPiso"
@@ -199,7 +199,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <!-- <q-option-group
                       :options="tenenciaOptions"
                       type="radio"
@@ -230,7 +230,7 @@
 
               <q-card-section>
                 <div class="row">
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="col-xs-12 ">
                     <q-select
                       dense
                       v-model="datosVivienda.estadoTecho"

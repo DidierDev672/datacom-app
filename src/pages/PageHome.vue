@@ -1,6 +1,6 @@
 <template>
   <div class="q-ma-sm">
-    <h5>Dashboard</h5>
+    <div class="text-h6 q-px-xs q-py-md ">Dashboard</div>
     <div class="row q-col-gutter-sm q-mb-md">
       <div
         class="col-xs-12 col-md-3"

@@ -1,7 +1,7 @@
 <template>
   <div class="q-ma-sm">
     <div class="row">
-      <div class="col-xs-12 col-sm-8 offset-sm-2">
+      <div class="col-xs-12 col-sm-6 offset-sm-3">
         <q-form ref="calidadForm">
           <p class="text-h6 q-mt-md q-mb-sm">3. Calidad de Vida</p>
           <q-card flat bordered class="my-card q-mb-md">
@@ -11,7 +11,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <q-input
                     dense
                     v-model="calidad.ano"
@@ -34,7 +34,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input
                                       dense
                                       v-model.number="calidad.ipmUrbana"
@@ -70,7 +70,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input
                                       dense
                                       v-model.number="calidad.ipmRural"
@@ -107,7 +107,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input
                                       dense
                                       v-model.number="calidad.ipmTotal"
@@ -148,7 +148,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input
                                       dense
                                       v-model.number="calidad.nbi_urbano"
@@ -185,7 +185,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input
                                       dense
                                       v-model.number="calidad.nbi_rural"
@@ -226,7 +226,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input
                                       dense
                                       v-model.number="calidad.pcmUrbano"
@@ -263,7 +263,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input
                                       dense
                                       v-model.number="calidad.pcmRural"
@@ -299,7 +299,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <!-- <q-input
                                       dense
                                       v-model.number="calidad.pcm"
@@ -335,7 +335,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12 ">
                   <q-input
                     dense
                     v-model="calidad.fuente"
