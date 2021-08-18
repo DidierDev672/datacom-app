@@ -112,7 +112,7 @@
         <router-view />
       </keep-alive>
     </q-page-container>
-    <tour></tour>
+    <!-- <tour></tour> -->
   </q-layout>
 </template>
 
@@ -121,16 +121,16 @@
 import { mapActions } from "vuex";
 import EssentialLink from "components/EssentialLink";
 // import NavBarUser from "components/NavBarUser";
-import Tour from "components/Tour/Tour";
+// import Tour from "components/Tour/Tour";
 // Initialize deferredPrompt for use later to show browser install prompt.
 let deferredPrompt;
 export default {
   name: "MainLayout",
 
   components: {
-    EssentialLink,
+    EssentialLink
     // NavBarUser,
-    Tour
+    // Tour
   },
 
   data() {
@@ -206,7 +206,7 @@ export default {
     }
   },
   mounted() {
-    this.$tours["datacomTour"].start();
+    // this.$tours["datacomTour"].start();
     // const status = exportFile('important.pdf', 'Some important content', 'application/pdf')
 
     const neverShowAppInstallBanner = this.$q.localStorage.getItem(

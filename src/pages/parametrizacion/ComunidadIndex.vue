@@ -18,7 +18,7 @@
           dense
           debounce="300"
           v-model="filter"
-          placeholder="Filtrar"
+          placeholder="Filtrar por comunidad"
         >
           <template v-slot:append>
             <q-icon name="search" />
@@ -62,7 +62,7 @@ export default {
         sortBy: "id",
         descending: false,
         page: 1,
-        rowsPerPage: 7,
+        rowsPerPage: 10,
         rowsNumber: 10
       },
       comunidadList: [],
@@ -72,9 +72,7 @@ export default {
           align: "left",
           label: "Municipio",
           field: row => {
-            return (
-              row.municipio.codigoDane + " - " + row.municipio.nombreMunicipio
-            );
+            return row.municipio.nombreMunicipio;
           }
         },
         {
@@ -82,7 +80,7 @@ export default {
           align: "left",
           label: "Comunidad",
           field: row => {
-            return row.codigoDane + " " + row.nombreComunidad;
+            return row.nombreComunidad;
           }
         },
         { name: "estado", label: "Estado", field: "estado" },

@@ -84,19 +84,22 @@ export function cargarListaEncuestaEnProcesoAction({ commit }) {
   });
 }
 
-export function cargarListaEncuestaCerradasAction({ commit }) {
+export function cargarListaEncuestaCerradasAction({ commit }, payload) {
   commit("inicializarAccion");
   const urlService = "encuesta";
   return new Promise((resolve, reject) => {
     axios
-      .get(`${URL_API}/${urlService}/cerradas`)
-      .then(({ data }) => {
-        commit("setListaEncuestaSuccess", data);
-        resolve(data);
+      .get(
+        `${URL_API}/${urlService}/cerradas?page=${payload.page}&size=${payload.rowsPerPage}&filter=${payload.filter}`
+      )
+      .then(response => {
+        console.log("Encuestas cerradas: ", response);
+        commit("setListaEncuestaSuccess", response.data.content);
+        resolve(response);
       })
       .catch(error => {
         console.log(
-          "Ocurrió un error al consultar los tipos de encuestas: ",
+          "Ocurrió un error al consultar las encuestas cerradas: ",
           error.response
         );
         commit("setActionFail", error.response);

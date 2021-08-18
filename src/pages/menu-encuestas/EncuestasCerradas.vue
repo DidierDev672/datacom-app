@@ -5,6 +5,8 @@
       :data="encuestas"
       :columns="columns"
       row-key="name"
+      :pagination.sync="pagination"
+      @request="onRequest"
       @row-click="seleccionar"
       :loading="getEncuestaState.loading"
       loading-label="Cargando información, por favor espere"
@@ -36,6 +38,14 @@ import { TIPO_ENCUESTA, CATEGORIAS } from "../../utils/config";
 export default {
   data() {
     return {
+      filter: "",
+      pagination: {
+        sortBy: "id",
+        descending: false,
+        page: 1,
+        rowsPerPage: 10,
+        rowsNumber: 10
+      },
       encuestas: [],
       columns: [
         { name: "id", align: "left", label: "#", field: "id", sortable: true },
@@ -70,8 +80,12 @@ export default {
     };
   },
   created() {
-    this.cargarListaEncuestaCerradasAction().then(data => {
-      this.encuestas = data;
+    // this.cargarListaEncuestaCerradasAction().then(data => {
+    //   this.encuestas = data;
+    // });
+    this.onRequest({
+      pagination: this.pagination,
+      filter: ""
     });
   },
   methods: {
@@ -98,6 +112,41 @@ export default {
           this.$router.push({ name: "a-info-general", params: { id: row.id } });
           break;
       }
+    },
+    onRequest(props) {
+      const { page, rowsPerPage, sortBy, descending } = props.pagination;
+      const filter = props.filter;
+
+      // get all rows if "All" (0) is selected
+      const fetchCount =
+        rowsPerPage === 0 ? this.pagination.rowsNumber : rowsPerPage;
+
+      // calculate starting row of data
+      // const startRow = (page - 1) * rowsPerPage;
+      const startRow = page - 1;
+
+      // fetch data from "server"
+      this.cargarListaEncuestaCerradasAction({
+        page: startRow,
+        rowsPerPage: fetchCount,
+        filter: filter
+        // sort: `${sortBy},${descending ? "desc" : "asc"}`
+      }).then(response => {
+        // update rowsCount with appropriate value
+        this.pagination.rowsNumber = response.data.totalElements;
+        // clear out existing data and add new
+        this.encuestas.splice(
+          0,
+          this.encuestas.length,
+          ...response.data.content
+        );
+      });
+
+      // don't forget to update local pagination object
+      this.pagination.page = page;
+      this.pagination.rowsPerPage = rowsPerPage;
+      this.pagination.sortBy = sortBy;
+      this.pagination.descending = descending;
     }
   },
   computed: {
