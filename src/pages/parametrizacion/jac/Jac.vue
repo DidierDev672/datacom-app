@@ -1,9 +1,9 @@
 <template>
   <div class="q-ma-sm">
     <div class="row">
-      <div class="col-xs-12 col-sm-8 offset-sm-2">
-        <q-form ref="jacForm">
-          <div v-if="step == 1">
+      <div class="col-xs-12 col-sm-6 offset-sm-3">
+        <div v-if="step == 1">
+          <q-form ref="jacForm">
             <p class="text-h6 q-mt-md q-mb-sm">
               Ubicación
             </p>
@@ -26,7 +26,6 @@
                       @filter="filterFnDepartamento"
                       hint="Seleccione un departamento"
                       :options="departamentos"
-                      behavior="dialog"
                       size="sm"
                       lazy-rules
                       :rules="[
@@ -56,7 +55,6 @@
                       option-label="nombreMunicipio"
                       option-value="id"
                       hint="Seleccione un municipio"
-                      behavior="dialog"
                       :options="municipios"
                       @filter="filterFnMunicipio"
                       @input="buscarComunidades"
@@ -82,13 +80,14 @@
                   <div class="col-xs-12">
                     <q-select
                       dense
+                      use-input
                       ref="comunidad"
                       v-model="jac.comunidad"
                       option-label="nombreComunidad"
                       option-value="id"
                       hint="Seleccione una comunidad"
+                      @filter="filterFnComunidad"
                       :options="comunidades"
-                      behavior="dialog"
                       lazy-rules
                       :rules="[
                         val =>
@@ -100,9 +99,11 @@
                 </div>
               </q-card-section>
             </q-card>
-          </div>
+          </q-form>
+        </div>
 
-          <div v-if="step == 2">
+        <div v-if="step == 2">
+          <q-form ref="orgForm">
             <p class="text-h6 q-mt-md q-mb-sm">Datos de la Organización</p>
 
             <q-card flat bordered class="my-card q-mb-md">
@@ -115,13 +116,12 @@
                   <div class="col-xs-12">
                     <q-select
                       dense
-                      ref="comunidad"
+                      ref="organizacion"
                       v-model="jac.tipo"
                       option-label="nombre"
                       option-value="id"
                       hint="Elija el tipo de organización"
                       :options="tipoJuntaOptions"
-                      behavior="dialog"
                       lazy-rules
                       :rules="[
                         val =>
@@ -143,7 +143,6 @@
                 <div class="row">
                   <div class="col-xs-12">
                     <q-input
-                      outlined
                       v-model="jac.noRut"
                       label="Nit de la Organización"
                       lazy-rules
@@ -163,7 +162,6 @@
                 <div class="row">
                   <div class="col-xs-12">
                     <q-input
-                      outlined
                       v-model="jac.nombre"
                       label="Nombre de la Organización"
                       lazy-rules
@@ -173,9 +171,11 @@
                 </div>
               </q-card-section>
             </q-card>
-          </div>
+          </q-form>
+        </div>
 
-          <div v-if="step == 3">
+        <div v-if="step == 3">
+          <q-form ref="repLegalForm">
             <p class="text-h6 q-mt-md q-mb-sm">Representante Legal</p>
 
             <q-card flat bordered class="my-card q-mb-md">
@@ -187,9 +187,8 @@
                 <div class="row">
                   <div class="col-xs-12">
                     <q-input
-                      outlined
                       v-model="jac.representanteLegal"
-                      label="Nombre completo del representante legal de la Organización"
+                      label="Representante legal de la Organización"
                       lazy-rules
                       :rules="[val => !!val || 'Campo requerido']"
                     />
@@ -197,8 +196,8 @@
                 </div>
               </q-card-section>
             </q-card>
-          </div>
-        </q-form>
+          </q-form>
+        </div>
 
         <div class="flex justify-center">
           <q-btn
@@ -252,6 +251,7 @@ export default {
       departamento: "",
       municipio: "",
       comunidades: [],
+      comunidadesList: [],
       tipoJuntaOptions: []
     };
   },
@@ -303,22 +303,14 @@ export default {
       if (municipioID != null) {
         this.cargarListaComunidadesDelMunicipioAction(municipioID.id).then(
           data => {
-            this.comunidades = data;
+            this.comunidadesList = data;
+            this.comunidades = this.comunidadesList;
           }
         );
       }
     },
     siguiente() {
-      this.$refs.jacForm.validate().then(success => {
-        if (success) {
-          this.step++;
-        } else {
-          this.$q.notify({
-            message: "Favor completar los campos correctamente",
-            color: "red"
-          });
-        }
-      });
+      this.validarForm();
     },
     anterior() {
       if (this.step < 1) {
@@ -328,8 +320,41 @@ export default {
         this.step--;
       }
     },
+    validarForm() {
+      let stepValue = this.step;
+      switch (stepValue) {
+        case 1:
+          this.$refs.jacForm.validate().then(success => {
+            if (success) {
+              this.step++;
+            } else {
+              this.$q.notify({
+                message: "Favor completar los campos correctamente",
+                color: "red",
+                position: "bottom-right"
+              });
+            }
+          });
+          break;
+        case 2:
+          this.$refs.orgForm.validate().then(success => {
+            if (success) {
+              this.step++;
+            } else {
+              this.$q.notify({
+                message: "Favor completar los campos correctamente",
+                color: "red"
+              });
+            }
+          });
+          break;
+        default:
+          this.step++;
+          break;
+      }
+    },
     onSubmit() {
-      this.$refs.jacForm.validate().then(success => {
+      this.$refs.repLegalForm.validate().then(success => {
         if (success) {
           console.log("Form valido", this.jac);
           (this.jac.usuarioCreacion = this.getUser),
@@ -366,6 +391,14 @@ export default {
         const needle = val.toLowerCase();
         this.municipios = this.municipiosList.filter(
           v => v.nombreMunicipio.toLowerCase().indexOf(needle) > -1
+        );
+      });
+    },
+    filterFnComunidad(val, update) {
+      update(() => {
+        const needle = val.toLowerCase();
+        this.comunidades = this.comunidadesList.filter(
+          v => v.nombreComunidad.toLowerCase().indexOf(needle) > -1
         );
       });
     }

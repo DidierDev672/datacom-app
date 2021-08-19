@@ -26,7 +26,9 @@
               <q-item-label
                 >1. Ubicación (<b>Fuente: </b
                 >{{
-                  encuesta.informacionGeneral.fuenteInfoGeneral
+                  encuesta.informacionGeneral != null
+                    ? encuesta.informacionGeneral.fuenteInfoGeneral
+                    : ""
                 }})</q-item-label
               >
             </q-item-section>
@@ -144,7 +146,9 @@
               <q-item-label
                 >2. Demografía (<b>Fuente: </b
                 >{{
-                  encuesta.informacionGeneral.fuenteInfoGeneral
+                  encuesta.informacionGeneral != null
+                    ? encuesta.informacionGeneral.fuenteDemografia
+                    : ""
                 }})</q-item-label
               >
             </q-item-section>
@@ -240,7 +244,11 @@
             <q-item-section>
               <q-item-label
                 >2.1. Composición Etaria (<b>Fuente: </b
-                >{{ encuesta.poblacionPorRangoDeEdads.fuente }})</q-item-label
+                >{{
+                  encuesta.poblacionPorRangoDeEdads != null
+                    ? encuesta.poblacionPorRangoDeEdads.fuente
+                    : ""
+                }})</q-item-label
               >
             </q-item-section>
           </q-item>
@@ -660,7 +668,11 @@
               <q-item-label
                 >3. Calidad de vida ({{ encuesta.calidadVida.ano }}) (<b
                   >Fuente: </b
-                >{{ encuesta.calidadVida.fuente }})</q-item-label
+                >{{
+                  encuesta.calidadVida != null
+                    ? encuesta.calidadVida.fuente
+                    : ""
+                }})</q-item-label
               >
             </q-item-section>
           </q-item>
@@ -751,7 +763,9 @@
               <q-item-section>
                 <q-item-label
                   >4. Educación ({{ encuesta.educacion.ano }}) (<b>Fuente: </b
-                  >{{ encuesta.educacion.fuente }})</q-item-label
+                  >{{
+                    encuesta.educacion != null ? encuesta.educacion.fuente : ""
+                  }})</q-item-label
                 >
               </q-item-section>
             </q-item>
@@ -907,7 +921,9 @@
             <q-item-section>
               <q-item-label
                 >5. Vivienda (<b>Fuente: </b
-                >{{ encuesta.vivienda.fuente }})</q-item-label
+                >{{
+                  encuesta.vivienda != null ? encuesta.vivienda.fuente : ""
+                }})</q-item-label
               >
             </q-item-section>
           </q-item>
@@ -963,7 +979,11 @@
             <q-item-section>
               <q-item-label
                 >Servicios (<b>Fuente: </b
-                >{{ encuesta.coberturaEnServicios.fuente }})</q-item-label
+                >{{
+                  encuesta.coberturaEnServicios != null
+                    ? encuesta.coberturaEnServicios.fuente
+                    : ""
+                }})</q-item-label
               >
             </q-item-section>
           </q-item>
@@ -1123,7 +1143,9 @@
               <q-item-label
                 >7. Administración Pública (<b>Fuente: </b
                 >{{
-                  encuesta.informacionGeneral.fuenteInfoAlcaldia
+                  encuesta.informacionGeneral != null
+                    ? encuesta.informacionGeneral.fuenteInfoAlcaldia
+                    : ""
                 }})</q-item-label
               >
             </q-item-section>
@@ -1263,7 +1285,9 @@
               <q-item-label
                 >Políticas públicas (<b>Fuente: </b
                 >{{
-                  encuesta.informacionGeneral.fuenteInfoAlcaldia
+                  encuesta.informacionGeneral != null
+                    ? encuesta.informacionGeneral.fuenteInfoAlcaldia
+                    : ""
                 }})</q-item-label
               >
             </q-item-section>
@@ -1302,7 +1326,9 @@
               <q-item-label
                 >8. Organizaciones (<b>Fuente: </b
                 >{{
-                  encuesta.informacionGeneral.fuenteInfoAlcaldia
+                  encuesta.informacionGeneral != null
+                    ? encuesta.informacionGeneral.fuenteInfoAlcaldia
+                    : ""
                 }})</q-item-label
               >
             </q-item-section>
@@ -1371,7 +1397,9 @@
               <q-item-label
                 >9. Infraestructura Pública (<b>Fuente: </b
                 >{{
-                  encuesta.informacionGeneral.fuenteInfoAlcaldia
+                  encuesta.informacionGeneral != null
+                    ? encuesta.informacionGeneral.fuenteInfoAlcaldia
+                    : ""
                 }})</q-item-label
               >
             </q-item-section>
@@ -1425,7 +1453,9 @@
               <q-item-label
                 >10. Finanzas municipales (<b>Fuente: </b
                 >{{
-                  encuesta.informacionGeneral.fuenteInfoFinanzas
+                  encuesta.informacionGeneral != null
+                    ? encuesta.informacionGeneral.fuenteInfoFinanzas
+                    : ""
                 }})</q-item-label
               >
             </q-item-section>
@@ -1478,7 +1508,11 @@
             <q-item-section>
               <q-item-label
                 >11. Indicadores de Gestión (<b>Fuente: </b
-                >{{ encuesta.indicadores.fuente }})</q-item-label
+                >{{
+                  encuesta.indicadores != null
+                    ? encuesta.indicadores.fuente
+                    : ""
+                }})</q-item-label
               >
             </q-item-section>
           </q-item>
@@ -1557,7 +1591,9 @@
             <q-item-section>
               <q-item-label
                 >12. Territorio (<b>Fuente: </b
-                >{{ encuesta.territorio.fuente }})</q-item-label
+                >{{
+                  encuesta.territorio != null ? encuesta.territorio.fuente : ""
+                }})</q-item-label
               >
             </q-item-section>
           </q-item>
@@ -1717,7 +1753,9 @@
               <q-item-label
                 >13. Participación (<b>Fuente: </b
                 >{{
-                  encuesta.informacionGeneral.fuenteInfoParticipacion
+                  encuesta.informacionGeneral != null
+                    ? encuesta.informacionGeneral.fuenteInfoParticipacion
+                    : ""
                 }})</q-item-label
               >
             </q-item-section>
@@ -1811,7 +1849,9 @@
               <q-item-label
                 >15. Economía y marca propia (<b>Fuente: </b
                 >{{
-                  encuesta.informacionGeneral.fuenteInfoAlcaldia
+                  encuesta.informacionGeneral != null
+                    ? encuesta.informacionGeneral.fuenteInfoAlcaldia
+                    : ""
                 }})</q-item-label
               >
             </q-item-section>

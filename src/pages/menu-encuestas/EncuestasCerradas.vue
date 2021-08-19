@@ -75,6 +75,12 @@ export default {
           label: "Tipo de Estudio",
           field: row => row.tipoEstudio.nombre
         },
+        {
+          name: "usuarioCreacion",
+          align: "left",
+          label: "Usuario",
+          field: "usuarioCreacion"
+        },
         { name: "acciones", label: "", field: "acciones" }
       ]
     };

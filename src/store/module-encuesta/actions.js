@@ -63,19 +63,22 @@ export function cargarTotalEncuestasPorDepartamentosAction({ commit }) {
   });
 }
 
-export function cargarListaEncuestaEnProcesoAction({ commit }) {
+export function cargarListaEncuestaEnProcesoAction({ commit }, payload) {
   commit("inicializarAccion");
   const urlService = "encuesta";
   return new Promise((resolve, reject) => {
     axios
-      .get(`${URL_API}/${urlService}/en-proceso`)
-      .then(({ data }) => {
-        commit("setListaEncuestaSuccess", data);
-        resolve(data);
+      .get(
+        `${URL_API}/${urlService}/en-proceso?page=${payload.page}&size=${payload.rowsPerPage}&filter=${payload.filter}`
+      )
+      .then(response => {
+        console.log("Encuestas en proceso: ", response);
+        commit("setListaEncuestaSuccess", response.data.content);
+        resolve(response);
       })
       .catch(error => {
         console.log(
-          "Ocurrió un error al consultar los tipos de encuestas: ",
+          "Ocurrió un error al consultar las encuestas en proceso: ",
           error.response
         );
         commit("setActionFail", error.response);
