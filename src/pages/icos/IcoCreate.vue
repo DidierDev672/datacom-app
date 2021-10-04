@@ -3,6 +3,7 @@
     <div class="row">
       <div class="col-xs-12 col-sm-6 offset-sm-3">
         <div v-if="step == 1">
+          <!-- <pre>{{ indicadores }}</pre> -->
           <q-form ref="infoEvaluacion">
             <q-card flat bordered class="my-card q-mb-md">
               <q-card-section class="q-pb-none">
@@ -58,7 +59,7 @@
           <div class="text-h6 q-px-xs q-py-md ">Indicadores</div>
 
           <q-card
-            v-for="indicador in evaluacion.indicadores"
+            v-for="indicador in indicadores"
             flat
             bordered
             class="my-card q-mb-md"
@@ -127,7 +128,7 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-import { indicadoresIco, juntas } from "src/db/data";
+// import { indicadoresIco, juntas } from "src/db/data";
 import axios from "axios";
 import { URL_API } from "src/utils/config";
 
@@ -136,8 +137,9 @@ export default {
     return {
       opciones: "1",
       evaluacion: {},
-      indicadoresOptions: indicadoresIco,
-      jacOptions: juntas,
+      indicadoresOptions: [],
+      indicadores: [],
+      jacOptions: [],
       jacs: [],
       calificacionOptions: [
         {
@@ -160,12 +162,18 @@ export default {
     };
   },
   created() {
-    this.jacs = this.jacOptions;
+    this.jacOptions = this.getJacState.lista;
+    this.getIndicadoresState.lista.forEach(indicador => {
+      this.indicadores.push({
+        indicador: indicador,
+        calificacion: 1
+      });
+    });
     this.evaluacion = {
       id: 0,
       descripcion: "",
       jac: null,
-      indicadores: indicadoresIco,
+      indicadores: [],
       usuarioCreacion: this.getUser,
       usuarioActualizacion: this.getUser
     };
@@ -193,6 +201,8 @@ export default {
     },
     onSubmit() {
       const urlService = "ico-evaluacion";
+      this.evaluacion.indicadores = this.indicadores;
+      // console.log("Evaluacion: ", this.evaluacion);
 
       axios
         .post(`${URL_API}/${urlService}/`, this.evaluacion)
@@ -200,32 +210,20 @@ export default {
           this.$router.push({ name: "IcoIndex" });
         })
         .catch(error => {
-          if (!navigator.onLine && this.backgroundSyncSupported) {
-            //redirigir al listado de categorias
-            this.$q.notify({
-              message: "Ico registrado offLine.",
-              icon: "ti-check",
-              textColor: "white",
-              color: "dark",
-              position: "bottom-right"
-            });
-            this.$router.push({ name: "IcoIndex" });
-          } else {
-            console.log("Error al guardar: ", error);
-          }
+          console.log("Error al guardar: ", error);
         });
     },
     filtrarJac(val, update) {
-      if (val === "") {
-        update(() => {
-          this.options = this.jacOptions;
+      // if (val === "") {
+      //   update(() => {
+      //     this.options = this.jacOptions;
 
-          // with Quasar v1.7.4+
-          // here you have access to "ref" which
-          // is the Vue reference of the QSelect
-        });
-        return;
-      }
+      //     // with Quasar v1.7.4+
+      //     // here you have access to "ref" which
+      //     // is the Vue reference of the QSelect
+      //   });
+      //   return;
+      // }
 
       update(() => {
         const needle = val.toLowerCase();
@@ -237,6 +235,8 @@ export default {
   },
   computed: {
     ...mapGetters("auth", ["getUser"]),
+    ...mapGetters("jac", ["getJacState"]),
+    ...mapGetters("indicadores", ["getIndicadoresState"]),
     backgroundSyncSupported() {
       if ("serviceWorker" in navigator && "SyncManager" in window) return true;
       return false;

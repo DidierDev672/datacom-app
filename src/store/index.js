@@ -62,6 +62,9 @@ import fileManager from "./module-file-manager";
 //ModuleUsuario
 import usuario from "./module-usuario";
 import rol from "./module-rol";
+//Ico
+import ico from "./module-ico";
+import indicadores from "./module-indicadores";
 
 Vue.use(Vuex);
 
@@ -136,7 +139,10 @@ export default function(/* { ssrContext } */) {
       fileManager,
       //ModuleUsuario
       usuario,
-      rol
+      rol,
+      //Ico
+      ico,
+      indicadores
     },
 
     // enable strict mode (adds overhead!)

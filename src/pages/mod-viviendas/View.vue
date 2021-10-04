@@ -66,7 +66,7 @@
             <q-item-section>
               <q-item-label caption>5.1. Área</q-item-label>
               <q-item-label>{{
-                encuesta.informacionGeneral.area.nombre
+                encuesta.informacionGeneral.area != null ? encuesta.informacionGeneral.area.nombre : ''
               }}</q-item-label>
             </q-item-section>
 
@@ -88,7 +88,7 @@
             <q-item-section>
               <q-item-label caption>7. ¿Su vivienda es?</q-item-label>
               <q-item-label>{{
-                encuesta.infoVivienda.tenencia.nombre
+                encuesta.infoVivienda.tenencia != null ? encuesta.infoVivienda.tenencia.nombre : ''
               }}</q-item-label>
             </q-item-section>
 
@@ -108,7 +108,7 @@
                 >9. Material predominante de las paredes</q-item-label
               >
               <q-item-label>{{
-                encuesta.infoVivienda.materialParedes.nombre
+                encuesta.infoVivienda.materialParedes != null ? encuesta.infoVivienda.materialParedes.nombre : ''
               }}</q-item-label>
             </q-item-section>
 
@@ -133,7 +133,7 @@
                 >11. Material predominante del piso</q-item-label
               >
               <q-item-label>{{
-                encuesta.infoVivienda.materialPiso.nombre
+                encuesta.infoVivienda.materialPiso != null ? encuesta.infoVivienda.materialPiso.nombre : ''
               }}</q-item-label>
             </q-item-section>
 
@@ -157,7 +157,7 @@
                 >13. Material predominante del techo</q-item-label
               >
               <q-item-label>{{
-                encuesta.infoVivienda.materialTecho.nombre
+                encuesta.infoVivienda.materialTecho != null ? encuesta.infoVivienda.materialTecho.nombre : ''
               }}</q-item-label>
             </q-item-section>
 
@@ -251,7 +251,7 @@
                 >17. Frecuencia servicio de acueducto</q-item-label
               >
               <q-item-label>{{
-                encuesta.infoVivienda.frecuenciaServicioAcueducto.nombre
+                encuesta.infoVivienda.frecuenciaServicioAcueducto != null ? encuesta.infoVivienda.frecuenciaServicioAcueducto.nombre : ''
               }}</q-item-label>
             </q-item-section>
           </q-item>
@@ -305,7 +305,7 @@
                 >19. Capacidad de Almacenamiento de agua</q-item-label
               >
               <q-item-label>{{
-                encuesta.infoVivienda.capacidadAlmacenamientoAgua.nombre
+                encuesta.infoVivienda.capacidadAlmacenamientoAgua != null ? encuesta.infoVivienda.capacidadAlmacenamientoAgua.nombre : ''
               }}</q-item-label>
             </q-item-section>
 
@@ -314,13 +314,13 @@
                 >20. ¿Qué tipo de sanitario tiene la vivienda?</q-item-label
               >
               <q-item-label>{{
-                encuesta.infoVivienda.excretas.nombre
+                encuesta.infoVivienda.excretas != null ? encuesta.infoVivienda.excretas.nombre : ''
               }}</q-item-label>
             </q-item-section>
             <q-item-section>
               <q-item-label caption>21. Disposición de residuos</q-item-label>
               <q-item-label>{{
-                encuesta.infoVivienda.residuos.nombre
+                encuesta.infoVivienda.residuos != null ? encuesta.infoVivienda.residuos.nombre : ''
               }}</q-item-label>
             </q-item-section>
           </q-item>

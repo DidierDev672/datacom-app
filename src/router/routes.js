@@ -100,20 +100,92 @@ const routes = [
       },
       {
         path: "icos",
-        name: "icos",
-        component: () => import("pages/icos/IcosList.vue")
+        component: () => import("pages/icos/PageIco.vue"),
+        children: [
+          {
+            path: "",
+            name: "IcoIndex",
+            component: () => import("pages/icos/list/IcoIndex.vue")
+          },
+          {
+            path: "create",
+            name: "IcoCreate",
+            component: () => import("pages/icos/IcoCreate.vue")
+          },
+          {
+            path: "view/:id",
+            name: "IcoView",
+            component: () => import("pages/icos/detail/IcoView.vue")
+          }
+        ]
       },
+      {
+        path: "plan-trabajo",
+        component: () => import("pages/icos-plan-trabajo/PagePlanTrabajo.vue"),
+        children: [
+          {
+            path: "",
+            name: "PlanTrabajoIndex",
+            component: () =>
+              import("pages/icos-plan-trabajo/list/PlanTrabajoIndex.vue")
+          },
+          {
+            path: "create",
+            name: "PlanTrabajoCreate",
+            component: () =>
+              import("pages/icos-plan-trabajo/detail/PlanTrabajoCreate.vue")
+          },
+          {
+            path: ":id/actividades",
+            component: () =>
+              import(
+                "pages/icos-plan-trabajo/actividades/PlanTrabajoActividades.vue"
+              ),
+            children: [
+              {
+                path: "",
+                name: "PlanTrabajoActividadesIndex",
+                component: () =>
+                  import(
+                    "pages/icos-plan-trabajo/actividades/list/PlanTrabajoActividadesIndex.vue"
+                  )
+              },
+              {
+                path: "create",
+                name: "PlanTrabajoActividadCreate",
+                component: () =>
+                  import(
+                    "pages/icos-plan-trabajo/actividades/detail/PlanTrabajoActividadCreate.vue"
+                  )
+              },
+              {
+                path: ":actividadId",
+                name: "PlanTrabajoActividadEdit",
+                component: () =>
+                  import(
+                    "pages/icos-plan-trabajo/actividades/detail/PlanTrabajoActividadEdit.vue"
+                  )
+              }
+            ]
+          }
+        ]
+      },
+      // {
+      //   path: "icos/create",
+      //   name: "IcoCreate",
+      //   component: () => import("pages/icos/IcoCreate.vue")
+      // },
       {
         path: "icos/:id",
         name: "icos-view",
         component: () => import("pages/icos/IcoView.vue")
       },
       // { path: 'plan-trabajo', name: 'plan-trabajo-list', component: () => import('pages/icos/PlanTrabajoList.vue')},
-      {
-        path: "plan-trabajo/:id",
-        name: "plan-trabajo",
-        component: () => import("pages/icos/PlanTrabajo.vue")
-      },
+      // {
+      //   path: "plan-trabajo/:id",
+      //   name: "plan-trabajo",
+      //   component: () => import("pages/icos/PlanTrabajo.vue")
+      // },
       {
         path: "/municipios",
         name: "municipios",
