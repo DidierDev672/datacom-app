@@ -125,7 +125,7 @@
           <q-btn
             no-caps
             flat
-            :to="{ name: 'ComunidadIndex' }"
+            :to="{ name: 'PageComunidadIndex' }"
             label="Cancelar"
             color="primary"
             class="q-mr-sm"

@@ -450,7 +450,7 @@
               <q-item-section>
                 <q-item-label caption>Tipo Documento</q-item-label>
                 <q-item-label>{{
-                  integrante.tipoDocumento.nombre
+                  integrante.tipoDocumento != null ? integrante.tipoDocumento.nombre : ''
                 }}</q-item-label>
               </q-item-section>
               <q-item-section>
@@ -471,7 +471,7 @@
             <q-item>
               <q-item-section>
                 <q-item-label caption>Sexo</q-item-label>
-                <q-item-label>{{ integrante.sexo.nombre }}</q-item-label>
+                <q-item-label>{{ integrante.sexo != null ? integrante.sexo.nombre : ''}}</q-item-label>
               </q-item-section>
               <q-item-section>
                 <q-item-label caption>Fecha de Nacimiento</q-item-label>
@@ -485,16 +485,16 @@
             <q-item>
               <q-item-section>
                 <q-item-label caption>Etnia</q-item-label>
-                <q-item-label>{{ integrante.etnia.nombre }}</q-item-label>
+                <q-item-label>{{ integrante.etnia != null ? integrante.etnia.nombre : '' }}</q-item-label>
               </q-item-section>
               <q-item-section>
                 <q-item-label caption>Ocupación</q-item-label>
-                <q-item-label>{{ integrante.ocupacion.nombre }}</q-item-label>
+                <q-item-label>{{ integrante.ocupacion != null ? integrante.ocupacion.nombre : '' }}</q-item-label>
               </q-item-section>
               <q-item-section>
                 <q-item-label caption>Nivel de Educativo</q-item-label>
                 <q-item-label>{{
-                  integrante.nivelEducativo.nombre
+                  integrante.nivelEducativo != null ? integrante.nivelEducativo.nombre : ''
                 }}</q-item-label>
               </q-item-section>
             </q-item>
@@ -502,7 +502,7 @@
               <q-item-section>
                 <q-item-label caption>Seguridad Social</q-item-label>
                 <q-item-label>{{
-                  integrante.seguridadSocial.nombre
+                  integrante.seguridadSocial != null ? integrante.seguridadSocial.nombre : ''
                 }}</q-item-label>
               </q-item-section>
               <q-item-section>

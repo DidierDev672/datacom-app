@@ -158,7 +158,6 @@ export default {
   .q-tab__icon
     font-size: 30px
 .fondo-nav
-  background: rgb(175,202,11)
-  background: linear-gradient(90deg, rgba(175,202,11,1) 0%, rgba(100,194,200, 1) 100%)
-  background: --prefix-linear-gradient(90deg, rgba(175,202,11,1) 0%, rgba(100,194,200, 1) 100%)
+  background: #248b48
+  background: linear-gradient( 135deg, #248b48 0%,#95b947 52%,#64ab9b 100%)
 </style>

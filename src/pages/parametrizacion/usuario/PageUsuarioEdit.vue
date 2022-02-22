@@ -458,7 +458,7 @@ export default {
           this.usuario.usuarioActualizacion = this.getUser;
           this.actualizarUsuarioAction(this.usuario).then(data => {
             this.$router.push({
-              name: "UsuariosIndex"
+              name: "PageUsuarioIndex"
             });
           });
         } else {

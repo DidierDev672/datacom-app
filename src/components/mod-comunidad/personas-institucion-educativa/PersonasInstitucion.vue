@@ -1,6 +1,6 @@
 ﻿<template>
-  <q-dialog 
-    transition-show="scale" 
+  <q-dialog
+    transition-show="scale"
     transition-hide="scale"
     @hide="close"
     v-model="show">
@@ -28,7 +28,7 @@
               </thead>
               <tbody>
                 <tr v-for="persona in personalList" :key="persona.id">
-                  <td>{{ persona.nombre }}</td>
+                  <td>{{ persona.nombre }} {{ persona.primerApellido }} {{ persona.segundoApellido }}</td>
                   <td>{{ persona.cargo.nombre }}</td>
                   <td>{{ persona.telefono }}</td>
                   <td>
@@ -49,9 +49,9 @@
               @close="showPersonalList=true"
               @guardar="agregar" />
           </div>
-           
-          
-        </q-card-section>        
+
+
+        </q-card-section>
       </q-card>
     </q-dialog>
 </template>

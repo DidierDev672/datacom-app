@@ -347,8 +347,10 @@ export default {
     });
 
     this.buscarDatosViviendaAction(this.encuestaID).then(data => {
+      console.log('Data: ', data)
       if (data.id > 0) {
         this.datosVivienda = { ...data };
+        console.log('DatosVivienda: ', this.datosVivienda)
       }
     });
   },
@@ -364,10 +366,11 @@ export default {
       //validar FormUbicacion
       this.$refs.estadoViviendaForm.validate().then(success => {
         if (success) {
+
           this.registrarDatosViviendaAction({
             ...this.datosVivienda,
             encuesta: {
-              id: this.encuestaID
+              id: parseInt(this.encuestaID)
             },
             fechaActualizacion: fecha,
             usuarioActualizacion: this.getUser,

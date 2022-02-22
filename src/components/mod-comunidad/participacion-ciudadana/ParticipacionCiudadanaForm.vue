@@ -33,7 +33,7 @@
               <q-input
                 outlined
                 v-model="participacionCiudadanaDB.observacion"
-                label="Observacion"
+                label="Propuesta presentada"
               />
             </div>
           </div>

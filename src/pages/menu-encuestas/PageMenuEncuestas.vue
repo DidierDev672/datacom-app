@@ -9,7 +9,7 @@
             v-ripple
             class="q-mb-md v-step-1"
             v-for="opt in menu"
-            :to="{ name: 'nueva-encuesta', params: { id: opt.id } }"
+            :to="{ name: 'PageNewEncuesta', params: { id: opt.id } }"
             :key="opt.id"
           >
             <q-item-section avatar top>
@@ -37,7 +37,7 @@
             clickable
             v-ripple
             class="q-mb-md v-step-2"
-            :to="{ name: 'encuesta-proceso' }"
+            :to="{ name: 'PageEncuestasEnProceso' }"
           >
             <q-item-section avatar top>
               <q-avatar icon="ti-settings" color="grey" text-color="white" />
@@ -59,7 +59,7 @@
             clickable
             v-ripple
             class="q-mb-md v-step-3"
-            :to="{ name: 'encuesta-cerrada' }"
+            :to="{ name: 'PageEncuestasCerradas' }"
           >
             <q-item-section avatar top>
               <q-avatar icon="ti-lock" color="grey" text-color="white" />
@@ -76,21 +76,6 @@
               <q-icon name="info" color="amber" />
             </q-item-section>
           </q-item>
-
-          <!-- <q-item clickable v-ripple>
-            <q-item-section avatar top>
-              <q-avatar icon="library_music" color="grey" text-color="white" />
-            </q-item-section>
-
-            <q-item-section>
-              <q-item-label lines="1">My favorite song</q-item-label>
-              <q-item-label caption>Singing it all day</q-item-label>
-            </q-item-section>
-
-            <q-item-section side>
-              <q-icon name="info" />
-            </q-item-section>
-          </q-item> -->
         </q-list>
       </div>
     </div>

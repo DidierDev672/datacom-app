@@ -42,7 +42,7 @@
     </q-td> -->
     </q-table>
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
-      <q-btn fab icon="add" color="primary" :to="{ name: 'ComunidadCreate' }">
+      <q-btn fab icon="add" color="primary" :to="{ name: 'PageComunidadCreate' }">
         <q-tooltip>
           Agregar comunidad
         </q-tooltip>

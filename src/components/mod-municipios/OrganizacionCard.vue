@@ -5,7 +5,7 @@
             <q-item-label>{{ organizacion.idOrganizacion.nombre }}</q-item-label>
         </q-item-section>
 
-        <q-item-section side top>              
+        <q-item-section side top>
             <div class="text-grey-8 ">
                 <q-btn size="12px" flat dense round icon="more_vert" >
                     <q-menu cover auto-close>
@@ -16,11 +16,11 @@
                         </q-list>
                     </q-menu>
                 </q-btn>
-            </div>        
+            </div>
         </q-item-section>
-    </q-item>    
+    </q-item>
 
-    <q-item >
+    <!-- <q-item >
         <q-item-section top>
             <q-item-label caption lines="1">
             Nombre
@@ -29,7 +29,7 @@
             <span class="text-weight-medium">{{ organizacion.nombre }}</span>
             </q-item-label>
         </q-item-section>
-    </q-item>
+    </q-item> -->
 
     <q-item >
         <q-item-section top>
@@ -75,7 +75,7 @@
         </q-item-section>
     </q-item>
 
-    <q-item>
+    <!-- <q-item>
         <q-item-section top>
             <q-item-label caption lines="1">
             Dirección
@@ -84,9 +84,9 @@
                 <span class="text-weight-medium">{{ organizacion.direccion }}</span>
             </q-item-label>
         </q-item-section>
-    </q-item>
+    </q-item> -->
 
-          
+
 
 </q-list>
 </template>

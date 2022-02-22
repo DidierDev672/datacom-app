@@ -21,7 +21,7 @@
     <q-item >
       <q-item-section top>
         <q-item-label caption lines="1">
-          Espacio de participación
+          Propuesta presentada
         </q-item-label>
         <q-item-label lines="1">
           <span class="text-weight-medium">{{ participacionC.observacion }}</span>

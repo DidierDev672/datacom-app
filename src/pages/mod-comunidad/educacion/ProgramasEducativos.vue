@@ -75,7 +75,7 @@ export default {
     },
     onSubmit() {
       this.$router.push({
-        name: "c-fiestas-tradicionales",
+        name: "c-comite-emergencia",
         params: { id: this.encuestaID }
       });
     }

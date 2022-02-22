@@ -117,7 +117,7 @@ export default {
           }).then(data => {
             this.vivienda.id = data;
             this.$router.push({
-              name: "c-comite-emergencia",
+              name: "c-programas-educativos",
               params: { id: this.encuestaID }
             });
           });

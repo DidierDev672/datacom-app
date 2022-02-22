@@ -191,9 +191,11 @@ export default {
       this.departamentos = this.departamentosList;
     });
     this.buscarInformacionGeneralAction(this.encuestaID).then(data => {
+      console.log('Data: ', data)
       if (data.id > 0) {
         //this.step = 5
         this.infoGeneral = { ...data };
+        console.log('Informacion General: ', this.infoGeneral);
         if (data.municipio != null) {
           this.departamento = data.municipio.departamento;
         }
@@ -238,11 +240,22 @@ export default {
       const fecha = date.formatDate(new Date(), "YYYY-MM-DDTHH:mm:ss.SSSZ");
       this.$refs.ubicacionForm.validate().then(success => {
         if (success) {
-          console.log(this.infoGeneral);
+          // console.log(this.infoGeneral);
+          // let informacion = {
+          //   ...this.infoGeneral,
+          //   encuesta: {
+          //     id: parseInt(this.encuestaID)
+          //   },
+          //   fechaActualizacion: fecha,
+          //   usuarioActualizacion: this.getUser,
+          //   fechaCreacion: fecha,
+          //   usuarioCreacion: this.getUser
+          // }
+          // console.log('Informacion: ', informacion)
           this.guardarInformacionGeneralAction({
             ...this.infoGeneral,
             encuesta: {
-              id: this.encuestaID
+              id: parseInt(this.encuestaID)
             },
             fechaActualizacion: fecha,
             usuarioActualizacion: this.getUser,

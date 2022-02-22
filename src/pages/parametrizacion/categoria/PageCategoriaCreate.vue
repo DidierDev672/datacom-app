@@ -26,7 +26,7 @@
 
       <div class="flex justify-end">
         <q-btn
-          :to="{ name: 'categorias' }"
+          :to="{ name: 'PageCategoriaIndex' }"
           label="Cancelar"
           flat
           class="q-mr-sm"

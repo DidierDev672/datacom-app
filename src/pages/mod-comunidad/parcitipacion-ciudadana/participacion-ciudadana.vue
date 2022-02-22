@@ -79,7 +79,7 @@ export default {
     },
     onSubmit() {
       this.$router.push({
-        name: "c-programas-educativos",
+        name: "c-fiestas-tradicionales",
         params: { id: this.encuestaID }
       });
     }

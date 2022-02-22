@@ -68,7 +68,7 @@ export default {
     },
     onSubmit() {
       this.$router.push({
-        name: "c-calidad-de-vida",
+        name: "c-vivienda",
         params: { id: this.encuestaID }
       });
     }

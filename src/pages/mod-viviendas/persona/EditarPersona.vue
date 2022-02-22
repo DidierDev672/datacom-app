@@ -232,9 +232,13 @@
                   <div class="col-xs-12 ">
                     <q-input
                       dense
-                      v-model="persona.edad"
+                      type="number"
+                      v-model.number="persona.edad"
                       lazy-rules
-                      :rules="[val => val => !!val || 'Debe ingresar la edad']"
+                      :rules="[
+                        val => val > -1 || 'La edad ingresada es erronea',
+                        val => typeof(val) == 'number' || 'Ingrese la edad'
+                      ]"
                     />
                   </div>
                 </div>

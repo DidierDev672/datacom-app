@@ -30,7 +30,7 @@
           </div>
           <div class="flex justify-end">
             <q-btn
-              :to="{ name: 'parametros' }"
+              :to="{ name: 'PageParametroIndex' }"
               label="Cancelar"
               flat
               class="q-mr-sm"

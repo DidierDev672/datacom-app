@@ -18,7 +18,7 @@
             </div>
           </div>
 
-          <div class="row q-col-gutter-sm">
+          <!-- <div class="row q-col-gutter-sm">
             <div class="col-xs-12">
               <q-select
                 outlined
@@ -29,7 +29,7 @@
                 label="Seleccione la frecuencia"
               />
             </div>
-          </div>
+          </div> -->
 
         </q-form>
       </q-card-section>

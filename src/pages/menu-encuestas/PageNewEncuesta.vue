@@ -106,7 +106,7 @@
               color="primary"
               flat
               class="q-mr-sm"
-              to="/"
+              to="/encuestas"
             />
             <q-btn
               label="Siguiente"
@@ -151,6 +151,7 @@ export default {
     this.tipoEncuestaID = this.$route.params.id;
     if (this.tipoEncuestaID > 0) {
       this.tipoEncuesta = this.getTipoEncuestaPorId(this.tipoEncuestaID);
+      console.log('TipoEncuesta: ', this.tipoEncuesta);
     }
     this.nuevaEncuesta = {
       id: 0,

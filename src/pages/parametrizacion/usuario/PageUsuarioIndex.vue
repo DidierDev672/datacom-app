@@ -28,7 +28,7 @@
       </q-td>
     </q-table>
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
-      <q-btn fab icon="add" color="primary" :to="{ name: 'UsuarioCreate' }">
+      <q-btn fab icon="add" color="primary" :to="{ name: 'PageUsuarioCreate' }">
         <q-tooltip>
           Agregar nuevo registro
         </q-tooltip>
@@ -88,7 +88,7 @@ export default {
     seleccionar(evt, row, index) {
       console.log(row);
       this.$router.push({
-        name: "UsuarioEdit",
+        name: "PageUsuarioEdit",
         params: { id: row.id }
       });
     }

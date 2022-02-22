@@ -18,7 +18,7 @@
       </q-td>
     </q-table>
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
-      <q-btn fab icon="add" color="primary" :to="{ name: 'nueva-categoria' }">
+      <q-btn fab icon="add" color="primary" :to="{ name: 'PageCategoriaCreate' }">
         <q-tooltip>
           Agregar categoria
         </q-tooltip>
@@ -77,7 +77,7 @@ export default {
     ...mapMutations("categoria", ["setCategoriaSuccess"]),
     seleccionar(evt, row, index) {
       this.setCategoriaSuccess(row);
-      this.$router.push({ name: "categoria", params: { id: row.id } });
+      this.$router.push({ name: "PageCategoriaEdit", params: { id: row.id } });
     },
     getOfflineCategorias() {
       let db = openDB("workbox-background-sync").then(db => {

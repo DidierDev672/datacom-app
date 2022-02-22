@@ -32,7 +32,7 @@
       </q-td>
     </q-table>
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
-      <q-btn fab icon="add" color="primary" :to="{ name: 'nuevo-parametro' }">
+      <q-btn fab icon="add" color="primary" :to="{ name: 'PageParametroCreate' }">
         <q-tooltip>
           Agregar Parametro
         </q-tooltip>
@@ -97,7 +97,7 @@ export default {
     ...mapMutations("categoria", ["setCategoriaSuccess"]),
     seleccionar(evt, row, index) {
       this.setParametroSuccess(row);
-      this.$router.push({ name: "parametro", params: { id: row.id } });
+      this.$router.push({ name: "PageParametroEdit", params: { id: row.id } });
     },
     cargarParametrosPorcategoria(valor) {
       console.log("cargo datos " + valor.id);

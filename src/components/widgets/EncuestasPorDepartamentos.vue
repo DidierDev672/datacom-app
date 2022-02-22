@@ -2,7 +2,7 @@
   <div>
     <q-card class="my-card">
       <q-card-section>
-        <div class="text-h6">Encuestas por departamentos</div>
+        <div class="text-h6">Viviendas por departamentos</div>
         <div class="text-subtitle2">Datacom</div>
       </q-card-section>
 

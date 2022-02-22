@@ -6,7 +6,7 @@
         <q-list bordered>
           <q-item
             clickable
-            :to="{ name: 'categorias' }"
+            :to="{ name: 'PageCategoriaIndex' }"
             v-ripple
             class="q-py-md"
           >
@@ -28,7 +28,7 @@
 
           <q-item
             clickable
-            :to="{ name: 'parametros' }"
+            :to="{ name: 'PageParametroIndex' }"
             v-ripple
             class="q-py-md"
           >
@@ -48,7 +48,7 @@
 
           <q-item
             clickable
-            :to="{ name: 'nueva-organizacion' }"
+            :to="{ name: 'PageJacCreate' }"
             v-ripple
             class="q-py-md"
           >
@@ -68,7 +68,7 @@
 
           <q-item
             clickable
-            :to="{ name: 'UsuariosIndex' }"
+            :to="{ name: 'PageUsuarioIndex' }"
             v-ripple
             class="q-py-md"
           >
@@ -88,7 +88,7 @@
 
           <q-item
             clickable
-            :to="{ name: 'ComunidadIndex' }"
+            :to="{ name: 'PageComunidadIndex' }"
             v-ripple
             class="q-py-md"
           >
@@ -108,7 +108,7 @@
 
           <q-item
             clickable
-            :to="{ name: 'municipios' }"
+            :to="{ name: 'PageMunicipioIndex' }"
             v-ripple
             class="q-py-md"
           >
@@ -128,7 +128,7 @@
 
           <q-item
             clickable
-            :to="{ name: 'DepartamentoIndex' }"
+            :to="{ name: 'PageDepartamentoIndex' }"
             v-ripple
             class="q-py-md"
           >

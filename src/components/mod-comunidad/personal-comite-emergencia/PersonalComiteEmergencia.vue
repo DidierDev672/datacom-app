@@ -28,7 +28,7 @@
             </thead>
             <tbody>
             <tr v-for="personalComite in personalList" :key="personalComite.id">
-              <td>{{ personalComite.nombre }}</td>
+              <td>{{ personalComite.nombre }} {{ personalComite.primerApellido }} {{ personalComite.segundoApellido }}</td>
               <td>{{ personalComite.tipoCargo.nombre }}</td>
               <td>{{ personalComite.telefono }}</td>
               <td>

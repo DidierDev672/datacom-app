@@ -1,6 +1,36 @@
 import axios from "axios";
 import { URL_API } from "../../utils/config";
 
+export function bajarReporteAction({ commit }) {
+  //commit("inicializarAccion");
+  const urlService = "reportes-vivienda";
+  return new Promise((resolve, reject) => {
+    axios
+      .get(`${URL_API}/${urlService}/hcabeza/por-encuestador`,{ responseType: 'blob'})
+      .then(({ data }) => {
+        // commit("setListaEncuestaSuccess", data);
+        const url = window.URL.createObjectURL(data);
+          // console.log('Url: ', url)
+          const a = document.createElement('a');
+          a.setAttribute('style', 'display:none;');
+          document.body.appendChild(a);
+          a.href = url;
+          a.download = 'reporte.pdf';
+          a.click();
+          return url;
+        //resolve(data);
+      })
+      .catch(error => {
+        console.log(
+          "Ocurrió un error al bajar el reporte: ",
+          error.response
+        );
+        // commit("setActionFail", err-or.response);
+        reject(error.response);
+      });
+  });
+}
+
 // Acciones para la lista
 export function cargarListaEncuestaAction({ commit }) {
   commit("inicializarAccion");

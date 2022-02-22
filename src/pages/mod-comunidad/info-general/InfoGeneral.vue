@@ -112,7 +112,7 @@
         <div v-if="step == 2">
           <q-form ref="limitesForm">
             <p class="text-h6 q-mt-md q-mb-sm">1. Datos de la Comunidad</p>
-            <q-card flat bordered class="my-card q-mb-md">
+            <!-- <q-card flat bordered class="my-card q-mb-md">
               <q-card-section class="q-pb-none">
                 <div class="text-h6 q-mb-none">No. Manzanas</div>
               </q-card-section>
@@ -124,7 +124,7 @@
                   </div>
                 </div>
               </q-card-section>
-            </q-card>
+            </q-card> -->
 
             <q-card flat bordered class="my-card q-mb-md">
               <q-card-section class="q-pb-none">
@@ -158,7 +158,7 @@
               </q-card-section>
             </q-card>
 
-            <q-card flat bordered class="my-card q-mb-md">
+            <!-- <q-card flat bordered class="my-card q-mb-md">
               <q-card-section class="q-pb-none">
                 <div class="text-h6 q-mb-none">Longitud del Oleoducto</div>
               </q-card-section>
@@ -170,7 +170,7 @@
                   </div>
                 </div>
               </q-card-section>
-            </q-card>
+            </q-card> -->
           </q-form>
         </div>
 
@@ -372,7 +372,7 @@ export default {
             usuarioActualizacion: this.getUser
           }).then(data => {
             this.$router.push({
-              name: "c-poblacion",
+              name: "c-organizaciones",
               params: { id: this.encuestaID }
             });
           });

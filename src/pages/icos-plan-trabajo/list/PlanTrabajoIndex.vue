@@ -24,13 +24,13 @@
         />
       </template>
     </q-table>
-    <q-page-sticky position="bottom-right" :offset="[18, 18]">
+    <!-- <q-page-sticky position="bottom-right" :offset="[18, 18]">
       <q-btn fab icon="add" color="primary" :to="{ name: 'PlanTrabajoCreate' }">
         <q-tooltip>
           Agregar Plan de Trabajo
         </q-tooltip>
       </q-btn>
-    </q-page-sticky>
+    </q-page-sticky> -->
   </div>
 </template>
 
@@ -66,7 +66,7 @@ export default {
   methods: {
     seleccionar(evt, row, index) {
       this.$router.push({
-        name: "PlanTrabajoActividades",
+        name: "PlanTrabajoActividadesIndex",
         params: { id: row.id }
       });
     }

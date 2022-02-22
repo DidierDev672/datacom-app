@@ -6,6 +6,7 @@
       :columns="columns"
       row-key="name"
       :pagination.sync="pagination"
+      :filter="filter"
       @request="onRequest"
       @row-click="seleccionar"
       :loading="getEncuestaState.loading"
@@ -15,6 +16,17 @@
         <div class="col-4 q-table__title">Encuestas en Proceso</div>
 
         <q-space />
+        <q-input
+          borderless
+          dense
+          debounce="300"
+          v-model="filter"
+          placeholder="Filtrar resultados"
+        >
+          <template v-slot:append>
+            <q-icon name="search" />
+          </template>
+        </q-input>
         <q-btn
           flat
           round
@@ -54,7 +66,7 @@ export default {
           name: "tipoEncuesta",
           align: "left",
           label: "Tipo de Encuesta",
-          field: row => row.tipoEncuesta.title,
+          field: row => row.tipoEncuesta,
           sortable: true
         },
         {
@@ -64,23 +76,23 @@ export default {
           field: "descripcion"
         },
         {
-          name: "anio",
+          name: "fecha",
           align: "left",
           label: "Fecha de aplicación",
-          field: row => row.anio + "-" + row.mes + "-" + row.dia,
+          field: row => row.fecha,
           sortable: true
         },
         {
           name: "tipoEstudio",
           align: "left",
           label: "Tipo de Estudio",
-          field: row => row.tipoEstudio.nombre
+          field: row => row.tipoEstudio
         },
         {
-          name: "usuarioCreacion",
+          name: "usuario",
           align: "left",
           label: "Usuario",
-          field: "usuarioCreacion"
+          field: "usuario"
         },
         { name: "acciones", label: "", field: "acciones" }
       ]
@@ -101,7 +113,7 @@ export default {
     ...mapActions("encuesta", ["cargarListaEncuestaEnProcesoAction"]),
     seleccionar(evt, row, index) {
       console.log("Encuesta: ", row);
-      let tipoEncuestaID = row.tipoEncuesta.id;
+      let tipoEncuestaID = row.tipoEncuestaId;
       switch (tipoEncuestaID) {
         case TIPO_ENCUESTA.VIVIENDA:
           console.log("Tipo encuesta vivienda");
@@ -124,6 +136,11 @@ export default {
     onRequest(props) {
       const { page, rowsPerPage, sortBy, descending } = props.pagination;
       const filter = props.filter;
+
+    //Filtramos solo cuando la persona ha escrito 3 caracteres en el control
+      if(filter.length > 0 && filter.length < 3){
+        return
+      }
 
       // get all rows if "All" (0) is selected
       const fetchCount =

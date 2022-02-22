@@ -27,14 +27,14 @@
             <thead>
               <tr>
                 <th class="text-center">Servicio</th>
-                <th class="text-center">Frecuencia</th>
+                <!-- <th class="text-center">Frecuencia</th> -->
                 <th class="text-center"></th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="servicio in serviciosList" :key="servicio.id">
                 <td>{{ servicio.tipoServicio.nombre }}</td>
-                <td>{{ servicio.frecuenciaServicio.nombre }}</td>
+                <!-- <td>{{ servicio.frecuenciaServicio.nombre }}</td> -->
                 <td>
                   <q-btn
                     flat

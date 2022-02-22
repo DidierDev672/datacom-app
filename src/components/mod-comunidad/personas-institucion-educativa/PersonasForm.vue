@@ -48,7 +48,7 @@
             </div>
           </div>
 
-          <div class="row q-col-gutter-sm">
+          <!-- <div class="row q-col-gutter-sm">
             <div class="col-xs-12">
               <q-input
                 outlined
@@ -56,7 +56,7 @@
                 label="Dirección"
               />
             </div>
-          </div>
+          </div> -->
 
           <div class="row q-col-gutter-sm">
             <div class="col-xs-12">

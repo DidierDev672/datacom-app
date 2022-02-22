@@ -35,7 +35,7 @@
               <q-input
                 outlined
                 v-model="medio.nombre"
-                label="Nombre del medio de comunicación"
+                label="Nombre del local"
               />
             </div>
           </div>
@@ -58,7 +58,7 @@
             </div>
           </div>
 
-          <div class="row q-col-gutter-sm">
+          <!-- <div class="row q-col-gutter-sm">
             <div class="col-xs-12">
               <q-input
                 outlined
@@ -67,9 +67,9 @@
                 label="Alcance que tiene el medio de comunicación"
               />
             </div>
-          </div>
+          </div> -->
 
-          <div class="row q-col-gutter-sm">
+          <!-- <div class="row q-col-gutter-sm">
             <div class="col-xs-12">
               El medio es público?
 
@@ -79,7 +79,7 @@
                 v-model="medio.publico"
               />
             </div>
-          </div>
+          </div> -->
         </q-form>
       </q-card-section>
 

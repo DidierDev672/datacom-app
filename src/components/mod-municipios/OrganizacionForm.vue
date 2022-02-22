@@ -33,7 +33,7 @@
             </div>
           </div>
 
-          <div class="row q-col-gutter-sm">
+          <!-- <div class="row q-col-gutter-sm">
             <div class="col-xs-12">
               <q-input
                 outlined
@@ -45,7 +45,7 @@
                 label="Nombre de la organización"
               />
             </div>
-          </div>
+          </div> -->
 
           <div class="row q-col-gutter-sm">
             <div class="col-xs-12">
@@ -104,7 +104,7 @@
             </div>
           </div>
 
-          <div class="row q-col-gutter-sm">
+          <!-- <div class="row q-col-gutter-sm">
             <div class="col-xs-12">
               <q-input
                 outlined
@@ -116,7 +116,7 @@
                 label="Dirección"
               />
             </div>
-          </div>
+          </div> -->
         </q-form>
       </q-card-section>
 
@@ -253,18 +253,18 @@ export default {
       tipoActividad: {
         required
       },
-      nombre: {
-        required,
-        minLength: minLength(5)
-      },
+      // nombre: {
+      //   required,
+      //   minLength: minLength(5)
+      // },
       contacto: {
         required,
         minLength: minLength(5)
       },
-      direccion: {
-        required,
-        minLength: minLength(5)
-      },
+      // direccion: {
+      //   required,
+      //   minLength: minLength(5)
+      // },
       idOrganizacion: {
         required
       }

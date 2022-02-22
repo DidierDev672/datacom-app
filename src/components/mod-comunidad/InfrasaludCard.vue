@@ -6,7 +6,7 @@
                 <q-item-label>{{ infrasalud.tipoInfraestructura.nombre }}</q-item-label>
             </q-item-section>
 
-            <q-item-section side top>              
+            <q-item-section side top>
                 <div class="text-grey-8 ">
                     <q-btn size="12px" flat dense round icon="more_vert" >
                         <q-menu cover auto-close>
@@ -14,18 +14,18 @@
                                 <q-item clickable @click="editar">
                                     <q-item-section>Editar información</q-item-section>
                                 </q-item>
-                                <q-item clickable @click="agregarPersonal">
+                                <!-- <q-item clickable @click="agregarPersonal">
                                     <q-item-section>Agregar Personal</q-item-section>
-                                </q-item>
+                                </q-item> -->
                                 <q-item clickable @click="agregarServicio">
                                     <q-item-section>Agregar Servicio</q-item-section>
                                 </q-item>
                             </q-list>
                         </q-menu>
                     </q-btn>
-                </div>        
+                </div>
             </q-item-section>
-        </q-item>    
+        </q-item>
 
         <q-item >
             <q-item-section top>
@@ -72,7 +72,7 @@
         </q-item>
 
 
-    
+
 
     </q-list>
 

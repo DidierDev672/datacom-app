@@ -24,7 +24,7 @@
         />
       </template>
     </q-table>
-    <q-page-sticky position="bottom-right" :offset="[18, 18]">
+    <!-- <q-page-sticky position="bottom-right" :offset="[18, 18]">
       <q-btn
         fab
         icon="add"
@@ -35,7 +35,7 @@
           Agregar Actividad
         </q-tooltip>
       </q-btn>
-    </q-page-sticky>
+    </q-page-sticky> -->
   </div>
 </template>
 
@@ -99,10 +99,10 @@ export default {
   methods: {
     ...mapActions("planTrabajo", ["buscarPlanTrabajoAction"]),
     seleccionar(evt, row, index) {
-      this.$router.push({
-        name: "PlanTrabajoActividadEdit",
-        params: { actividadId: row.id }
-      });
+      // this.$router.push({
+      //   name: "PlanTrabajoActividadEdit",
+      //   params: { actividadId: row.id }
+      // });
     }
   },
   computed: {

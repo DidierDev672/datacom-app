@@ -1,65 +1,66 @@
 // app global css in SCSS form
 
-@import "custom/dashboard";
+@import 'custom/dashboard';
 
 body {
-  font-family: "Montserrat", "Robotos", "Helvetica Neue", Helvetica, Arial,
-    sans-serif;
-  font-size: $html-font-size !important;
-  color: #464d69;
-  font-weight: 500;
-  // background-color: rgb(244, 244, 245);
-  background-color: #fff;
+    font-family: 'Montserrat', 'Robotos', 'Helvetica Neue', Helvetica, Arial,
+        sans-serif;
+    font-size: $html-font-size !important;
+    //color: #464d69;
+    color: #898888;
+    font-weight: 500;
+    // background-color: rgb(244, 244, 245);
+    background-color: #fff;
 }
 
 .small-screen-only {
-  @media (max-width: $breakpoint-xs-max) {
-    display: block;
-  }
-  @media (min-width: $breakpoint-sm-min) {
-    display: none;
-  }
+    @media (max-width: $breakpoint-xs-max) {
+        display: block;
+    }
+    @media (min-width: $breakpoint-sm-min) {
+        display: none;
+    }
 }
 
 .large-screen-only {
-  @media (max-width: $breakpoint-xs-max) {
-    display: none;
-  }
-  @media (min-width: $breakpoint-sm-min) {
-    display: block;
-  }
+    @media (max-width: $breakpoint-xs-max) {
+        display: none;
+    }
+    @media (min-width: $breakpoint-sm-min) {
+        display: block;
+    }
 }
 
 .constrain {
-  max-width: 975px;
-  margin: 0 auto;
+    max-width: 975px;
+    margin: 0 auto;
 }
 
 @media print {
-  /* Contenido del fichero print.css */
+    /* Contenido del fichero print.css */
 
-  .text-center {
-    text-align: center;
-  }
+    .text-center {
+        text-align: center;
+    }
 
-  .report-list .q-item__section {
-    border-right: 1px solid #ccc;
-  }
+    .report-list .q-item__section {
+        border-right: 1px solid #ccc;
+    }
 
-  .q-list--bordered {
-    border: 1px solid rgba(0, 0, 0, 0.12);
-  }
+    .q-list--bordered {
+        border: 1px solid rgba(0, 0, 0, 0.12);
+    }
 
-  @page {
-    size: auto; /* auto is the initial value */
-    margin: 10%;
-    margin-top: 0;
-  }
+    @page {
+        size: auto; /* auto is the initial value */
+        margin: 10%;
+        margin-top: 0;
+    }
 
-  header,
-  footer,
-  nav,
-  aside {
-    display: none;
-  }
+    header,
+    footer,
+    nav,
+    aside {
+        display: none;
+    }
 }
