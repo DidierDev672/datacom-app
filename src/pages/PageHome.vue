@@ -1,6 +1,9 @@
 <template>
-    <div class="q-ma-sm">
-        <div class="text-h6 q-px-xs q-py-md ">Dashboard</div>
+    <div >
+        <div class="text-h6 page-title-box" >Dashboard</div>
+        <div class="q-ma-md">
+            
+        
         <div class="row q-col-gutter-sm q-mb-md">
             <div
                 class="col-xs-12 col-md-3"
@@ -34,24 +37,19 @@
                 </q-card>
             </div>
         </div>
-        <div class="row q-col-gutter-sm">
-            <div class="col-xs-12 col-md-5">
-                <encuestas-por-departamentos></encuestas-por-departamentos>
-            </div>
-            <div class="col-xs-12 col-md-7">
-                <ultimas-organizaciones></ultimas-organizaciones>
-            </div>
+        <encuestas-por-departamentos></encuestas-por-departamentos>
+                   
+        
         </div>
     </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import UltimasOrganizaciones from 'components/widgets/UltimasOrganizaciones.vue';
 import EncuestasPorDepartamentos from 'components/widgets/EncuestasPorDepartamentos.vue';
 export default {
     name: 'PageHome',
-    components: { UltimasOrganizaciones, EncuestasPorDepartamentos },
+    components: { EncuestasPorDepartamentos },
     data() {
         return {
             totalEncuestas: [],
@@ -110,3 +108,8 @@ export default {
     },
 };
 </script>
+
+<style lang="sass">
+
+
+</style>

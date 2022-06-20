@@ -11,9 +11,11 @@
                     aria-label="Menu"
                     @click="leftDrawerOpen = !leftDrawerOpen"
                 />
-                <q-toolbar-title>
-                    Datacom
-                </q-toolbar-title>
+                <q-input dark filled placeholder="Buscar" class="q-ml-md">
+                    <template v-slot:prepend>
+                        <q-icon name="search" />
+                    </template>
+                </q-input>
                 <!-- <nav-bar-user /> -->
             </q-toolbar>
         </q-header>
@@ -23,6 +25,7 @@
             v-model="leftDrawerOpen"
             show-if-above
             bordered
+            :width="255"
         >
             <div class="logo-sidebar">
                 <img width="80px" src="/icons/app-icon.png" alt="" />
@@ -43,78 +46,6 @@
                 </q-item>
             </q-list>
         </q-drawer>
-        <q-footer class="bg-white" bordered>
-            <div
-                v-if="showAppInstallBanner"
-                class="banner-container bg-primary"
-            >
-                <transition
-                    appear
-                    enter-active-class="animated fadeIn"
-                    leave-active-class="animated fadeOut"
-                >
-                    <div class="constrain">
-                        <q-banner
-                            inline-actions
-                            class="bg-primary text-white q-mb-sm"
-                            dense
-                        >
-                            <template v-slot:avatar>
-                                <q-icon name="ti-instagram" color="white" />
-                            </template>
-                            <b>¿Desea instalar Datacom?</b>
-                            <template v-slot:action>
-                                <q-btn
-                                    dense
-                                    @click="installApp"
-                                    flat
-                                    label="Si"
-                                    class="q-mr-sm"
-                                />
-                                <q-btn
-                                    dense
-                                    @click="neverShowAppInstallBanner"
-                                    flat
-                                    label="No"
-                                />
-                            </template>
-                        </q-banner>
-                    </div>
-                </transition>
-            </div>
-            <q-tabs
-                class="text-dark small-screen-only q-pt-sm"
-                active-color="primary"
-                indicator-color="transparent"
-            >
-                <q-route-tab
-                    dense
-                    to="/"
-                    name="home"
-                    icon="ti-home"
-                    label="Inicio"
-                />
-                <q-route-tab
-                    dense
-                    to="/encuestas"
-                    name="ecuestas"
-                    icon="ti-view-list"
-                    label="Encuestas"
-                />
-                <!-- <q-route-tab
-          to="/reportes"
-          name="reportes"
-          icon="ti-export"
-          label="Reportes" /> -->
-                <q-route-tab
-                    dense
-                    to="/parametrizacion"
-                    name="parametrizacion"
-                    icon="ti-settings"
-                    label="Parametros"
-                />
-            </q-tabs>
-        </q-footer>
 
         <q-page-container>
             <keep-alive :include="['PageCategorias']">
@@ -126,11 +57,9 @@
 </template>
 
 <script>
-// import { exportFile } from 'quasar'
 import { mapActions } from 'vuex';
 import EssentialLink from 'components/EssentialLink';
-// import NavBarUser from "components/NavBarUser";
-// import Tour from "components/Tour/Tour";
+
 // Initialize deferredPrompt for use later to show browser install prompt.
 let deferredPrompt;
 export default {
@@ -159,24 +88,24 @@ export default {
                     icon: 'ti-bar-chart-alt',
                     link: '/encuestas',
                 },
-                // {
-                //   title: "Municipios",
-                //   caption: "",
-                //   icon: "ti-map-alt",
-                //   link: "/app/municipio"
-                // },
-                // {
-                //   title: "Comunidades",
-                //   caption: "",
-                //   icon: "ti-location-pin",
-                //   link: "/app/comunidad"
-                // },
-                // {
-                //   title: "Viviendas",
-                //   caption: "",
-                //   icon: "ti-home",
-                //   link: "/app/vivienda"
-                // },
+                {
+                  title: "Municipios",
+                  caption: "",
+                  icon: "ti-map-alt",
+                  link: "/app/municipios"
+                },
+                {
+                  title: "Comunidades",
+                  caption: "",
+                  icon: "ti-location-pin",
+                  link: "/app/comunidad"
+                },
+                {
+                  title: "Viviendas",
+                  caption: "",
+                  icon: "ti-home",
+                  link: "/app/vivienda"
+                },
                 {
                     title: 'Jac',
                     caption: '',
@@ -254,7 +183,7 @@ export default {
 </script>
 <style lang="sass">
 body
-  background-color: #fff
+  background-color: #f3f3f9
 
 .q-separator
   background-color: rgba(255,255,255,0.13)
@@ -272,8 +201,7 @@ body
 
 .bg-sidebar
  aside
-  background-color: #333333
-  color: #898888
+  color: #6d7080
 
 
 .q-toolbar
@@ -288,5 +216,5 @@ body
     font-size: 30px
 .fondo-nav
   background: #248b48
-  background: linear-gradient( 135deg, #248b48 0%,#95b947 52%,#64ab9b 100%)
+  background: linear-gradient( 135deg, #248b48 0%,#95b947 62%,#64ab9b 100%)
 </style>

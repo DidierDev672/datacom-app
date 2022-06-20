@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-xs-12 col-sm-6 offset-sm-3">
         <div class="text-h6 q-px-xs q-py-md ">Parametrización</div>
-        <q-list bordered>
+        <q-list padding bordered class="bg-white">
           <q-item
             clickable
             :to="{ name: 'PageCategoriaIndex' }"

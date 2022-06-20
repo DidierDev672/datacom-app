@@ -1,12 +1,11 @@
 ﻿<template>
-    <div class="q-ma-sm">
+<div>
+    <div class="text-h6 page-title-box" > Seguimiento organizaci&oacute;n</div>
+    <div class="q-ma-md">
         <div class="text-right logo">
             <img width="164px" src="/icons/logo.png" />
         </div>
-        <div class="text-h6 text-center q-px-xs q-py-md " v-if="evaluacion.jac">
-            Seguimiento organizaci&oacute;n
-        </div>
-        <q-markup-table dense>
+        <q-markup-table dense flat bordered square class="q-mb-sm">
             <tbody>
                 <tr>
                     <td>Junta de acci&oacute;n comunal</td>
@@ -27,13 +26,20 @@
             </tbody>
         </q-markup-table>
 
+        <q-card class="q-mb-sm">
+            <q-card-section>                
+                <ico-radar :title="evaluacion.jac.nombre"></ico-radar> 
+            </q-card-section>
+        </q-card>
+        
         <q-card
             flat
             bordered
-            class="my-card bg-grey-1 q-mb-sm"
+            class="my-card q-mb-sm"
             v-for="tema in temas"
             :key="tema.id"
         >
+        
             <q-card-section class="q-pb-none">
                 <div class="row items-center no-wrap">
                     <div class="col">
@@ -62,9 +68,10 @@
                         v-for="indicador in tema.indicadores"
                         :key="indicador.id"
                     >
-                        <q-item-section>{{
-                            indicador.indicador.descripcion
-                        }}</q-item-section>
+                        <q-item-section>
+                            <q-item-label>{{ indicador.indicador.descripcion }}</q-item-label>
+                            <q-item-label caption>R//: {{ indicador.descripcionCalificacion }}</q-item-label>
+                        </q-item-section>
                         <q-item-section avatar>
                             <q-item-label>{{
                                 indicador.calificacion
@@ -78,13 +85,14 @@
         <q-markup-table wrap-cells dense flat bordered square>
             <tbody>
                 <tr>
-                    <th rowspan="4">
+                    <th rowspan="5">
                         Plan de mejoramiento
                     </th>
                     <th>Valoración</th>
                     <th>Proyección</th>
                     <th>Actividad a realizar</th>
-                    <th>Plazo</th>
+                    <th>Nivel</th>
+                    <th>Plazo para logros</th>
                 </tr>
                 <tr>
                     <td>
@@ -97,9 +105,10 @@
                             1
                         </q-chip>
                     </td>
-                    <td>Plan de choque</td>
-                    <td>Acompañamiento, Asesoría y capacitación</td>
-                    <td>Corto</td>
+                    <td>Plan de choque urgente</td>
+                    <td>Acompañamiento, definición, asesoría y capacitación</td>
+                    <td>Inferior</td>
+                    <td>6 meses</td>
                 </tr>
                 <tr>
                     <td>
@@ -109,12 +118,29 @@
                             text-color="white"
                             class="full-width"
                         >
-                            Entre 2 y 2,99
+                            2
                         </q-chip>
                     </td>
-                    <td>Fortalecimiento</td>
-                    <td>Asesoría y Sistematización</td>
-                    <td>Mediano</td>
+                    <td>Plan de mejora mediano plazo</td>
+                    <td>Seguimiento, asesoría, capacitación</td>
+                    <td>Medio</td>
+                    <td>4 meses</td>
+                </tr>
+                <tr>
+                    <td>
+                        <q-chip
+                            square
+                            color="yellow"
+                            text-color="white"
+                            class="full-width text-center"
+                        >
+                            3
+                        </q-chip>
+                    </td>
+                    <td>Plan de mejora mediano plazo</td>
+                    <td>Seguimiento</td>
+                    <td>Intermedio</td>
+                    <td>4 meses</td>
                 </tr>
                 <tr>
                     <td>
@@ -124,13 +150,15 @@
                             text-color="white"
                             class="full-width text-center"
                         >
-                            3
+                            4
                         </q-chip>
                     </td>
-                    <td>Mejoramiento contínuo</td>
-                    <td>Seguimiento</td>
-                    <td>Largo</td>
+                    <td>Plan mejoramiento continuo, gestion, sostenibilidad </td>
+                    <td>Seguimiento, asesoría, gestión, rendición de cuentas</td>
+                    <td>Superior</td>
+                    <td>2 meses</td>
                 </tr>
+                
             </tbody>
         </q-markup-table>
 
@@ -156,13 +184,17 @@
             </q-fab>
         </q-page-sticky>
     </div>
+</div>
+    
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import IcoRadar from 'components/widgets/IcoRadar.vue'
 import { log } from 'util';
 import print from 'print-js';
 export default {
+    components: { IcoRadar },
     data() {
         return {
             evaluacionID: 0,
@@ -181,7 +213,7 @@ export default {
         this.evaluacionID = this.$route.params.id;
         this.buscarIcoAction(this.evaluacionID).then((data) => {
             this.evaluacion = data;
-            console.log('data: ', data);
+            console.log('data: ', data);            
             this.registro = data.indicadores['0'];
 
             this.tema = this.registro.indicador.tema;
@@ -198,8 +230,9 @@ export default {
                 this.countTemas = 0;
                 this.calificacionTema = 0;
                 this.indicadores = data.indicadores.filter((indicador) => {
-                    // console.log("Quien es indicador: ", indicador);
+                    console.log("Quien es indicador: ", indicador);
                     if (indicador.indicador.tema.id === tema.id) {
+                        console.log('Indicador que coincide: ', indicador)
                         return { indi: indicador.id };
                     }
                 });
@@ -216,6 +249,7 @@ export default {
                         this.calificacionTema / this.indicadores.length,
                 });
             });
+            console.log('Temas: ', this.temas)
         });
     },
     methods: {

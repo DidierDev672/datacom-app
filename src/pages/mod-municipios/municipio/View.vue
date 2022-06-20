@@ -2024,9 +2024,6 @@ export default {
   .q-item__section
     border-right: 1px solid #ccc
 
-body
-  font-size: 12px !important
-
 .fondo
   background-color: #E8E8E8
 

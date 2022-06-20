@@ -1,10 +1,20 @@
 ﻿// dashobard crypto
 
 .organizacion-table {
-    max-height: 300px;
+    max-height: 350px;
     color: #898888;
 }
 
 .q-table__card {
     color: #898888;
+}
+
+.page-title-box {
+    padding: 10px 2.5rem;
+    background-color: #fff;
+    -webkit-box-shadow: 0 1px 2px rgb(56 65 74 / 15%);
+    box-shadow: 0 1px 2px rgb(56 65 74 / 15%);
+    border-bottom: 1px solid none;
+    border-top: 1px solid none;
+    margin: -5px 0 1.5rem -1.5rem;
 }

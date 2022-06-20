@@ -31,9 +31,14 @@ body {
     }
 }
 
+
+
 .constrain {
-    max-width: 975px;
     margin: 0 auto;
+}
+
+.full-alto {
+  height: 70vh;
 }
 
 @media print {

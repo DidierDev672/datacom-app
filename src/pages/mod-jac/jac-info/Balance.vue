@@ -1,6 +1,8 @@
 ﻿<template>
-  <div class="q-ma-sm">
-    <q-form ref="balanceForm">
+<div>
+  <div class="text-h6 page-title-box" >Balance</div>
+  <div class="q-ma-md">
+    <q-form ref="balanceForm" class="bg-white q-pa-md">
       <p class="text-h6">9. Balance financiero</p>
       <p class="text-h6">9.1. Activos corrientes</p>
 
@@ -151,6 +153,25 @@
 
       <div class="row q-col-gutter-sm q-mt-md">
         <div class="col-xs-12 col-md-6">
+          <p class="text-h6">Vehículos - Maquinarias</p>
+          <!-- <q-input outlined dense v-model.number="jacInfoDB.terrenos" /> -->
+          <q-field v-model="jacInfoDB.vehiculos">
+            <template v-slot:control="{ id, floatingLabel, value, emitValue }">
+              <money
+                :id="id"
+                class="q-field__input"
+                :value="value"
+                @input="emitValue"
+                v-bind="decimales"
+                v-show="floatingLabel"
+              />
+            </template>
+          </q-field>
+        </div>
+      </div>
+
+      <div class="row q-col-gutter-sm q-mt-md">
+        <div class="col-xs-12 col-md-6">
           <p class="text-h6">Otros activos fijos</p>
           <q-field v-model="jacInfoDB.otrosActivosFijos">
             <template v-slot:control="{ id, floatingLabel, value, emitValue }">
@@ -262,6 +283,7 @@
       </div>
     </q-form>
   </div>
+</div>
 </template>
 
 <script>
@@ -299,6 +321,7 @@ export default {
       mueblesEnseres: 0,
       construcciones: 0,
       terrenos: 0,
+      vehiculos: 0,
       otrosActivosFijos: 0,
       obligacionesBancarias: 0,
       obligacionesTributarias: 0,
@@ -346,6 +369,7 @@ export default {
         this.jacInfoDB.mueblesEnseres +
         this.jacInfoDB.construcciones +
         this.jacInfoDB.terrenos +
+        this.jacInfoDB.vehiculos +
         this.jacInfoDB.otrosActivosFijos
       );
     },

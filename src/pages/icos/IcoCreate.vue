@@ -36,7 +36,7 @@
                     <q-select
                       use-input
                       v-model="evaluacion.jac"
-                      option-label="nombre"
+                      option-label="jac"
                       option-value="id"
                       hint="Seleccione la organización"
                       :options="jacs"
@@ -73,7 +73,7 @@
 
             <q-card-section>
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12">
                   <!-- <q-input
                     dense
                     v-model="indicador.calificacion"
@@ -82,7 +82,7 @@
                   /> -->
                   <q-option-group
                     v-model="indicador.calificacion"
-                    :options="calificacionOptions"
+                    :options="indicador.respuestas"
                   />
                 </div>
               </div>
@@ -143,18 +143,23 @@ export default {
       jacs: [],
       calificacionOptions: [
         {
-          label: "No existe",
+          label: "Inferior",
           value: 1,
           color: "red"
         },
         {
-          label: "Aceptable",
+          label: "Medio",
           value: 2,
           color: "orange"
         },
         {
-          label: "Existe",
+          label: "Intermedio",
           value: 3,
+          color: "yellow"
+        },
+        {
+          label: "Superior",
+          value: 4,
           color: "green"
         }
       ],
@@ -163,10 +168,19 @@ export default {
   },
   created() {
     this.jacOptions = this.getJacState.lista;
+    // this.cargarListaIndicadoresAction();
     this.getIndicadoresState.lista.forEach(indicador => {
+      console.log('Indicador: ', indicador)
       this.indicadores.push({
         indicador: indicador,
-        calificacion: 1
+        respuestas: indicador.respuestas.map(resp => {
+          return {
+            label: resp.descripcion,
+            value: resp.valoracion
+          }
+        }),
+        calificacion: 1,
+        descripcionCalificacion: ''
       });
     });
     this.evaluacion = {
@@ -179,6 +193,8 @@ export default {
     };
   },
   methods: {
+    ...mapActions('jacInfo', ['cargarListaJacInfoAction']),
+    // ...mapActions("indicadores", ["cargarListaIndicadoresAction"]),
     siguiente() {
       this.$refs.infoEvaluacion.validate().then(success => {
         if (success) {
@@ -201,8 +217,18 @@ export default {
     },
     onSubmit() {
       const urlService = "ico-evaluacion";
-      this.evaluacion.indicadores = this.indicadores;
-      // console.log("Evaluacion: ", this.evaluacion);
+      this.evaluacion.indicadores = this.indicadores.map(indi => {
+
+       let respuestaSeleccionada = indi.respuestas.find(resp => {
+            if(resp.value === indi.calificacion){
+              return resp
+            }
+          });
+        return {
+          ...indi,
+          descripcionCalificacion: respuestaSeleccionada.label
+        }
+      })
 
       axios
         .post(`${URL_API}/${urlService}/`, this.evaluacion)
@@ -213,34 +239,45 @@ export default {
           console.log("Error al guardar: ", error);
         });
     },
-    filtrarJac(val, update) {
-      // if (val === "") {
-      //   update(() => {
-      //     this.options = this.jacOptions;
-
-      //     // with Quasar v1.7.4+
-      //     // here you have access to "ref" which
-      //     // is the Vue reference of the QSelect
-      //   });
-      //   return;
-      // }
+    filtrarJac(val, update, abort) {
+      console.log(val)
+      if (val.length < 3) {
+        abort()
+        return
+      }
 
       update(() => {
         const needle = val.toLowerCase();
-        this.jacs = this.jacOptions.filter(
-          v => v.nombre.toLowerCase().indexOf(needle) > -1
-        );
+
+        // this.jacs = this.jacOptions.filter(
+        //   v => v.nombre.toLowerCase().indexOf(needle) > -1
+        // );
+
+        this.cargarListaJacInfoAction({
+            page: 0,
+            rowsPerPage: 50,
+            filter: needle
+          }).then(response => {
+
+            this.jacs.splice(
+              0,
+              this.jacs.length,
+              ...response.data.content
+            );
+        });
+
+
       });
-    }
+    },
   },
   computed: {
     ...mapGetters("auth", ["getUser"]),
     ...mapGetters("jac", ["getJacState"]),
     ...mapGetters("indicadores", ["getIndicadoresState"]),
-    backgroundSyncSupported() {
-      if ("serviceWorker" in navigator && "SyncManager" in window) return true;
-      return false;
-    }
+    // backgroundSyncSupported() {
+    //   if ("serviceWorker" in navigator && "SyncManager" in window) return true;
+    //   return false;
+    // }
   }
 };
 </script>

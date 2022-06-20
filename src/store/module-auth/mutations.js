@@ -29,6 +29,8 @@ export function CLEAR_AUTHENTICATED_DATA(state) {
   state.tokenInfo = null;
   localStorage.removeItem("token");
   localStorage.removeItem("user");
+  localStorage.removeItem("filtroJac");
+  localStorage.removeItem("filtroIco");
   axios.defaults.headers.common["Authorization"] = "";
 }
 

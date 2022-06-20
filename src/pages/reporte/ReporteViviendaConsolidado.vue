@@ -96,7 +96,7 @@ export default {
 
             axios
                 .get(
-                    `${URL_API}/reportes-vivienda/${this.encuesta.id}/${urlService}`,
+                    `${URL_API}/reporte-de-ejemplo/${this.encuesta.id}`,
                     {
                         responseType: 'blob',
                     }

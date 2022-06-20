@@ -1,7 +1,10 @@
 ﻿<template>
   <div>
-    <q-table
+    <div class="text-h6 page-title-box" >Comunidades</div>
+    <div class="q-ma-md">
+      <q-table
       title="Encuestas de Comunidad"
+      class="my-sticky-header-table"
       :data="encuestas"
       :columns="columns"
       wrap-cells
@@ -15,17 +18,18 @@
       loading-label="Cargando información, por favor espere"
     >
       <template v-slot:top="props">
-        <div class="col-4 q-table__title">Encuestas de Comunidad</div>
+        <div class="col-4 q-table__title">Listado de Comunidades</div>
 
         <q-space />
         <q-input
           borderless
+          dark
           dense
           debounce="300"
           v-model="filter"
-          placeholder="Filtrar resultados"
+          placeholder="Filtrar comunidades"
         >
-          <template v-slot:append>
+          <template v-slot:prepend>
             <q-icon name="search" />
           </template>
         </q-input>
@@ -43,6 +47,8 @@
         <q-btn flat round icon="ti-zoom-in" />
       </q-td>
     </q-table>
+    </div>
+    
   </div>
 </template>
 
@@ -118,6 +124,7 @@ export default {
     seleccionar(evt, row, index) {
       console.log("Encuesta: ", row);
       let tipoEncuestaID = row.tipoEncuestaId;
+      this.$router.push({ name: "c-ver-encuesta", params: { id: row.id } });
     },
     onRequest(props) {
       const { page, rowsPerPage, sortBy, descending } = props.pagination;

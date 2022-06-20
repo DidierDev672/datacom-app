@@ -71,6 +71,9 @@ import encuestasComunidad from './module-comunidad/encuestas-comunidad';
 //Modulo de reportes
 import reporteFichaMunicipio from './module-reportes/municipio';
 
+// Modulo de busquedas
+import buscar from './module-busquedas'
+
 Vue.use(Vuex);
 
 /*
@@ -152,6 +155,10 @@ export default function(/* { ssrContext } */) {
 
             //Reportes
             reporteFichaMunicipio,
+
+            // Busqueda
+            buscar
+
         },
 
         // enable strict mode (adds overhead!)

@@ -4,9 +4,13 @@ import money from "v-money";
 import VueJWT from "vuejs-jwt";
 import VueTour from "vue-tour";
 
+import VueApexCharts from 'vue-apexcharts'
+
 import routes from "./routes";
 
 require("vue-tour/dist/vue-tour.css");
+
+Vue.use(VueApexCharts);
 
 Vue.use(VueRouter);
 

@@ -15,3 +15,11 @@ export function getJuntaDirectivaPorId (state) {
     return state.juntaDirectiva.lista.find(opt => opt.id === id)
   }
 }
+
+export function getOrganosRepresentacion (state) {
+  return state.juntaDirectiva.lista.filter(opt => opt.tipo.id === 249)
+}
+
+export function getOrganosJusticia (state) {
+  return state.juntaDirectiva.lista.filter(opt => opt.tipo.id === 248)
+}

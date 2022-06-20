@@ -1,31 +1,71 @@
 ﻿<template>
-  <div class="q-ma-sm">
-    <q-form ref="fiscalForm">
+<div>
+  <div class="text-h6 page-title-box" >Nivel gerencial</div>
+  <div class="q-ma-md">
+    <q-form ref="fiscalForm" class="bg-white q-pa-md">
       <p class="text-h6">7. Nivel gerencial</p>
 
       <div class="row q-col-gutter-sm">
         <div class="col-xs-12 col-md-6">
-          <p class="text-h6">Frecuencia reunión directiva</p>
+          <p class="text-h6">Frecuencia reunión junta directiva</p>
           <q-input
             outlined
             v-model="jacInfoDB.frecuenciaReunionDirectiva"
-            lazy-rules
-            :rules="[val => !!val || 'Campo requerido']"
           />
         </div>
         <div class="col-xs-12 col-md-6">
-          <p class="text-h6">¿Hace cuánto está nombrada la directiva?</p>
-          <q-input
+          <p class="text-h6">Fecha de última reunión</p>
+          <!-- <q-input
             outlined
-            v-model="jacInfoDB.tiempoJuntaDirectiva"
+            v-model="jacInfoDB.fechaReuniondirectiva"
             lazy-rules
             :rules="[val => !!val || 'Campo requerido']"
-          />
+          /> -->
+
+          <q-input
+                outlined
+                v-model="jacInfoDB.fechaReuniondirectiva"
+                mask="date"
+              >
+                <template v-slot:append>
+                  <q-icon name="event" class="cursor-pointer">
+                    <q-popup-proxy
+                      ref="qDateProxy"
+                      transition-show="scale"
+                      transition-hide="scale"
+                    >
+                      <q-date v-model="jacInfoDB.fechaReuniondirectiva">
+                        <div class="row items-center justify-end">
+                          <q-btn
+                            v-close-popup
+                            label="Close"
+                            color="primary"
+                            flat
+                          />
+                        </div>
+                      </q-date>
+                    </q-popup-proxy>
+                  </q-icon>
+                </template>
+              </q-input>
+
         </div>
       </div>
 
       <div class="row q-col-gutter-sm q-mb-md">
-        <div class="col-xs-12 col-md-4">
+<div class="col-xs-12">
+          <p class="text-h6">Es acorde frecuencia Reunión Junta Directiva Real con lo planeado</p>
+          <q-option-group
+                inline
+                :options="options"
+                type="radio"
+                v-model="jacInfoDB.esAcordeLaReunionDirectiva"
+              />
+        </div>
+      </div>
+
+      <div class="row q-col-gutter-sm q-mb-md">
+        <!-- <div class="col-xs-12 col-md-4">
           <p class="text-h6">Años de permanencia</p>
           <q-input
             outlined
@@ -34,8 +74,17 @@
             lazy-rules
             :rules="[val => !!val || 'Campo requerido']"
           />
-        </div>
+        </div> -->
         <div class="col-xs-12 col-md-4">
+          <p class="text-h6">No. dignatarios que asistieron</p>
+          <q-input
+            outlined
+            v-model="jacInfoDB.noDignatariosAsistentes"
+          />
+        </div>
+
+
+        <!-- <div class="col-xs-12 col-md-4">
           <p class="text-h6">Frecuencia reunión socios</p>
           <q-input
             outlined
@@ -43,26 +92,22 @@
             lazy-rules
             :rules="[val => !!val || 'Campo requerido']"
           />
-        </div>
+        </div> -->
         <div class="col-xs-12 col-md-4">
           <p class="text-h6">Fecha última asamblea</p>
           <q-input
             outlined
             v-model="jacInfoDB.fechaUltimaAsamblea"
-            lazy-rules
-            :rules="[val => !!val || 'Campo requerido']"
           />
         </div>
       </div>
 
       <div class="row q-col-gutter-sm">
         <div class="col-xs-12 col-sm-4">
-          <p class="text-h6">No. Socios que asistieron</p>
+          <p class="text-h6">No. afiliados que asistieron</p>
           <q-input
             outlined
             v-model="jacInfoDB.noSociosAsistentes"
-            lazy-rules
-            :rules="[val => !!val || 'Campo requerido']"
           />
         </div>
         <div class="col-xs-12 col-sm-8">
@@ -73,13 +118,11 @@
             outlined
             type="number"
             v-model.number="jacInfoDB.noDignatariosComputacion"
-            lazy-rules
-            :rules="[val => !!val || 'Campo requerido']"
           />
         </div>
       </div>
 
-      <div class="row q-col-gutter-sm">
+      <!-- <div class="row q-col-gutter-sm">
         <div class="col-xs-12">
           <p class="text-h6">¿Tiene plan veredal?</p>
           <q-option-group
@@ -89,11 +132,11 @@
             v-model="jacInfoDB.tienePlanVeredal"
           />
         </div>
-      </div>
+      </div> -->
 
       <div class="row q-col-gutter-sm q-mt-md">
         <div class="col-xs-12">
-          <p class="text-h6">¿La organización cuenta con plan de acción?</p>
+          <p class="text-h6">¿La organización cuenta con plan de acción anual?</p>
           <q-option-group
             inline
             :options="options"
@@ -107,6 +150,7 @@
         <q-btn @click="onSubmit" color="primary">Actualizar</q-btn>
       </div>
     </q-form>
+  </div>
   </div>
 </template>
 
@@ -139,7 +183,10 @@ export default {
       noSociosAsistentes: "",
       noDignatariosComputacion: "",
       tienePlanVeredal: true,
-      tienePlanAccion: true
+      tienePlanAccion: true,
+      fechaReuniondirectiva: "",
+  noDignatariosAsistentes: "",
+  esAcordeLaReunionDirectiva: false
     };
     this.buscarJacInfoAction(this.jacID).then(data => {
       if (data.id > 0) {

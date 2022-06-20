@@ -10,7 +10,7 @@
             loading-label="Cargando información, por favor espere"
         >
             <template v-slot:top="props">
-                <div class="col-8 q-table__title">6. Comités de Trabajo</div>
+                <div class="col-8 q-table__title">6. Comisiones de Trabajo</div>
 
                 <q-space />
                 <q-btn

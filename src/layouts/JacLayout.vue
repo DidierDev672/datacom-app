@@ -19,9 +19,10 @@
 
     <q-drawer
       v-model="leftDrawerOpen"
+      class="bg-sidebar"
       show-if-above
       bordered
-      content-class="bg-grey-1"
+      :width="255"
     >
       <q-list>
         <q-item-label header class="text-grey-8">
@@ -118,7 +119,35 @@
           </q-item-section>
 
           <q-item-section>
-            <q-item-label>Comités de Trabajo</q-item-label>
+            <q-item-label>Comisiones de Trabajo</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-item
+          clickable
+          :to="{ name: 'j-organos-representacion', params: { id: jacID } }"
+          exact
+        >
+          <q-item-section avatar>
+            <q-icon size="14px" name="ti-angle-right" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Órganos de representación</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-item
+          clickable
+          :to="{ name: 'j-organos-justicia', params: { id: jacID } }"
+          exact
+        >
+          <q-item-section avatar>
+            <q-icon size="14px" name="ti-angle-right" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Órganos de justicia y Conv.</q-item-label>
           </q-item-section>
         </q-item>
 
@@ -290,6 +319,13 @@ export default {
 </script>
 
 <style lang="sass">
+body
+  background-color: #f3f3f9
+
+.bg-sidebar
+ aside
+  color: #6d7080
+
 .q-toolbar
   @media (min-width: $breakpoint-sm-min)
     height: 77px

@@ -1,12 +1,10 @@
 ﻿<template>
-  <div class="q-ma-sm">
+<div>
+  <div class="text-h6 page-title-box" > Nueva encuesta de {{ tipoEncuesta ? tipoEncuesta.title : "" }}</div>
+<div class="q-ma-sm">
     <div class="row">
       <div class="col-xs-12 col-sm-6 offset-sm-3">
         <q-form ref="encuestaForm">
-          <p class="text-h6 q-mt-md">
-            Nueva encuesta de {{ tipoEncuesta ? tipoEncuesta.title : "" }}
-          </p>
-
           <q-card flat bordered class="my-card q-mb-md">
             <q-card-section>
               <div class="text-h6">Seleccione un estudio</div>
@@ -125,6 +123,8 @@
       </div>
     </div>
   </div>
+</div>
+  
 </template>
 
 <script>

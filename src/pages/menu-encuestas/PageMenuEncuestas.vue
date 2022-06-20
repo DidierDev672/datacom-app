@@ -1,8 +1,9 @@
 <template>
-  <q-page class="q-ma-sm">
-    <div class="row">
+  <q-page>
+    <div class="text-h6 page-title-box" >Opciones de encuestas</div>
+    <div class="q-ma-md">
+<div class="row">
       <div class="col-xs-12 col-sm-6 offset-sm-3">
-        <div class="text-h6 q-px-xs q-py-md ">Opciones de encuestas</div>
         <q-list padding bordered class="bg-white">
           <q-item
             clickable
@@ -79,6 +80,8 @@
         </q-list>
       </div>
     </div>
+    </div>
+    
   </q-page>
 </template>
 

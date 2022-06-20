@@ -1,6 +1,8 @@
 ﻿<template>
-  <div class="q-ma-sm">
-    <q-form ref="fiscalForm">
+<div>
+  <div class="text-h6 page-title-box" >Fiscal</div>
+  <div class="q-ma-md">
+    <q-form ref="fiscalForm" class="bg-white q-pa-md">
       <p class="text-h">5. Datos del Fiscal</p>
       <div class="row q-col-gutter-sm">
         <div class="col-xs-12 col-md-8">
@@ -8,8 +10,6 @@
           <q-input
             outlined
             v-model="jacInfoDB.fiscal"
-            lazy-rules
-            :rules="[val => !!val || 'Campo requerido']"
           />
         </div>
       </div>
@@ -19,8 +19,6 @@
           <q-input
             outlined
             v-model="jacInfoDB.noIdentificacionFiscal"
-            lazy-rules
-            :rules="[val => !!val || 'Campo requerido']"
           />
         </div>
         <div class="col-xs-12 col-md-4">
@@ -28,8 +26,6 @@
           <q-input
             outlined
             v-model="jacInfoDB.celularFiscal"
-            lazy-rules
-            :rules="[val => !!val || 'Campo requerido']"
           />
         </div>
         <div class="col-xs-12 col-md-4">
@@ -37,8 +33,6 @@
           <q-input
             outlined
             v-model="jacInfoDB.emailFiscal"
-            lazy-rules
-            :rules="[val => !!val || 'Campo requerido']"
           />
         </div>
       </div>
@@ -47,6 +41,7 @@
         <q-btn @click="onSubmit" color="primary">Actualizar</q-btn>
       </div>
     </q-form>
+  </div>
   </div>
 </template>
 

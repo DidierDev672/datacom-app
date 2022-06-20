@@ -1,12 +1,14 @@
 <template>
-  <div class="q-ma-sm">
-    <div class="row">
+<div>
+  <div class="text-h6 page-title-box" >Información General</div>
+  <div class="q-ma-md">
+    <div class="row bg-white q-pa-md">
       <div class="col-xs-12 ">
         <q-form ref="jacForm">
           <p class="text-h6 q-mt-md q-mb-sm">1. Información General</p>
           <div class="row q-col-gutter-sm">
             <div class="col-xs-12 col-sm-12 col-md-7">
-              <p class="text-h6">Nombre de la organización *</p>
+              <p class="text-h6">1.1. Nombre de la organización *</p>
               <q-input
                 outlined
                 v-model="jacInfoDB.nombre"
@@ -15,7 +17,7 @@
               />
             </div>
             <div class="col-xs-12 col-sm-12 col-md-5">
-              <p class="text-h6">Tipo *</p>
+              <p class="text-h6">1.2. Tipo *</p>
               <q-select
                 outlined
                 option-value="id"
@@ -29,7 +31,7 @@
           </div>
           <div class="row q-col-gutter-sm">
             <div class="col-xs-12 col-md-4">
-              <p class="text-h6">Departamento *</p>
+              <p class="text-h6">1.3. Departamento *</p>
               <q-select
                 outlined
                 use-input
@@ -47,7 +49,7 @@
               />
             </div>
             <div class="col-xs-12 col-md-4">
-              <p class="text-h6">Municipio *</p>
+              <p class="text-h6">1.4. Municipio *</p>
               <q-select
                 outlined
                 ref="municipio"
@@ -66,7 +68,7 @@
               />
             </div>
             <div class="col-xs-12 col-md-4">
-              <p class="text-h6">Comunidad/Barrio/Vereda *</p>
+              <p class="text-h6">1.5. Comunidad/Barrio/Vereda *</p>
               <q-select
                 outlined
                 ref="comunidad"
@@ -84,18 +86,28 @@
           </div>
           <div class="row q-col-gutter-sm">
             <div class="col-xs-12">
-              <p class="text-h6">Email *</p>
+              <p class="text-h6">1.6. Dirección</p>
               <q-input
                 outlined
-                v-model="jacInfoDB.email"
-                lazy-rules
-                :rules="[val => !!val || 'Campo requerido']"
+                v-model="jacInfoDB.direccionOrganizacion"
               />
             </div>
           </div>
           <div class="row q-col-gutter-sm">
             <div class="col-xs-12">
-              <p class="text-h6">¿Tiene personería jurídica? *</p>
+              <p class="text-h6">1.7. Email </p>
+              <q-input
+                outlined
+                v-model="jacInfoDB.email"
+              />
+            </div>
+          </div>
+
+          <!-- Personería Juridica -->
+
+          <div class="row q-col-gutter-sm">
+            <div class="col-xs-12">
+              <p class="text-h6">1.8. ¿Tiene personería jurídica? </p>
               <q-option-group
                 inline
                 :options="options"
@@ -109,18 +121,34 @@
             v-if="jacInfoDB.tienePersoneriaJuridica"
           >
             <div class="col-xs-12 col-md-4">
-              <p class="text-h6">No. Personería Jurídica</p>
+              <p class="text-h6">1.9. No. Personería Jurídica</p>
               <q-input outlined v-model="jacInfoDB.noPersoneriaJuridica" />
             </div>
-            <div class="col-xs-12 col-md-4">
+            <div class="col-xs-12 col-md-8">
+              <p class="text-h6">1.10. ¿Tiene el documento de la Personería Jurídica escaneado?</p>
+              <!-- <q-input outlined v-model="jacInfoDB.personeriaJuridicaEscaneada" /> -->
+              <q-option-group
+                inline
+                :options="options"
+                type="radio"
+                v-model="jacInfoDB.personeriaJuridicaEscaneada"
+              />
+            </div>
+            <!-- <div class="col-xs-12 col-md-4">
               <p class="text-h6">Otorgada por:</p>
               <q-input
                 outlined
                 v-model="jacInfoDB.personeriaJuridicaOtorgadaPor"
               />
-            </div>
-            <div class="col-xs-12 col-md-4">
-              <p class="text-h6">Fecha de expedición</p>
+            </div> -->
+          </div>
+          <div
+            class="row q-col-gutter-sm q-mt-md"
+            v-if="jacInfoDB.tienePersoneriaJuridica"
+          >
+
+          <div class="col-xs-12 col-md-4">
+              <p class="text-h6">1.11. Fecha de expedición</p>
               <q-input
                 outlined
                 v-model="jacInfoDB.fechaExpedicionPersoneria"
@@ -148,103 +176,16 @@
                 </template>
               </q-input>
             </div>
+
           </div>
-          <div class="row q-col-gutter-sm q-mt-md">
-            <div class="col-xs-12">
-              <p class="text-h6">¿Tiene RUT? *</p>
-              <q-option-group
-                inline
-                :options="options"
-                type="radio"
-                v-model="jacInfoDB.tieneRut"
-              />
-            </div>
-          </div>
-          <div class="row q-col-gutter-sm q-mt-md" v-if="jacInfoDB.tieneRut">
-            <div class="col-xs-12 col-md-6">
-              <p class="text-h6">No. del Rut</p>
-              <q-input outlined v-model="jacInfoDB.noRut" />
-            </div>
-            <div class="col-xs-12 col-md-6">
-              <p class="text-h6">Fecha de Expedición del Rut</p>
-              <q-input
-                outlined
-                v-model="jacInfoDB.fechaExpedicionRut"
-                mask="date"
-              >
-                <template v-slot:append>
-                  <q-icon name="event" class="cursor-pointer">
-                    <q-popup-proxy
-                      ref="qDateProxy"
-                      transition-show="scale"
-                      transition-hide="scale"
-                    >
-                      <q-date v-model="jacInfoDB.fechaExpedicionRut">
-                        <div class="row items-center justify-end">
-                          <q-btn
-                            v-close-popup
-                            label="Close"
-                            color="primary"
-                            flat
-                          />
-                        </div>
-                      </q-date>
-                    </q-popup-proxy>
-                  </q-icon>
-                </template>
-              </q-input>
-            </div>
-          </div>
-          <div class="row q-col-gutter-sm q-mt-md">
-            <div class="col-xs-12">
-              <p class="text-h6">¿Tiene RUC? *</p>
-              <q-option-group
-                inline
-                :options="options"
-                type="radio"
-                v-model="jacInfoDB.tieneRuc"
-              />
-            </div>
-          </div>
-          <div class="row q-col-gutter-sm q-mt-md" v-if="jacInfoDB.tieneRuc">
-            <div class="col-xs-12 col-md-6">
-              <p class="text-h6">No. del Ruc</p>
-              <q-input outlined v-model="jacInfoDB.noRuc" />
-            </div>
-            <div class="col-xs-12 col-md-6">
-              <p class="text-h6">Fecha de Expedición del Ruc</p>
-              <q-input
-                outlined
-                v-model="jacInfoDB.fechaExpedicionRuc"
-                mask="date"
-              >
-                <template v-slot:append>
-                  <q-icon name="event" class="cursor-pointer">
-                    <q-popup-proxy
-                      ref="qDateProxy"
-                      transition-show="scale"
-                      transition-hide="scale"
-                    >
-                      <q-date v-model="jacInfoDB.fechaExpedicionRuc">
-                        <div class="row items-center justify-end">
-                          <q-btn
-                            v-close-popup
-                            label="Close"
-                            color="primary"
-                            flat
-                          />
-                        </div>
-                      </q-date>
-                    </q-popup-proxy>
-                  </q-icon>
-                </template>
-              </q-input>
-            </div>
-          </div>
+
+          <!-- Fin Personería Juridica -->
+
+          <!-- Autoreconocimiento -->
 
           <div class="row q-col-gutter-sm q-mt-md">
             <div class="col-xs-12">
-              <p class="text-h6">¿Tiene Autoreconocimiento? *</p>
+              <p class="text-h6">1.12. ¿Tiene Autoreconocimiento? </p>
               <q-option-group
                 inline
                 :options="options"
@@ -258,18 +199,18 @@
             v-if="jacInfoDB.tieneAutoreconocimiento"
           >
             <div class="col-xs-12 col-md-4">
-              <p class="text-h6">No. Autoreconocimiento</p>
-              <q-input outlined v-model="jacInfoDB.noAutoreconocimiento" />
+              <p class="text-h6">1.13. No. Autoreconocimiento</p>
+              <q-input outlined v-model="jacInfoDB.noAutorecocimiento" />
             </div>
-            <div class="col-xs-12 col-md-5">
+            <!-- <div class="col-xs-12 col-md-5">
               <p class="text-h6">Autoreconocimiento otorgado por:</p>
               <q-input
                 outlined
                 v-model="jacInfoDB.autorecocimientoExpedidoPor"
               />
-            </div>
+            </div> -->
             <div class="col-xs-12 col-md-3">
-              <p class="text-h6">Fecha expedición</p>
+              <p class="text-h6">1.14. Fecha expedición</p>
               <q-input
                 outlined
                 v-model="jacInfoDB.fechaExpedicionAutoreconocimiento"
@@ -299,7 +240,155 @@
                 </template>
               </q-input>
             </div>
+
+            <div class="col-xs-12 col-md-5">
+              <p class="text-h6">1.14. ¿Autoreconocimiento escaneado? </p>
+              <q-option-group
+                inline
+                :options="options"
+                type="radio"
+                v-model="jacInfoDB.autoreconocimientoEscaneada"
+              />
+            </div>
+
           </div>
+
+          <!-- Fin Autoreconocimiento -->
+
+          <!-- Rut -->
+
+          <div class="row q-col-gutter-sm q-mt-md">
+            <div class="col-xs-12">
+              <p class="text-h6">1.15. ¿Tiene RUT?</p>
+              <q-option-group
+                inline
+                :options="options"
+                type="radio"
+                v-model="jacInfoDB.tieneRut"
+              />
+            </div>
+          </div>
+          <div class="row q-col-gutter-sm q-mt-md" v-if="jacInfoDB.tieneRut">
+
+            <div class="col-xs-12 col-md-4">
+              <p class="text-h6">1.16. Fecha de Expedición</p>
+              <q-input
+                outlined
+                v-model="jacInfoDB.fechaExpedicionRut"
+                mask="date"
+              >
+                <template v-slot:append>
+                  <q-icon name="event" class="cursor-pointer">
+                    <q-popup-proxy
+                      ref="qDateProxy"
+                      transition-show="scale"
+                      transition-hide="scale"
+                    >
+                      <q-date v-model="jacInfoDB.fechaExpedicionRut">
+                        <div class="row items-center justify-end">
+                          <q-btn
+                            v-close-popup
+                            label="Close"
+                            color="primary"
+                            flat
+                          />
+                        </div>
+                      </q-date>
+                    </q-popup-proxy>
+                  </q-icon>
+                </template>
+              </q-input>
+            </div>
+            <div class="col-xs-12 col-md-4">
+              <p class="text-h6">1.17. ¿Rut escaneado? </p>
+              <q-option-group
+                inline
+                :options="options"
+                type="radio"
+                v-model="jacInfoDB.rutEscaneada"
+              />
+            </div>
+            <div class="col-xs-12 col-md-4">
+              <p class="text-h6">1.18. Actividad económica 1</p>
+              <q-input outlined v-model="jacInfoDB.actividadEconomica1" />
+            </div>
+            <div class="col-xs-12 col-md-4">
+              <p class="text-h6">1.19. Actividad económica 2</p>
+              <q-input outlined v-model="jacInfoDB.actividadEconomica2" />
+            </div>
+            <div class="col-xs-12 col-md-4">
+              <p class="text-h6">1.20. Actividad económica 3</p>
+              <q-input outlined v-model="jacInfoDB.actividadEconomica3" />
+            </div>
+            <div class="col-xs-12 col-md-4">
+              <p class="text-h6">1.21. No. del Rut</p>
+              <q-input outlined v-model="jacInfoDB.noRut" />
+            </div>
+          </div>
+
+          <!-- Fin Rut -->
+
+          <!-- Ruc -->
+
+          <div class="row q-col-gutter-sm q-mt-md">
+            <div class="col-xs-12">
+              <p class="text-h6">1.22. ¿Tiene RUC? </p>
+              <q-option-group
+                inline
+                :options="options"
+                type="radio"
+                v-model="jacInfoDB.tieneRuc"
+              />
+            </div>
+          </div>
+          <div class="row q-col-gutter-sm q-mt-md" v-if="jacInfoDB.tieneRuc">
+
+            <div class="col-xs-12 col-md-4">
+              <p class="text-h6">1.23. Fecha de Expedición</p>
+              <q-input
+                outlined
+                v-model="jacInfoDB.fechaExpedicionRuc"
+                mask="date"
+              >
+                <template v-slot:append>
+                  <q-icon name="event" class="cursor-pointer">
+                    <q-popup-proxy
+                      ref="qDateProxy"
+                      transition-show="scale"
+                      transition-hide="scale"
+                    >
+                      <q-date v-model="jacInfoDB.fechaExpedicionRuc">
+                        <div class="row items-center justify-end">
+                          <q-btn
+                            v-close-popup
+                            label="Close"
+                            color="primary"
+                            flat
+                          />
+                        </div>
+                      </q-date>
+                    </q-popup-proxy>
+                  </q-icon>
+                </template>
+              </q-input>
+            </div>
+
+            <div class="col-xs-12 col-md-4">
+              <p class="text-h6">1.24. No. del Ruc</p>
+              <q-input outlined v-model="jacInfoDB.noRuc" />
+            </div>
+            <div class="col-xs-12 col-md-4">
+              <p class="text-h6">1.25. ¿Ruc escaneado? </p>
+              <q-option-group
+                inline
+                :options="options"
+                type="radio"
+                v-model="jacInfoDB.rucEscaneada"
+              />
+            </div>
+          </div>
+
+          <!-- Fin Ruc -->
 
           <div align="right">
             <q-btn @click="onSubmit" color="primary">Actualizar</q-btn>
@@ -308,6 +397,8 @@
       </div>
     </div>
   </div>
+</div>
+
 </template>
 
 <script>
@@ -366,16 +457,27 @@ export default {
       noRuc: "",
       fechaExpedicionRuc: "",
       tieneAutoreconocimiento: true,
+      noAutorecocimiento: "",
       autorecocimientoExpedidoPor: "",
       fechaExpedicionAutoreconocimiento: "",
-      fechaActualizacionJac: ""
+      fechaActualizacionJac: "",
+      direccionOrganizacion: "",
+      personeriaJuridicaEscaneada: false,
+      autoreconocimientoEscaneada: false,
+      rutEscaneada: false,
+      actividadEconomica1: "",
+      actividadEconomica2: "",
+      actividadEconomica3: "",
+      rucEscaneada: false
     };
 
     this.buscarJacInfoAction(this.jacID).then(data => {
       if (data.id > 0) {
         this.jacInfoDB = { ...data };
-        this.municipio = data.comunidad.municipio;
-        this.departamento = data.comunidad.municipio.departamento;
+        if(data.comunidad){
+          this.municipio = data.comunidad.municipio;
+          this.departamento = data.comunidad.municipio.departamento;
+        }
       }
     });
   },

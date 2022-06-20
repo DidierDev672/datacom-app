@@ -1,6 +1,8 @@
 ﻿<template>
-  <div class="q-ma-sm">
-    <q-form ref="fiscalForm">
+<div>
+  <div class="text-h6 page-title-box" >Nivel administrativo</div>
+  <div class="q-ma-md">
+    <q-form ref="fiscalForm" class="bg-white q-pa-md">
       <p class="text-h6">8. Nivel administrativo y financiero</p>
 
       <div class="row q-col-gutter-sm">
@@ -243,7 +245,7 @@
       </div>
 
       <div class="row q-col-gutter-sm q-mt-md" v-if="jacInfoDB.cuentaBancaria">
-        <div class="col-xs-12 col-md-4">
+        <div class="col-xs-12 col-md-3">
           <p class="text-h6">Tipo</p>
           <q-select
             :options="tipoCuentaOptions"
@@ -252,11 +254,11 @@
             v-model="jacInfoDB.tipoCuentaBancaria"
           />
         </div>
-        <div class="col-xs-12 col-md-4">
+        <div class="col-xs-12 col-md-3">
           <p class="text-h6">No. Cuenta Bancaria</p>
           <q-input outlined v-model="jacInfoDB.numeroCuentaBancaria" />
         </div>
-        <div class="col-xs-12 col-md-4">
+        <div class="col-xs-12 col-md-3">
           <p class="text-h6">Entidad / Banco</p>
           <q-select
             outlined
@@ -271,6 +273,10 @@
               val => (val != null && val.id > 0) || 'Debe elegir una comunidad'
             ]"
           />
+        </div>
+        <div class="col-xs-12 col-md-3">
+          <p class="text-h6">Saldo en banco</p>
+          <q-input outlined v-model="jacInfoDB.saldoCuentaBancaria" />
         </div>
       </div>
 
@@ -310,12 +316,12 @@
 
       <div class="row q-col-gutter-sm q-mt-md">
         <div class="col-xs-12 col-md-6">
-          <p class="text-h6">¿Realizan balances contables?</p>
+          <p class="text-h6">¿Tienen estados financieros?</p>
           <q-option-group
             inline
             :options="options"
             type="radio"
-            v-model="jacInfoDB.balanceContable"
+            v-model="jacInfoDB.tienenEstadosFinancieros"
           />
         </div>
       </div>
@@ -344,6 +350,7 @@
         <q-btn @click="onSubmit" color="primary">Actualizar</q-btn>
       </div>
     </q-form>
+  </div>
   </div>
 </template>
 
@@ -393,7 +400,9 @@ export default {
       facturaElectronica: false,
       balanceContable: false,
       capitalTrabajo: false,
-      montoCapitalTrabajo: ""
+      montoCapitalTrabajo: "",
+      saldoCuentaBancaria: "",
+tienenEstadosFinancieros: false
     };
 
     let categorias = [CATEGORIAS.BANCO];

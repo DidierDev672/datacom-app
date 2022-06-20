@@ -2,14 +2,14 @@ import axios from 'axios'
 import { URL_API } from '../../../utils/config'
 
 // Acciones para la lista
-export function cargarListaJacInfoAction ({ commit }) {
+export function cargarListaJacInfoAction ({ commit }, payload) {
   commit('inicializarAccion')
   const urlService = 'jac'
   return new Promise((resolve, reject) => {
-    axios.get(`${URL_API}/${urlService}/`)
-      .then(({ data }) => {
-        commit('setListaJacInfoSuccess', data)
-        resolve(data)
+    axios.get(`${URL_API}/${urlService}/?page=${payload.page}&size=${payload.rowsPerPage}&filter=${payload.filter}`)
+      .then(response => {
+        commit('setListaJacInfoSuccess', response.data.content)
+        resolve(response)
       }).catch(error => {
       console.log('Ocurrió un error al consultar los tipos de Jac: ', error.response)
       commit('setActionFail', error.response)

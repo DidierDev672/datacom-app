@@ -1,46 +1,47 @@
 ﻿<template>
-  <div class="q-ma-sm">
-    <q-form ref="afiliadosForm">
+<div>
+  <div class="text-h6 page-title-box" >Afiliados</div>
+  <div class="q-ma-md">
+    <q-form ref="afiliadosForm" class="bg-white q-pa-md">
       <p class="text-h6">3. Datos de los Afiliados</p>
 
       <div class="row q-col-gutter-sm">
-        <div class="col-xs-12 col-md-4">
+        <div class="col-xs-12 col-md-3">
           <p class="text-h6">No. Hombres</p>
           <q-input
             outlined
             v-model="jacInfoDB.noHombres"
-            lazy-rules
-            :rules="[val => !!val || 'Campo requerido']"
           />
         </div>
-        <div class="col-xs-12 col-md-4">
+        <div class="col-xs-12 col-md-3">
           <p class="text-h6">No. Mujeres</p>
           <q-input
             outlined
             v-model="jacInfoDB.noMujeres"
-            lazy-rules
-            :rules="[val => !!val || 'Campo requerido']"
           />
         </div>
-        <div class="col-xs-12 col-md-4">
+        <div class="col-xs-12 col-md-3">
           <p class="text-h6">No. Afros</p>
           <q-input
             outlined
             v-model="jacInfoDB.noAfros"
-            lazy-rules
-            :rules="[val => !!val || 'Campo requerido']"
+          />
+        </div>
+        <div class="col-xs-12 col-md-3">
+          <p class="text-h6">No. Indígenas</p>
+          <q-input
+            outlined
+            v-model="jacInfoDB.noIndigenas"
           />
         </div>
       </div>
 
       <div class="row q-col-gutter-sm">
-        <div class="col-xs-12 col-md-4">
-          <p class="text-h6">No. Indígenas</p>
+        <div class="col-xs-12 col-md-3">
+          <p class="text-h6">No. ROOM</p>
           <q-input
             outlined
-            v-model="jacInfoDB.noIndigenas"
-            lazy-rules
-            :rules="[val => !!val || 'Campo requerido']"
+            v-model="jacInfoDB.noRoom"
           />
         </div>
         <div class="col-xs-12 col-md-4">
@@ -48,17 +49,13 @@
           <q-input
             outlined
             v-model="jacInfoDB.noPoblacionDiscapacitada"
-            lazy-rules
-            :rules="[val => !!val || 'Campo requerido']"
           />
         </div>
-        <div class="col-xs-12 col-md-4">
+        <div class="col-xs-12 col-md-5">
           <p class="text-h6">Pob. Entre 14 y 28 años</p>
           <q-input
             outlined
             v-model="jacInfoDB.noPoblacionEntre14y28"
-            lazy-rules
-            :rules="[val => !!val || 'Campo requerido']"
           />
         </div>
       </div>
@@ -69,8 +66,6 @@
           <q-input
             outlined
             v-model="jacInfoDB.noHombresJovenes"
-            lazy-rules
-            :rules="[val => !!val || 'Campo requerido']"
           />
         </div>
         <div class="col-xs-12 col-md-6">
@@ -78,8 +73,6 @@
           <q-input
             outlined
             v-model="jacInfoDB.noMujeresJovenes"
-            lazy-rules
-            :rules="[val => !!val || 'Campo requerido']"
           />
         </div>
       </div>
@@ -88,6 +81,7 @@
         <q-btn @click="onSubmit" color="primary">Actualizar</q-btn>
       </div>
     </q-form>
+  </div>
   </div>
 </template>
 
@@ -107,6 +101,7 @@ export default {
       noHombres: "",
       noMujeres: "",
       noAfros: "",
+      noRoom: "",
       noIndigenas: "",
       noPoblacionDiscapacitada: "",
       noPoblacionEntre14y28: "",

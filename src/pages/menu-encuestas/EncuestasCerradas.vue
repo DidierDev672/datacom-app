@@ -1,7 +1,10 @@
 ﻿<template>
   <div>
-    <q-table
+    <div class="text-h6 page-title-box" >Encuestas cerradas</div>
+    <div class="q-ma-md">
+      <q-table
       title="Encuestas Cerradas"
+      class="my-sticky-header-table"
       :data="encuestas"
       :columns="columns"
       row-key="name"
@@ -13,17 +16,18 @@
       loading-label="Cargando información, por favor espere"
     >
       <template v-slot:top="props">
-        <div class="col-4 q-table__title">Encuestas Cerradas</div>
+        <div class="col-4 q-table__title">Listado de encuestas</div>
 
         <q-space />
         <q-input
           borderless
+          dark
           dense
           debounce="300"
           v-model="filter"
           placeholder="Filtrar resultados"
         >
-          <template v-slot:append>
+          <template v-slot:prepend>
             <q-icon name="search" />
           </template>
         </q-input>
@@ -41,6 +45,9 @@
         <q-btn flat round icon="ti-zoom-in" />
       </q-td>
     </q-table>
+
+    </div>
+    
   </div>
 </template>
 

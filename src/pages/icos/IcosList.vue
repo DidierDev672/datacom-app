@@ -1,7 +1,10 @@
 ﻿<template>
   <div>
-    <q-table
+    <div class="text-h6 page-title-box" >Evaluaciones ICO</div>
+    <div class="q-ma-md">
+<q-table
       title="Evaluaciones ICO"
+      class="my-sticky-header-table"
       :data="encuestas"
       :columns="columns"
       row-key="name"
@@ -39,6 +42,8 @@
         </q-tooltip>
       </q-btn>
     </q-page-sticky>
+    </div>
+    
   </div>
 </template>
 

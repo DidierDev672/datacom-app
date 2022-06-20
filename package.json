@@ -12,6 +12,7 @@
     },
     "dependencies": {
         "@quasar/extras": "^1.0.0",
+        "apexcharts": "^3.33.1",
         "axios": "^0.21.1",
         "chart.js": "^2.9.4",
         "core-js": "^3.6.5",
@@ -20,6 +21,7 @@
         "print-js": "^1.6.0",
         "quasar": "^1.0.0",
         "v-money": "^0.8.1",
+        "vue-apexcharts": "^1.6.2",
         "vue-chartjs": "^3.5.1",
         "vue-tour": "^1.1.0",
         "vue2-dropzone": "^3.6.0",

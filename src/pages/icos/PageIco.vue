@@ -7,8 +7,8 @@ import { mapActions } from "vuex";
 export default {
   created() {
     //Traer los indicadores también
-    this.cargarListaIcoAction();
-    this.cargarListaJacAction();
+    //this.cargarListaIcoAction();
+    //this.cargarListaJacAction();
     this.cargarListaIndicadoresAction();
   },
   methods: {

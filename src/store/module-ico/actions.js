@@ -2,15 +2,15 @@ import axios from "axios";
 import { URL_API } from "src/utils/config";
 
 // Acciones para la lista
-export function cargarListaIcoAction({ commit }) {
+export function cargarListaIcoAction({ commit }, payload) {
   commit("inicializarAccion");
   const urlService = "ico-evaluacion";
   return new Promise((resolve, reject) => {
     axios
-      .get(`${URL_API}/${urlService}/`)
-      .then(({ data }) => {
-        commit("setListaIcoSuccess", data);
-        resolve(data);
+      .get(`${URL_API}/${urlService}/?page=${payload.page}&size=${payload.rowsPerPage}&filter=${payload.filter}`)
+      .then( response => {
+        commit("setListaIcoSuccess", response.data.content);
+        resolve(response);
       })
       .catch(error => {
         console.log("Ocurrió un error al consultar los icos: ", error.response);

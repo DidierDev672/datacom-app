@@ -10,7 +10,7 @@ const routes = [
                 component: () => import('pages/app/modulo/PageModulo.vue'),
                 children: [
                     {
-                        path: 'municipio',
+                        path: 'municipios',
                         name: 'PageModuloMunicipio',
                         component: () =>
                             import(
@@ -331,6 +331,14 @@ const routes = [
                                 'pages/reporte/municipio/ReporteMunicipioFicha.vue'
                             ),
                     },
+                    {
+                        path: 'reporte-ejemplo',
+                        name: 'ReporteEjemplo',
+                        component: () =>
+                            import(
+                                'pages/reporte/municipio/ReporteEjemplo.vue'
+                            ),
+                    },
                 ],
             },
 
@@ -505,6 +513,18 @@ const routes = [
                 name: 'jac',
                 component: () => import('pages/mod-jac/JacList.vue'),
             },
+            {
+              path: '/jac/:id/view',
+              name: 'jac-detalle',
+              component: () => import('pages/mod-jac/JacView.vue'),
+              children: [
+                {
+                  path: '',
+                  name: 'jac-detalle-info-general',
+                  component: () => import('pages/mod-jac/view/InfoGeneral.vue'),
+                },
+              ]
+          },
 
             { path: '', redirect: 'encuestas' },
         ],
@@ -849,6 +869,16 @@ const routes = [
                 path: 'comites-trabajo',
                 name: 'j-comites-trabajo',
                 component: () => import('pages/mod-jac/comites/Comites.vue'),
+            },
+            {
+                path: 'organos-representacion',
+                name: 'j-organos-representacion',
+                component: () => import('pages/mod-jac/organos-representacion/OrganoRepresentacion.vue'),
+            },
+            {
+                path: 'organos-justicia',
+                name: 'j-organos-justicia',
+                component: () => import('pages/mod-jac/organos-justicia/OrganoJusticia.vue'),
             },
             {
                 path: 'nivel-gerencial',

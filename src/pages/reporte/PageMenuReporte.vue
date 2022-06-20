@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-xs-12 col-sm-6 offset-sm-3">
                 <div class="text-h6 q-px-xs q-py-md ">Reportes</div>
-                <q-list bordered>
+                <q-list padding bordered class="bg-white">
                     <q-item
                         clickable
                         :to="{ name: 'ReporteViviendaEncuestador' }"
@@ -45,23 +45,6 @@
                             <q-icon color="grey-6" name="ti-angle-right" />
                         </q-item-section>
                     </q-item>
-
-                    <q-separator />
-
-                    <!-- <q-item clickable v-ripple class="q-py-md">
-                        <q-item-section avatar>
-                            <q-icon name="ti-home" />
-                        </q-item-section>
-                        <q-item-section>
-                            <q-item-label>Viviendas</q-item-label>
-                            <q-item-label caption
-                                >filtradas por municipio</q-item-label
-                            >
-                        </q-item-section>
-                        <q-item-section avatar>
-                            <q-icon color="grey-6" name="ti-angle-right" />
-                        </q-item-section>
-                    </q-item> -->
 
                     <q-separator />
 
