@@ -9,7 +9,7 @@
       </div>
       <q-table
         title="Evaluaciones Ico"
-        class="my-sticky-header-table"
+        class="ico-table"
         :data="icos"
         :columns="columns"
         separator="vertical"
@@ -41,7 +41,7 @@
                 @input="saveFilter()">
                 <template v-slot:append>
                   <q-icon v-if="filter.length < 1" name="search" />
-                  <q-icon v-else name="clear" @click="filter=''" />
+                  <q-icon v-else name="clear" @click="removeFilter()" />
                 </template>
               </q-input>
             </template>
@@ -195,6 +195,11 @@ export default {
           localStorage.setItem("filtroIco", this.filter);
         },
 
+        removeFilter(){
+          this.filter = '';
+          localStorage.removeItem("filtroIco");
+        }
+
 
   },
   computed: {
@@ -205,7 +210,7 @@ export default {
 
 <style lang="sass" scoped>
 
-.my-sticky-header-table
+.ico-table
   /* height or max-height is important */
   height: 75vh
 

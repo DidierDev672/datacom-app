@@ -9,7 +9,7 @@
           </div>
         <q-table
             title="Jacs"
-            class="my-sticky-header-table"
+            class="jac-table"
             :data="jacInfos"
             :columns="columns"
             separator="vertical"
@@ -41,7 +41,7 @@
                 <template v-slot:append>
                   <!-- <q-icon name="search" /> -->
                   <q-icon v-if="filter.length < 1" name="search" />
-                  <q-icon v-else name="clear" @click="filter=''" />
+                  <q-icon v-else name="clear" @click="removeFilter()" />
                 </template>
               </q-input>
             </template>
@@ -210,6 +210,11 @@ export default {
           localStorage.setItem("filtroJac", this.filter);
         },
 
+        removeFilter(){
+          this.filter = '';
+          localStorage.removeItem("filtroJac");
+        },
+
         closeModal() {
             this.showCrearNuevaJacForm = false;
         },
@@ -223,7 +228,7 @@ export default {
 
 <style lang="sass" scoped>
 
-.my-sticky-header-table
+.jac-table
   /* height or max-height is important */
   height: 75vh
 
