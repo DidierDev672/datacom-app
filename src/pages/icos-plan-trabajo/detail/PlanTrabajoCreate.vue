@@ -15,7 +15,7 @@
                     <q-select
                       use-input
                       v-model="planTrabajo.jac"
-                      option-label="nombre"
+                      option-label="jac"
                       option-value="id"
                       hint="Seleccione la organización"
                       :options="jacOptions"
@@ -113,32 +113,62 @@ export default {
       jacOptions: [],
       jacOptionsList: [],
       evaluacionSeleccionada: null,
-      evaluacionesOptions: []
+      evaluacionesOptions: [],
+      page: 0,
+      rowsPerPage: 50,
+      filter: ''
     };
   },
   created() {
-    this.cargarListaJacAction().then(data => {
-      this.jacOptionsList = data;
+    this.cargarListaJacInfoAction({
+      page: this.page,
+      rowsPerPage: this.rowsPerPage,
+      filter: this.filter
+    }).then(response => {
+      this.jacOptionsList = response.data.content;
     });
     this.planTrabajo = {
       id: 0,
       jac: null,
       titulo: "",
       observacion: "",
-      detalle: []
+      detalle: [],
+      usuarioCreacion: this.getUser,
+      usuarioActualizacion: this.getUser
     };
   },
   methods: {
-    ...mapActions("jac", ["cargarListaJacAction"]),
+    ...mapActions("jacInfo", ["cargarListaJacAction", "cargarListaJacInfoAction"]),
     ...mapActions("ico", ["buscarEvaluacionesPorJacAction"]),
     ...mapActions("planTrabajo", ["registrarPlanTrabajoAction"]),
-    filtrarJac(val, update) {
+    filtrarJac(val, update, abort) {
+
+      console.log(val)
+      if (val.length < 3) {
+        abort()
+        return
+      }
+
       update(() => {
         const needle = val.toLowerCase();
-        this.jacOptions = this.jacOptionsList.filter(
-          v => v.nombre.toLowerCase().indexOf(needle) > -1
-        );
+
+        this.cargarListaJacInfoAction({
+            page: this.page,
+            rowsPerPage: this.rowsPerPage,
+            filter: needle
+          }).then(response => {
+
+            this.jacOptions.splice(
+              0,
+              this.jacOptions.length,
+              ...response.data.content
+            );
+        });
+
+
       });
+
+
     },
     changeOrganizacion(value) {
       // console.log(value.nombre);
@@ -158,7 +188,8 @@ export default {
     onSubmit() {
       this.$refs.planTrabajoForm.validate().then(success => {
         if (success) {
-          this.planTrabajo.detalle = this.evaluacionSeleccionada.indicadores.map(
+          let indicadoreParaElPlanDeTrabajo = this.evaluacionSeleccionada.indicadores.filter(indicador => indicador.calificacion < 4);
+          this.planTrabajo.detalle = indicadoreParaElPlanDeTrabajo.map(
             indi => {
               return {
                 id: 0,
@@ -172,9 +203,13 @@ export default {
               };
             }
           );
-          console.log("Evaluación seleccionada: ", this.planTrabajo);
           this.registrarPlanTrabajoAction(this.planTrabajo).then(response => {
-            console.log("Response: ", response);
+            this.$q.notify({
+            message: "Plan de trabajo registrado",
+            position: "bottom-right",
+            color: "green"
+          });
+            this.$router.push({ name: "PlanTrabajoActividadesIndex", params: { id: response }});
           });
         } else {
           this.$q.notify({
@@ -185,6 +220,9 @@ export default {
         }
       });
     }
+  },
+  computed: {
+    ...mapGetters("auth", ["getUser"]),
   }
 };
 </script>

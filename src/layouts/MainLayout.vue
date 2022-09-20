@@ -118,12 +118,12 @@ export default {
                     icon: 'ti-pencil-alt',
                     link: '/icos',
                 },
-                // {
-                //     title: 'Planes de Trabajo',
-                //     caption: '',
-                //     icon: 'ti-bar-chart-alt',
-                //     link: '/plan-trabajo',
-                // },
+                {
+                    title: 'Planes de Trabajo',
+                    caption: '',
+                    icon: 'ti-bar-chart-alt',
+                    link: '/plan-trabajo',
+                },
                 {
                     title: 'Parametrización',
                     caption: '',

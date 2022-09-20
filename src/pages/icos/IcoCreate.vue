@@ -189,7 +189,10 @@ export default {
       jac: null,
       indicadores: [],
       usuarioCreacion: this.getUser,
-      usuarioActualizacion: this.getUser
+      usuarioActualizacion: this.getUser,
+      tipoEstudio: {
+        id: 1
+      }
     };
   },
   methods: {

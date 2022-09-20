@@ -6,10 +6,10 @@
 import { mapActions } from "vuex";
 export default {
   created() {
-    this.cargarListaPlanTrabajoAction();
+    // this.cargarListaPlanTrabajoAction();
   },
   methods: {
-    ...mapActions("planTrabajo", ["cargarListaPlanTrabajoAction"])
+    // ...mapActions("planTrabajo", ["cargarListaPlanTrabajoAction"])
   }
 };
 </script>

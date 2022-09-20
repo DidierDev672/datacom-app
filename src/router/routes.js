@@ -332,6 +332,38 @@ const routes = [
                             ),
                     },
                     {
+                      path: 'reporte-ico-organizacion',
+                      name: 'ReporteIcoOrganizacionIndex',
+                      component: () =>
+                          import(
+                              'pages/reporte/icos/ReporteIcoOrganizacionIndex.vue'
+                          ),
+                    },
+                    {
+                      path: 'ico/departamento/resumido/radar',
+                      name: 'ReporteIcoDepartamentoRadarIndex',
+                      component: () =>
+                          import(
+                              'pages/reporte/icos/departamento-radar/ReporteIcoDepartamentoRadarIndex.vue'
+                          ),
+                    },
+                    {
+                      path: 'ico/departamento/resumido/csv',
+                      name: 'ReporteIcoDepartamentoExcelResumidoIndex',
+                      component: () =>
+                          import(
+                              'pages/reporte/icos/departamento-radar/ReporteIcoDepartamentoExcelResumidoIndex.vue'
+                          ),
+                    },
+                    {
+                      path: 'ico/departamento/extendido/csv',
+                      name: 'ReporteIcoDepartamentoExcelExtendidoIndex',
+                      component: () =>
+                          import(
+                              'pages/reporte/icos/departamento-radar/ReporteIcoDepartamentoExcelExtendidoIndex.vue'
+                          ),
+                    },
+                    {
                         path: 'reporte-ejemplo',
                         name: 'ReporteEjemplo',
                         component: () =>

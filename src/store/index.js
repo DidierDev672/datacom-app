@@ -74,6 +74,9 @@ import reporteFichaMunicipio from './module-reportes/municipio';
 // Modulo de busquedas
 import buscar from './module-busquedas'
 
+import reportesGenerales from './module-reportes-generales';
+import reportesIcos from './module-reportes/ico';
+
 Vue.use(Vuex);
 
 /*
@@ -155,6 +158,8 @@ export default function(/* { ssrContext } */) {
 
             //Reportes
             reporteFichaMunicipio,
+            reportesGenerales,
+            reportesIcos,
 
             // Busqueda
             buscar

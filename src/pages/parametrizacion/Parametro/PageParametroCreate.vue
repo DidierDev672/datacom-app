@@ -121,7 +121,7 @@ export default {
               color: "positive",
               position: "bottom-right"
             });
-            this.$router.push({ name: "parametros" });
+            this.$router.push({ name: "PageParametroIndex" });
           })
           .catch(error => {
             if (!navigator.onLine && this.backgroundSyncSupported) {

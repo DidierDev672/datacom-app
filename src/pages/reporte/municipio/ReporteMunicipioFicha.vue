@@ -15,15 +15,15 @@
                                 label="Caucasia"
                             >
                                 <q-list>
-                                    <!-- <q-item clickable v-close-popup>
+                                    <q-item clickable v-close-popup>
                                         <q-item-section>
                                             <q-item-label
                                                 >Remedios</q-item-label
                                             >
                                         </q-item-section>
-                                    </q-item> -->
+                                    </q-item>
 
-                                    <!-- <q-item clickable v-close-popup>
+                                    <q-item clickable v-close-popup>
                                         <q-item-section>
                                             <q-item-label>Coveñas</q-item-label>
                                         </q-item-section>
@@ -35,7 +35,7 @@
                                                 >Miraflores</q-item-label
                                             >
                                         </q-item-section>
-                                    </q-item> -->
+                                    </q-item>
                                 </q-list>
                             </q-btn-dropdown>
                         </div>

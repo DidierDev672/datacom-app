@@ -456,7 +456,7 @@ export default {
           console.log("Info: ", info);
           this.registrarUsuarioAction(info).then(data => {
             this.$router.push({
-              name: "UsuariosIndex"
+              name: "PageUsuarioIndex"
             });
           });
         } else {

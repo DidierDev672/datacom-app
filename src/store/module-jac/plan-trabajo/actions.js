@@ -2,15 +2,15 @@ import axios from "axios";
 import { URL_API } from "../../../utils/config";
 
 // Acciones para la lista
-export function cargarListaPlanTrabajoAction({ commit }) {
+export function cargarListaPlanTrabajoAction({ commit }, payload) {
   commit("inicializarAccion");
   const urlService = "ico-plan-trabajo";
   return new Promise((resolve, reject) => {
     axios
-      .get(`${URL_API}/${urlService}/`)
-      .then(({ data }) => {
-        commit("setListaPlanTrabajoSuccess", data);
-        resolve(data);
+      .get(`${URL_API}/${urlService}/?page=${payload.page}&size=${payload.rowsPerPage}&filter=${payload.filter}`)
+      .then((response) => {
+        commit("setListaPlanTrabajoSuccess", response.data.content);
+        resolve(response);
       })
       .catch(error => {
         console.log(

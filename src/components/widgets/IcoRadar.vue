@@ -1,5 +1,5 @@
 ﻿<template>
-    <div>     
+    <div>
       <apexcharts width="100%" type="radar" :options="options" :series="series"></apexcharts>
     </div>
 </template>
@@ -15,7 +15,7 @@ export default {
         }
     },
     components: {apexcharts: VueApexCharts},
-    
+
   data () {
     return {
         icoID: 0,
@@ -45,19 +45,19 @@ export default {
                 id: 'Ico'
               },
               plotOptions: {
-          radar: {
-            size: 140,
-            polygons: {
-              strokeColors: '#e9e9e9',
-              fill: {
-                colors: ['#f8f8f8', '#fff']
-              }
-            }
-          }
-        },
-        title: {
-          text: this.title
-        },
+                radar: {
+                  size: 140,
+                  polygons: {
+                    strokeColors: '#e9e9e9',
+                    fill: {
+                      colors: ['#f8f8f8', '#fff']
+                    }
+                  }
+                }
+              },
+              title: {
+                text: this.title
+              },
               dataLabels: {
                 enabled: true
                },
@@ -73,10 +73,10 @@ export default {
             ]
 
       })
-      
+
   },
   methods: {
-      ...mapActions('buscar', ['buscarIcoRadarAction']),     
+      ...mapActions('buscar', ['buscarIcoRadarAction']),
   }
 }
 </script>

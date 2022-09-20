@@ -7,13 +7,14 @@
       :filter="filter"
       @request="onRequest"
       @row-click="seleccionar"
+      :pagination.sync="pagination"
       separator="vertical"
       row-key="name"
       flat
       bordered
       wrap-cells
     >
-    <template v-slot:top="props">       
+    <template v-slot:top="props">
 
         <q-space />
         <q-input
@@ -56,7 +57,7 @@ export default {
             sortBy: "id",
             descending: false,
             page: 1,
-            rowsPerPage: 10,
+            rowsPerPage: 50,
             rowsNumber: 10
         },
       columns: [
@@ -78,8 +79,8 @@ export default {
         { name: 'municipio', align: 'left', label: 'Municipio', field: 'municipio', sortable: true },
         { name: 'alcalde', align: 'left', label: 'Alcalde', field: 'alcalde', sortable: true },
         { name: 'telefono', align: 'left', label: 'Teléfono', field: 'telefono', sortable: true },
-        { name: 'direccion', align: 'left', label: 'Dirección', field: 'direccion', sortable: true },       
-        
+        { name: 'direccion', align: 'left', label: 'Dirección', field: 'direccion', sortable: true },
+
       ],
 
       data: []
@@ -94,7 +95,7 @@ export default {
   methods: {
       ...mapActions('buscar', ['buscarListaMunicipiosAction']),
       seleccionar(evt, row, index){
-        this.$router.push({ name: "ver-encuesta", params: { id: row.id } });        
+        this.$router.push({ name: "ver-encuesta", params: { id: row.id } });
       },
       closeFichaMunicipioDialog(){
         this.showFichaMunicipioDialog = false

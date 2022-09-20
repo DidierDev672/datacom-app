@@ -105,7 +105,7 @@ export default {
               color: "positive",
               position: "bottom-right"
             });
-            this.$router.push({ name: "categorias" });
+            this.$router.push({ name: "PageCategoriaIndex" });
           })
           .catch(error => {
             if (!navigator.onLine && this.backgroundSyncSupported) {

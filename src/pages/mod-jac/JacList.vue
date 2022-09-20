@@ -10,6 +10,7 @@
         <q-table
             title="Jacs"
             class="jac-table"
+            wrap-cells
             :data="jacInfos"
             :columns="columns"
             separator="vertical"
@@ -145,8 +146,8 @@ export default {
         seleccionar(evt, row, index) {
             console.log('jacInfo: ', row);
             let jacID = row.id;
-            // this.$router.push({ name: 'jac-info', params: { id: row.id } });
-            this.$router.push({ name: 'jac-detalle-info-general', params: { id: row.id } });
+            this.$router.push({ name: 'jac-info', params: { id: row.id } });
+            // this.$router.push({ name: 'jac-detalle-info-general', params: { id: row.id } });
         },
 
         onRequest(props) {

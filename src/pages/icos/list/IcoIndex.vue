@@ -152,53 +152,53 @@ export default {
     },
 
     onRequest(props) {
-          const { page, rowsPerPage, sortBy, descending } = props.pagination;
-          const filter = props.filter;
+      const { page, rowsPerPage, sortBy, descending } = props.pagination;
+      const filter = props.filter;
 
-        //Filtramos solo cuando la persona ha escrito 3 caracteres en el control
-          if(filter.length > 0 && filter.length < 3){
-            return
-          }
+    //Filtramos solo cuando la persona ha escrito 3 caracteres en el control
+      if(filter.length > 0 && filter.length < 3){
+        return
+      }
 
-          // get all rows if "All" (0) is selected
-          const fetchCount =
-            rowsPerPage === 0 ? this.pagination.rowsNumber : rowsPerPage;
+      // get all rows if "All" (0) is selected
+      const fetchCount =
+        rowsPerPage === 0 ? this.pagination.rowsNumber : rowsPerPage;
 
-          // calculate starting row of data
-          // const startRow = (page - 1) * rowsPerPage;
-          const startRow = page - 1;
+      // calculate starting row of data
+      // const startRow = (page - 1) * rowsPerPage;
+      const startRow = page - 1;
 
-          this.cargarListaIcoAction({
-            page: startRow,
-            rowsPerPage: fetchCount,
-            filter: filter
-          }).then(response => {
-            //this.jacInfos = data;
-            // update rowsCount with appropriate value
-            this.pagination.rowsNumber = response.data.totalElements;
-            // clear out existing data and add new
-            this.icos.splice(
-              0,
-              this.icos.length,
-              ...response.data.content
-            );
-        });
+      this.cargarListaIcoAction({
+        page: startRow,
+        rowsPerPage: fetchCount,
+        filter: filter
+      }).then(response => {
+        //this.jacInfos = data;
+        // update rowsCount with appropriate value
+        this.pagination.rowsNumber = response.data.totalElements;
+        // clear out existing data and add new
+        this.icos.splice(
+          0,
+          this.icos.length,
+          ...response.data.content
+        );
+    });
 
-          // don't forget to update local pagination object
-          this.pagination.page = page;
-          this.pagination.rowsPerPage = rowsPerPage;
-          this.pagination.sortBy = sortBy;
-          this.pagination.descending = descending;
-        },
+      // don't forget to update local pagination object
+      this.pagination.page = page;
+      this.pagination.rowsPerPage = rowsPerPage;
+      this.pagination.sortBy = sortBy;
+      this.pagination.descending = descending;
+    },
 
-        saveFilter(){
-          localStorage.setItem("filtroIco", this.filter);
-        },
+    saveFilter(){
+      localStorage.setItem("filtroIco", this.filter);
+    },
 
-        removeFilter(){
-          this.filter = '';
-          localStorage.removeItem("filtroIco");
-        }
+    removeFilter(){
+      this.filter = '';
+      localStorage.removeItem("filtroIco");
+    }
 
 
   },
