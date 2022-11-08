@@ -6,8 +6,8 @@
           <q-card-section>
             <div class="q-gutter-sm row ">
               <div class="col">
-                <q-select v-model="model" :options="options" option-value="id" option-label="nombreDepartamento"
-                  label="Departamento" />
+                <q-select v-model="model" :options="options" option-value="id" option-label="nombreMunicipio"
+                  label="Municipio" />
               </div>
               <div class="col">
                 <q-select v-model="parametro" :options="parametros" option-value="id" option-label="nombre"
@@ -18,42 +18,33 @@
               </div>
             </div>
           </q-card-section>
+
           <q-card-section>
-            <radar-chart
-              :series="series"
-              :categorias="categories"
-            ></radar-chart>
+            <radar-chart :series="series" :categorias="categories"></radar-chart>
           </q-card-section>
           <q-card-section v-if="info.titulo">
             <q-list>
               <q-item clickable v-ripple>
                 <q-item-section>
-                  <q-item-label>Departamento:</q-item-label>
+                  <q-item-label>Ciudad</q-item-label>
                   <q-item-label caption>{{ info.titulo }}</q-item-label>
                 </q-item-section>
                 <q-item-section>
-                  <q-item-label>Generado el:</q-item-label>
+                  <q-item-label>Generado el</q-item-label>
                   <q-item-label caption>{{ info.fecha }}</q-item-label>
                 </q-item-section>
               </q-item>
               <q-item clickable v-ripple>
                 <q-item-section>
-                  <q-item-label>No. de Jacs:</q-item-label>
+                  <q-item-label>No. de Jacs</q-item-label>
                   <q-item-label caption>{{ info.totalJac }}</q-item-label>
                 </q-item-section>
               </q-item>
             </q-list>
           </q-card-section>
           <q-card-section>
-            <q-table
-              v-if="data.length > 0"
-              :data="data"
-              :columns="columns"
-              bordered
-              flat
-              row-key="name"
-              :rows-per-page-options="[10, 20]"
-            />
+            <q-table v-if="data.length > 0" :data="data" :columns="columns" bordered flat row-key="name"
+              :rows-per-page-options="[10, 20]" />
           </q-card-section>
         </q-card>
       </div>
@@ -66,7 +57,7 @@ import { mapActions } from "vuex";
 import { CATEGORIAS } from "src/utils/config";
 import RadarChart from "src/components/widgets/RadarChart.vue";
 export default {
-  name: "ReporteIcoDepartamentoRadarIndex",
+  name: "ReporteIcoMunicipioRadarIndex",
   components: { RadarChart },
   data() {
     return {
@@ -110,7 +101,7 @@ export default {
   },
   created() {
     let categorias = [CATEGORIAS.TIPOS_ESTUDIO];
-    this.cargarListaDepartamentoAction().then(data => {
+    this.cargarListaMunicipiosAction().then(data => {
       this.options = data;
     });
     this.cargarListaParametroPorCategoriaAction(categorias).then(data => {
@@ -118,30 +109,13 @@ export default {
     });
   },
   methods: {
-    ...mapActions("departamento", ["cargarListaDepartamentoAction"]),
+    ...mapActions("municipios", ["cargarListaMunicipiosAction"]),
     ...mapActions("parametros", ["cargarListaParametroPorCategoriaAction"]),
-    ...mapActions("reportesIcos", ["icosPorDepartamentoRadarAction"]),
-    // actualizarDepartamento(value) {
-    //   console.log("Value: ", value);
-    //   this.series = [
-    //     {
-    //       name: "Máxima calificación",
-    //       data: [4, 4, 4, 4, 4, 4, 4, 4]
-    //     }
-    //   ];
-    //   this.icosPorDepartamentoRadarAction(value.id).then(response => {
-    //     console.log(response);
-    //     this.data = response;
-    //     this.series.push({
-    //       name: value.nombreDepartamento,
-    //       data: response.map(objIco => objIco.calificacion)
-    //     });
-    //   });
-    // },
+    ...mapActions("reportesIcos", ["icosPorMunicipioRadarAction"]),
     filtrar() {
       if (this.model === null) {
         this.$q.notify({
-          message: 'Debe seleccionar un Departamento.',
+          message: 'Debe seleccionar un Municipio.',
           position: 'bottom-right'
         })
         return;
@@ -154,7 +128,7 @@ export default {
         return;
       }
       let payload = {
-        departamento: this.model.id,
+        municipio: this.model.id,
         estudio: this.parametro.id
       }
       this.series = [
@@ -163,11 +137,12 @@ export default {
           data: [4, 4, 4, 4, 4, 4, 4, 4]
         }
       ];
-      this.icosPorDepartamentoRadarAction(payload).then(response => {
+      this.icosPorMunicipioRadarAction(payload).then(response => {
+        console.log("Response: ", response);
         this.info = response;
-        this.data = response.data;
+        this.data = this.info.data;
         this.series.push({
-          name: this.model.nombreDepartamento,
+          name: this.model.nombreMunicipio,
           data: this.data.map(objIco => objIco.calificacion)
         });
       });

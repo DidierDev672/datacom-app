@@ -48,7 +48,7 @@
       </q-td>
     </q-table>
     </div>
-    
+
   </div>
 </template>
 
@@ -122,8 +122,8 @@ export default {
   methods: {
     ...mapActions("encuestasComunidad", ["cargarListaEncuestasComunidadAction"]),
     seleccionar(evt, row, index) {
-      console.log("Encuesta: ", row);
-      let tipoEncuestaID = row.tipoEncuestaId;
+      //console.log("Encuesta: ", row);
+      //let tipoEncuestaID = row.tipoEncuestaId;
       this.$router.push({ name: "c-ver-encuesta", params: { id: row.id } });
     },
     onRequest(props) {

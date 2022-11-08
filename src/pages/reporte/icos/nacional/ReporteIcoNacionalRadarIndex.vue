@@ -6,10 +6,6 @@
           <q-card-section>
             <div class="q-gutter-sm row ">
               <div class="col">
-                <q-select v-model="model" :options="options" option-value="id" option-label="nombreDepartamento"
-                  label="Departamento" />
-              </div>
-              <div class="col">
                 <q-select v-model="parametro" :options="parametros" option-value="id" option-label="nombre"
                   label="Tipo de estudio" />
               </div>
@@ -19,16 +15,13 @@
             </div>
           </q-card-section>
           <q-card-section>
-            <radar-chart
-              :series="series"
-              :categorias="categories"
-            ></radar-chart>
+            <radar-chart :series="series" :categorias="categories"></radar-chart>
           </q-card-section>
           <q-card-section v-if="info.titulo">
             <q-list>
               <q-item clickable v-ripple>
                 <q-item-section>
-                  <q-item-label>Departamento:</q-item-label>
+                  <q-item-label>Icos:</q-item-label>
                   <q-item-label caption>{{ info.titulo }}</q-item-label>
                 </q-item-section>
                 <q-item-section>
@@ -45,15 +38,8 @@
             </q-list>
           </q-card-section>
           <q-card-section>
-            <q-table
-              v-if="data.length > 0"
-              :data="data"
-              :columns="columns"
-              bordered
-              flat
-              row-key="name"
-              :rows-per-page-options="[10, 20]"
-            />
+            <q-table v-if="data.length > 0" :data="data" :columns="columns" bordered dense flat row-key="name"
+              :rows-per-page-options="[10, 20]" />
           </q-card-section>
         </q-card>
       </div>
@@ -110,42 +96,14 @@ export default {
   },
   created() {
     let categorias = [CATEGORIAS.TIPOS_ESTUDIO];
-    this.cargarListaDepartamentoAction().then(data => {
-      this.options = data;
-    });
     this.cargarListaParametroPorCategoriaAction(categorias).then(data => {
       this.parametros = data;
     });
   },
   methods: {
-    ...mapActions("departamento", ["cargarListaDepartamentoAction"]),
     ...mapActions("parametros", ["cargarListaParametroPorCategoriaAction"]),
-    ...mapActions("reportesIcos", ["icosPorDepartamentoRadarAction"]),
-    // actualizarDepartamento(value) {
-    //   console.log("Value: ", value);
-    //   this.series = [
-    //     {
-    //       name: "Máxima calificación",
-    //       data: [4, 4, 4, 4, 4, 4, 4, 4]
-    //     }
-    //   ];
-    //   this.icosPorDepartamentoRadarAction(value.id).then(response => {
-    //     console.log(response);
-    //     this.data = response;
-    //     this.series.push({
-    //       name: value.nombreDepartamento,
-    //       data: response.map(objIco => objIco.calificacion)
-    //     });
-    //   });
-    // },
+    ...mapActions("reportesIcos", ["icoNacionalRadarAction"]),
     filtrar() {
-      if (this.model === null) {
-        this.$q.notify({
-          message: 'Debe seleccionar un Departamento.',
-          position: 'bottom-right'
-        })
-        return;
-      }
       if (this.parametro === null) {
         this.$q.notify({
           message: 'Debe seleccionar un tipo de estudio.',
@@ -153,21 +111,17 @@ export default {
         })
         return;
       }
-      let payload = {
-        departamento: this.model.id,
-        estudio: this.parametro.id
-      }
       this.series = [
         {
           name: "Máxima calificación",
           data: [4, 4, 4, 4, 4, 4, 4, 4]
         }
       ];
-      this.icosPorDepartamentoRadarAction(payload).then(response => {
-        this.info = response;
+      this.icoNacionalRadarAction(this.parametro.id).then(response => {
+        this.info = response
         this.data = response.data;
         this.series.push({
-          name: this.model.nombreDepartamento,
+          name: 'Ico Nacional',
           data: this.data.map(objIco => objIco.calificacion)
         });
       });

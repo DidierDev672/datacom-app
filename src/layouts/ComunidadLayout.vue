@@ -347,9 +347,7 @@
         </q-footer>
 
         <q-page-container>
-            <keep-alive :include="['PageCategorias']">
-                <router-view />
-            </keep-alive>
+            <router-view />
         </q-page-container>
     </q-layout>
 </template>
@@ -375,6 +373,7 @@ export default {
         ...mapActions('encuesta', ['buscarEncuestaAction']),
     },
     created() {
+      console.log('Comunidad Layout')
         this.encuestaID = this.$route.params.id;
         this.buscarEncuestaAction(this.encuestaID).then((data) => {
             if (data.encuestaCerrada) this.leftDrawerOpen = false;

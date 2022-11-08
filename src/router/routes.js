@@ -340,6 +340,14 @@ const routes = [
                           ),
                     },
                     {
+                      path: 'ico/nacional/resumido/radar',
+                      name: 'ReporteIcoNacionalRadarIndex',
+                      component: () =>
+                          import(
+                              'pages/reporte/icos/nacional/ReporteIcoNacionalRadarIndex.vue'
+                          ),
+                    },
+                    {
                       path: 'ico/departamento/resumido/radar',
                       name: 'ReporteIcoDepartamentoRadarIndex',
                       component: () =>
@@ -361,6 +369,14 @@ const routes = [
                       component: () =>
                           import(
                               'pages/reporte/icos/departamento-radar/ReporteIcoDepartamentoExcelExtendidoIndex.vue'
+                          ),
+                    },
+                    {
+                      path: 'ico/municipio/resumido/radar',
+                      name: 'ReporteIcoMunicipalRadarIndex',
+                      component: () =>
+                          import(
+                              'pages/reporte/icos/municipal/ReporteIcoMunicipalRadarIndex.vue'
                           ),
                     },
                     {

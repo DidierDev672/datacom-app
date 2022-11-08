@@ -4,14 +4,19 @@
       <div class="col-xs-12 col-sm-8 col-md-6 offset-sm-3">
         <q-card>
           <q-card-section>
-            <q-select
-              v-model="model"
-              :options="options"
-              option-value="id"
-              option-label="nombreDepartamento"
-              label="Departamento"
-              @input="actualizarDepartamento(model)"
-            />
+            <div class="q-gutter-sm row ">
+              <div class="col">
+                <q-select v-model="model" :options="options" option-value="id" option-label="nombreDepartamento" label="Departamento"
+                   />
+              </div>
+              <div class="col">
+                <q-select v-model="parametro" :options="parametros" option-value="id" option-label="nombre" label="Tipo de estudio"
+                   />
+              </div>
+              <div class="col-auto items-bottom">
+                <q-btn @click="filtrar" round color="primary" icon="search"  />
+              </div>
+            </div>
           </q-card-section>
           <q-card-section>
             <q-table
@@ -43,7 +48,7 @@
 <script>
 import { mapActions } from "vuex";
 import { exportFile } from "quasar";
-
+import { CATEGORIAS } from "src/utils/config";
 function wrapCsvValue(val, formatFn) {
   let formatted = formatFn !== void 0 ? formatFn(val) : val;
 
@@ -65,6 +70,8 @@ export default {
   data() {
     return {
       model: null,
+      parametros: [],
+      parametro: null,
       options: [],
       columns: [
         {
@@ -84,22 +91,42 @@ export default {
     };
   },
   created() {
+    let categorias = [CATEGORIAS.TIPOS_ESTUDIO];
     this.cargarListaDepartamentoAction().then(data => {
-      console.log("Departamentos: ", data);
       this.options = data;
+    });
+    this.cargarListaParametroPorCategoriaAction(categorias).then(data => {
+      this.parametros = data;
     });
   },
   methods: {
     ...mapActions("departamento", ["cargarListaDepartamentoAction"]),
+    ...mapActions("parametros", ["cargarListaParametroPorCategoriaAction"]),
     ...mapActions("reportesIcos", [
       "icosPorDepartamentoResumidoExcelAction",
       "icosPorDepartamentoRadarAction"
     ]),
-    actualizarDepartamento(value) {
-      console.log("Value: ", value);
-      this.icosPorDepartamentoRadarAction(value.id).then(response => {
-        console.log(response);
-        this.data = response;
+    filtrar() {
+      if(this.model === null) {
+        this.$q.notify({
+          message: 'Debe seleccionar un Departamento.',
+          position: 'bottom-right'
+        })
+        return;
+      }
+      if (this.parametro === null) {
+        this.$q.notify({
+          message: 'Debe seleccionar un tipo de estudio.',
+          position: 'bottom-right'
+        })
+        return;
+      }
+      let payload = {
+        departamento: this.model.id,
+        estudio: this.parametro.id
+      }
+      this.icosPorDepartamentoRadarAction(payload).then(response => {
+        this.data = response.data;
       });
     },
     exportTable() {
@@ -132,9 +159,11 @@ export default {
       }
     },
     exportarInformacion() {
-      this.icosPorDepartamentoResumidoExcelAction(this.model.id).then(()=>{
-        console.log('Funciona')
-      });
+      let payload = {
+        departamento: this.model.id,
+        estudio: this.parametro.id
+      }
+      this.icosPorDepartamentoResumidoExcelAction(payload);
     }
   }
 };

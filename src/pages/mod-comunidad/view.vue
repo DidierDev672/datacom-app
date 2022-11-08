@@ -442,6 +442,30 @@
                     </q-item>
                     <q-separator />
 
+                    <!-- Población -->
+                    <q-item>
+                      <q-item-section>
+                        <q-item-label>Poblaci&oacute;n por rangos de edades</q-item-label>
+                      </q-item-section>
+                    </q-item>
+
+                    <q-separator />
+
+                    <q-item>
+                      <q-item-section v-for="poblacion in poblacionEtarea" :key="poblacion.rango">
+                        <q-item-label>{{ poblacion.rango }}</q-item-label>
+                        <q-item-label caption>{{
+                        poblacion.total
+                        }}</q-item-label>
+                      </q-item-section>
+                      <q-item-section>
+                        <q-item-label>Total</q-item-label>
+                        <q-item-label caption>{{
+                          totalPoblacion
+                          }}</q-item-label>
+                      </q-item-section>
+                    </q-item>
+
                     <!-- Instituciones Educativas -->
                     <q-item>
                         <q-item-section>
@@ -887,13 +911,33 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import print from 'print-js';
 import axios from 'axios';
 import { URL_API } from 'src/utils/config';
 import { jsPDF } from 'jspdf';
 export default {
+  data(){
+    return {
+      encuestaID: 0,
+      poblacionEtarea: [],
+      totalPoblacion: 0
+    }
+  },
+  created(){
+    this.encuestaID = this.$route.params.id;
+    this.cargarPoblacionEtareaComunidadAction(this.encuestaID).then(response => {
+      this.poblacionEtarea = response.data.map(objRango => {
+        return {
+          ...objRango,
+          'rango': (objRango.rango && objRango.rango.length > 0) ? objRango.rango.substr(3) : objRango.rango,
+        }
+      });
+      this.totalPoblacion = response.data.map(objRango => parseInt(objRango.total)).reduce((a, b)=> a + b, 0);
+    })
+  },
     methods: {
+      ...mapActions('encuestasComunidad', ['cargarPoblacionEtareaComunidadAction']),
         imprimir() {
             // print('imprimir', 'html')
             window.print();
@@ -963,47 +1007,6 @@ export default {
         ...mapGetters('encuesta', ['getEncuestaState']),
         encuesta() {
             return this.getEncuestaState.objEncuesta;
-        },
-        totalPoblacion() {
-            let total = 0;
-
-            total =
-                this.getEncuestaState.objEncuesta.poblacionPorRangoDeEdads
-                    .de0A4Anos +
-                this.getEncuestaState.objEncuesta.poblacionPorRangoDeEdads
-                    .de5A9Anos +
-                this.getEncuestaState.objEncuesta.poblacionPorRangoDeEdads
-                    .de10A14Anos +
-                this.getEncuestaState.objEncuesta.poblacionPorRangoDeEdads
-                    .de20A24Anos +
-                this.getEncuestaState.objEncuesta.poblacionPorRangoDeEdads
-                    .de15A19Anos +
-                this.getEncuestaState.objEncuesta.poblacionPorRangoDeEdads
-                    .de25A29Anos +
-                this.getEncuestaState.objEncuesta.poblacionPorRangoDeEdads
-                    .de30A34Anos +
-                this.getEncuestaState.objEncuesta.poblacionPorRangoDeEdads
-                    .de35A39Anos +
-                this.getEncuestaState.objEncuesta.poblacionPorRangoDeEdads
-                    .de40A44Anos +
-                this.getEncuestaState.objEncuesta.poblacionPorRangoDeEdads
-                    .de45A49Anos +
-                this.getEncuestaState.objEncuesta.poblacionPorRangoDeEdads
-                    .de50A54Anos +
-                this.getEncuestaState.objEncuesta.poblacionPorRangoDeEdads
-                    .de55A59Anos +
-                this.getEncuestaState.objEncuesta.poblacionPorRangoDeEdads
-                    .de60A64Anos +
-                this.getEncuestaState.objEncuesta.poblacionPorRangoDeEdads
-                    .de65A69Anos +
-                this.getEncuestaState.objEncuesta.poblacionPorRangoDeEdads
-                    .de70A74Anos +
-                this.getEncuestaState.objEncuesta.poblacionPorRangoDeEdads
-                    .de75A79Anos +
-                this.getEncuestaState.objEncuesta.poblacionPorRangoDeEdads
-                    .mayorA80Anos;
-
-            return total;
         },
     },
 };

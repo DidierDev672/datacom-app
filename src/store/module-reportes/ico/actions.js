@@ -5,7 +5,7 @@ export function icosPorDepartamentoRadarAction({ commit }, payload) {
     const urlService = 'icos-por-departamento-radar';
     return new Promise((resolve, reject) => {
         axios
-            .get(`${URL_API}/${urlService}/${payload}`)
+            .get(`${URL_API}/${urlService}/${payload.departamento}/${payload.estudio}`)
             .then(({ data }) => {
                 resolve(data);
             })
@@ -23,7 +23,7 @@ export function icosPorDepartamentoResumidoExcelAction({ commit }, payload) {
     const urlService = 'icos-por-departamento-resumido-csv';
     return new Promise((resolve, reject) => {
         axios
-            .get(`${URL_API}/${urlService}/${payload}`, { responseType: "blob" })
+            .get(`${URL_API}/${urlService}/${payload.departamento}/${payload.estudio}`, { responseType: "blob" })
             .then(({ data }) => {
               this.loading = false;
               const url = window.URL.createObjectURL(data);
@@ -49,7 +49,7 @@ export function icosPorDepartamentoExtendidoExcelAction({ commit }, payload) {
     const urlService = 'icos-por-departamento-extendido-csv';
     return new Promise((resolve, reject) => {
         axios
-            .get(`${URL_API}/${urlService}/${payload}`, { responseType: "blob" })
+            .get(`${URL_API}/${urlService}/${payload.departamento}/${payload.estudio}`, { responseType: "blob" })
             .then(({ data }) => {
               this.loading = false;
               const url = window.URL.createObjectURL(data);
@@ -61,6 +61,42 @@ export function icosPorDepartamentoExtendidoExcelAction({ commit }, payload) {
               a.click();
               resolve(data);
               return url;
+            })
+            .catch((error) => {
+                console.log(
+                    'Ocurrió un error al consultar la data: ',
+                    error.response
+                );
+                reject(error.response);
+            });
+    });
+}
+
+export function icoNacionalRadarAction({ commit }, payload) {
+    const urlService = 'ico-nacional-radar';
+    return new Promise((resolve, reject) => {
+        axios
+            .get(`${URL_API}/${urlService}/${payload}`)
+            .then(({ data }) => {
+                resolve(data);
+            })
+            .catch((error) => {
+                console.log(
+                    'Ocurrió un error al consultar la data: ',
+                    error.response
+                );
+                reject(error.response);
+            });
+    });
+}
+
+export function icosPorMunicipioRadarAction({ commit }, payload) {
+    const urlService = 'icos-por-municipio-radar';
+    return new Promise((resolve, reject) => {
+        axios
+            .get(`${URL_API}/${urlService}/${payload.municipio}/${payload.estudio}`)
+            .then(({ data }) => {
+                resolve(data);
             })
             .catch((error) => {
                 console.log(
