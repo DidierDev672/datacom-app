@@ -1,9 +1,9 @@
 //export const URL_API = 'http://localhost:28181';
 //export const URL_API = "http://85.25.223.24:28181";
-// export const URL_API = "https://datacomdev.fodc.org.co:9443";
+//export const URL_API = "https://datacomdev.fodc.org.co:9443";
 //export const URL_API = "http://192.168.1.16:28181";
-export const URL_API = 'http://191.103.253.34:28181';
-// export const URL_API = "https://datacom-backend.herokuapp.com";
+export const URL_API = 'http://181.205.199.34:28181';
+//export const URL_API = "https://datacom-backend.herokuapp.com";
 
 export const TOKEN_AUTH_USERNAME = 'wang-plus';
 export const TOKEN_AUTH_PASSWORD = 'G3n0m4Plu51*!';

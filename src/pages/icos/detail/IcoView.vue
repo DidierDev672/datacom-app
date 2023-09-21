@@ -27,11 +27,11 @@
         </q-markup-table>
 
         <q-card class="q-mb-sm">
-            <q-card-section>                
-                <ico-radar :title="evaluacion.jac.nombre"></ico-radar> 
+            <q-card-section>
+                <ico-radar :title="tituloGrafico"></ico-radar>
             </q-card-section>
         </q-card>
-        
+
         <q-card
             flat
             bordered
@@ -39,7 +39,7 @@
             v-for="tema in temas"
             :key="tema.id"
         >
-        
+
             <q-card-section class="q-pb-none">
                 <div class="row items-center no-wrap">
                     <div class="col">
@@ -158,7 +158,7 @@
                     <td>Superior</td>
                     <td>2 meses</td>
                 </tr>
-                
+
             </tbody>
         </q-markup-table>
 
@@ -185,7 +185,7 @@
         </q-page-sticky>
     </div>
 </div>
-    
+
 </template>
 
 <script>
@@ -207,13 +207,15 @@ export default {
             temas: [],
             registro: null,
             temasArray: [],
+            tituloGrafico: ''
         };
     },
     created() {
         this.evaluacionID = this.$route.params.id;
         this.buscarIcoAction(this.evaluacionID).then((data) => {
             this.evaluacion = data;
-            console.log('data: ', data);            
+          this.tituloGrafico = this.evaluacion.id + ' ' + this.evaluacion.jac.nombre + ' - ' + this.evaluacion.descripcion + ' | Cal. ' + this.evaluacion.calificacion
+            console.log('data: ', data);
             this.registro = data.indicadores['0'];
 
             this.tema = this.registro.indicador.tema;
@@ -230,9 +232,9 @@ export default {
                 this.countTemas = 0;
                 this.calificacionTema = 0;
                 this.indicadores = data.indicadores.filter((indicador) => {
-                    console.log("Quien es indicador: ", indicador);
+                    //console.log("Quien es indicador: ", indicador);
                     if (indicador.indicador.tema.id === tema.id) {
-                        console.log('Indicador que coincide: ', indicador)
+                        //console.log('Indicador que coincide: ', indicador)
                         return { indi: indicador.id };
                     }
                 });
@@ -249,7 +251,7 @@ export default {
                         this.calificacionTema / this.indicadores.length,
                 });
             });
-            console.log('Temas: ', this.temas)
+           // console.log('Temas: ', this.temas)
         });
     },
     methods: {
