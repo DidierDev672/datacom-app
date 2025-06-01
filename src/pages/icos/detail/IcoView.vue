@@ -5,83 +5,103 @@
         <div class="text-right logo">
             <img width="164px" src="/icons/logo.png" />
         </div>
-        <q-markup-table dense flat bordered square class="q-mb-sm">
-            <tbody>
-                <tr>
-                    <td>Junta de acci&oacute;n comunal</td>
-                    <td>{{ evaluacion.jac.nombre }}</td>
-                </tr>
-                <tr>
-                    <td>Nit</td>
-                    <td>{{ evaluacion.jac.noRut }}</td>
-                </tr>
-                <tr>
-                    <td>Representante Legal</td>
-                    <td>{{ evaluacion.jac.representanteLegal }}</td>
-                </tr>
-                <tr>
-                    <td>Valoración Junta de Acción comunal</td>
-                    <td>{{ evaluacion.calificacion }}</td>
-                </tr>
-            </tbody>
-        </q-markup-table>
+        <q-card class="q-mb-sm">
+            <q-card-section>
+                <q-chip class="full-width q-py-md text-bold text-h6" square color="info" text-color="white" icon="ti-minus">
+                    Datos de la organización
+                </q-chip>
+                <q-markup-table dense flat bordered square class="q-mb-sm">
+                    <tbody>
+                        <tr>
+                            <td style="width: 20%;" class="text-h6">Junta de acci&oacute;n comunal</td>
+                            <td>{{ evaluacion.jac.nombre }}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-h6">Nit</td>
+                            <td>{{ evaluacion.jac.noRut }}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-h6">Representante Legal</td>
+                            <td>{{ evaluacion.jac.representanteLegal }}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-h6">Valoración Junta de Acción comunal</td>
+                            <td>{{ evaluacion.calificacion }}</td>
+                        </tr>
+                    </tbody>
+                </q-markup-table>
+            </q-card-section>
+        </q-card>
 
         <q-card class="q-mb-sm">
             <q-card-section>
+                <q-chip class="full-width q-py-md text-bold text-h6" square color="info" text-color="white" icon="ti-minus">
+                    Representación gráfica
+                </q-chip>
                 <ico-radar :title="tituloGrafico"></ico-radar>
             </q-card-section>
         </q-card>
 
-        <q-card
-            flat
-            bordered
-            class="my-card q-mb-sm"
-            v-for="tema in temas"
-            :key="tema.id"
-        >
-
-            <q-card-section class="q-pb-none">
-                <div class="row items-center no-wrap">
-                    <div class="col">
-                        <div class="text-h6">{{ tema.tema }}</div>
-                    </div>
-                    <div class="col-auto">
-                        <q-btn
-                            color="grey-7"
-                            class="print-grey-7"
-                            round
-                            :label="tema.calificacionTotal.toFixed(2)"
-                        >
-                        </q-btn>
-                    </div>
-                </div>
-            </q-card-section>
-
-            <q-card-section
-                class="q-pt-none"
-                v-if="tema.indicadores.length > 0"
+        <div v-if="mostrarDetalle">
+            <q-card
+                flat
+                bordered            
+                class="my-card q-mb-sm"
+                v-for="tema in temas"
+                :key="tema.id"
             >
-                <q-list>
-                    <q-item
-                        clickable
-                        v-ripple
-                        v-for="indicador in tema.indicadores"
-                        :key="indicador.id"
-                    >
-                        <q-item-section>
-                            <q-item-label>{{ indicador.indicador.descripcion }}</q-item-label>
-                            <q-item-label caption>R//: {{ indicador.descripcionCalificacion }}</q-item-label>
-                        </q-item-section>
+    
+                <q-card-section class="q-pb-none">
+                    <div class="row items-center no-wrap">
+                        <div class="col">                        
+                            <q-chip class="full-width q-py-md text-bold text-h6" square color="info" text-color="white" icon="ti-minus" :label="tema.tema" />                       
+                        </div>
+                        <div class="col-auto">
+                            <q-btn
+                                color="info"
+                                outline
+                                class="print-grey-7"                        
+                                :label="tema.calificacionTotal.toFixed(2)"
+                            >
+                            </q-btn>
+                        </div>
+                    </div>
+                </q-card-section>
+    
+                <q-card-section
+                    class="q-pt-none"
+                    v-if="tema.indicadores.length > 0"
+                >
+                    <q-list bordered 
+                            separator>
+                        <q-item
+                            clickable                        
+                            v-ripple
+                            v-for="indicador in tema.indicadores"
+                            :key="indicador.id"
+                        >
                         <q-item-section avatar>
-                            <q-item-label>{{
-                                indicador.calificacion
-                            }}</q-item-label>
-                            <!-- <q-badge color="primary" :label="indicador.calificacion" /> -->
+                            <q-icon size="xs" :color="getChipColor(indicador.calificacion)" name="ti-check" />
                         </q-item-section>
-                    </q-item>
-                </q-list>
-            </q-card-section>
-        </q-card>
+                            <q-item-section>
+                                <q-item-label>{{ indicador.indicador.descripcion }}</q-item-label>
+                                <q-item-label caption class="text-bold">
+                                    {{ indicador.descripcionCalificacion }}                                
+                                </q-item-label>
+                            </q-item-section>
+                            <q-item-section avatar :color="getChipColor(indicador.calificacion)" text-color="white">
+                                <q-item-label class="text-bold" text-color="info">{{
+                                    indicador.calificacion
+                                }}</q-item-label>
+                                <!-- <q-badge color="primary" :label="indicador.calificacion" /> -->
+                            </q-item-section>
+                        </q-item>
+                    </q-list>
+                </q-card-section>
+            </q-card>
+        </div>
+
+        
         <q-markup-table wrap-cells dense flat bordered square>
             <tbody>
                 <tr>
@@ -97,31 +117,31 @@
                 <tr>
                     <td>
                         <q-chip
-                            square
-                            color="red"
-                            text-color="white"
-                            class="full-width"
+                        square
+                        color="red"
+                        text-color="white"
+                        class="full-width text-center"
                         >
-                            1
-                        </q-chip>
-                    </td>
-                    <td>Plan de choque urgente</td>
-                    <td>Acompañamiento, definición, asesoría y capacitación</td>
-                    <td>Inferior</td>
-                    <td>6 meses</td>
-                </tr>
-                <tr>
-                    <td>
-                        <q-chip
-                            square
-                            color="orange"
-                            text-color="white"
-                            class="full-width"
-                        >
-                            2
-                        </q-chip>
-                    </td>
-                    <td>Plan de mejora mediano plazo</td>
+                        1
+                    </q-chip>
+                </td>
+                <td>Plan de choque urgente</td>
+                <td>Acompañamiento, definición, asesoría y capacitación</td>
+                <td>Inferior</td>
+                <td>6 meses</td>
+            </tr>
+            <tr>
+                <td>
+                    <q-chip
+                    square
+                    color="orange"
+                    text-color="white"
+                    class="full-width"
+                    >
+                    2
+                </q-chip>
+            </td>
+            <td>Plan de mejora mediano plazo</td>
                     <td>Seguimiento, asesoría, capacitación</td>
                     <td>Medio</td>
                     <td>4 meses</td>
@@ -161,6 +181,7 @@
 
             </tbody>
         </q-markup-table>
+        <q-btn flat class="q-mt-md" :icon="mostrarDetalle ? 'ti-angle-up' : 'ti-angle-down'" color="info" no-caps @click="mostrarDetalle = !mostrarDetalle" :label="mostrarDetalle ? 'Ocultar detalles' : 'Ver detalles'"></q-btn>
 
         <q-page-sticky
             class="botones"
@@ -207,7 +228,8 @@ export default {
             temas: [],
             registro: null,
             temasArray: [],
-            tituloGrafico: ''
+            tituloGrafico: '',
+            mostrarDetalle: false
         };
     },
     created() {
@@ -260,6 +282,15 @@ export default {
             // print('imprimir', 'html')
             window.print();
         },
+        getChipColor(calificacion) {
+            switch (calificacion) {
+                case 1: return 'red';
+                case 2: return 'orange';
+                case 3: return 'yellow';
+                case 4: return 'green';
+                default: return 'grey';
+            }
+        }
     },
     computed: {
         ...mapGetters('ico', ['getIcoState']),

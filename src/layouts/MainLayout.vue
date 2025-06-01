@@ -136,6 +136,12 @@ export default {
                     icon: 'ti-export',
                     link: '/reporte',
                 },
+                {
+                    title: 'Abastecimiento',
+                    caption: '',
+                    icon: 'ti-home',
+                    link: '/abastecimiento',
+                },
             ],
         };
     },
@@ -182,6 +188,16 @@ export default {
 };
 </script>
 <style lang="sass">
+.WAL
+    &__layout
+        margin: 0 auto
+        z-index: 4000
+        height: 100%
+        width: 90%
+        max-width: 950px
+        border-radius: 5px
+
+
 body
   background-color: #f3f3f9
 

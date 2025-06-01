@@ -27,7 +27,7 @@ Vue.use(VueTour);
  * with the Router instance.
  */
 
-export default function(/* { store, ssrContext } */) {
+export default function (/* { store, ssrContext } */) {
   const Router = new VueRouter({
     scrollBehavior: () => ({ x: 0, y: 0 }),
     routes,
@@ -41,6 +41,7 @@ export default function(/* { store, ssrContext } */) {
 
   Router.beforeEach((to, from, next) => {
     const loggedIn = localStorage.getItem("token");
+    console.log("toRoute: ", to.fullPath);
 
     // const payload = VueJWT.jwt.decode();
 
@@ -50,7 +51,11 @@ export default function(/* { store, ssrContext } */) {
 
     if (to.matched.some(record => record.meta.requiresAuth) && !loggedIn) {
       console.log("Pasa por el guard");
-      next("/auth");
+
+      next({
+        path: '/auth',
+        query: { from: to.fullPath } // Guarda la ruta completa (path + parámetros)
+      });
     } else {
       next();
     }

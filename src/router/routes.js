@@ -10,6 +10,10 @@ const routes = [
                 component: () => import('pages/app/modulo/PageModulo.vue'),
                 children: [
                     {
+                        path: 'abastecimiento',
+                        component: () => import('pages/app/modulo/abastecimiento/Abastecimiento.vue')
+                    },
+                    {
                         path: 'municipios',
                         name: 'PageModuloMunicipio',
                         component: () =>
@@ -65,6 +69,7 @@ const routes = [
                     },
                 ],
             },
+
             {
                 path: 'encuestas',
                 component: () =>
@@ -332,52 +337,52 @@ const routes = [
                             ),
                     },
                     {
-                      path: 'reporte-ico-organizacion',
-                      name: 'ReporteIcoOrganizacionIndex',
-                      component: () =>
-                          import(
-                              'pages/reporte/icos/ReporteIcoOrganizacionIndex.vue'
-                          ),
+                        path: 'reporte-ico-organizacion',
+                        name: 'ReporteIcoOrganizacionIndex',
+                        component: () =>
+                            import(
+                                'pages/reporte/icos/ReporteIcoOrganizacionIndex.vue'
+                            ),
                     },
                     {
-                      path: 'ico/nacional/resumido/radar',
-                      name: 'ReporteIcoNacionalRadarIndex',
-                      component: () =>
-                          import(
-                              'pages/reporte/icos/nacional/ReporteIcoNacionalRadarIndex.vue'
-                          ),
+                        path: 'ico/nacional/resumido/radar',
+                        name: 'ReporteIcoNacionalRadarIndex',
+                        component: () =>
+                            import(
+                                'pages/reporte/icos/nacional/ReporteIcoNacionalRadarIndex.vue'
+                            ),
                     },
                     {
-                      path: 'ico/departamento/resumido/radar',
-                      name: 'ReporteIcoDepartamentoRadarIndex',
-                      component: () =>
-                          import(
-                              'pages/reporte/icos/departamento-radar/ReporteIcoDepartamentoRadarIndex.vue'
-                          ),
+                        path: 'ico/departamento/resumido/radar',
+                        name: 'ReporteIcoDepartamentoRadarIndex',
+                        component: () =>
+                            import(
+                                'pages/reporte/icos/departamento-radar/ReporteIcoDepartamentoRadarIndex.vue'
+                            ),
                     },
                     {
-                      path: 'ico/departamento/resumido/csv',
-                      name: 'ReporteIcoDepartamentoExcelResumidoIndex',
-                      component: () =>
-                          import(
-                              'pages/reporte/icos/departamento-radar/ReporteIcoDepartamentoExcelResumidoIndex.vue'
-                          ),
+                        path: 'ico/departamento/resumido/csv',
+                        name: 'ReporteIcoDepartamentoExcelResumidoIndex',
+                        component: () =>
+                            import(
+                                'pages/reporte/icos/departamento-radar/ReporteIcoDepartamentoExcelResumidoIndex.vue'
+                            ),
                     },
                     {
-                      path: 'ico/departamento/extendido/csv',
-                      name: 'ReporteIcoDepartamentoExcelExtendidoIndex',
-                      component: () =>
-                          import(
-                              'pages/reporte/icos/departamento-radar/ReporteIcoDepartamentoExcelExtendidoIndex.vue'
-                          ),
+                        path: 'ico/departamento/extendido/csv',
+                        name: 'ReporteIcoDepartamentoExcelExtendidoIndex',
+                        component: () =>
+                            import(
+                                'pages/reporte/icos/departamento-radar/ReporteIcoDepartamentoExcelExtendidoIndex.vue'
+                            ),
                     },
                     {
-                      path: 'ico/municipio/resumido/radar',
-                      name: 'ReporteIcoMunicipalRadarIndex',
-                      component: () =>
-                          import(
-                              'pages/reporte/icos/municipal/ReporteIcoMunicipalRadarIndex.vue'
-                          ),
+                        path: 'ico/municipio/resumido/radar',
+                        name: 'ReporteIcoMunicipalRadarIndex',
+                        component: () =>
+                            import(
+                                'pages/reporte/icos/municipal/ReporteIcoMunicipalRadarIndex.vue'
+                            ),
                     },
                     {
                         path: 'reporte-ejemplo',
@@ -393,11 +398,13 @@ const routes = [
             {
                 path: 'icos',
                 component: () => import('pages/icos/PageIco.vue'),
+                meta: { requiresAuth: true },
                 children: [
                     {
                         path: '',
                         name: 'IcoIndex',
                         component: () => import('pages/icos/list/IcoIndex.vue'),
+                        meta: { requiresAuth: true },
                     },
                     {
                         path: 'create',
@@ -562,20 +569,32 @@ const routes = [
                 component: () => import('pages/mod-jac/JacList.vue'),
             },
             {
-              path: '/jac/:id/view',
-              name: 'jac-detalle',
-              component: () => import('pages/mod-jac/JacView.vue'),
-              children: [
-                {
-                  path: '',
-                  name: 'jac-detalle-info-general',
-                  component: () => import('pages/mod-jac/view/InfoGeneral.vue'),
-                },
-              ]
-          },
+                path: '/jac/:id/view',
+                name: 'jac-detalle',
+                component: () => import('pages/mod-jac/JacView.vue'),
+                children: [
+                    {
+                        path: '',
+                        name: 'jac-detalle-info-general',
+                        component: () => import('pages/mod-jac/view/InfoGeneral.vue'),
+                    },
+                ]
+            },
 
             { path: '', redirect: 'encuestas' },
         ],
+    },
+    {
+        path: '/abastecimiento',
+        name: 'municipio',
+        meta: { requiresAuth: true },
+        component: () => import('layouts/AbastecimientoLayout.vue'),
+        children: [
+            {
+                path: '',
+                component: () => import('pages/app/modulo/abastecimiento/Abastecimiento.vue')
+            }
+        ]
     },
     {
         path: '/municipio/:id',

@@ -1,5 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import { store } from 'quasar/wrappers'
+import { createStore } from 'vuex'
 
 // import example from './module-example'
 import auth from './module-auth';
@@ -77,6 +79,9 @@ import buscar from './module-busquedas'
 import reportesGenerales from './module-reportes-generales';
 import reportesIcos from './module-reportes/ico';
 
+import projects from './abastecimiento/projects';
+import orderSupply from './abastecimiento/orderSupply'
+
 Vue.use(Vuex);
 
 /*
@@ -88,7 +93,7 @@ Vue.use(Vuex);
  * with the Store instance.
  */
 
-export default function(/* { ssrContext } */) {
+export default function (/* { ssrContext } */) {
     const Store = new Vuex.Store({
         modules: {
             auth,
@@ -162,7 +167,11 @@ export default function(/* { ssrContext } */) {
             reportesIcos,
 
             // Busqueda
-            buscar
+            buscar,
+
+            //Abastecimiento
+            projects,
+            orderSupply
 
         },
 

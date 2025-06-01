@@ -1,14 +1,15 @@
 // app global css in SCSS form
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 @import 'custom/dashboard';
 
 body {
-    font-family: 'Montserrat', 'Robotos', 'Helvetica Neue', Helvetica, Arial,
+    font-family: 'Inter Tight', 'Montserrat', 'Robotos', 'Helvetica Neue', Helvetica, Arial,
         sans-serif;
     font-size: $html-font-size !important;
     //color: #464d69;
     color: #898888;
-    font-weight: 500;
+    font-weight: 300;
     // background-color: rgb(244, 244, 245);
     background-color: #fff;
 }
@@ -17,6 +18,7 @@ body {
     @media (max-width: $breakpoint-xs-max) {
         display: block;
     }
+
     @media (min-width: $breakpoint-sm-min) {
         display: none;
     }
@@ -26,6 +28,7 @@ body {
     @media (max-width: $breakpoint-xs-max) {
         display: none;
     }
+
     @media (min-width: $breakpoint-sm-min) {
         display: block;
     }
@@ -38,7 +41,19 @@ body {
 }
 
 .full-alto {
-  height: 70vh;
+    height: 70vh;
+}
+
+.text-h6 {
+    color: #000000;
+    font-weight: 500;
+}
+
+p {
+    font-size: .875rem;
+    line-height: 1.4rem;
+    font-weight: 400;
+    letter-spacing: -.00875rem;
 }
 
 @media print {
@@ -57,7 +72,8 @@ body {
     }
 
     @page {
-        size: auto; /* auto is the initial value */
+        size: auto;
+        /* auto is the initial value */
         margin: 10%;
         margin-top: 0;
     }

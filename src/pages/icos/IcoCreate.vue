@@ -1,41 +1,24 @@
 ﻿<template>
   <div class="q-ma-sm">
     <div class="row">
-      <div class="col-xs-12 col-sm-6 offset-sm-3">
-        <div v-if="step == 1">
-          <!-- <pre>{{ indicadores }}</pre> -->
-          <q-form ref="infoEvaluacion">
+      <div class="col-xs-12 col-sm-10 offset-sm-1">
+        <div>
+          <q-form ref="infoEvaluacion">            
             <q-card flat bordered class="my-card q-mb-md">
-              <q-card-section class="q-pb-none">
-                <div class="text-h6 q-mb-none">
-                  Descripción de la Evaluación *
-                </div>
+              <q-card-section class="q-pb-none">                
+                <q-chip class="full-width q-py-md text-bold text-h6" square color="info" text-color="white" icon="ti-minus">
+                    Información de la evaluación
+                </q-chip>
               </q-card-section>
 
               <q-card-section>
-                <div class="row">
-                  <div class="col-xs-12">
-                    <q-input
-                      dense
-                      v-model="evaluacion.descripcion"
-                      lazy-rules
-                      :rules="[val => !!val || 'Información requerida']"
-                    />
-                  </div>
-                </div>
-              </q-card-section>
-            </q-card>
-            <q-card flat bordered class="my-card q-mb-md">
-              <q-card-section class="q-pb-none">
-                <div class="text-h6 q-mb-none">Junta de Acción Comunal *</div>
-              </q-card-section>
-
-              <q-card-section>
-                <div class="row">
-                  <div class="col-xs-12">
+                <div class="q-col-gutter-md row q-mb-md">                  
+                  <div class="col-xs-12 col-sm-4">
                     <q-select
                       use-input
+                      dense
                       v-model="evaluacion.jac"
+                      label="Organización"
                       option-label="jac"
                       option-value="id"
                       hint="Seleccione la organización"
@@ -48,6 +31,55 @@
                           'Debe elegir una organizacion'
                       ]"
                     />
+                  </div>                  
+                  
+                </div>
+
+                <div class="q-col-gutter-md row q-mb-md">
+                  <div class="col-xs-12 col-sm-4">
+                    <q-input
+                      dense
+                      v-model="evaluacion.descripcion"
+                      label="Descripción de la evaluación"
+                      lazy-rules
+                      :rules="[val => !!val || 'Información requerida']"
+                    />
+                  </div>                
+                  <div class="col-xs-12 col-sm-4">                    
+                    <q-input label="Fecha de aplicación" v-model="evaluacion.fechaAplicacion" mask="date" dense>
+                      <template v-slot:append>
+                        <q-icon name="event" class="cursor-pointer">
+                          <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
+                            <q-date v-model="evaluacion.fechaAplicacion">
+                              <div class="row items-center justify-end">
+                                <q-btn v-close-popup label="Close" color="primary" flat />
+                              </div>
+                            </q-date>
+                          </q-popup-proxy>
+                        </q-icon>
+                      </template>
+                    </q-input>
+                  </div>
+                  <div class="col-xs-12 col-sm-4">
+                    <q-input
+                      dense
+                      v-model="evaluacion.encuestador"
+                      label="Encuestador"
+                      lazy-rules
+                      :rules="[val => !!val || 'Información requerida']"
+                    />
+                  </div>
+                </div>
+
+                <div class="q-col-gutter-md row">
+                  <div class="col-xs-12">
+                    <q-input
+                      dense
+                      v-model="evaluacion.observaciones"
+                      type="textarea"
+                      autogrow
+                      label="Observaciones generales de la evaluación"
+                    />
                   </div>
                 </div>
               </q-card-section>
@@ -55,72 +87,62 @@
           </q-form>
         </div>
 
-        <div v-if="step == 2">
-          <div class="text-h6 q-px-xs q-py-md ">Indicadores</div>
-
-          <q-card
-            v-for="indicador in indicadores"
-            flat
-            bordered
-            class="my-card q-mb-md"
-            :key="indicador.indicador.id"
-          >
-            <q-card-section class="q-pb-none">
-              <div class="text-h6 q-mb-none">
-                {{ indicador.indicador.descripcion }} *
-              </div>
-            </q-card-section>
-
-            <q-card-section>
+        <div >
+          
+          
+          
+          <q-card class="q-pa-md">
+            <q-chip class="full-width q-py-md text-bold text-h6" square color="info" text-color="white" icon="ti-minus">
+                    Indicadores
+                </q-chip>
+            <q-stepper
+                v-model="stepper"
+                ref="stepper"
+                color="primary"
+                animated
+              >
+              
+              <q-step
+                v-for="(indicador, index) in indicadoresAgrupados"
+                  flat
+                  bordered
+                  class="my-card q-mb-md"
+                  :key="index"
+                :name="index"
+                :title="indicador.tema"
+                icon="settings"
+                :done="stepper > index"
+              >
               <div class="row">
-                <div class="col-xs-12">
-                  <!-- <q-input
-                    dense
-                    v-model="indicador.calificacion"
-                    lazy-rules
-                    :rules="[val => !!val || 'Información requerida']"
-                  /> -->
-                  <q-option-group
-                    v-model="indicador.calificacion"
-                    :options="indicador.respuestas"
-                  />
+                <div class="col-xs-12 col-sm-6 offset-sm-3 text-h6 q-mb-md">
+                  {{ indicador.tema }}
                 </div>
               </div>
-            </q-card-section>
-          </q-card>
-        </div>
-
-        <div class="flex justify-center">
-          <q-btn
-            v-if="step < 2"
-            label="Continuar"
-            class="full-width"
-            no-caps
-            color="positive"
-            @click="siguiente"
-          />
-          <q-btn
-            v-else
-            label="Guardar"
-            class="full-width"
-            no-caps
-            color="positive"
-            @click="onSubmit"
-          >
-            <template v-slot:loading>
-              <q-spinner-facebook />
-            </template>
-          </q-btn>
-          <q-btn
-            v-if="step > 1"
-            label="Anterior"
-            no-caps
-            color="dark"
-            flat
-            class="full-width"
-            @click="anterior"
-          />
-        </div>
+                <div v-for="(indi, index) in indicador.indicadores" class="row q-mb-md" :key="index">                
+                    <div class="col-xs-12 col-sm-6 offset-sm-3">
+                      <q-select 
+                        v-model="indi.calificacion" 
+                        :options="indi.respuestas" 
+                        emit-value 
+                        map-options 
+                        :label="indi.indicador.descripcion" />
+                    </div> 
+                </div>
+              </q-step>
+              <template v-slot:navigation>
+                <q-stepper-navigation>
+                  <q-btn no-caps v-if="stepper < 7" 
+                  @click="$refs.stepper.next()" 
+                  color="primary" 
+                  label="Siguiente"
+                  icon-right="arrow_forward" />
+                  <q-btn no-caps v-else @click="onSubmit" color="primary" label="Finalizar" />
+                  <q-btn no-caps v-if="stepper > 0" flat color="primary" @click="$refs.stepper.previous()" label="Anterior" class="q-ml-sm" />
+                </q-stepper-navigation>
+              </template>
+            </q-stepper>
+          </q-card>          
+        </div>        
       </div>
     </div>
   </div>
@@ -131,12 +153,13 @@ import { mapActions, mapGetters } from "vuex";
 // import { indicadoresIco, juntas } from "src/db/data";
 import axios from "axios";
 import { URL_API } from "src/utils/config";
+import { date } from 'quasar'
 
 export default {
   data() {
     return {
       opciones: "1",
-      evaluacion: {},
+      evaluacion: this.inicializarEvaluacion(),
       indicadoresOptions: [],
       indicadores: [],
       jacOptions: [],
@@ -163,14 +186,16 @@ export default {
           color: "green"
         }
       ],
-      step: 1
+      step: 1,
+      stepper: 0,
+      indicadoresAgrupados: []
     };
+    
   },
-  created() {
+  created() {    
     this.jacOptions = this.getJacState.lista;
     // this.cargarListaIndicadoresAction();
     this.getIndicadoresState.lista.forEach(indicador => {
-      console.log('Indicador: ', indicador)
       this.indicadores.push({
         indicador: indicador,
         respuestas: indicador.respuestas.map(resp => {
@@ -183,21 +208,60 @@ export default {
         descripcionCalificacion: ''
       });
     });
-    this.evaluacion = {
-      id: 0,
-      descripcion: "",
-      jac: null,
-      indicadores: [],
-      usuarioCreacion: this.getUser,
-      usuarioActualizacion: this.getUser,
-      tipoEstudio: {
-        id: 1
+
+    this.indicadoresAgrupados = this.getIndicadoresState.lista.reduce((acc, indicador) => {
+      const temaDescripcion = indicador.tema.descripcion;
+
+      // Verificamos si ya existe un grupo para ese tema
+      let grupo = acc.find(g => g.tema === temaDescripcion);
+
+      if (!grupo) {
+        grupo = {
+          tema: temaDescripcion,
+          indicadores: []
+        };
+        acc.push(grupo);
       }
-    };
+
+      // Añadimos el indicador al grupo correspondiente
+      //grupo.indicadores.push({...indicador});
+      grupo.indicadores.push({
+        indicador: indicador,
+        respuestas: indicador.respuestas.map(resp => {
+          return {
+            label: resp.descripcion,
+            value: resp.valoracion
+          }
+        }),
+        calificacion: "",
+        descripcionCalificacion: ''
+      });
+
+      return acc;
+    }, []);
+
+    console.log("agrupados: ", this.indicadoresAgrupados)
+    
   },
   methods: {
     ...mapActions('jacInfo', ['cargarListaJacInfoAction']),
     // ...mapActions("indicadores", ["cargarListaIndicadoresAction"]),
+    inicializarEvaluacion(){
+      return {
+      id: 0,
+      jac: null,
+      descripcion: "",
+      fechaAplicacion: "",
+      encuestador: "",
+      observaciones: "",
+      indicadores: [],
+      usuarioCreacion: "",
+      usuarioActualizacion: "",
+      tipoEstudio: {
+        id: 1
+      }
+    }
+    },
     siguiente() {
       this.$refs.infoEvaluacion.validate().then(success => {
         if (success) {
@@ -218,23 +282,57 @@ export default {
         this.step--;
       }
     },
-    onSubmit() {
-      const urlService = "ico-evaluacion";
-      this.evaluacion.indicadores = this.indicadores.map(indi => {
 
-       let respuestaSeleccionada = indi.respuestas.find(resp => {
-            if(resp.value === indi.calificacion){
+
+    onSubmit2() {
+      const urlService = "ico-evaluacion";
+      let indicadoresFormateados = [];
+      this.indicadoresAgrupados.forEach(indi => {
+        indi.indicadores.forEach(subIndicador => {
+          let respuestaSeleccionada = subIndicador.respuestas.find(resp => {
+            if(resp.value === subIndicador.calificacion){              
               return resp
             }
-          });
-        return {
-          ...indi,
-          descripcionCalificacion: respuestaSeleccionada.label
-        }
-      })
+          });          
+          indicadoresFormateados.push({
+            ...subIndicador,
+            descripcionCalificacion: respuestaSeleccionada != undefined ? respuestaSeleccionada.label: ''
+          });          
+        });        
+      });  
+      
+      console.log("indicadoresFormateados: ", indicadoresFormateados);
+      
+    },
+    onSubmit() {
+      const urlService = "ico-evaluacion";
+      let indicadoresFormateados = [];
+      this.indicadoresAgrupados.forEach(indi => {
+        indi.indicadores.forEach(subIndicador => {
+          let respuestaSeleccionada = subIndicador.respuestas.find(resp => {
+            if(resp.value === subIndicador.calificacion){              
+              return resp
+            }
+          });          
+          indicadoresFormateados.push({
+            ...subIndicador,
+            descripcionCalificacion: respuestaSeleccionada != undefined ? respuestaSeleccionada.label: ''
+          });          
+        });        
+      });  
+
+      const fechaFormateada = date.formatDate(this.evaluacion.fechaAplicacion, 'YYYY-MM-DD');
+      
+      let nuevaEvaluacion = {
+        ...this.evaluacion,
+        indicadores: indicadoresFormateados,
+        fechaAplicacion: fechaFormateada,
+        usuarioCreacion: this.getUser,
+        usuarioActualizacion: this.getUser,
+      }
 
       axios
-        .post(`${URL_API}/${urlService}/`, this.evaluacion)
+        .post(`${URL_API}/${urlService}/`, nuevaEvaluacion)
         .then(({ data }) => {
           this.$router.push({ name: "IcoIndex" });
         })
@@ -272,6 +370,9 @@ export default {
 
       });
     },
+    cambiarRespuesta(respuesta){
+      console.log(respuesta)
+    }
   },
   computed: {
     ...mapGetters("auth", ["getUser"]),

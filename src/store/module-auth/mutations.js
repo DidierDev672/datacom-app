@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Notify } from "quasar";
 
-export function someMutation(/* state */) {}
+export function someMutation(/* state */) { }
 
 export function SET_TOKEN_INFO(state, tokenInfo) {
   // state.tokenInfo = tokenInfo;
@@ -10,7 +10,8 @@ export function SET_TOKEN_INFO(state, tokenInfo) {
   localStorage.setItem("token", JSON.stringify(tokenInfo));
   axios.defaults.headers.common[
     "Authorization"
-  ] = `Bearer ${tokenInfo.access_token}`;
+  ] = `Bearer ${tokenInfo.token}`;
+
   Notify.create({
     type: "positive",
     position: "bottom-right",
@@ -24,18 +25,29 @@ export function SET_USER_DATA(state, userData) {
   localStorage.setItem("user", JSON.stringify(userData));
 }
 
+export function SET_TENANT_DATA(state, tenantData) {
+  console.log('SET_TENANT_DATA: ', tenantData)
+  state.tenant = tenantData;
+  state.loading = false;
+  localStorage.setItem("tenant", JSON.stringify(tenantData));
+}
+
 export function CLEAR_AUTHENTICATED_DATA(state) {
   state.user = null;
+  state.tenant = null;
   state.tokenInfo = null;
   localStorage.removeItem("token");
+  localStorage.removeItem("tenant");
   localStorage.removeItem("user");
   localStorage.removeItem("filtroJac");
   localStorage.removeItem("filtroIco");
   axios.defaults.headers.common["Authorization"] = "";
+  axios.defaults.headers.common["X-Tenantid"] = "";
 }
 
 export function SET_ERROR(state, payload) {
   state.user = null;
+  state.tenant = null;
   state.tokenInfo = null;
   state.loading = false;
   state.loaded = false;
@@ -43,6 +55,7 @@ export function SET_ERROR(state, payload) {
   localStorage.removeItem("token");
   localStorage.removeItem("user");
   axios.defaults.headers.common["Authorization"] = "";
+  axios.defaults.headers.common["X-Tenantid"] = "";
   Notify.create({
     type: "negative",
     position: "bottom-right",

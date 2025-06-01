@@ -12,27 +12,18 @@
                                 split
                                 color="dark"
                                 rounded
-                                label="Caucasia"
+                                :label="label"
                             >
                                 <q-list>
-                                    <q-item clickable v-close-popup>
+                                    <q-item
+                                      v-for="data in lstMunicipios"
+                                      clickable
+                                      v-close-popup
+                                      :key="data.id"
+                                      @click="onSelected(data)">
                                         <q-item-section>
                                             <q-item-label
-                                                >Remedios</q-item-label
-                                            >
-                                        </q-item-section>
-                                    </q-item>
-
-                                    <q-item clickable v-close-popup>
-                                        <q-item-section>
-                                            <q-item-label>Coveñas</q-item-label>
-                                        </q-item-section>
-                                    </q-item>
-
-                                    <q-item clickable v-close-popup>
-                                        <q-item-section>
-                                            <q-item-label
-                                                >Miraflores</q-item-label
+                                                >{{ data.municipio }}</q-item-label
                                             >
                                         </q-item-section>
                                     </q-item>
@@ -110,7 +101,7 @@
                             <div class="row q-col-gutter-sm q-mt-md q-mb-md">
                                 <div class="col">
                                     <q-card flat bordered>
-                                        <bar-chart municipioID="37"></bar-chart>
+                                        <bar-chart :municipioID="municipioSelected.id"></bar-chart>
                                     </q-card>
                                 </div>
                                 <div class="col">
@@ -226,7 +217,7 @@
                                         Educaci&oacute;n.
                                     </q-banner>
                                     <bar-chart-educacion-municipio
-                                        municipioID="37"
+                                        :municipioID="municipioSelected.id"
                                     ></bar-chart-educacion-municipio>
                                     <div class="row">
                                         <div class="col">
@@ -622,17 +613,45 @@ export default {
             encuestasCerradas: true,
             loading: false,
             info: {},
+            lstMunicipios: [],
+            label: 'Seleccione un municipio',
+            municipioSelected: null
         };
     },
 
     created() {
+      this.buscarListaMunicipiosAction({
+      page: 0,
+      rowsPerPage: 0,
+      filter: ''
+    }).then(response => {
+      this.lstMunicipios = response.data;
+    });
+
+    this.municipioSelected = {
+      id: '37',
+      municipio: 'Caucasia'
+    }
+
         console.log('Parent 1: ', this.chartdata);
-        this.reporteFichaMunicipioAction(37).then((data) => {
+        this.label = this.municipioSelected.municipio;
+        this.reporteFichaMunicipioAction(this.municipioSelected.id).then((data) => {
             this.info = data;
         });
     },
     methods: {
         ...mapActions('reporteFichaMunicipio', ['reporteFichaMunicipioAction']),
+        ...mapActions('buscar', ['buscarListaMunicipiosAction']),
+        onSelected(data){
+          console.log("Selected ciudad: " + data);
+          this.municipioSelected = {
+            ...data,
+          id: data.id.toString()};
+          this.label = this.municipioSelected.municipio
+          this.reporteFichaMunicipioAction(this.municipioSelected.id).then((data) => {
+            this.info = data;
+          });
+        }
     },
     computed: {
         ...mapGetters('reporteFichaMunicipio', ['getChartdataState']),

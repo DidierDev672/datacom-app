@@ -28,7 +28,8 @@ export default {
         };
     },
     mounted() {
-        this.reporteFichaMunicipioAction(37).then((data) => {
+      console.log('BarChart: ', this.municipioID)
+        this.reporteFichaMunicipioAction(this.municipioID).then((data) => {
             console.log('Child data: ', data);
             this.chartdata = {
                 labels: Object.keys(data.poblacionRango),
@@ -43,6 +44,9 @@ export default {
             console.log('Parent 2: ', this.chartdata);
             this.renderChart(this.chartdata, this.options);
         });
+    },
+    updated(){
+      console.log('BarChart update: ', this.municipioID)
     },
     methods: {
         ...mapActions('reporteFichaMunicipio', ['reporteFichaMunicipioAction']),

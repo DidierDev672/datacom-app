@@ -1,10 +1,17 @@
 ﻿<template>
   <div>
     <div class="text-h6 page-title-box" >Evaluaciones ICO</div>
-    <div class="q-ma-md bg-white">
+    <div class="q-ma-md q-pa-md bg-white">
+      <q-chip class="full-width q-py-md text-bold text-h6" square color="info" text-color="white" icon="ti-minus">
+                    Evaluaciones ICO
+                </q-chip>
       <div v-if="filter.length > 0" class="row">
         <div class="col q-px-md q-pt-md">
-          <p class="q-mb-none">Los resultados se filtran por: <b>{{ filter }}</b></p>
+          <q-btn
+            no-caps
+            color="secondary"
+            :to="{ name: 'IcoCreate' }"
+            flat>Nuevo Ico</q-btn>
         </div>
       </div>
       <q-table
@@ -12,7 +19,7 @@
         class="ico-table"
         :data="icos"
         :columns="columns"
-        separator="vertical"
+        separator="horizontal"
         :pagination.sync="pagination"
         :filter="filter"
         @request="onRequest"
@@ -20,16 +27,14 @@
         @row-click="seleccionar"
         wrap-cells
         flat
-        :bordered="false"
+        bordered
         :loading="getIcoState.loading"
         loading-label="Cargando información, por favor espere"
       >
         <template v-slot:top>
-          <q-btn
-            no-caps
-            color="secondary"
-            :to="{ name: 'IcoCreate' }"
-            flat>Nuevo Ico</q-btn>
+          
+
+            <p class="q-mb-none">Los resultados se filtran por: <b>{{ filter }}</b></p>
               <!-- <q-btn no-caps color="secondary" flat :to="{ name: 'PageJacCreate' }">Descargar Jacs</q-btn> -->
               <q-space />
               <q-input
@@ -44,6 +49,7 @@
                   <q-icon v-else name="clear" @click="removeFilter()" />
                 </template>
               </q-input>
+              
             </template>
 
         <q-td slot="body-cell-descripcion" slot-scope="props" :props="props">

@@ -46,22 +46,25 @@ export function registerAction({ dispatch }, credentials) {
 }
 
 export function loginAction({ commit }, credentials) {
-  const url_service = "/oauth/token";
+  //const url_service = "/oauth/token";
+  const url_service = "/login";
 
-  const body = `grant_type=password&username=${encodeURIComponent(
-    credentials.username
-  )}&password=${encodeURIComponent(credentials.password)}`;
+  //const body = `username=${credentials.username}&password=${credentials.password}`;
 
   commit("INICIALIZAR");
 
   return new Promise((resolve, reject) => {
+    let tenant = JSON.parse(localStorage.getItem("tenant"));
+    if (tenant) {
+      axios.defaults.headers.common["X-Tenantid"] = tenant;
+    } else {
+      // Opcional: eliminar header si no hay tenant
+      delete axios.defaults.headers.common["X-Tenantid"];
+    }
     axios
-      .post(URL_API + url_service, body, {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-          Authorization:
-            "Basic " + btoa(TOKEN_AUTH_USERNAME + ":" + TOKEN_AUTH_PASSWORD)
-        }
+      .post(URL_API + url_service, {
+        username: credentials.username,
+        password: credentials.password
       })
       .then(({ data }) => {
         commit("SET_TOKEN_INFO", data);

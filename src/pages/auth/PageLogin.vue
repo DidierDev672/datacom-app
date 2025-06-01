@@ -57,6 +57,25 @@
                 </template>
               </q-input>
 
+              <p class="text-subtitle2 text-weight-bold text-dark">
+                Empresa
+              </p>
+
+              <q-select
+                v-model="tenant"
+                outlined
+                dense
+                :options="tenantList"
+                option-label="value"
+                option-value="id"
+                :rules="[
+                        val =>
+                          (val != null) ||
+                          'Debe elegir una organizacion'
+                      ]"
+                required
+              />
+
               <q-toggle
                 v-model="remember"
                 color="secondary"
@@ -108,27 +127,44 @@ export default {
       loading: false,
       username: "", //enarvaez
       password: "", //edinson261282
-      remember: false
+      tenant: "",
+      remember: false,
+      tenantList: [
+        {
+          id: 'tenant_fodc',
+          value: 'Fodc'
+        },
+        {
+          id: 'tenant_mineros',
+          value: 'Mineros S.A'
+        }
+      ]
     };
   },
 
   methods: {
     ...mapActions("auth", ["loginAction"]),
-    ...mapMutations("auth", ["SET_USER_DATA"]),
+    ...mapMutations("auth", ["SET_USER_DATA", "SET_TENANT_DATA"]),
     onSubmit() {
-      // this.loading = true;
+      this.SET_TENANT_DATA(this.tenant.id);
       this.loginAction({
         username: this.username,
         password: this.password,
         remember_me: this.remember
       }).then(data => {
+        const redirectPath = this.$route.query.from || '/';
         if (this.$jwt.hasToken()) {
           this.SET_USER_DATA(this.username);
-          this.$router.push("/");
+          //this.SET_TENANT_DATA(data.tenant);
+          this.$router.push(redirectPath);
         } else {
           console.log("No existe el token");
         }
+      })
+      .catch(error => {
+        console.error("Error en el login:", error);
       });
+
     }
   },
   computed: {

@@ -42,7 +42,8 @@ export default {
           this.options = {
               colors:['#64c2c8'],
               chart: {
-                id: 'Ico'
+                id: 'Ico',
+                height: 350
               },
               plotOptions: {
                 radar: {
@@ -54,9 +55,6 @@ export default {
                     }
                   }
                 }
-              },
-              title: {
-                text: this.title
               },
               dataLabels: {
                 enabled: true

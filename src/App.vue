@@ -9,19 +9,26 @@ import axios from "axios";
 export default {
   name: "App",
   methods: {
-    ...mapMutations("auth", ["SET_TOKEN_INFO", "SET_USER_DATA"])
+    ...mapMutations("auth", ["SET_TOKEN_INFO", "SET_USER_DATA", "SET_TENANT_DATA"])
   },
   created() {
     const tokenString = localStorage.getItem("token");
     const userData = localStorage.getItem("user");
+    const tenant = localStorage.getItem("tenant");
     if (tokenString) {
+      console.log('tokenString: ', tokenString)
       const tokenData = JSON.parse(tokenString);
-      //console.log(tokenData)
       this.SET_TOKEN_INFO(tokenData);
     }
 
     if (userData) {
+      console.log('userData: ', userData)
       this.SET_USER_DATA(JSON.parse(userData));
+    }
+
+    if(tenant){
+      console.log('tenant: ', tenant)
+      this.SET_TENANT_DATA(JSON.parse(tenant))
     }
 
     axios.interceptors.response.use(

@@ -15,6 +15,7 @@ export function reporteFichaMunicipioAction({ commit }, payload) {
                     'Ocurrió un error al consultar la data: ',
                     error.response
                 );
+                alert('Municipio presenta error en la data');
                 reject(error.response);
             });
     });

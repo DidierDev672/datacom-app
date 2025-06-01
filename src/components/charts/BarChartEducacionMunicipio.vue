@@ -28,7 +28,7 @@ export default {
         };
     },
     mounted() {
-        this.reporteFichaMunicipioAction(37).then((data) => {
+        this.reporteFichaMunicipioAction(this.municipioID).then((data) => {
             this.chartdata = {
                 labels: ['Cobertura neta', 'Cobertura bruta'],
                 datasets: [
