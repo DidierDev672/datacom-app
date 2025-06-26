@@ -14,15 +14,13 @@
             <div class="text-h5 q-mb-md text-primary text-weight-bold">
               Iniciar sesión
             </div>
-            <q-form @submit="onSubmit" class="q-gutter-xs">
-              <p class="text-subtitle2 text-weight-bold text-dark">
-                Nombre de usuario
-              </p>
+            <q-form @submit="onSubmit" class="q-gutter-xs">              
               <q-input
-                color="secondary"
+                color="green-200"
                 outlined
                 dense
                 v-model="username"
+                label="Nombre de usuario"
                 lazy-rules
                 :rules="[
                   val =>
@@ -31,15 +29,12 @@
                 ]"
               />
 
-              <p class="text-subtitle2 text-weight-bold text-dark">
-                Contraseña
-              </p>
-
               <q-input
                 v-model="password"
                 outlined
                 dense
-                color="secondary"
+                label="Contraseña"
+                color="green-200"
                 :type="isPwd ? 'password' : 'text'"
                 lazy-rules
                 :rules="[
@@ -57,14 +52,12 @@
                 </template>
               </q-input>
 
-              <p class="text-subtitle2 text-weight-bold text-dark">
-                Empresa
-              </p>
-
               <q-select
                 v-model="tenant"
                 outlined
                 dense
+                label="Empresa"
+                color="green-200"
                 :options="tenantList"
                 option-label="value"
                 option-value="id"
@@ -137,6 +130,10 @@ export default {
         {
           id: 'tenant_mineros',
           value: 'Mineros S.A'
+        },
+        {
+          id: 'tenant_pruebas',
+          value: 'Fodc pruebas'
         }
       ]
     };

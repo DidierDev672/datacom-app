@@ -379,10 +379,9 @@ export default {
     },
     async onSubmit(){
       try {
-        const currentDate = new Date().toISOString();
         const orderData = {
           id: uid(),
-          subdireccion: this.abastecimiento.subdireccion,
+          subdireccion: this.abastecimiento.subdireccion.label,
           nivelAprobacion: this.abastecimiento.nivelAprobacion,
           description: this.abastecimiento.descripcion,
           notes: this.abastecimiento.notes,

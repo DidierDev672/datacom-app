@@ -1,5 +1,6 @@
-import axios from 'axios'
-
+import axios from 'axios';
+import { URL_API } from "../../utils/config";
+  
 export const state = {
     orders: []
 }
@@ -16,7 +17,7 @@ export const mutations = {
 export const actions = {
     async createOrder({ commit }, orderData) {
         try {
-            const response = await axios.post('/api/supply-orders', orderData)
+            const response = await axios.put(`${URL_API}/api/supply-order/${orderData.id}`, orderData)
             commit('ADD_ORDER', response.data)
             return response.data
         } catch (error) {
