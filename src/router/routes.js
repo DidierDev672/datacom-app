@@ -9,10 +9,10 @@ const routes = [
                 path: 'app',
                 component: () => import('pages/app/modulo/PageModulo.vue'),
                 children: [
-                    {
+                    /* {
                         path: 'abastecimiento',
                         component: () => import('pages/app/modulo/abastecimiento/Abastecimiento.vue')
-                    },
+                    }, */
                     {
                         path: 'municipios',
                         name: 'PageModuloMunicipio',
@@ -586,12 +586,22 @@ const routes = [
     },
     {
         path: '/abastecimiento',
-        name: 'municipio',
+        name: 'abastecimiento',
         meta: { requiresAuth: true },
         component: () => import('layouts/AbastecimientoLayout.vue'),
         children: [
             {
                 path: '',
+                redirect: 'mis-ordenes'
+            },
+            {
+                path: 'mis-ordenes',
+                name: 'mis-ordenes-abastecimiento',
+                component: () => import('pages/app/modulo/abastecimiento/OrdersList.vue')
+            },
+            {
+                path: 'crear-orden',
+                name: 'crear-orden-abastecimiento',
                 component: () => import('pages/app/modulo/abastecimiento/Abastecimiento.vue')
             }
         ]

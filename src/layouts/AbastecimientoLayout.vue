@@ -73,9 +73,21 @@ export default {
             leftDrawerOpen: false,
             essentialLinks: [
                 {
+                    title: 'Mis Órdenes',
+                    caption: 'Ver y gestionar mis solicitudes',
+                    icon: 'list_alt',
+                    link: '/abastecimiento/mis-ordenes',
+                },
+                {
+                    title: 'Crear Orden',
+                    caption: 'Nueva solicitud de abastecimiento',
+                    icon: 'add_circle',
+                    link: '/abastecimiento/crear-orden',
+                },
+                {
                     title: 'Inicio',
-                    caption: '',
-                    icon: 'ti-home',
+                    caption: 'Volver al menú principal',
+                    icon: 'home',
                     link: '/',
                 },
             ],
