@@ -581,7 +581,7 @@ const routes = [
                 ]
             },
 
-            { path: '', redirect: 'encuestas' },
+            { path: '', redirect: 'icos' },
         ],
     },
     {
