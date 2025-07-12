@@ -16,12 +16,12 @@
             </div>
             <div class="col-xs-12 col-md-9">
               <div class="q-mb-md">
-                <p class="text-weight-bold">Subdirección</p>
+                <p class="text-weight-bold"></p>
                 <!-- <q-input dense outlined v-model="abastecimiento.subdireccion" :rules="[requiredRule]" /> -->
                 <q-select label="Seleccione una opción" dense outlined v-model="abastecimiento.subdireccion" :options="subdirecciones" />
               </div>
               <div>
-                <p class="text-weight-bold">Descripción de la orden</p>
+                <p class="text-weight-bold">Descripción de la necesidad</p>
                 <q-input type="textarea" dense outlined v-model="abastecimiento.descripcion" :rules="[requiredRule]" />
               </div>
             </div>
@@ -33,7 +33,7 @@
   
           <div class="row q-col-gutter-sm">
             <div class="col-xs-12 col-md-3">
-              <p class="text-h6">Financiera</p>
+              <p class="text-h6">Centro de costo</p>
               <p>Seleccione el proyecto y el centro de costo.</p>
             </div>
             <div class="col-xs-12 col-md-9">
@@ -188,7 +188,7 @@
           </div>
 
           <q-chip class="full-width q-py-md text-bold text-h6 q-mb-md" square color="info" text-color="white" icon="ti-minus">
-            Datos de aprobación de la orden
+            Proceso de autorización
           </q-chip>
   
           <div class="row q-col-gutter-sm">
@@ -338,14 +338,10 @@ export default {
     this.subdirecciones = [
       {
         value: 1,
-        label: 'Dirección ejecutiva'
-      },
-      {
-        value: 2,
         label: 'Subdirección programática'
       },
       {
-        value: 3,
+        value: 2,
         label: 'Subdirección administrativa'
       }
     ]
@@ -397,7 +393,8 @@ export default {
           })),
           approvers: this.usuariosData.map(user => ({
             id: uid(),
-            userId: user.email,
+            userId: user.username,
+            email: user.email,
             userPosition: user.rol,
             approved: false,
             approvalDate: null

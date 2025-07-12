@@ -95,14 +95,16 @@ export default {
             show: true,
             product: this.iniciarModeloProducto(),
             unidades: [
-                'Unidad',
-                'Metro',
-                'Kilogramo',
-                'Litro',
+                'UND',
+                'MTS',
+                'KG',
+                'GR',
+                'MGR',
+                'LT',
                 'Hora',
-                'Día',
-                'Mes',
-                'Servicio'
+                'DIA',
+                'MES',
+                'SERV'
             ],
             requiredRule: val => (val !== null && val !== '' && val !== undefined) || 'Este campo es obligatorio'
         };

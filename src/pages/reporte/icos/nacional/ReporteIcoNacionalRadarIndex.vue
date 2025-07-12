@@ -63,7 +63,7 @@ export default {
       series: [
         {
           name: "Máxima calificación",
-          data: [4, 4, 4, 4, 4, 4, 4, 4]
+          data: [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]
         }
       ],
       categories: [
@@ -74,6 +74,8 @@ export default {
         "Ejecución de proyectos y contratos ",
         "Espacios de participación ciudadana y comunitaria",
         "Financiero",
+        "Gestión Ambiental",
+        "Gestión HSE",
         "Junta administradora o directiva"
       ],
       columns: [
@@ -114,7 +116,7 @@ export default {
       this.series = [
         {
           name: "Máxima calificación",
-          data: [4, 4, 4, 4, 4, 4, 4, 4]
+          data: [4, 4, 4, 4, 4, 4, 4, 4, 4, 4]
         }
       ];
       this.icoNacionalRadarAction(this.parametro.id).then(response => {

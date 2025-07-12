@@ -131,7 +131,7 @@
               </q-step>
               <template v-slot:navigation>
                 <q-stepper-navigation>
-                  <q-btn no-caps v-if="stepper < 7" 
+                  <q-btn no-caps v-if="stepper < 9" 
                   @click="$refs.stepper.next()" 
                   color="primary" 
                   label="Siguiente"

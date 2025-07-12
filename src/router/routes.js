@@ -603,6 +603,12 @@ const routes = [
                 path: 'crear-orden',
                 name: 'crear-orden-abastecimiento',
                 component: () => import('pages/app/modulo/abastecimiento/Abastecimiento.vue')
+            },
+            {
+                path: 'aprobaciones',
+                name: 'aprobaciones-pendientes',
+                component: () => import('pages/app/modulo/abastecimiento/PendingApprovalsPage.vue'),
+                meta: { requiresRole: ['APPROVER', 'ADMIN'] }
             }
         ]
     },

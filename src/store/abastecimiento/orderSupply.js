@@ -4,6 +4,7 @@ import { URL_API } from "../../utils/config";
 export const state = {
     orders: [],
     userOrders: [],
+    pendingApprovals: [],
     loading: false,
     error: null
 }
@@ -17,6 +18,23 @@ export const mutations = {
     },
     SET_USER_ORDERS(state, orders) {
         state.userOrders = orders
+    },
+    SET_PENDING_APPROVALS(state, approvals) {
+        state.pendingApprovals = approvals
+    },
+    UPDATE_ORDER_STATUS(state, { orderId, status, approverNotes }) {
+        // Actualizar en la lista de aprobaciones pendientes
+        const approvalIndex = state.pendingApprovals.findIndex(order => order.id === orderId)
+        if (approvalIndex !== -1) {
+            state.pendingApprovals.splice(approvalIndex, 1)
+        }
+        
+        // Actualizar en la lista de órdenes del usuario si existe
+        const userOrderIndex = state.userOrders.findIndex(order => order.id === orderId)
+        if (userOrderIndex !== -1) {
+            state.userOrders[userOrderIndex].status = status
+            state.userOrders[userOrderIndex].statusDescription = status === 'APPROVED' ? 'Aprobada' : 'Rechazada'
+        }
     },
     SET_LOADING(state, loading) {
         state.loading = loading
@@ -64,17 +82,78 @@ export const actions = {
         } finally {
             commit('SET_LOADING', false)
         }
+    },
+    
+    // 🚀 NUEVAS ACCIONES PARA APROBACIONES
+    async fetchPendingApprovals({ commit }, userId) {
+        commit('SET_LOADING', true)
+        commit('SET_ERROR', null)
+        try {
+            // Usar el endpoint que ya tienes para obtener órdenes pendientes de aprobación
+            const response = await axios.get(`${URL_API}/api/supply-order/approver/${userId}`)
+            if (response.data && response.data.results) {
+                commit('SET_PENDING_APPROVALS', response.data.results)
+                return response.data.results
+            }
+            return []
+        } catch (error) {
+            console.error('Error al obtener las órdenes pendientes:', error)
+            commit('SET_ERROR', error.message || 'Error al obtener las órdenes pendientes')
+            throw error
+        } finally {
+            commit('SET_LOADING', false)
+        }
+    },
+    
+    async approveOrderAction({ commit }, { orderId, approverId }) {
+        try {
+            const response = await axios.post(`${URL_API}/api/supply-order/approve/${orderId}`, {
+                approverId: approverId
+            })
+            
+            commit('UPDATE_ORDER_STATUS', {
+                orderId,
+                status: 'APPROVED',
+                approverNotes: ''
+            })
+            
+            return response.data
+        } catch (error) {
+            console.error('Error al aprobar la orden:', error)
+            throw error
+        }
+    },
+    
+    async rejectOrderAction({ commit }, { orderId, rejectionReason }) {
+        try {
+            const response = await axios.post(`${URL_API}/api/supply-order/${orderId}/reject`, {
+                rejectionReason: rejectionReason
+            })
+            
+            commit('UPDATE_ORDER_STATUS', {
+                orderId,
+                status: 'REJECTED',
+                approverNotes: rejectionReason
+            })
+            
+            return response.data
+        } catch (error) {
+            console.error('Error al rechazar la orden:', error)
+            throw error
+        }
     }
 }
 
 export const getters = {
     getOrders: state => state.orders,
     getUserOrders: state => state.userOrders,
+    getPendingApprovals: state => state.pendingApprovals,
     getLoading: state => state.loading,
     getError: state => state.error,
     getApprovedOrders: state => state.userOrders.filter(order => order.status === 'APPROVED'),
     getRejectedOrders: state => state.userOrders.filter(order => order.status === 'REJECTED'),
-    getInProgressOrders: state => state.userOrders.filter(order => order.status === 'IN_PROGRESS')
+    getInProgressOrders: state => state.userOrders.filter(order => order.status === 'IN_PROGRESS'),
+    getPendingApprovalsCount: state => state.pendingApprovals.length
 }
 
 export default {

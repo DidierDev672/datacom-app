@@ -85,6 +85,12 @@ export default {
                     link: '/abastecimiento/crear-orden',
                 },
                 {
+                    title: 'Aprobaciones',
+                    caption: 'Órdenes pendientes de aprobación',
+                    icon: 'approval',
+                    link: '/abastecimiento/aprobaciones',
+                },
+                {
                     title: 'Inicio',
                     caption: 'Volver al menú principal',
                     icon: 'home',
