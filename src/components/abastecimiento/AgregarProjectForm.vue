@@ -8,7 +8,7 @@
         <q-card style="width: 700px;">
             <q-card-section>
                 <div class="text-h6">
-                     Proyectos
+                     Plan de abastecimiento
                 </div>
             </q-card-section>
 
@@ -18,40 +18,66 @@
                     <div class="row q-col-gutter-sm">
                         <div class="col-xs-12">                            
                             <q-select 
-                            label="Seleccione un proyecto" 
+                            label="Seleccione un plan de abastecimiento" 
                             dense 
                             outlined 
                             use-input
-                            v-model="project.project" 
-                            :options="getProjects"
-                            option-label="title"
+                            v-model="supplyPlanModel.supplyPlan" 
+                            :options="getSupplyPlans"
+                            option-label="name"
                             option-value="id"
-                            @input="onSeleccionarProyecto" />
+                            @input="onSeleccionarPlan" />
+                        </div>
+                    </div>
+                    <div class="row q-col-gutter-sm">
+                        <div class="col-xs-12">                            
+                            <q-select 
+                            label="Seleccione un item del plan" 
+                            dense 
+                            outlined 
+                            use-input
+                            v-model="supplyPlanModel.supplyPlanItem" 
+                            :options="getPlanItems"
+                            option-label="name"
+                            option-value="id"
+                            :disable="!supplyPlanModel.supplyPlan"
+                            @input="onSeleccionarItem" />
                         </div>
                     </div>
                     <div class="row q-col-gutter-sm">
                         <div class="col-xs-12">
                             <q-input
                                 outlined
-                                v-model="project.percentage"
+                                v-model="supplyPlanModel.percentage"
+                                :disable="!supplyPlanModel.supplyPlan"
                                 label="Porcentaje"
                             />
                         </div>
-                    </div>
-                    <q-card flat bordered v-if="projectSelected.id">
+                    </div>                    
+                    <q-card flat bordered v-if="selectedItemInfo.id" class="q-mt-sm">
                         <q-card-section>
-                            <div class="text-h6">Info del proyecto seleccionado</div>
+                            <div class="text-h6">Info del item seleccionado</div>
                         </q-card-section>
                         <q-card-section>
                             <div class="row q-col-gutter-sm q-mb-md">
-                                <div class="col-xs-12 col-md-3 ">Monto del proyecto</div>
-                                <div class="col-xs-12 col-md-3 text-bold text-info">${{ new Intl.NumberFormat().format(projectSelected.amount) }}</div>
+                                <div class="col-xs-12 col-md-3">Plan seleccionado</div>
+                                <div class="col-xs-12 col-md-9 text-bold text-info">{{ selectedPlanInfo.name }}</div>
+                            </div>
+                            <div class="row q-col-gutter-sm q-mb-md">
+                                <div class="col-xs-12 col-md-3">Rubro</div>
+                                <div class="col-xs-12 col-md-9 text-bold text-info">{{ selectedItemInfo.name }}</div>
+                            </div>
+                            <div class="row q-col-gutter-sm q-mb-md">
+                                <div class="col-xs-12 col-md-3">Presupuesto total</div>
+                                <div class="col-xs-12 col-md-3 text-bold text-info">${{ new Intl.NumberFormat().format(selectedItemInfo.totalBudget) }}</div>
+                                <div class="col-xs-12 col-md-3">Presupuesto disponible</div>
+                                <div class="col-xs-12 col-md-3 text-bold text-info">${{ new Intl.NumberFormat().format(selectedItemInfo.availableBudget) }}</div>
                             </div>
                             <div class="row q-col-gutter-sm">
-                                <div class="col-xs-12 col-md-3 ">Fecha de inicio</div>
-                                <div class="col-xs-12 col-md-3 text-bold text-info">{{ projectSelected.startAt }}</div>
-                                <div class="col-xs-12 col-md-3 ">Fecha de fin</div>
-                                <div class="col-xs-12 col-md-3 text-bold text-info">{{ projectSelected.endAt }}</div>
+                                <div class="col-xs-12 col-md-3">Fecha de inicio</div>
+                                <div class="col-xs-12 col-md-3 text-bold text-info">{{ selectedItemInfo.startDate }}</div>
+                                <div class="col-xs-12 col-md-3">Fecha de fin</div>
+                                <div class="col-xs-12 col-md-3 text-bold text-info">{{ selectedItemInfo.endDate }}</div>
                             </div>
                         </q-card-section>
                     </q-card>
@@ -81,49 +107,72 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import { date, uid } from 'quasar'
 
 
 export default {
-    name: 'JuntaDirectivaForm',
+    name: 'AgregarProjectForm',
     data() {
         return {
             show: true,
-            project: this.iniciarModeloProjecto(),
-            projectSelected: {}
+            supplyPlanModel: this.iniciarModeloSupplyPlan(),
+            selectedPlanInfo: {},
+            selectedItemInfo: {}
         };
     },
     methods: {  
+        ...mapActions('supplyPlans', ['fetchSupplyPlanItems']),
         onSubmit() {            
-            this.$emit('onSubmitProject', this.project);
+            this.$emit('onSubmitProject', this.supplyPlanModel);
         },
         close() {
             this.$emit('close');
         },
-        iniciarModeloProjecto(){
+        iniciarModeloSupplyPlan(){
             return {
                 id: uid(),
-                project: '',
-                percentage: 0.00
+                supplyPlan: '',
+                supplyPlanItem: '',
+                percentage: 0.00,
+                allocatedAmount: 0.00
             }
         },
-        onSeleccionarProyecto(value){
-            const fechaInicio = value.startAt;
-            const fechaInicioFormateada = date.formatDate(fechaInicio, 'YYYY-MM-DD');
-            const fechaFin = value.endAt;
-            const fechaFinFormateada = date.formatDate(fechaFin, 'YYYY-MM-DD');
+        async onSeleccionarPlan(value){
+            this.selectedPlanInfo = {
+                ...value,
+                startAt: value.startDate ? date.formatDate(value.startDate, 'YYYY-MM-DD') : '',
+                endAt: value.endDate ? date.formatDate(value.endDate, 'YYYY-MM-DD') : ''
+            };
             
+            // Limpiar el item seleccionado cuando se cambia de plan
+            this.supplyPlanModel.supplyPlanItem = '';
+            this.selectedItemInfo = {};
             
-           this.projectSelected = {
-            ...value,
-            startAt: fechaInicioFormateada,
-            endAt: fechaFinFormateada
-        };
+            // Consultar los items del plan seleccionado
+            if (value && value.id) {
+                try {
+                    await this.fetchSupplyPlanItems(value.id);
+                } catch (error) {
+                    console.error('Error al consultar los items del plan:', error);
+                    this.$q.notify({
+                        type: 'negative',
+                        message: 'Error al cargar los items del plan seleccionado'
+                    });
+                }
+            }
+        },
+        onSeleccionarItem(value){
+            this.selectedItemInfo = {
+                ...value,
+                startDate: value.startDate ? date.formatDate(value.startDate, 'YYYY-MM-DD') : '',
+                endDate: value.endDate ? date.formatDate(value.endDate, 'YYYY-MM-DD') : ''
+            };
         }
     },
     computed: {
-        ...mapGetters('projects', ['getProjects'])        
+        ...mapGetters('projects', ['getProjects']),
+        ...mapGetters('supplyPlans', ['getSupplyPlans', 'getPlanItems'])        
     }
 };
 </script>

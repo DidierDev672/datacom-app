@@ -80,7 +80,8 @@ import reportesGenerales from './module-reportes-generales';
 import reportesIcos from './module-reportes/ico';
 
 import projects from './abastecimiento/projects';
-import orderSupply from './abastecimiento/orderSupply'
+import orderSupply from './abastecimiento/orderSupply';
+import supplyPlans from './abastecimiento/supplyPlans';
 
 Vue.use(Vuex);
 
@@ -171,7 +172,8 @@ export default function (/* { ssrContext } */) {
 
             //Abastecimiento
             projects,
-            orderSupply
+            orderSupply,
+            supplyPlans
 
         },
 

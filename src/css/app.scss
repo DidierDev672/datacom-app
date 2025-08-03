@@ -7,11 +7,181 @@ body {
     font-family: 'Inter Tight', 'Montserrat', 'Robotos', 'Helvetica Neue', Helvetica, Arial,
         sans-serif;
     font-size: $html-font-size !important;
-    //color: #464d69;
-    color: #898888;
-    font-weight: 300;
-    // background-color: rgb(244, 244, 245);
+    color: #2c3e50;
+    font-weight: 400;
     background-color: #fff;
+    line-height: 1.6;
+    letter-spacing: -0.01em;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+// Sistema tipográfico profesional
+h1, .text-h1 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 2.5rem;
+    line-height: 1.2;
+    color: #1a202c;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+h2, .text-h2 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 2rem;
+    line-height: 1.3;
+    color: #1a202c;
+    letter-spacing: -0.015em;
+    margin-bottom: 1.25rem;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+h3, .text-h3 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 1.5rem;
+    line-height: 1.4;
+    color: #2d3748;
+    letter-spacing: -0.01em;
+    margin-bottom: 1rem;
+}
+
+h4, .text-h4 {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 600;
+    font-size: 1.25rem;
+    line-height: 1.4;
+    color: #2d3748;
+    letter-spacing: -0.005em;
+    margin-bottom: 0.875rem;
+}
+
+h5, .text-h5 {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 600;
+    font-size: 1.125rem;
+    line-height: 1.5;
+    color: #2d3748;
+    margin-bottom: 0.75rem;
+}
+
+h6, .text-h6 {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #2d3748;
+    margin-bottom: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+// Párrafos y texto mejorados
+p {
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    font-weight: 400;
+    letter-spacing: -0.005em;
+    color: #4a5568;
+    margin-bottom: 1rem;
+    
+    &.lead {
+        font-size: 1.125rem;
+        font-weight: 300;
+        line-height: 1.8;
+        color: #2d3748;
+        margin-bottom: 1.5rem;
+    }
+    
+    &.small {
+        font-size: 0.8125rem;
+        color: #718096;
+    }
+}
+
+// Clases de utilidad tipográfica
+.text-primary {
+    color: #2c3e50 !important;
+}
+
+.text-secondary {
+    color: #4a5568 !important;
+}
+
+.text-muted {
+    color: #718096 !important;
+}
+
+.text-accent {
+    color: $primary !important;
+    font-weight: 500;
+}
+
+.text-elegant {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+}
+
+.text-strong {
+    font-weight: 600;
+    color: #1a202c;
+}
+
+.text-gradient {
+    background: linear-gradient(135deg, $primary 0%, #64c2c8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 600;
+}
+
+// Mejoras para elementos específicos
+.q-btn {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.025em;
+    text-transform: none;
+    
+    &.btn-primary {
+        box-shadow: 0 4px 14px 0 rgba($primary, 0.3);
+        transition: all 0.3s ease;
+        
+        &:hover {
+            box-shadow: 0 6px 20px 0 rgba($primary, 0.4);
+            transform: translateY(-1px);
+        }
+    }
+}
+
+.q-card {
+    .q-card__section {
+        &.card-title {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 1.25rem;
+            color: #1a202c;
+            letter-spacing: -0.01em;
+        }
+    }
+}
+
+// Mejoras para formularios
+.q-field {
+    .q-field__label {
+        font-weight: 500;
+        color: #2d3748;
+        letter-spacing: 0.01em;
+    }
+    
+    .q-field__control {
+        font-weight: 400;
+        color: #2c3e50;
+    }
 }
 
 .small-screen-only {
@@ -42,18 +212,6 @@ body {
 
 .full-alto {
     height: 70vh;
-}
-
-.text-h6 {
-    color: #000000;
-    font-weight: 500;
-}
-
-p {
-    font-size: .875rem;
-    line-height: 1.4rem;
-    font-weight: 400;
-    letter-spacing: -.00875rem;
 }
 
 @media print {

@@ -6,7 +6,9 @@ export const state = {
     userOrders: [],
     pendingApprovals: [],
     loading: false,
-    error: null
+    error: null,
+    approvalLevels: [],
+    levelApprovers: [] // Nueva propiedad
 }
 
 export const mutations = {
@@ -21,6 +23,12 @@ export const mutations = {
     },
     SET_PENDING_APPROVALS(state, approvals) {
         state.pendingApprovals = approvals
+    },
+    SET_APPROVAL_LEVELS(state, levels) {
+        state.approvalLevels = levels
+    },
+    SET_LEVEL_APPROVERS(state, approvers) {
+        state.levelApprovers = approvers
     },
     UPDATE_ORDER_STATUS(state, { orderId, status, approverNotes }) {
         // Actualizar en la lista de aprobaciones pendientes
@@ -124,9 +132,10 @@ export const actions = {
         }
     },
     
-    async rejectOrderAction({ commit }, { orderId, rejectionReason }) {
+    async rejectOrderAction({ commit }, { orderId, rejectionReason, approverId }) {
         try {
-            const response = await axios.post(`${URL_API}/api/supply-order/${orderId}/reject`, {
+            const response = await axios.post(`${URL_API}/api/supply-order/reject/${orderId}`, {
+                approverId: approverId,
                 rejectionReason: rejectionReason
             })
             
@@ -141,6 +150,29 @@ export const actions = {
             console.error('Error al rechazar la orden:', error)
             throw error
         }
+    },
+
+    async fetchApprovalLevels({ commit }) {
+        try {
+            const response = await axios.get(`${URL_API}/api/supply-order/approval-config/levels`)
+            commit('SET_APPROVAL_LEVELS', response.data.body)
+            return response.data.body
+        } catch (error) {
+            console.error('Error al obtener los niveles de aprobación:', error)
+            throw error
+        }
+    },
+
+    async fetchLevelApprovers({ commit }, { userId, levelCode }) {
+        try {
+            const response = await axios.get(`${URL_API}/api/supply-order/approval-config/user/${userId}/level/${levelCode}`)
+            commit('SET_LEVEL_APPROVERS', response.data.body)
+            // Importante: retornar los datos para que el componente pueda usarlos
+            return response.data.body
+        } catch (error) {
+            console.error('Error al obtener los usuarios aprobadores:', error)
+            throw error
+        }
     }
 }
 
@@ -150,10 +182,12 @@ export const getters = {
     getPendingApprovals: state => state.pendingApprovals,
     getLoading: state => state.loading,
     getError: state => state.error,
+    getApprovalLevels: state => state.approvalLevels,
     getApprovedOrders: state => state.userOrders.filter(order => order.status === 'APPROVED'),
     getRejectedOrders: state => state.userOrders.filter(order => order.status === 'REJECTED'),
     getInProgressOrders: state => state.userOrders.filter(order => order.status === 'IN_PROGRESS'),
-    getPendingApprovalsCount: state => state.pendingApprovals.length
+    getPendingApprovalsCount: state => state.pendingApprovals.length,
+    getLevelApprovers: state => state.levelApprovers
 }
 
 export default {

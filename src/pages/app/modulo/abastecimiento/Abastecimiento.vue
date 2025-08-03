@@ -59,7 +59,14 @@
               </div>
               <div>
                 <p class="text-weight-bold q-mt-md">Nivel de aprobación</p>
-                <q-select label="Seleccione un nivel" dense outlined v-model="abastecimiento.nivelAprobacion" :options="niveles" />
+                <q-select 
+                    label="Seleccione un nivel" 
+                    dense 
+                    outlined 
+                    v-model="abastecimiento.nivelAprobacion" 
+                    :options="niveles"
+                    @input="onLevelChange"
+                />
               </div>
             </div>
           </div>
@@ -166,7 +173,27 @@
                 <div class="row q-col-gutter-sm">
                   <div class="col">
                     <p class="text-weight-bold">Fecha de entrega</p>
-                    <q-input dense outlined v-model="abastecimiento.shippingAddress.deliveryDate" :rules="[requiredRule]" />
+                    <q-input 
+                      dense 
+                      outlined 
+                      v-model="abastecimiento.shippingAddress.deliveryDate" 
+                      :rules="[requiredRule]"
+                      readonly
+                    >
+                      <template v-slot:append>
+                        <q-icon name="event" class="cursor-pointer">
+                          <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                            <q-date 
+                              v-model="abastecimiento.shippingAddress.deliveryDate"
+                              mask="YYYY-MM-DD"
+                              :options="dateOptions"
+                              today-btn
+                              @update:model-value="formatDeliveryDate"
+                            />
+                          </q-popup-proxy>
+                        </q-icon>
+                      </template>
+                    </q-input>
                   </div>
                   <div class="col">
                     <p class="text-weight-bold">¿Requiere flete?</p>
@@ -255,237 +282,350 @@ import AgregarProjectForm from 'components/abastecimiento/AgregarProjectForm';
 import AgregarProductoForm from 'components/abastecimiento/AgregarProductoForm';
 import AgregarAprobadorForm from 'components/abastecimiento/AgregarAprobadorForm';
 import { uid } from 'quasar';
+
 export default {
     name: "Abastecimiento",
     components: { AgregarProjectForm, AgregarProductoForm, AgregarAprobadorForm },
-  data() {
-    return {
-      abastecimiento: this.iniciarModeloAbastecimiento(), 
-      showProjectDialog: false,
-      showProductDialog: false,
-      showAprobadorDialog: false,
-      subdirecciones: [],     
-      requiredRule: val => (val !== null && val !== '' && val !== undefined) || 'Este campo es obligatorio',
-      selected: [],
-      lastIndex: null,
-      columns: [
-        {
-          name: 'item',
-          required: true,
-          label: 'Item',
-          align: 'left',
-          field: row => row.item,
-          format: val => `${val}`,
-          sortable: true,
-          classes: 'bg-grey-2 ellipsis',
-          headerClasses: 'bg-secondary text-white'
-        },
-        { name: 'cant', align: 'center', label: 'Cant.', field: 'cantidad', sortable: true },
-        { name: 'und', label: 'Unidad', field: 'unidad', sortable: true },
-        { name: 'precio', label: 'Valor', field: 'valor' },
-        { 
-          name: 'acciones',
-          label: 'Acciones',
-          field: 'acciones',
-          align: 'center',
-          sortable: false
-        }
-      ],
-      data: [],
-      usuariosColumns: [
-        {
-          name: 'usuario',
-          required: true,
-          label: 'Usuario',
-          align: 'left',
-          field: row => row.nombre,
-          format: val => `${val}`,
-          sortable: true,
-          classes: 'bg-grey-2 ellipsis',
-          headerClasses: 'bg-secondary text-white'
-        },
-        { name: 'rol', align: 'center', label: 'Rol', field: 'rol', sortable: true },
-        { name: 'email', align: 'center', label: 'Email', field: 'email', sortable: true },
-        { 
-          name: 'acciones',
-          label: 'Acciones',
-          field: 'acciones',
-          align: 'center',
-          sortable: false
-        }
-      ],
-      usuariosData: [],
-      projectColumns: [
-        {
-          name: 'title',
-          required: true,
-          label: 'Proyecto',
-          align: 'left',
-          field: row => row.title,
-          format: val => `${val}`,
-          sortable: true,
-          classes: 'bg-grey-2 ellipsis',
-          headerClasses: 'bg-secondary text-white'
-        },
-        { name: 'porcentaje', align: 'center', label: 'Porcentaje.', field: 'percentage', sortable: true },
-        { name: 'accion', align: 'center', label: '.', field: 'accion' }
-      ],
-      projectData: [],
-      niveles: ['Nivel 1', 'Nivel 2', 'Nivel 3']
-    };
-  },
-  created(){
-    this.subdirecciones = [
-      {
-        value: 1,
-        label: 'Subdirección programática'
-      },
-      {
-        value: 2,
-        label: 'Subdirección administrativa'
-      }
-    ]
-
-    this.fetchProjects();
-  },
-  methods: {
-    ...mapActions('projects', ['fetchProjects']),
-    ...mapActions('orderSupply', ['createOrder']),
-    iniciarModeloAbastecimiento(){
-      return {
-        id: "",
-        subdireccion: '',
-        descripcion: '',
-        nivelAprobacion: '',
-        notes: '',
-        warranty: '',
-        requiereFlete: false,
-        shippingAddress: {
-          departamento: '',
-          ciudad: '',
-          contact: '',
-          cellphone: '',
-          deliveryDate: '',
-          address: ''
-        },
-        details: [],
-        approvers: [],
-        projects: []
-      }
-    },
-    async onSubmit(){
-      try {
-        const orderData = {
-          id: uid(),
-          subdireccion: this.abastecimiento.subdireccion.label,
-          nivelAprobacion: this.abastecimiento.nivelAprobacion,
-          description: this.abastecimiento.descripcion,
-          notes: this.abastecimiento.notes,
-          warranty: this.abastecimiento.warranty,
-          ownerUserId: this.getUser,
-          shippingAddress: this.abastecimiento.shippingAddress,
-          details: this.data.map(item => ({
-            id: uid(),
-            productName: item.item,
-            quantity: item.cantidad,
-            unit: item.unidad,
-            unitPrice: item.valor
-          })),
-          approvers: this.usuariosData.map(user => ({
-            id: uid(),
-            userId: user.username,
-            email: user.email,
-            userPosition: user.rol,
-            approved: false,
-            approvalDate: null
-          })),
-          projects: this.projectData.map(project => ({
-            id: uid(),
-            projectId: project.projectId,
-            percentage: project.percentage
-          }))
+    data() {
+        return {
+            abastecimiento: this.iniciarModeloAbastecimiento(), 
+            showProjectDialog: false,
+            showProductDialog: false,
+            showAprobadorDialog: false,
+            subdirecciones: [],     
+            requiredRule: val => (val !== null && val !== '' && val !== undefined) || 'Este campo es obligatorio',
+            selected: [],
+            lastIndex: null,
+            columns: [
+                {
+                    name: 'item',
+                    required: true,
+                    label: 'Item',
+                    align: 'left',
+                    field: row => row.item,
+                    format: val => `${val}`,
+                    sortable: true,
+                    classes: 'bg-grey-2 ellipsis',
+                    headerClasses: 'bg-secondary text-white'
+                },
+                { name: 'cant', align: 'center', label: 'Cant.', field: 'cantidad', sortable: true },
+                { name: 'und', label: 'Unidad', field: 'unidad', sortable: true },
+                { name: 'precio', label: 'Valor', field: 'valor' },
+                { 
+                    name: 'acciones',
+                    label: 'Acciones',
+                    field: 'acciones',
+                    align: 'center',
+                    sortable: false
+                }
+            ],
+            data: [],
+            usuariosColumns: [
+                {
+                    name: 'usuario',
+                    required: true,
+                    label: 'Usuario',
+                    align: 'left',
+                    field: row => row.nombre,
+                    format: val => `${val}`,
+                    sortable: true,
+                    classes: 'bg-grey-2 ellipsis',
+                    headerClasses: 'bg-secondary text-white'
+                },
+                { name: 'rol', align: 'center', label: 'Rol', field: 'rol', sortable: true },
+                { name: 'email', align: 'center', label: 'Email', field: 'email', sortable: true },
+                { 
+                    name: 'acciones',
+                    label: 'Acciones',
+                    field: 'acciones',
+                    align: 'center',
+                    sortable: false
+                }
+            ],
+            usuariosData: [],
+            projectColumns: [
+                {
+                    name: 'title',
+                    required: true,
+                    label: 'Proyecto',
+                    align: 'left',
+                    field: row => row.title,
+                    format: val => `${val}`,
+                    sortable: true,
+                    classes: 'bg-grey-2 ellipsis',
+                    headerClasses: 'bg-secondary text-white'
+                },
+                { name: 'porcentaje', align: 'center', label: 'Porcentaje.', field: 'percentage', sortable: true },
+                { name: 'accion', align: 'center', label: '.', field: 'accion' }
+            ],
+            projectData: [],
+            niveles: []
         };
+    },
+    created(){
+        this.subdirecciones = [
+            {
+                value: 1,
+                label: 'Subdirección programática'
+            },
+            {
+                value: 2,
+                label: 'Subdirección administrativa'
+            }
+        ]
 
-        await this.createOrder(orderData);
-        this.$q.notify({
-          color: 'positive',
-          message: 'Orden de abastecimiento creada exitosamente',
-          icon: 'check'
-        });
+        this.fetchProjects();
+        this.fetchApprovalLevels();
+        this.fetchSupplyPlans();
+    },
+    methods: {
+        ...mapActions('projects', ['fetchProjects']),
+        ...mapActions('orderSupply', ['createOrder', 'fetchApprovalLevels', 'fetchLevelApprovers']),
+        ...mapActions('supplyPlans', ['fetchSupplyPlans']),
+        
+        dateOptions(date) {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const selectedDate = new Date(date);
+            return selectedDate >= today;
+        },
+        formatDeliveryDate(date) {
+            if (!date) return;
+            
+            // Convertir la fecha al formato ISO que Spring Boot espera
+            const [year, month, day] = date.split('-');
+            const isoDate = new Date(year, month - 1, day);
+            this.abastecimiento.shippingAddress.deliveryDate = isoDate.toISOString().split('T')[0];
+        },
+        
+        // Nueva función para manejar el cambio de nivel
+        async onLevelChange(selectedLevel) {
+            console.log('Nivel seleccionado: ', selectedLevel.value)
+            if (selectedLevel && selectedLevel.value) {
+                try {
+                    // Limpiar la tabla de usuarios aprobadores antes de cargar los nuevos
+                    this.usuariosData = [];
+                    
+                    // Obtener el usuario actual
+                    const currentUser = this.getUser;
+                    if (currentUser) {
+                        // Llamar a la API para obtener los usuarios aprobadores
+                        const response = await this.fetchLevelApprovers({
+                            userId: currentUser,
+                            levelCode: selectedLevel.value
+                        });
+                        
+                        // Procesar la respuesta y agregar usuarios a la tabla
+                        if (response) {
+                          console.log('Respuesta:', response);
+                            const approversToAdd = [];
+                            
+                            // Agregar VoBo Approver si existe
+                            if (response.voBoApprover) {
+                                approversToAdd.push({
+                                    id: `vobo_${response.voBoApprover.userId}`,
+                                    username: response.voBoApprover.userId,
+                                    nombre: response.voBoApprover.name,
+                                    email: response.voBoApprover.email,
+                                    rol: 'VoBo'
+                                });
+                            }
+                            
+                            // Agregar Decision Approver si existe
+                            if (response.decisionApprover) {
+                                approversToAdd.push({
+                                    id: `decision_${response.decisionApprover.userId}`,
+                                    username: response.decisionApprover.userId,
+                                    nombre: response.decisionApprover.name,
+                                    email: response.decisionApprover.email,
+                                    rol: 'Autorizador'
+                                });
+                            }
+                            
+                            // Agregar los usuarios a la tabla
+                            this.usuariosData = approversToAdd;
+                            
+                            console.log('Usuarios aprobadores agregados:', this.usuariosData);
+                        }
+                        
+                        // Mostrar notificación de éxito
+                        this.$q.notify({
+                            color: 'positive',
+                            message: `Usuarios aprobadores cargados correctamente (${this.usuariosData.length} usuarios)`,
+                            icon: 'check'
+                        });
+                    } else {
+                        console.error('No se pudo obtener el usuario actual');
+                        this.$q.notify({
+                            color: 'negative',
+                            message: 'Error: No se pudo obtener el usuario actual',
+                            icon: 'error'
+                        });
+                    }
+                } catch (error) {
+                    console.error('Error al obtener los usuarios aprobadores:', error);
+                    this.$q.notify({
+                        color: 'negative',
+                        message: 'Error al cargar los usuarios aprobadores',
+                        icon: 'error'
+                    });
+                }
+            }
+        },
+        
+        iniciarModeloAbastecimiento(){
+            return {
+                id: "",
+                subdireccion: '',
+                descripcion: '',
+                nivelAprobacion: '',
+                notes: '',
+                warranty: '',
+                requiereFlete: false,
+                shippingAddress: {
+                    departamento: '',
+                    ciudad: '',
+                    contact: '',
+                    cellphone: '',
+                    deliveryDate: '',
+                    address: ''
+                },
+                details: [],
+                approvers: [],
+                projects: []
+            }
+        },
+        async onSubmit(){
+            try {
+                const orderData = {
+                    id: uid(),
+                    subdireccion: this.abastecimiento.subdireccion.label,
+                    approvalLevel: this.abastecimiento.nivelAprobacion.value,
+                    description: this.abastecimiento.descripcion,
+                    notes: this.abastecimiento.notes,
+                    warranty: this.abastecimiento.warranty,
+                    ownerUserId: this.getUser,
+                    requiereFlete: this.abastecimiento.requiereFlete,
+                    shippingAddress: this.abastecimiento.shippingAddress,
+                    details: this.data.map(item => ({
+                        id: uid(),
+                        productName: item.item,
+                        quantity: item.cantidad,
+                        unit: item.unidad,
+                        unitPrice: item.valor
+                    })),
+                    approvers: this.usuariosData.map(user => ({
+                        id: uid(),
+                        userId: user.username,
+                        email: user.email,
+                        userPosition: user.rol,
+                        approved: false,
+                        approvalDate: null
+                    })),
+                    planItems: this.projectData.map(project => ({
+                        id: uid(),
+                        planItemId: project.projectId,
+                        percentage: project.percentage
+                    }))
+                };
 
-        // Limpiar el formulario
-        this.abastecimiento = this.iniciarModeloAbastecimiento();
-        this.data = [];
-        this.usuariosData = [];
-        this.projectData = [];
+                await this.createOrder(orderData);
+                this.$q.notify({
+                    color: 'positive',
+                    message: 'Orden de abastecimiento creada exitosamente',
+                    icon: 'check'
+                });
 
-      } catch (error) {
-        this.$q.notify({
-          color: 'negative',
-          message: 'Error al crear la orden de abastecimiento',
-          icon: 'error'
-        });
-        console.error('Error:', error);
-      }
-    },  
-    removeProject(item){
-      console.log('Item: ', item)
-      this.projectData = this.projectData.filter(project => project.id != item.id);
+                // Limpiar el formulario
+                this.abastecimiento = this.iniciarModeloAbastecimiento();
+                this.data = [];
+                this.usuariosData = [];
+                this.projectData = [];
+
+            } catch (error) {
+                this.$q.notify({
+                    color: 'negative',
+                    message: 'Error al crear la orden de abastecimiento',
+                    icon: 'error'
+                });
+                console.error('Error:', error);
+            }
+        },  
+        removeProject(item){
+            console.log('Item: ', item)
+            this.projectData = this.projectData.filter(project => project.id != item.id);
+        },
+        showProjectModal(){
+            this.showProjectDialog = true;
+        },
+        closeProjectModal(){
+            this.showProjectDialog = false;
+        },
+        agregarProyecto(data){
+            console.log('Proyecto a agregar: ', data);
+            this.projectData.unshift({
+                id: data.id,
+                percentage: data.percentage,
+                projectId: data.supplyPlanItem.id,
+                title: data.supplyPlan.name + ' - ' + data.supplyPlanItem.name
+            })
+            this.closeProjectModal();
+        },
+        showProductModal(){
+            this.showProductDialog = true;
+        },
+        closeProductModal(){
+            this.showProductDialog = false;
+        },
+        agregarProducto(data){
+            console.log('Producto a agregar: ', data);
+            this.data.unshift(data);
+            this.closeProductModal();
+        },
+        showAprobadorModal(){
+            this.showAprobadorDialog = true;
+        },
+        closeAprobadorModal(){
+            this.showAprobadorDialog = false;
+        },
+        agregarAprobador(data){
+            console.log('Aprobador a agregar: ', data);
+            this.usuariosData.unshift(data);
+            this.closeAprobadorModal();
+        },
+        eliminarProducto(row) {
+            this.data = this.data.filter(item => item.id !== row.id);
+        },
+        eliminarAprobador(row) {
+            this.usuariosData = this.usuariosData.filter(item => item.id !== row.id);
+        }
     },
-    showProjectModal(){
-      this.showProjectDialog = true;
+    computed: {
+        ...mapGetters('projects', ['getProjects']),
+        ...mapGetters('orderSupply', ['getApprovalLevels', 'getLevelApprovers']),
+        ...mapGetters("auth", ["getUser"]),
+        
+        totalProductos() {
+            return this.data.reduce((total, item) => {
+                return total + (item.cantidad * item.valor);
+            }, 0).toLocaleString('es-CO');
+        },
+        
+        nivelOptions() {
+            return this.getApprovalLevels.map(level => ({
+                label: level.description,
+                value: level.code
+            }));
+        }
     },
-    closeProjectModal(){
-      this.showProjectDialog = false;
-    },
-    agregarProyecto(data){
-      console.log('Proyecto a agregar: ', data);
-      this.projectData.unshift({
-        id: data.id,
-        percentage: data.percentage,
-        projectId: data.project.id,
-        title: data.project.title
-      })
-      this.closeProjectModal();
-    },
-    showProductModal(){
-      this.showProductDialog = true;
-    },
-    closeProductModal(){
-      this.showProductDialog = false;
-    },
-    agregarProducto(data){
-      console.log('Producto a agregar: ', data);
-      this.data.unshift(data);
-      this.closeProductModal();
-    },
-    showAprobadorModal(){
-      this.showAprobadorDialog = true;
-    },
-    closeAprobadorModal(){
-      this.showAprobadorDialog = false;
-    },
-    agregarAprobador(data){
-      console.log('Aprobador a agregar: ', data);
-      this.usuariosData.unshift(data);
-      this.closeAprobadorModal();
-    },
-    eliminarProducto(row) {
-      this.data = this.data.filter(item => item.id !== row.id);
-    },
-    eliminarAprobador(row) {
-      this.usuariosData = this.usuariosData.filter(item => item.id !== row.id);
+    watch: {
+        nivelOptions: {
+            immediate: true,
+            handler(newValue) {
+                this.niveles = newValue;
+            }
+        }
     }
-  },
-  computed: {
-    ...mapGetters('projects', ['getProjects']),
-    ...mapGetters("auth", ["getUser"]),
-    totalProductos() {
-      return this.data.reduce((total, item) => {
-        return total + (item.cantidad * item.valor);
-      }, 0).toLocaleString('es-CO');
-    }
-  }
 }
 </script>
 

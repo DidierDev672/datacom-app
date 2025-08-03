@@ -860,9 +860,11 @@ export default {
     async confirmReject() {
       try {
         this.rejecting = true
+        let approverObject = this.selectedOrder.approvers.find(approver => approver.userId === this.getUser);
         await this.rejectOrderAction({
           orderId: this.selectedOrder.id,
-          rejectionReason: this.rejectionReason
+          rejectionReason: this.rejectionReason,
+          approverId: approverObject.id
         })
         
         this.$q.notify({
@@ -894,6 +896,7 @@ export default {
       this.showDetailsDialog = false
       this.rejectOrder(this.selectedOrder)
     },
+
     truncateUUID(uuid) {
     if (!uuid) return 'N/A'
     // Mostrar solo los primeros 8 caracteres

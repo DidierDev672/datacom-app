@@ -12,18 +12,72 @@
 // to match your app's branding.
 // Tip: Use the "Theme Builder" on Quasar's documentation website.
 
-// $primary   : #1976D2;
+// Paleta de colores sofisticada y profesional
 $primary: #afca0b;
+$primary-light: lighten($primary, 15%);
+$primary-dark: darken($primary, 15%);
+
 $secondary: #64c2c8;
-$accent: #868686;
+$secondary-light: lighten($secondary, 15%);
+$secondary-dark: darken($secondary, 15%);
 
-// $dark      : #1D1D1D;
-$dark: #868686;
+$accent: #2c3e50;
 
-// $positive  : #21BA45;
-$positive: #afca0b;
-$negative: #c10015;
-$info: #248b48;
-$warning: #f2c037;
+// Escala de grises profesional
+$gray-50: #f7fafc;
+$gray-100: #edf2f7;
+$gray-200: #e2e8f0;
+$gray-300: #cbd5e0;
+$gray-400: #a0aec0;
+$gray-500: #718096;
+$gray-600: #4a5568;
+$gray-700: #2d3748;
+$gray-800: #1a202c;
+$gray-900: #171923;
 
+$dark: $gray-800;
+
+// Colores de estado mejorados
+$positive: #48bb78;
+$negative: #f56565;
+$info: #4299e1;
+$warning: #ed8936;
+
+// Tipografía avanzada
 $html-font-size: 1rem;
+$font-size-xs: 0.75rem;
+$font-size-sm: 0.8125rem;
+$font-size-base: 0.9375rem;
+$font-size-lg: 1.125rem;
+$font-size-xl: 1.25rem;
+
+// Variables tipográficas profesionales
+$text-primary: $gray-800;
+$text-secondary: $gray-600;
+$text-muted: $gray-500;
+$text-light: $gray-400;
+
+// Espaciado y elevación
+$spacing-xs: 0.25rem;
+$spacing-sm: 0.5rem;
+$spacing-md: 1rem;
+$spacing-lg: 1.5rem;
+$spacing-xl: 2rem;
+$spacing-2xl: 3rem;
+
+// Sombras sofisticadas
+$shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+$shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+// Bordes y radios
+$border-radius-sm: 0.25rem;
+$border-radius-md: 0.375rem;
+$border-radius-lg: 0.5rem;
+$border-radius-xl: 0.75rem;
+
+// Transiciones
+$transition-fast: 150ms ease-out;
+$transition-normal: 250ms ease-out;
+$transition-slow: 350ms ease-out;

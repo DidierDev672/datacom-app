@@ -331,13 +331,16 @@
                   <template v-slot:body-cell-approved="props">
                     <q-td :props="props">
                       <q-chip
-                        :color="props.row.approved ? 'positive' : 'orange'"
+                        :color="props.row.approved ? 'positive' : props.row.approvalDate ? 'negative' : 'orange'"
                         text-color="white"
                         size="sm"
-                        :icon="props.row.approved ? 'check_circle' : 'schedule'"
+                        :icon="props.row.approved ? 'check_circle' : props.row.approvalDate ? 'cancel' : 'schedule'"
                       >
-                        {{ props.row.approved ? 'Aprobado' : 'Pendiente' }}
-                      </q-chip>
+                        {{ props.row.approved ? 'Aprobado' : props.row.approvalDate ? 'Rechazado' : 'Pendiente' }}
+                        <q-tooltip v-if="props.row.approved === false && props.row.approvalDate">
+                          {{ props.row.rejectionReason }}
+                        </q-tooltip>
+                      </q-chip>                      
                     </q-td>
                   </template>
                   <template v-slot:body-cell-approvalDate="props">
@@ -349,7 +352,7 @@
                           size="xs" 
                           class="q-mr-xs" 
                         />
-                        {{ props.row.approvalDate ? formatDate(props.row.approvalDate) : 'Pendiente' }}
+                        {{ props.row.approvalDate ? formatDate(props.row.approvalDate) : 'Pendiente' }}                        
                       </div>
                     </q-td>
                   </template>
@@ -363,20 +366,20 @@
                 <div class="row items-center justify-between">
                   <div class="row items-center">
                     <q-icon name="account_tree" color="teal-7" size="sm" class="q-mr-sm" />
-                    <span class="text-h6 text-teal-8 text-weight-bold">Proyectos Asociados</span>
+                    <span class="text-h6 text-teal-8 text-weight-bold">Plan de Abastecimiento</span>
                   </div>
                   <q-chip 
                     color="teal-7" 
                     text-color="white" 
                     icon="work"
-                    :label="`${selectedOrder.projects.length} proyecto${selectedOrder.projects.length !== 1 ? 's' : ''}`"
+                    :label="`${selectedOrder.planItems.length} proyecto${selectedOrder.planItems.length !== 1 ? 's' : ''}`"
                   />
                 </div>
               </q-card-section>
               <q-separator />
               <q-card-section>
                 <q-table
-                  :data="selectedOrder.projects"
+                  :data="selectedOrder.planItems"
                   :columns="projectColumns"
                   row-key="id"
                   flat
@@ -472,7 +475,7 @@ export default {
           name: 'projectId',
           label: 'ID Proyecto',
           align: 'left',
-          field: 'projectId'
+          field: 'id'
         },
         {
           name: 'percentage',
@@ -480,6 +483,12 @@ export default {
           align: 'right',
           field: 'percentage',
           format: val => `${val}%`
+        },
+        {
+          name: 'allocatedAmount',
+          label: 'Monto Asignado',
+          align: 'right',
+          field: 'allocatedAmount'
         }
       ],
       statusOptions: [
@@ -488,7 +497,7 @@ export default {
         { label: 'Rechazada', value: 'REJECTED' },
         { label: 'En Progreso', value: 'IN_PROGRESS' }
       ],
-            columns: [
+      columns: [
         
         {
           name: 'code',
@@ -577,7 +586,7 @@ export default {
           await this.fetchUserOrders(userId)
         } else {
           // Fallback con usuario por defecto
-          await this.fetchUserOrders('enarvaez')
+          //await this.fetchUserOrders('enarvaez')
         }
       } catch (error) {
         console.error('Error cargando órdenes:', error)
