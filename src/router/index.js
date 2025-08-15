@@ -49,8 +49,19 @@ export default function (/* { store, ssrContext } */) {
 
     //Validar fecha de caducidad del token
 
+    // Si el usuario ya está autenticado y navega al login, redirigirlo a la ruta original o al home
+    if (to.path.startsWith('/auth') && loggedIn) {
+      const target = to.query.from || '/';
+      next(target);
+      return;
+    }
+
     if (to.matched.some(record => record.meta.requiresAuth) && !loggedIn) {
       console.log("Pasa por el guard");
+
+      try {
+        sessionStorage.setItem('redirectAfterLogin', to.fullPath);
+      } catch (e) { }
 
       next({
         path: '/auth',

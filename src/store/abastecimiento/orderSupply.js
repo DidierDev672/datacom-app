@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { URL_API } from "../../utils/config";
-  
+
 export const state = {
     orders: [],
     userOrders: [],
@@ -36,7 +36,7 @@ export const mutations = {
         if (approvalIndex !== -1) {
             state.pendingApprovals.splice(approvalIndex, 1)
         }
-        
+
         // Actualizar en la lista de órdenes del usuario si existe
         const userOrderIndex = state.userOrders.findIndex(order => order.id === orderId)
         if (userOrderIndex !== -1) {
@@ -65,13 +65,28 @@ export const actions = {
     },
     async fetchOrders({ commit }) {
         try {
-            const response = await axios.get('/api/supply-orders')
-            commit('SET_ORDERS', response.data)
-            return response.data
+            const response = await axios.get(`${URL_API}/api/supply-orders`)
+            // Se asume que la API retorna un objeto con results o un array directo
+            const orders = response.data && response.data.results ? response.data.results : response.data
+            commit('SET_ORDERS', orders || [])
+            return orders || []
         } catch (error) {
             console.error('Error al obtener las órdenes:', error)
             throw error
         }
+    },
+
+    async fetchApprovedOrders({ dispatch, state }) {
+        // Obtiene todas las órdenes y filtra las completamente aprobadas
+        const orders = state.orders && state.orders.length > 0 ? state.orders : await dispatch('fetchOrders')
+        if (!Array.isArray(orders)) return []
+        return orders.filter(order => {
+            if (!order) return false
+            const approvers = order.approvers || []
+            const total = approvers.length
+            const approved = approvers.filter(a => a && a.approved === true).length
+            return order.status === 'APPROVED' || (total > 0 && approved === total)
+        })
     },
     async fetchUserOrders({ commit }, userId) {
         commit('SET_LOADING', true)
@@ -91,7 +106,22 @@ export const actions = {
             commit('SET_LOADING', false)
         }
     },
-    
+
+    async fetchOrderById({ commit }, orderId) {
+        commit('SET_LOADING', true)
+        commit('SET_ERROR', null)
+        try {
+            const response = await axios.get(`${URL_API}/api/supply-order/${orderId}`)
+            return response.data.results
+        } catch (error) {
+            console.error('Error al obtener la orden:', error)
+            commit('SET_ERROR', error.message || 'Error al obtener la orden')
+            throw error
+        } finally {
+            commit('SET_LOADING', false)
+        }
+    },
+
     // 🚀 NUEVAS ACCIONES PARA APROBACIONES
     async fetchPendingApprovals({ commit }, userId) {
         commit('SET_LOADING', true)
@@ -112,39 +142,39 @@ export const actions = {
             commit('SET_LOADING', false)
         }
     },
-    
+
     async approveOrderAction({ commit }, { orderId, approverId }) {
         try {
             const response = await axios.post(`${URL_API}/api/supply-order/approve/${orderId}`, {
                 approverId: approverId
             })
-            
+
             commit('UPDATE_ORDER_STATUS', {
                 orderId,
                 status: 'APPROVED',
                 approverNotes: ''
             })
-            
+
             return response.data
         } catch (error) {
             console.error('Error al aprobar la orden:', error)
             throw error
         }
     },
-    
+
     async rejectOrderAction({ commit }, { orderId, rejectionReason, approverId }) {
         try {
             const response = await axios.post(`${URL_API}/api/supply-order/reject/${orderId}`, {
                 approverId: approverId,
                 rejectionReason: rejectionReason
             })
-            
+
             commit('UPDATE_ORDER_STATUS', {
                 orderId,
                 status: 'REJECTED',
                 approverNotes: rejectionReason
             })
-            
+
             return response.data
         } catch (error) {
             console.error('Error al rechazar la orden:', error)
@@ -172,6 +202,24 @@ export const actions = {
         } catch (error) {
             console.error('Error al obtener los usuarios aprobadores:', error)
             throw error
+        }
+    },
+
+    // Asignar orden aprobada a un usuario del equipo de abastecimiento
+    async assignOrderToUser({ commit }, { orderId, username }) {
+        commit('SET_LOADING', true)
+        commit('SET_ERROR', null)
+        try {
+            const response = await axios.post(`${URL_API}/api/supply-order/${orderId}/assign`, {
+                id: username
+            })
+            return response.data
+        } catch (error) {
+            console.error('Error al asignar la orden:', error)
+            commit('SET_ERROR', error.message || 'Error al asignar la orden')
+            throw error
+        } finally {
+            commit('SET_LOADING', false)
         }
     }
 }

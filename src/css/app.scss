@@ -3,117 +3,169 @@
 
 @import 'custom/dashboard';
 
+// Variables tipográficas mejoradas
+:root {
+    --font-family-sans: 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+    --font-family-heading: 'Poppins', var(--font-family-sans);
+
+    // Escala tipográfica fluida
+    --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.8rem);
+    --text-sm: clamp(0.875rem, 0.8rem + 0.375vw, 0.9rem);
+    --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+    --text-lg: clamp(1.125rem, 1rem + 0.625vw, 1.25rem);
+    --text-xl: clamp(1.25rem, 1.1rem + 0.75vw, 1.5rem);
+    --text-2xl: clamp(1.5rem, 1.3rem + 1vw, 1.875rem);
+    --text-3xl: clamp(1.875rem, 1.6rem + 1.375vw, 2.25rem);
+    --text-4xl: clamp(2.25rem, 2rem + 1.25vw, 3rem);
+
+    // Line heights optimizados
+    --leading-tight: 1.25;
+    --leading-snug: 1.375;
+    --leading-normal: 1.5;
+    --leading-relaxed: 1.625;
+    --leading-loose: 2;
+}
+
 body {
-    font-family: 'Inter Tight', 'Montserrat', 'Robotos', 'Helvetica Neue', Helvetica, Arial,
-        sans-serif;
-    font-size: $html-font-size !important;
-    color: #2c3e50;
+    font-family: var(--font-family-sans);
+    font-size: var(--text-base);
+    color: #1f2937; // Gris más moderno y legible
     font-weight: 400;
-    background-color: #fff;
-    line-height: 1.6;
-    letter-spacing: -0.01em;
+    background-color: #fafafa; // Fondo ligeramente off-white
+    line-height: var(--leading-normal);
+    letter-spacing: -0.011em; // Tracking optimizado para Inter
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
 }
 
-// Sistema tipográfico profesional
-h1, .text-h1 {
-    font-family: 'Poppins', sans-serif;
+// Sistema tipográfico moderno y escalable
+h1,
+.text-h1 {
+    font-family: var(--font-family-heading);
+    font-weight: 800; // Más peso para mejor jerarquía
+    font-size: var(--text-4xl);
+    line-height: var(--leading-tight);
+    color: #0f172a; // Negro azulado más elegante
+    letter-spacing: -0.025em;
+    margin-bottom: clamp(1rem, 4vw, 2rem);
+    font-feature-settings: 'kern' 1, 'liga' 1;
+
+    @media (prefers-reduced-motion: no-preference) {
+        transition: color 0.2s ease;
+    }
+}
+
+h2,
+.text-h2 {
+    font-family: var(--font-family-heading);
     font-weight: 700;
-    font-size: 2.5rem;
-    line-height: 1.2;
-    color: #1a202c;
-    letter-spacing: -0.02em;
-    margin-bottom: 1.5rem;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    font-size: var(--text-3xl);
+    line-height: var(--leading-tight);
+    color: #1e293b;
+    letter-spacing: -0.022em;
+    margin-bottom: clamp(0.75rem, 3vw, 1.5rem);
+    font-feature-settings: 'kern' 1, 'liga' 1;
 }
 
-h2, .text-h2 {
-    font-family: 'Poppins', sans-serif;
+h3,
+.text-h3 {
+    font-family: var(--font-family-heading);
     font-weight: 600;
-    font-size: 2rem;
-    line-height: 1.3;
-    color: #1a202c;
-    letter-spacing: -0.015em;
-    margin-bottom: 1.25rem;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+    font-size: var(--text-2xl);
+    line-height: var(--leading-snug);
+    color: #334155;
+    letter-spacing: -0.018em;
+    margin-bottom: clamp(0.5rem, 2.5vw, 1.25rem);
+    font-feature-settings: 'kern' 1;
 }
 
-h3, .text-h3 {
-    font-family: 'Poppins', sans-serif;
+h4,
+.text-h4 {
+    font-family: var(--font-family-sans);
     font-weight: 600;
-    font-size: 1.5rem;
-    line-height: 1.4;
-    color: #2d3748;
+    font-size: var(--text-xl);
+    line-height: var(--leading-snug);
+    color: #475569;
+    letter-spacing: -0.014em;
+    margin-bottom: clamp(0.5rem, 2vw, 1rem);
+}
+
+h5,
+.text-h5 {
+    font-family: var(--font-family-sans);
+    font-weight: 600;
+    font-size: var(--text-lg);
+    line-height: var(--leading-normal);
+    color: #64748b;
     letter-spacing: -0.01em;
-    margin-bottom: 1rem;
+    margin-bottom: clamp(0.375rem, 1.5vw, 0.75rem);
 }
 
-h4, .text-h4 {
-    font-family: 'Inter Tight', sans-serif;
+h6,
+.text-h6 {
+    font-family: var(--font-family-sans);
     font-weight: 600;
-    font-size: 1.25rem;
-    line-height: 1.4;
-    color: #2d3748;
-    letter-spacing: -0.005em;
-    margin-bottom: 0.875rem;
-}
-
-h5, .text-h5 {
-    font-family: 'Inter Tight', sans-serif;
-    font-weight: 600;
-    font-size: 1.125rem;
-    line-height: 1.5;
-    color: #2d3748;
-    margin-bottom: 0.75rem;
-}
-
-h6, .text-h6 {
-    font-family: 'Inter Tight', sans-serif;
-    font-weight: 600;
-    font-size: 1rem;
-    line-height: 1.5;
-    color: #2d3748;
-    margin-bottom: 0.625rem;
+    font-size: var(--text-base);
+    line-height: var(--leading-normal);
+    color: #64748b;
+    letter-spacing: 0.025em; // Ligeramente expandido para mejor legibilidad
+    margin-bottom: clamp(0.25rem, 1vw, 0.5rem);
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    font-size: var(--text-sm); // Más pequeño para subtítulos
 }
 
-// Párrafos y texto mejorados
+// Sistema de párrafos moderno y legible
 p {
-    font-size: 0.9375rem;
-    line-height: 1.7;
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed); // 1.625 para mejor legibilidad
     font-weight: 400;
-    letter-spacing: -0.005em;
-    color: #4a5568;
-    margin-bottom: 1rem;
-    
+    letter-spacing: -0.008em; // Optimizado para Inter
+    color: #475569; // Gris más accesible
+    margin-bottom: clamp(0.75rem, 2vw, 1.25rem);
+    max-width: 65ch; // Límite de caracteres para legibilidad óptima
+
     &.lead {
-        font-size: 1.125rem;
-        font-weight: 300;
-        line-height: 1.8;
-        color: #2d3748;
-        margin-bottom: 1.5rem;
+        font-size: var(--text-lg);
+        font-weight: 400; // Peso normal en lugar de light
+        line-height: var(--leading-relaxed);
+        color: #334155;
+        margin-bottom: clamp(1rem, 3vw, 1.75rem);
+        max-width: 60ch;
     }
-    
+
     &.small {
-        font-size: 0.8125rem;
-        color: #718096;
+        font-size: var(--text-sm);
+        color: #64748b;
+        line-height: var(--leading-normal);
+    }
+
+    &.caption {
+        font-size: var(--text-xs);
+        color: #94a3b8;
+        line-height: var(--leading-normal);
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+        font-weight: 500;
     }
 }
 
-// Clases de utilidad tipográfica
+// Sistema de utilidades tipográficas moderno
 .text-primary {
-    color: #2c3e50 !important;
+    color: #0f172a !important;
 }
 
 .text-secondary {
-    color: #4a5568 !important;
+    color: #475569 !important;
 }
 
 .text-muted {
-    color: #718096 !important;
+    color: #64748b !important;
+}
+
+.text-subtle {
+    color: #94a3b8 !important;
 }
 
 .text-accent {
@@ -121,15 +173,23 @@ p {
     font-weight: 500;
 }
 
+.text-brand {
+    color: $primary !important;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
 .text-elegant {
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-family-heading);
     font-weight: 300;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.015em;
+    line-height: var(--leading-relaxed);
 }
 
 .text-strong {
     font-weight: 600;
-    color: #1a202c;
+    color: #0f172a;
+    letter-spacing: -0.01em;
 }
 
 .text-gradient {
@@ -138,34 +198,142 @@ p {
     -webkit-text-fill-color: transparent;
     background-clip: text;
     font-weight: 600;
+    letter-spacing: -0.015em;
 }
 
-// Mejoras para elementos específicos
+// Nuevas utilidades de tamaño
+.text-xs {
+    font-size: var(--text-xs) !important;
+}
+
+.text-sm {
+    font-size: var(--text-sm) !important;
+}
+
+.text-base {
+    font-size: var(--text-base) !important;
+}
+
+.text-lg {
+    font-size: var(--text-lg) !important;
+}
+
+.text-xl {
+    font-size: var(--text-xl) !important;
+}
+
+.text-2xl {
+    font-size: var(--text-2xl) !important;
+}
+
+.text-3xl {
+    font-size: var(--text-3xl) !important;
+}
+
+.text-4xl {
+    font-size: var(--text-4xl) !important;
+}
+
+// Utilidades de peso
+.font-light {
+    font-weight: 300 !important;
+}
+
+.font-normal {
+    font-weight: 400 !important;
+}
+
+.font-medium {
+    font-weight: 500 !important;
+}
+
+.font-semibold {
+    font-weight: 600 !important;
+}
+
+.font-bold {
+    font-weight: 700 !important;
+}
+
+.font-extrabold {
+    font-weight: 800 !important;
+}
+
+// Utilidades de line-height
+.leading-tight {
+    line-height: var(--leading-tight) !important;
+}
+
+.leading-snug {
+    line-height: var(--leading-snug) !important;
+}
+
+.leading-normal {
+    line-height: var(--leading-normal) !important;
+}
+
+.leading-relaxed {
+    line-height: var(--leading-relaxed) !important;
+}
+
+.leading-loose {
+    line-height: var(--leading-loose) !important;
+}
+
+// Mejoras para elementos específicos de Quasar
 .q-btn {
-    font-family: 'Inter Tight', sans-serif;
+    font-family: var(--font-family-sans);
     font-weight: 500;
-    letter-spacing: 0.025em;
+    letter-spacing: -0.005em; // Más sutil para Inter
     text-transform: none;
-    
+    //font-size: var(--text-base); // Aumentado de text-sm para mejor legibilidad
+    border-radius: 8px; // Bordes más modernos
+    // padding: 10px 20px; // Mejor padding
+
     &.btn-primary {
-        box-shadow: 0 4px 14px 0 rgba($primary, 0.3);
-        transition: all 0.3s ease;
-        
+        box-shadow: 0 4px 14px 0 rgba($primary, 0.25);
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
         &:hover {
-            box-shadow: 0 6px 20px 0 rgba($primary, 0.4);
+            box-shadow: 0 6px 20px 0 rgba($primary, 0.35);
             transform: translateY(-1px);
         }
+
+        &:active {
+            transform: translateY(0);
+        }
+    }
+
+    // Diferentes tamaños de botón
+    &.q-btn--small {
+        font-size: var(--text-sm); // Aumentado de text-xs
+        padding: 8px 16px;
+    }
+
+    &.q-btn--large {
+        font-size: var(--text-lg); // Aumentado de text-base
+        font-weight: 600;
+        padding: 14px 28px;
+    }
+
+    // Botón extra pequeño para casos específicos
+    &.q-btn--xs {
+        font-size: var(--text-xs);
+        padding: 6px 12px;
     }
 }
 
 .q-card {
+    border-radius: 12px; // Bordes más modernos
+
     .q-card__section {
         &.card-title {
-            font-family: 'Poppins', sans-serif;
+            font-family: var(--font-family-heading);
             font-weight: 600;
-            font-size: 1.25rem;
-            color: #1a202c;
-            letter-spacing: -0.01em;
+            font-size: var(--text-xl);
+            color: #0f172a;
+            letter-spacing: -0.015em;
+            line-height: var(--leading-snug);
         }
     }
 }
@@ -173,14 +341,157 @@ p {
 // Mejoras para formularios
 .q-field {
     .q-field__label {
+        font-family: var(--font-family-sans);
         font-weight: 500;
-        color: #2d3748;
-        letter-spacing: 0.01em;
+        color: #334155;
+        letter-spacing: -0.005em;
+        font-size: var(--text-base); // Aumentado de text-sm
     }
-    
+
     .q-field__control {
+        font-family: var(--font-family-sans);
         font-weight: 400;
-        color: #2c3e50;
+        color: #1e293b;
+        font-size: var(--text-lg); // Aumentado de text-base para mejor legibilidad
+
+        input,
+        textarea {
+            line-height: var(--leading-normal);
+            font-size: var(--text-lg) !important; // Asegurar que se aplique
+            padding: 12px 16px; // Más padding para mejor UX
+        }
+
+        select {
+            font-size: var(--text-lg) !important;
+        }
+    }
+
+    .q-field__messages {
+        font-size: var(--text-sm); // Aumentado de text-xs
+        color: #64748b;
+        font-weight: 400;
+    }
+
+    // Placeholder más visible
+    .q-field__control input::placeholder,
+    .q-field__control textarea::placeholder {
+        color: #94a3b8;
+        font-size: var(--text-base);
+    }
+}
+
+// Mejoras para tablas
+.q-table {
+    th {
+        font-family: var(--font-family-sans);
+        font-weight: 600;
+        font-size: var(--text-sm); // Aumentado de text-xs
+        color: #475569;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        padding: 12px 16px; // Más espaciado
+        line-height: var(--leading-normal);
+    }
+
+    td {
+        font-size: var(--text-base); // Aumentado de text-sm
+        color: #334155;
+        line-height: var(--leading-relaxed); // Mejor legibilidad
+        padding: 14px 16px; // Más espaciado vertical
+        font-weight: 400;
+    }
+
+    // Estilos para diferentes tipos de celdas
+    .q-table__top {
+        .q-table__title {
+            font-size: var(--text-xl);
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        .q-table__subtitle {
+            font-size: var(--text-sm);
+            color: #64748b;
+        }
+    }
+
+    // Mejor spacing para tablas compactas
+    &.q-table--dense {
+        th {
+            padding: 8px 12px;
+            font-size: var(--text-xs);
+        }
+
+        td {
+            padding: 10px 12px;
+            font-size: var(--text-sm);
+        }
+    }
+}
+
+// Mejoras para tooltips y notificaciones
+.q-tooltip {
+    font-size: var(--text-sm); // Aumentado de text-xs para mejor legibilidad
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    padding: 8px 12px; // Más espaciado
+}
+
+.q-notification {
+    font-size: var(--text-base); // Aumentado de text-sm
+    font-weight: 400;
+    line-height: var(--leading-normal);
+}
+
+// Mejoras adicionales para elementos de interfaz
+.q-menu {
+    .q-item {
+        font-size: var(--text-base);
+        line-height: var(--leading-normal);
+        padding: 12px 16px; // Más espaciado para mejor UX móvil
+
+        .q-item__label {
+            font-size: var(--text-base);
+            font-weight: 400;
+        }
+
+        .q-item__label--caption {
+            font-size: var(--text-sm);
+            color: #64748b;
+        }
+    }
+}
+
+// Mejoras para breadcrumbs
+.q-breadcrumbs {
+    font-size: var(--text-base);
+
+    .q-breadcrumbs__el {
+        font-weight: 400;
+        color: #64748b;
+
+        &:last-child {
+            color: #334155;
+            font-weight: 500;
+        }
+    }
+
+    .q-breadcrumbs__separator {
+        color: #94a3b8;
+    }
+}
+
+// Mejoras para tabs
+.q-tabs {
+    .q-tab {
+        font-size: var(--text-base);
+        font-weight: 500;
+        letter-spacing: -0.005em;
+        padding: 12px 24px;
+
+        &.q-tab--active {
+            font-weight: 600;
+        }
     }
 }
 

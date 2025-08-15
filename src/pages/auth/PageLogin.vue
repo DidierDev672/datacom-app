@@ -149,11 +149,15 @@ export default {
         password: this.password,
         remember_me: this.remember
       }).then(data => {
-        const redirectPath = this.$route.query.from || '/';
+        const stored = sessionStorage.getItem('redirectAfterLogin');
+        const redirectPath = stored || this.$route.query.from || '/';
         if (this.$jwt.hasToken()) {
           this.SET_USER_DATA(this.username);
           //this.SET_TENANT_DATA(data.tenant);
-          this.$router.push(redirectPath);
+          if (stored) {
+            try { sessionStorage.removeItem('redirectAfterLogin'); } catch (e) {}
+          }
+          this.$router.replace(redirectPath);
         } else {
           console.log("No existe el token");
         }

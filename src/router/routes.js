@@ -605,10 +605,23 @@ const routes = [
                 component: () => import('pages/app/modulo/abastecimiento/Abastecimiento.vue')
             },
             {
+                path: 'editar-orden/:orderId',
+                name: 'editar-orden-abastecimiento',
+                component: () => import('pages/app/modulo/abastecimiento/Abastecimiento.vue'),
+                props: true
+            },
+            {
                 path: 'aprobaciones',
                 name: 'aprobaciones-pendientes',
                 component: () => import('pages/app/modulo/abastecimiento/PendingApprovalsPage.vue'),
                 meta: { requiresRole: ['APPROVER', 'ADMIN'] }
+            }
+            ,
+            {
+                path: 'gestionar',
+                name: 'gestion-abastecimiento',
+                component: () => import('pages/app/modulo/abastecimiento/ApprovedOrders.vue'),
+                meta: { requiresRole: ['ADMIN', 'SUPPLY', 'SUPPLY_MANAGER'] }
             }
         ]
     },

@@ -1,6 +1,6 @@
 ﻿<template>
   <div>
-    <div class="text-h6 page-title-box" >Solicitud de abastecimiento</div>
+    <div class="text-h6 page-title-box" >{{ isEditMode ? 'Editar solicitud de abastecimiento' : 'Solicitud de abastecimiento' }}</div>
 
     <div class="row">
       <div class="col-xs-12 col-md-8 offset-sm-2 q-ma-md">
@@ -253,7 +253,7 @@
             </div>
           </div>
   
-          <q-btn @click="onSubmit()" color="primary">Actualizar</q-btn>
+          <q-btn @click="onSubmit()" color="primary">{{ isEditMode ? 'Actualizar orden' : 'Crear orden' }}</q-btn>
           </q-form>
       </div>
     </div>
@@ -286,6 +286,12 @@ import { uid } from 'quasar';
 export default {
     name: "Abastecimiento",
     components: { AgregarProjectForm, AgregarProductoForm, AgregarAprobadorForm },
+    props: {
+        orderId: {
+            type: String,
+            default: null
+        }
+    },
     data() {
         return {
             abastecimiento: this.iniciarModeloAbastecimiento(), 
@@ -359,7 +365,9 @@ export default {
                 { name: 'accion', align: 'center', label: '.', field: 'accion' }
             ],
             projectData: [],
-            niveles: []
+            niveles: [],
+            isEditMode: false,
+            originalOrderId: null
         };
     },
     created(){
@@ -377,10 +385,15 @@ export default {
         this.fetchProjects();
         this.fetchApprovalLevels();
         this.fetchSupplyPlans();
+        
+        // Cargar datos si es modo edición
+        if (this.orderId) {
+            this.loadOrderForEdit();
+        }
     },
     methods: {
         ...mapActions('projects', ['fetchProjects']),
-        ...mapActions('orderSupply', ['createOrder', 'fetchApprovalLevels', 'fetchLevelApprovers']),
+        ...mapActions('orderSupply', ['createOrder', 'fetchApprovalLevels', 'fetchLevelApprovers', 'fetchOrderById']),
         ...mapActions('supplyPlans', ['fetchSupplyPlans']),
         
         dateOptions(date) {
@@ -498,7 +511,7 @@ export default {
         async onSubmit(){
             try {
                 const orderData = {
-                    id: uid(),
+                    id: this.isEditMode ? this.originalOrderId : uid(),
                     subdireccion: this.abastecimiento.subdireccion.label,
                     approvalLevel: this.abastecimiento.nivelAprobacion.value,
                     description: this.abastecimiento.descripcion,
@@ -508,44 +521,42 @@ export default {
                     requiereFlete: this.abastecimiento.requiereFlete,
                     shippingAddress: this.abastecimiento.shippingAddress,
                     details: this.data.map(item => ({
-                        id: uid(),
+                        id: item.id || uid(),
                         productName: item.item,
                         quantity: item.cantidad,
                         unit: item.unidad,
                         unitPrice: item.valor
                     })),
                     approvers: this.usuariosData.map(user => ({
-                        id: uid(),
+                        id: user.id || uid(),
                         userId: user.username,
                         email: user.email,
                         userPosition: user.rol,
-                        approved: false,
-                        approvalDate: null
+                        approved: user.approved || false,
+                        approvalDate: user.approvalDate || null
                     })),
                     planItems: this.projectData.map(project => ({
-                        id: uid(),
+                        id: project.id || uid(),
                         planItemId: project.projectId,
-                        percentage: project.percentage
+                        percentage: project.percentage,
+                        planItemDescription: project.title
                     }))
                 };
 
                 await this.createOrder(orderData);
                 this.$q.notify({
                     color: 'positive',
-                    message: 'Orden de abastecimiento creada exitosamente',
+                    message: this.isEditMode ? 'Orden actualizada exitosamente' : 'Orden de abastecimiento creada exitosamente',
                     icon: 'check'
                 });
 
-                // Limpiar el formulario
-                this.abastecimiento = this.iniciarModeloAbastecimiento();
-                this.data = [];
-                this.usuariosData = [];
-                this.projectData = [];
+                // Redirigir a la lista
+                this.$router.push({ name: 'mis-ordenes-abastecimiento' });
 
             } catch (error) {
                 this.$q.notify({
                     color: 'negative',
-                    message: 'Error al crear la orden de abastecimiento',
+                    message: this.isEditMode ? 'Error al actualizar la orden' : 'Error al crear la orden de abastecimiento',
                     icon: 'error'
                 });
                 console.error('Error:', error);
@@ -598,6 +609,74 @@ export default {
         },
         eliminarAprobador(row) {
             this.usuariosData = this.usuariosData.filter(item => item.id !== row.id);
+        },
+        async loadOrderForEdit() {
+            if (this.orderId) {
+                try {
+                    this.isEditMode = true;
+                    this.originalOrderId = this.orderId;
+                    
+                    const orderData = await this.fetchOrderById(this.orderId);
+                    
+                    // Cargar datos básicos
+                    this.abastecimiento.subdireccion = this.subdirecciones.find(s => s.label === orderData.subdireccion);
+                    this.abastecimiento.descripcion = orderData.description;
+                    this.abastecimiento.notes = orderData.notes;
+                    this.abastecimiento.warranty = orderData.warranty;
+                    this.abastecimiento.requiereFlete = orderData.requiereFlete;
+                    
+                    // Cargar dirección de entrega
+                    if (orderData.shippingAddress) {
+                        this.abastecimiento.shippingAddress = { ...orderData.shippingAddress };
+                    }
+                    
+                    // Cargar productos
+                    if (orderData.details) {
+                        this.data = orderData.details.map(detail => ({
+                            id: detail.id,
+                            item: detail.productName,
+                            cantidad: detail.quantity,
+                            unidad: detail.unit,
+                            valor: detail.unitPrice
+                        }));
+                    }
+                    
+                    // Cargar proyectos
+                    if (orderData.planItems) {
+                        this.projectData = orderData.planItems.map(item => ({
+                            id: item.id,
+                            projectId: item.planItemId,
+                            percentage: item.percentage,
+                            title: item.planItemDescription
+                        }));
+                    }
+                    
+                    // Cargar nivel de aprobación y aprobadores
+                    if (orderData.approvalLevel) {
+                        this.abastecimiento.nivelAprobacion = this.niveles.find(n => n.value === orderData.approvalLevel);
+                        
+                        if (orderData.approvers) {
+                            this.usuariosData = orderData.approvers.map(approver => ({
+                                id: approver.id,
+                                username: approver.userId,
+                                nombre: approver.userId, // Ajustar si tienes el nombre completo
+                                email: approver.email,
+                                rol: approver.userPosition,
+                                approved: approver.approved,
+                                approvalDate: approver.approvalDate
+                            }));
+                        }
+                    }
+                    
+                } catch (error) {
+                    this.$q.notify({
+                        color: 'negative',
+                        message: 'Error al cargar los datos de la orden',
+                        icon: 'error'
+                    });
+                    console.error('Error:', error);
+                }
+            }
         }
     },
     computed: {

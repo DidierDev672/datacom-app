@@ -87,8 +87,44 @@
               color="primary"
               icon="visibility"
               @click="viewOrderDetails(props.row)"
+              class="q-mr-sm"
             >
               <q-tooltip>Ver detalles</q-tooltip>
+            </q-btn>
+            
+            <q-btn
+              flat
+              round
+              color="warning"
+              icon="edit"
+              @click="editOrder(props.row)"
+              :disable="props.row.status === 'APPROVED'"
+            >
+              <q-tooltip>Editar orden</q-tooltip>
+            </q-btn>
+
+            <q-btn
+              v-if="isFullyApproved(props.row)"
+              flat
+              round
+              color="teal"
+              icon="file_download"
+              class="q-ml-sm"
+              @click="exportOrder(props.row)"
+            >
+              <q-tooltip>Exportar a Excel</q-tooltip>
+            </q-btn>
+
+            <q-btn
+              v-if="isFullyApproved(props.row)"
+              flat
+              round
+              color="positive"
+              icon="assignment_ind"
+              class="q-ml-sm"
+              @click="openAssignModal(props.row)"
+            >
+              <q-tooltip>Asignar a abastecimiento</q-tooltip>
             </q-btn>
           </q-td>
         </template>
@@ -106,6 +142,18 @@
             <div class="text-subtitle1 opacity-80">ID: {{ selectedOrder && selectedOrder.id }}</div>
           </div>
           <q-space />
+          <q-btn
+            v-if="selectedOrder && isFullyApproved(selectedOrder)"
+            icon="file_download"
+            flat
+            round
+            dense
+            class="text-white q-mr-sm"
+            size="md"
+            @click="exportOrder(selectedOrder)"
+          >
+            <q-tooltip>Exportar a Excel</q-tooltip>
+          </q-btn>
           <q-btn 
             icon="close" 
             flat 
@@ -392,20 +440,35 @@
         </q-card-section>
       </q-card>
     </q-dialog>
+
+    <!-- Modal asignar orden -->
+    <asignar-orden-form
+      v-if="showAssignDialog && selectedOrder"
+      :order-id="selectedOrder.id"
+      :order-code="selectedOrder.code"
+      :value="showAssignDialog"
+      @close="showAssignDialog = false"
+      @assigned="handleAssigned"
+    />
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+  import { mapActions, mapGetters } from 'vuex'
 import { date } from 'quasar'
+import axios from 'axios'
+import { URL_API } from 'src/utils/config'
+  import AsignarOrdenForm from 'components/abastecimiento/AsignarOrdenForm.vue'
 
-export default {
+  export default {
   name: 'OrdersList',
+    components: { AsignarOrdenForm },
   data() {
     return {
       statusFilter: null,
       showDetailsDialog: false,
       selectedOrder: null,
+        showAssignDialog: false,
       pagination: {
         rowsPerPage: 10
       },
@@ -576,7 +639,33 @@ export default {
     }
   },
   methods: {
-    ...mapActions('orderSupply', ['fetchUserOrders']),
+    ...mapActions('orderSupply', ['fetchUserOrders', 'assignOrderToUser']),
+    async exportOrder(order) {
+      try {
+        if (!order || !order.id) return
+        this.$q.loading.show({ message: 'Generando archivo...' })
+        const response = await axios.get(`${URL_API}/api/supply-order/${order.id}/export`, {
+          responseType: 'arraybuffer'
+        })
+
+        const blob = new Blob([response.data], { type: 'application/vnd.ms-excel' })
+        const url = window.URL.createObjectURL(blob)
+        const link = document.createElement('a')
+        link.href = url
+        const filename = `supply-order-${order.code || order.id}.xls`
+        link.setAttribute('download', filename)
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+        window.URL.revokeObjectURL(url)
+        this.$q.notify({ type: 'positive', message: 'Descarga iniciada', icon: 'file_download' })
+      } catch (error) {
+        console.error('Error exportando orden:', error)
+        this.$q.notify({ type: 'negative', message: 'No fue posible exportar la orden', icon: 'error' })
+      } finally {
+        this.$q.loading.hide()
+      }
+    },
     async loadOrders() {
       try {
         const user = this.getUser
@@ -625,6 +714,12 @@ export default {
     viewOrderDetails(order) {
       this.selectedOrder = order
       this.showDetailsDialog = true
+    },
+    editOrder(order) {
+      this.$router.push({
+        name: 'editar-orden-abastecimiento',
+        params: { orderId: order.id }
+      })
     },
     getApprovalStatusColor(approvers) {
       if (!approvers || !Array.isArray(approvers) || approvers.length === 0) {
@@ -680,6 +775,30 @@ export default {
         message: 'Error al copiar UUID',
         icon: 'error'
       })
+    }
+  },
+
+  isFullyApproved(order) {
+    if (!order || !Array.isArray(order.approvers) || order.approvers.length === 0) {
+      return false
+    }
+    const total = order.approvers.length
+    const approved = order.approvers.filter(a => a.approved === true).length
+    return order.status === 'APPROVED' || approved === total
+  },
+  openAssignModal(order) {
+    this.selectedOrder = order
+    this.showAssignDialog = true
+  },
+  async handleAssigned({ username }) {
+    try {
+      await this.assignOrderToUser({ orderId: this.selectedOrder.id, username })
+      this.$q.notify({ type: 'positive', message: 'Orden asignada exitosamente', icon: 'check' })
+      this.showAssignDialog = false
+      // refrescar lista
+      await this.loadOrders()
+    } catch (e) {
+      this.$q.notify({ type: 'negative', message: 'Error al asignar la orden', icon: 'error' })
     }
   }
   }

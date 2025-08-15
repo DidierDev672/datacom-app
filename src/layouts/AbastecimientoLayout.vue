@@ -30,6 +30,51 @@
                 <img width="80px" src="/icons/app-icon.png" alt="" />
             </div>
             <q-list>
+                <!-- Grupo: Solicitudes -->
+                <q-expansion-item icon="description" label="Solicitudes" expand-separator :header-class="['menu-header', isSolicitudesActive ? 'menu-header--active' : '']">
+                    <q-item class="submenu-item" clickable v-ripple :to="{ name: 'mis-ordenes-abastecimiento' }">
+                        <q-item-section avatar>
+                            <q-icon name="list_alt" />
+                        </q-item-section>
+                        <q-item-section>
+                            <q-item-label>Mis Órdenes</q-item-label>
+                            <q-item-label caption>Ver y gestionar mis solicitudes</q-item-label>
+                        </q-item-section>
+                    </q-item>
+                    <q-item class="submenu-item" clickable v-ripple :to="{ name: 'crear-orden-abastecimiento' }">
+                        <q-item-section avatar>
+                            <q-icon name="add_circle" />
+                        </q-item-section>
+                        <q-item-section>
+                            <q-item-label>Crear Orden</q-item-label>
+                            <q-item-label caption>Nueva solicitud de abastecimiento</q-item-label>
+                        </q-item-section>
+                    </q-item>
+                    <q-item class="submenu-item" clickable v-ripple :to="{ name: 'aprobaciones-pendientes' }">
+                        <q-item-section avatar>
+                            <q-icon name="approval" />
+                        </q-item-section>
+                        <q-item-section>
+                            <q-item-label>Aprobaciones</q-item-label>
+                            <q-item-label caption>Órdenes pendientes de aprobación</q-item-label>
+                        </q-item-section>
+                    </q-item>
+                </q-expansion-item>
+
+                <!-- Grupo: Órdenes de abastecimiento -->
+                <q-expansion-item icon="assignment" label="Órdenes de abastecimiento" expand-separator :header-class="['menu-header', isGestionActive ? 'menu-header--active' : '']">
+                    <q-item class="submenu-item" clickable v-ripple :to="{ name: 'gestion-abastecimiento' }">
+                        <q-item-section avatar>
+                            <q-icon name="manage_search" />
+                        </q-item-section>
+                        <q-item-section>
+                            <q-item-label>Gestionar</q-item-label>
+                            <q-item-label caption>Órdenes aprobadas</q-item-label>
+                        </q-item-section>
+                    </q-item>
+                </q-expansion-item>
+
+                <!-- Otros accesos -->
                 <EssentialLink
                     v-for="link in essentialLinks"
                     :key="link.title"
@@ -73,24 +118,6 @@ export default {
             leftDrawerOpen: false,
             essentialLinks: [
                 {
-                    title: 'Mis Órdenes',
-                    caption: 'Ver y gestionar mis solicitudes',
-                    icon: 'list_alt',
-                    link: '/abastecimiento/mis-ordenes',
-                },
-                {
-                    title: 'Crear Orden',
-                    caption: 'Nueva solicitud de abastecimiento',
-                    icon: 'add_circle',
-                    link: '/abastecimiento/crear-orden',
-                },
-                {
-                    title: 'Aprobaciones',
-                    caption: 'Órdenes pendientes de aprobación',
-                    icon: 'approval',
-                    link: '/abastecimiento/aprobaciones',
-                },
-                {
                     title: 'Inicio',
                     caption: 'Volver al menú principal',
                     icon: 'home',
@@ -98,6 +125,16 @@ export default {
                 },
             ],
         };
+    },
+    computed: {
+        isSolicitudesActive() {
+            return this.$route.name === 'mis-ordenes-abastecimiento'
+                || this.$route.name === 'crear-orden-abastecimiento'
+                || this.$route.name === 'aprobaciones-pendientes'
+        },
+        isGestionActive() {
+            return this.$route.name === 'gestion-abastecimiento'
+        }
     },
     methods: {
         ...mapActions('auth', ['logoutAction']),
@@ -153,4 +190,27 @@ body
 .fondo-nav
   background: #248b48
   background: linear-gradient( 135deg, #248b48 0%,#95b947 62%,#64ab9b 100%)
+
+// Estilos de menú
+.menu-header
+  background: rgba(255, 255, 255, 0.06)
+  border-radius: 6px
+  &:hover
+    background: rgba(102, 187, 106, 0.25)
+    color: #1b5e20
+
+.menu-header--active
+  background: linear-gradient(135deg, #2e7d32 0%, #66bb6a 100%)
+  color: #fff
+
+.submenu-item
+  font-size: 13px
+  border-radius: 6px
+  margin-left: 8px
+  margin-right: 6px
+  &.q-router-link--active
+    background: rgba(102, 187, 106, 0.15)
+    color: #1b5e20
+  &:hover
+    background: rgba(255, 255, 255, 0.08)
 </style>
