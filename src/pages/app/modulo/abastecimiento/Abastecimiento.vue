@@ -436,7 +436,7 @@ export default {
                             // Agregar VoBo Approver si existe
                             if (response.voBoApprover) {
                                 approversToAdd.push({
-                                    id: `vobo_${response.voBoApprover.userId}`,
+                                    id: uid(),
                                     username: response.voBoApprover.userId,
                                     nombre: response.voBoApprover.name,
                                     email: response.voBoApprover.email,
@@ -447,7 +447,7 @@ export default {
                             // Agregar Decision Approver si existe
                             if (response.decisionApprover) {
                                 approversToAdd.push({
-                                    id: `decision_${response.decisionApprover.userId}`,
+                                    id: uid(),
                                     username: response.decisionApprover.userId,
                                     nombre: response.decisionApprover.name,
                                     email: response.decisionApprover.email,

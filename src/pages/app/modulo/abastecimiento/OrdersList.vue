@@ -67,14 +67,14 @@
         <!-- Columna de Fecha de Entrega -->
         <template v-slot:body-cell-deliveryDate="props">
           <q-td :props="props">
-            {{ formatDate(props.row.shippingAddress.deliveryDate) }}
+            {{ formatDate(props.row.deliveryDate) }}
           </q-td>
         </template>
 
         <!-- Columna de Total -->
         <template v-slot:body-cell-total="props">
           <q-td :props="props">
-            ${{ calculateTotal(props.row.details) }}
+            ${{ new Intl.NumberFormat().format(props.row.amount) }}
           </q-td>
         </template>
 
@@ -560,8 +560,7 @@ import { URL_API } from 'src/utils/config'
         { label: 'Rechazada', value: 'REJECTED' },
         { label: 'En Progreso', value: 'IN_PROGRESS' }
       ],
-      columns: [
-        
+      columns: [        
         {
           name: 'code',
           required: true,
@@ -582,6 +581,13 @@ import { URL_API } from 'src/utils/config'
           label: 'Descripción',
           align: 'left',
           field: 'description',
+          sortable: true
+        },
+        {
+          name: 'ownerUserId',
+          label: 'Propietario',
+          align: 'left',
+          field: 'ownerUserId',
           sortable: true
         },
         {
@@ -639,7 +645,7 @@ import { URL_API } from 'src/utils/config'
     }
   },
   methods: {
-    ...mapActions('orderSupply', ['fetchUserOrders', 'assignOrderToUser']),
+    ...mapActions('orderSupply', ['fetchUserOrders', 'assignOrderToUser', 'fetchOrderById']),
     async exportOrder(order) {
       try {
         if (!order || !order.id) return
@@ -683,11 +689,13 @@ import { URL_API } from 'src/utils/config'
     },
     getStatusColor(status) {
       switch (status) {
-        case 'APPROVED':
+        case 'PENDING_SUPPLY':
           return 'positive'
         case 'REJECTED':
           return 'negative'
-        case 'IN_PROGRESS':
+        case 'CANCELED':
+          return 'negative'
+        case 'PENDING_AUTHORIZATION':
           return 'warning'
         default:
           return 'grey'
@@ -700,19 +708,15 @@ import { URL_API } from 'src/utils/config'
     calculateTotal(details) {
       if (!details || !Array.isArray(details)) return '0'
       try {
-        return details.reduce((total, item) => {
-          if (!item || typeof item.quantity !== 'number' || typeof item.unitPrice !== 'number') {
-            return total
-          }
-          return total + (item.quantity * item.unitPrice)
-        }, 0).toLocaleString()
+        console.log(new Intl.NumberFormat().format(details))
+        return new Intl.NumberFormat().format(details)
       } catch (error) {
         console.error('Error calculando total:', error)
         return '0'
       }
     },
-    viewOrderDetails(order) {
-      this.selectedOrder = order
+    async viewOrderDetails(order) {      
+      this.selectedOrder = await this.fetchOrderById(order.id);
       this.showDetailsDialog = true
     },
     editOrder(order) {
