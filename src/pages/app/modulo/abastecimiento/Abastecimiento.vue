@@ -58,6 +58,10 @@
               </q-table>
               </div>
               <div>
+                <p class="text-weight-bold q-mt-md">Presupuesto disponible</p>
+                <q-input type="text" dense outlined v-model="abastecimiento.availableBudget" :rules="[requiredRule]" />
+              </div>
+              <div>
                 <p class="text-weight-bold q-mt-md">Nivel de aprobación</p>
                 <q-select 
                     label="Seleccione un nivel" 
@@ -371,6 +375,7 @@ export default {
         };
     },
     created(){
+      console.log('Abastecimiento created');
         this.subdirecciones = [
             {
                 value: 1,
@@ -391,10 +396,63 @@ export default {
             this.loadOrderForEdit();
         }
     },
+    beforeRouteUpdate(to, from, next) {
+        // Este hook se ejecuta cuando la ruta cambia pero el componente se reutiliza
+        console.log('Route updated - orderId changed from', from.params.orderId, 'to', to.params.orderId);
+        
+        // Resetear el componente antes de cargar nuevos datos
+        this.resetComponent();
+        
+        // Continuar con la navegación
+        next();
+        
+        // Usar nextTick para asegurar que la vista se actualice antes de cargar datos
+        this.$nextTick(() => {
+            this.initializeComponent();
+        });
+    },
     methods: {
         ...mapActions('projects', ['fetchProjects']),
-        ...mapActions('orderSupply', ['createOrder', 'fetchApprovalLevels', 'fetchLevelApprovers', 'fetchOrderById']),
+        ...mapActions('orderSupply', ['createOrder', 'updateOrder', 'fetchApprovalLevels', 'fetchLevelApprovers', 'fetchOrderById']),
         ...mapActions('supplyPlans', ['fetchSupplyPlans']),
+        initializeComponent() {
+            this.subdirecciones = [
+                {
+                    value: 1,
+                    label: 'Subdirección programática'
+                },
+                {
+                    value: 2,
+                    label: 'Subdirección administrativa'
+                }
+            ];
+
+            this.fetchProjects();
+            this.fetchApprovalLevels();
+            this.fetchSupplyPlans();
+            
+            // Cargar datos si es modo edición
+            if (this.orderId) {
+                this.loadOrderForEdit();
+            }
+        },
+        
+        resetComponent() {
+            // Resetear todos los datos a su estado inicial
+            this.abastecimiento = this.iniciarModeloAbastecimiento();
+            this.data = [];
+            this.usuariosData = [];
+            this.projectData = [];
+            this.isEditMode = false;
+            this.originalOrderId = null;
+            
+            // Resetear formularios si es necesario
+            if (this.$refs.solicitudForm) {
+                this.$refs.solicitudForm.resetValidation();
+            }
+            
+            console.log('Component reset completed');
+        },
         
         dateOptions(date) {
             const today = new Date();
@@ -491,6 +549,7 @@ export default {
                 id: "",
                 subdireccion: '',
                 descripcion: '',
+                availableBudget: 0,
                 nivelAprobacion: '',
                 notes: '',
                 warranty: '',
@@ -513,6 +572,7 @@ export default {
                 const orderData = {
                     id: this.isEditMode ? this.originalOrderId : uid(),
                     subdireccion: this.abastecimiento.subdireccion.label,
+                    availableBudget: this.abastecimiento.availableBudget,
                     approvalLevel: this.abastecimiento.nivelAprobacion.value,
                     description: this.abastecimiento.descripcion,
                     notes: this.abastecimiento.notes,
@@ -543,12 +603,24 @@ export default {
                     }))
                 };
 
-                await this.createOrder(orderData);
-                this.$q.notify({
-                    color: 'positive',
-                    message: this.isEditMode ? 'Orden actualizada exitosamente' : 'Orden de abastecimiento creada exitosamente',
-                    icon: 'check'
-                });
+                if(this.isEditMode){
+                    console.log('Updating order with id: ', orderData.id);
+                    await this.updateOrder(orderData);
+                    this.$q.notify({
+                        color: 'positive',
+                        message: 'Orden actualizada exitosamente',
+                        icon: 'check'
+                    });
+                } else {
+                    console.log('Creating order with data: ', orderData);
+                    await this.createOrder(orderData);
+                    this.$q.notify({
+                        color: 'positive',
+                        message: 'Orden de abastecimiento creada exitosamente',
+                        icon: 'check'
+                    });
+                }
+                
 
                 // Redirigir a la lista
                 this.$router.push({ name: 'mis-ordenes-abastecimiento' });
@@ -624,6 +696,7 @@ export default {
                     this.abastecimiento.notes = orderData.notes;
                     this.abastecimiento.warranty = orderData.warranty;
                     this.abastecimiento.requiereFlete = orderData.requiereFlete;
+                    this.abastecimiento.availableBudget = orderData.availableBudget;
                     
                     // Cargar dirección de entrega
                     if (orderData.shippingAddress) {
@@ -698,6 +771,26 @@ export default {
         }
     },
     watch: {
+      // Observar cambios en orderId para manejar navegación
+        orderId: {
+            handler(newOrderId, oldOrderId) {
+                if (newOrderId !== oldOrderId) {
+                    console.log('OrderId changed from', oldOrderId, 'to', newOrderId);
+                    
+                    // Si no hay newOrderId, estamos creando una nueva orden
+                    if (!newOrderId) {
+                        this.resetComponent();
+                    } else if (newOrderId !== this.originalOrderId) {
+                        // Si hay un nuevo orderId diferente al actual, cargar nuevos datos
+                        this.resetComponent();
+                        this.$nextTick(() => {
+                            this.loadOrderForEdit();
+                        });
+                    }
+                }
+            },
+            immediate: false // No ejecutar inmediatamente porque created() ya maneja el estado inicial
+        },
         nivelOptions: {
             immediate: true,
             handler(newValue) {

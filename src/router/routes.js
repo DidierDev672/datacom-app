@@ -66,7 +66,7 @@ const routes = [
                                     ),
                             },
                         ],
-                    },
+                    }
                 ],
             },
 
@@ -600,9 +600,35 @@ const routes = [
                 component: () => import('pages/app/modulo/abastecimiento/OrdersList.vue')
             },
             {
+                path: 'crear',
+                name: 'crear-solicitud-abastecimiento',
+                component: () => import('src/modules/solicitud-abastecimiento/ui/views/SolicitudAbastecimientoView.vue')
+            },
+            {
+                path: 'solicitudes-registradas',
+                name: 'lista-solicitudes-abastecimiento',
+                component: () => import('src/modules/solicitud-abastecimiento/ui/views/ListaSolicitudesAbastecimientoView.vue')
+            },
+            {
                 path: 'crear-orden',
                 name: 'crear-orden-abastecimiento',
                 component: () => import('pages/app/modulo/abastecimiento/Abastecimiento.vue')
+            },
+            {
+              path: 'crear-plan-abastecimiento',
+              name: 'Crear-plan-abastecimiento',
+              component: () => import('pages/app/modulo/abastecimiento/CrearPlanAbastecimiento.vue')
+            },
+            {
+              path: 'planes',
+              name: 'lista-planes-abastecimiento',
+              component: () => import('src/modules/abastecimiento/ui/views/ListarPlanesAbastecimientoView.vue')
+            },
+            {
+              path: 'crear-rubros',
+              name: 'crear-rubros',
+              component: () => import('pages/app/modulo/abastecimiento/CrearRubro.vue'),
+              // props: true
             },
             {
                 path: 'editar-orden/:orderId',
@@ -615,14 +641,154 @@ const routes = [
                 name: 'aprobaciones-pendientes',
                 component: () => import('pages/app/modulo/abastecimiento/PendingApprovalsPage.vue'),
                 meta: { requiresRole: ['APPROVER', 'ADMIN'] }
+            },
+            {
+                path: 'revision-aprobaciones',
+                name: 'aprobacion-solicitudes-abastecimiento',
+                component: () => import('src/modules/solicitud-abastecimiento/ui/views/AprobacionAbastecimientoView.vue')
             }
             ,
             {
-                path: 'gestionar',
-                name: 'gestion-abastecimiento',
-                component: () => import('pages/app/modulo/abastecimiento/ApprovedOrders.vue'),
+                path: 'ordenes-compra',
+                name: 'ordenes-compra-lista',
+                component: () => import('pages/app/modulo/abastecimiento/PurchaseOrdersList.vue'),
+                meta: { requiresRole: ['ADMIN', 'SUPPLY', 'SUPPLY_MANAGER'] }
+            },
+            {
+                path: 'ordenes-compra/:id',
+                name: 'ordenes-compra-detalle',
+                component: () => import('pages/app/modulo/abastecimiento/PurchaseOrderDetail.vue'),
+                props: true,
                 meta: { requiresRole: ['ADMIN', 'SUPPLY', 'SUPPLY_MANAGER'] }
             }
+            ,
+            {
+                path: 'crear-ocs/:orderId',
+                name: 'crear-ocs',
+                component: () => import('pages/app/modulo/abastecimiento/CreatePurchaseOrder.vue'),
+                props: true
+            },
+            {
+                path: 'proveedores/nuevo',
+                name: 'registrar-proveedor-nuevo',
+                component: () => import('src/modules/terceros/ui/views/ProveedorRegistroView.vue')
+            },
+            {
+                path: 'proveedores',
+                name: 'lista-proveedores-terceros',
+                component: () => import('src/modules/terceros/ui/views/ProveedorListaView.vue')
+            },
+            {
+                path: 'requisiciones',
+                name: 'requisiciones-compras-lista',
+                component: () => import('src/modules/requisicion-compras/ui/views/RequisicionesListView.vue')
+            },
+            {
+                path: 'requisiciones/nueva',
+                name: 'crear-requisicion-compras',
+                component: () => import('src/modules/requisicion-compras/ui/views/RequisicionFormView.vue')
+            },
+            {
+                path: 'autorizacion-compra',
+                name: 'ordenes-compra-lista',
+                component: () => import('src/modules/orden-compra/ui/views/OrdenCompraListView.vue')
+            },
+            {
+                path: 'autorizacion-compra/nueva',
+                name: 'crear-orden-compra',
+                component: () => import('src/modules/orden-compra/ui/views/OrdenCompraCreateView.vue')
+            },
+            {
+                path: 'autorizacion-compra/:id',
+                name: 'detalle-orden-compra',
+                component: () => import('src/modules/orden-compra/ui/views/OrdenCompraDetailView.vue')
+            },
+            {
+                path: 'solicitudes-viaje',
+                name: 'lista-solicitudes-viaje',
+                component: () => import('src/modules/solicitud-viaje/ui/views/ListaSolicitudesViajeView.vue')
+            },
+            {
+                path: 'solicitudes-viaje/nueva',
+                name: 'crear-solicitud-viaje',
+                component: () => import('src/modules/solicitud-viaje/ui/views/SolicitudViajeView.vue')
+            },
+            {
+                path: 'transporte-aereo',
+                name: 'lista-solicitudes-transporte',
+                component: () => import('src/modules/solicitud-transporte/ui/views/SolicitudListView.vue')
+            },
+            {
+                path: 'transporte-aereo/nueva',
+                name: 'create-solicitud-transporte',
+                component: () => import('src/modules/solicitud-transporte/ui/views/SolicitudCreateView.vue')
+            },
+            {
+                path: 'transporte-terrestre',
+                name: 'lista-solicitudes-terrestre',
+                component: () => import('src/modules/solicitud-transporte-terrestre/ui/views/SolicitudTerrestreListView.vue')
+            },
+            {
+                path: 'transporte-terrestre/nueva',
+                name: 'create-solicitud-terrestre',
+                component: () => import('src/modules/solicitud-transporte-terrestre/ui/views/SolicitudTerrestreCreateView.vue')
+            }
+
+        ]
+    },
+    {
+        path: '/lista-proveedores-terceros',
+        redirect: '/abastecimiento/proveedores'
+    },
+    {
+        path: '/supplier',
+        name: 'PageModuloSupplier',
+        component: () =>
+            import(
+                'pages/app/modulo/supplier/PageModuloSupplier.vue'
+            ),
+        children: [
+            {
+                path: '',
+                name: 'PageModuloSupplierIndex',
+                component: () =>
+                    import(
+                        'pages/app/modulo/supplier/PageModuloSupplierIndex.vue'
+                    ),
+            },
+        ],
+    },
+    {
+        path: '/talento-humano',
+        component: () => import('layouts/MainLayout.vue'),
+        meta: { requiresAuth: true },
+        children: [
+            {
+                path: 'registro',
+                name: 'registro-colaborador',
+                component: () => import('src/modules/talento-humano/ui/views/RegistroColaboradorView.vue')
+            },
+            {
+                path: 'lista',
+                name: 'lista-colaboradores',
+                component: () => import('src/modules/talento-humano/ui/views/ListaColaboradoresView.vue')
+            },
+            {
+                path: 'puestos-trabajo',
+                name: 'puestos-trabajo-lista',
+                component: () => import('src/modules/talento-humano/ui/views/PuestoTrabajoList.vue')
+            },
+            {
+                path: 'puestos-trabajo/nuevo',
+                name: 'puestos-trabajo-nuevo',
+                component: () => import('src/modules/talento-humano/ui/views/PuestoTrabajoForm.vue')
+            },
+            {
+                path: 'puestos-trabajo/editar/:id',
+                name: 'puestos-trabajo-editar',
+                component: () => import('src/modules/talento-humano/ui/views/PuestoTrabajoForm.vue')
+            },
+            { path: 'colaboradores/nuevo', component: () => import('src/modules/talento-humano/ui/views/ColaboradorForm.vue') }
         ]
     },
     {

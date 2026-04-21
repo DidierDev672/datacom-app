@@ -1,20 +1,12 @@
 <template>
   <div class="q-pa-md">
     <div class="text-h5 q-mb-md">Mis Órdenes de Abastecimiento</div>
-    
+
     <!-- Filtros -->
     <div class="row q-mb-md">
       <div class="col-12 col-md-4">
-        <q-select
-          v-model="statusFilter"
-          :options="statusOptions"
-          label="Filtrar por estado"
-          clearable
-          dense
-          outlined
-          emit-value
-          map-options
-        />
+        <q-select v-model="statusFilter" :options="statusOptions" label="Filtrar por estado" clearable dense outlined
+          emit-value map-options />
       </div>
     </div>
 
@@ -39,26 +31,16 @@
 
     <!-- Tabla de órdenes -->
     <div v-if="!loading && !error">
-      <q-table
-        :data="filteredOrders"
-        :columns="columns"
-        row-key="id"
-        :pagination="pagination"
-        :rows-per-page-options="[5, 10, 20, 50]"
-        class="my-sticky-header-table"
-      >
+      <q-table :data="filteredOrders" :columns="columns" row-key="id" :pagination="pagination"
+        :rows-per-page-options="[5, 10, 20, 50]" class="my-sticky-header-table">
 
-      
+
 
 
         <!-- Columna de Estado -->
         <template v-slot:body-cell-status="props">
           <q-td :props="props">
-            <q-chip
-              :color="getStatusColor(props.row.status)"
-              text-color="white"
-              size="sm"
-            >
+            <q-chip :color="getStatusColor(props.row.status)" text-color="white" size="sm">
               {{ props.row.statusDescription }}
             </q-chip>
           </q-td>
@@ -81,394 +63,406 @@
         <!-- Columna de Acciones -->
         <template v-slot:body-cell-actions="props">
           <q-td :props="props">
-            <q-btn
-              flat
-              round
-              color="primary"
-              icon="visibility"
-              @click="viewOrderDetails(props.row)"
-              class="q-mr-sm"
-            >
-              <q-tooltip>Ver detalles</q-tooltip>
-            </q-btn>
-            
-            <q-btn
-              flat
-              round
-              color="warning"
-              icon="edit"
-              @click="editOrder(props.row)"
-              :disable="props.row.status === 'APPROVED'"
-            >
-              <q-tooltip>Editar orden</q-tooltip>
+
+            <q-btn round dense flat color="grey-8" icon="more_vert">
+              <q-menu anchor="bottom right" self="top right">
+                <q-list style="min-width: 220px">
+                  <q-item clickable v-close-popup @click="viewOrderDetails(props.row)">
+                    <q-item-section avatar><q-icon name="visibility" /></q-item-section>
+                    <q-item-section>Ver detalles</q-item-section>
+                  </q-item>
+
+                  <q-item clickable v-close-popup @click="editOrder(props.row)"
+                    :disable="props.row.status === 'PENDING_SUPPLY'">
+                    <q-item-section avatar><q-icon name="edit" /></q-item-section>
+                    <q-item-section>Editar</q-item-section>
+                  </q-item>
+
+                  <q-item v-if="isFullyApproved(props.row)" clickable v-close-popup @click="openAssignModal(props.row)"
+                    :disable="props.row.supplyUserId !== null">
+                    <q-item-section avatar><q-icon name="assignment_ind" /></q-item-section>
+                    <q-item-section>Asignar a abastecimiento</q-item-section>
+                  </q-item>
+
+                  <q-item v-if="props.row.supplyUserId" clickable v-close-popup @click="goToCreateOCS(props.row)">
+                    <q-item-section avatar><q-icon name="shopping_cart" /></q-item-section>
+                    <q-item-section>Generar OCS</q-item-section>
+                  </q-item>
+                </q-list>
+              </q-menu>
             </q-btn>
 
-            <q-btn
-              v-if="isFullyApproved(props.row)"
-              flat
-              round
-              color="teal"
-              icon="file_download"
-              class="q-ml-sm"
-              @click="exportOrder(props.row)"
-            >
-              <q-tooltip>Exportar a Excel</q-tooltip>
-            </q-btn>
-
-            <q-btn
-              v-if="isFullyApproved(props.row)"
-              flat
-              round
-              color="positive"
-              icon="assignment_ind"
-              class="q-ml-sm"
-              @click="openAssignModal(props.row)"
-            >
-              <q-tooltip>Asignar a abastecimiento</q-tooltip>
-            </q-btn>
           </q-td>
         </template>
       </q-table>
     </div>
 
     <!-- Modal de detalles de la orden -->
-    <q-dialog v-model="showDetailsDialog" persistent>
+    <q-dialog v-if="selectedOrder" v-model="showDetailsDialog" persistent>
       <q-card style="min-width: 85vw; max-width: 95vw; max-height: 90vh;" class="order-details-card">
         <!-- Header con gradiente -->
         <q-card-section class="row items-center bg-primary text-white q-pa-lg">
           <q-icon name="description" size="md" class="q-mr-md" />
           <div>
             <div class="text-h5 text-weight-bold">Detalles de la Orden</div>
-            <div class="text-subtitle1 opacity-80">ID: {{ selectedOrder && selectedOrder.id }}</div>
+            <div class="text-subtitle1 opacity-80">Solicitud: {{ selectedOrder && selectedOrder.code }}</div>
           </div>
           <q-space />
-          <q-btn
-            v-if="selectedOrder && isFullyApproved(selectedOrder)"
-            icon="file_download"
-            flat
-            round
-            dense
-            class="text-white q-mr-sm"
-            size="md"
-            @click="exportOrder(selectedOrder)"
-          >
-            <q-tooltip>Exportar a Excel</q-tooltip>
-          </q-btn>
-          <q-btn 
-            icon="close" 
-            flat 
-            round 
-            dense 
-            v-close-popup 
-            class="text-white"
-            size="md"
-          />
+          <q-btn icon="close" flat round dense v-close-popup class="text-white" size="md" />
         </q-card-section>
 
         <q-card-section class="q-pa-lg scroll" style="max-height: calc(90vh - 120px);">
           <div v-if="selectedOrder" class="q-px-xl">
-            
-            <!-- Estado de la orden - Badge destacado -->
-            <div class="row justify-center q-mb-lg">
-              <q-chip
-                :color="getStatusColor(selectedOrder.status)"
-                text-color="white"
-                size="lg"
-                icon="flag"
-                class="text-weight-bold q-px-lg q-py-sm"
-              >
-                {{ selectedOrder.statusDescription }}
-              </q-chip>
-            </div>
 
-            <!-- Información principal en tarjetas -->
-            <div class="row q-col-gutter-lg q-mb-lg">
-              <!-- Información General -->
-              <div class="col-12 col-md-6">
-                <q-card class="full-height shadow-5 rounded-borders">
-                  <q-card-section class="bg-blue-1">
-                    <div class="row items-center q-mb-md">
-                      <q-icon name="info" color="blue-7" size="sm" class="q-mr-sm" />
-                      <span class="text-h6 text-blue-8 text-weight-bold">Información General</span>
-                    </div>
-                  </q-card-section>
-                  <q-separator />
-                  <q-card-section>
-                    <q-list dense>
-                      <q-item>
-                        <q-item-section avatar>
-                          <q-icon name="business" color="grey-6" />
-                        </q-item-section>
-                        <q-item-section>
-                          <q-item-label caption>Subdirección</q-item-label>
-                          <q-item-label class="text-weight-medium">{{ selectedOrder.subdireccion }}</q-item-label>
-                        </q-item-section>
-                      </q-item>
-                      
-                      <q-item>
-                        <q-item-section avatar>
-                          <q-icon name="description" color="grey-6" />
-                        </q-item-section>
-                        <q-item-section>
-                          <q-item-label caption>Descripción</q-item-label>
-                          <q-item-label class="text-weight-medium">{{ selectedOrder.description }}</q-item-label>
-                        </q-item-section>
-                      </q-item>
+            <!-- Tabs para organizar el contenido -->
+            <q-tabs v-model="activeTab" dense class="text-grey q-mb-lg" active-color="primary" indicator-color="primary"
+              align="justify">
+              <q-tab name="details" icon="info" label="Detalles" />
+              <q-tab name="audit" icon="history" label="Historial" />
+            </q-tabs>
 
-                      <q-item>
-                        <q-item-section avatar>
-                          <q-icon name="approval" color="grey-6" />
-                        </q-item-section>
-                        <q-item-section>
-                          <q-item-label caption>Nivel de Aprobación</q-item-label>
-                          <q-item-label class="text-weight-medium">{{ selectedOrder.nivelAprobacion }}</q-item-label>
-                        </q-item-section>
-                      </q-item>
+            <q-separator class="q-mb-lg" />
 
-                      <q-item>
-                        <q-item-section avatar>
-                          <q-icon name="note" color="grey-6" />
-                        </q-item-section>
-                        <q-item-section>
-                          <q-item-label caption>Observaciones</q-item-label>
-                          <q-item-label class="text-weight-medium">{{ selectedOrder.notes || 'N/A' }}</q-item-label>
-                        </q-item-section>
-                      </q-item>
+            <!-- Tab Panels -->
+            <q-tab-panels v-model="activeTab" animated>
+              <!-- Panel de Detalles -->
+              <q-tab-panel name="details" class="q-pa-none">
 
-                      <q-item>
-                        <q-item-section avatar>
-                          <q-icon name="security" color="grey-6" />
-                        </q-item-section>
-                        <q-item-section>
-                          <q-item-label caption>Garantías</q-item-label>
-                          <q-item-label class="text-weight-medium">{{ selectedOrder.warranty || 'N/A' }}</q-item-label>
-                        </q-item-section>
-                      </q-item>
-                    </q-list>
-                  </q-card-section>
-                </q-card>
-              </div>
-
-              <!-- Dirección de Entrega -->
-              <div class="col-12 col-md-6">
-                <q-card class="full-height shadow-5 rounded-borders">
-                  <q-card-section class="bg-green-1">
-                    <div class="row items-center q-mb-md">
-                      <q-icon name="local_shipping" color="green-7" size="sm" class="q-mr-sm" />
-                      <span class="text-h6 text-green-8 text-weight-bold">Dirección de Entrega</span>
-                    </div>
-                  </q-card-section>
-                  <q-separator />
-                  <q-card-section>
-                    <q-list dense>
-                      <q-item>
-                        <q-item-section avatar>
-                          <q-icon name="person" color="grey-6" />
-                        </q-item-section>
-                        <q-item-section>
-                          <q-item-label caption>Contacto</q-item-label>
-                          <q-item-label class="text-weight-medium">{{ selectedOrder.shippingAddress.contact }}</q-item-label>
-                        </q-item-section>
-                      </q-item>
-
-                      <q-item>
-                        <q-item-section avatar>
-                          <q-icon name="phone" color="grey-6" />
-                        </q-item-section>
-                        <q-item-section>
-                          <q-item-label caption>Teléfono</q-item-label>
-                          <q-item-label class="text-weight-medium">{{ selectedOrder.shippingAddress.cellphone }}</q-item-label>
-                        </q-item-section>
-                      </q-item>
-
-                      <q-item>
-                        <q-item-section avatar>
-                          <q-icon name="location_on" color="grey-6" />
-                        </q-item-section>
-                        <q-item-section>
-                          <q-item-label caption>Dirección</q-item-label>
-                          <q-item-label class="text-weight-medium">{{ selectedOrder.shippingAddress.address }}</q-item-label>
-                        </q-item-section>
-                      </q-item>
-
-                      <q-item>
-                        <q-item-section avatar>
-                          <q-icon name="event" color="grey-6" />
-                        </q-item-section>
-                        <q-item-section>
-                          <q-item-label caption>Fecha de Entrega</q-item-label>
-                          <q-item-label class="text-weight-medium">
-                            {{ formatDate(selectedOrder.shippingAddress.deliveryDate) }}
-                          </q-item-label>
-                        </q-item-section>
-                      </q-item>
-                    </q-list>
-                  </q-card-section>
-                </q-card>
-              </div>
-            </div>
-
-            <!-- Detalles de productos -->
-            <q-card class="shadow-5 rounded-borders q-mb-lg">
-              <q-card-section class="bg-orange-1">
-                <div class="row items-center justify-between">
-                  <div class="row items-center">
-                    <q-icon name="inventory" color="orange-7" size="sm" class="q-mr-sm" />
-                    <span class="text-h6 text-orange-8 text-weight-bold">Productos/Servicios</span>
-                  </div>
-                  <q-chip 
-                    color="orange-7" 
-                    text-color="white" 
-                    icon="shopping_cart"
-                    :label="`${selectedOrder.details.length} item${selectedOrder.details.length !== 1 ? 's' : ''}`"
-                  />
+                <!-- Estado de la orden - Badge destacado -->
+                <div class="row justify-center q-mb-lg">
+                  <q-chip :color="getStatusColor(selectedOrder.status)" text-color="white" size="lg" icon="flag"
+                    class="text-weight-bold q-px-lg q-py-sm">
+                    {{ selectedOrder.statusDescription }}
+                  </q-chip>
                 </div>
-              </q-card-section>
-              <q-separator />
-              <q-card-section>
-                <q-table
-                  :data="selectedOrder.details"
-                  :columns="productColumns"
-                  row-key="id"
-                  flat
-                  :pagination="{ rowsPerPage: 0 }"
-                  class="modern-table"
-                >
-                  <template v-slot:bottom>
-                    <div class="row full-width bg-grey-1 q-pa-md rounded-borders">
-                      <div class="col-12 text-right">
-                        <div class="row items-center justify-end">
-                          <q-icon name="calculate" color="primary" size="sm" class="q-mr-sm" />
-                          <span class="text-h5 text-weight-bold text-primary">
-                            Total: ${{ calculateTotal(selectedOrder.details) }}
-                          </span>
+
+                <!-- Información principal en tarjetas -->
+                <div class="row q-col-gutter-lg q-mb-lg">
+                  <!-- Información General -->
+                  <div class="col-12 col-md-6">
+                    <q-card class="full-height shadow-5 rounded-borders">
+                      <q-card-section class="bg-blue-1">
+                        <div class="row items-center q-mb-md">
+                          <q-icon name="info" color="blue-7" size="sm" class="q-mr-sm" />
+                          <span class="text-h6 text-blue-8 text-weight-bold">Información General</span>
                         </div>
-                      </div>
-                    </div>
-                  </template>
-                </q-table>
-              </q-card-section>
-            </q-card>
+                      </q-card-section>
+                      <q-separator />
+                      <q-card-section>
+                        <q-list dense>
+                          <q-item>
+                            <q-item-section avatar>
+                              <q-icon name="edit_document" color="grey-6" />
+                            </q-item-section>
+                            <q-item-section>
+                              <q-item-label caption>Solicitud</q-item-label>
+                              <q-item-label class="text-weight-medium">{{ selectedOrder.code }}</q-item-label>
+                            </q-item-section>
+                          </q-item>
 
-            <!-- Aprobadores -->
-            <q-card class="shadow-5 rounded-borders q-mb-lg">
-              <q-card-section class="bg-purple-1">
-                <div class="row items-center justify-between">
-                  <div class="row items-center">
-                    <q-icon name="how_to_reg" color="purple-7" size="sm" class="q-mr-sm" />
-                    <span class="text-h6 text-purple-8 text-weight-bold">Proceso de Aprobación</span>
+                          <q-item>
+                            <q-item-section avatar>
+                              <q-icon name="business" color="grey-6" />
+                            </q-item-section>
+                            <q-item-section>
+                              <q-item-label caption>Subdirección</q-item-label>
+                              <q-item-label class="text-weight-medium">{{ selectedOrder.subdireccion }}</q-item-label>
+                            </q-item-section>
+                          </q-item>
+
+                          <q-item>
+                            <q-item-section avatar>
+                              <q-icon name="description" color="grey-6" />
+                            </q-item-section>
+                            <q-item-section>
+                              <q-item-label caption>Descripción</q-item-label>
+                              <q-item-label class="text-weight-medium">{{ selectedOrder.description }}</q-item-label>
+                            </q-item-section>
+                          </q-item>
+
+                          <q-item>
+                            <q-item-section avatar>
+                              <q-icon name="approval" color="grey-6" />
+                            </q-item-section>
+                            <q-item-section>
+                              <q-item-label caption>Nivel de Aprobación</q-item-label>
+                              <q-item-label class="text-weight-medium">{{ selectedOrder.approvalLevelDescription
+                              }}</q-item-label>
+                            </q-item-section>
+                          </q-item>
+
+                          <q-item>
+                            <q-item-section avatar>
+                              <q-icon name="note" color="grey-6" />
+                            </q-item-section>
+                            <q-item-section>
+                              <q-item-label caption>Observaciones</q-item-label>
+                              <q-item-label class="text-weight-medium">{{ selectedOrder.notes || 'N/A' }}</q-item-label>
+                            </q-item-section>
+                          </q-item>
+
+                          <q-item>
+                            <q-item-section avatar>
+                              <q-icon name="security" color="grey-6" />
+                            </q-item-section>
+                            <q-item-section>
+                              <q-item-label caption>Garantías</q-item-label>
+                              <q-item-label class="text-weight-medium">{{ selectedOrder.warranty || 'N/A'
+                              }}</q-item-label>
+                            </q-item-section>
+                          </q-item>
+                        </q-list>
+                      </q-card-section>
+                    </q-card>
                   </div>
-                  <q-chip 
-                    :color="getApprovalStatusColor(selectedOrder.approvers)" 
-                    text-color="white" 
-                    icon="verified_user"
-                    :label="getApprovalStatusText(selectedOrder.approvers)"
-                  />
+
+                  <!-- Dirección de Entrega -->
+                  <div class="col-12 col-md-6">
+                    <q-card class="full-height shadow-5 rounded-borders">
+                      <q-card-section class="bg-green-1">
+                        <div class="row items-center q-mb-md">
+                          <q-icon name="local_shipping" color="green-7" size="sm" class="q-mr-sm" />
+                          <span class="text-h6 text-green-8 text-weight-bold">Dirección de Entrega</span>
+                        </div>
+                      </q-card-section>
+                      <q-separator />
+                      <q-card-section>
+                        <q-list dense>
+                          <q-item>
+                            <q-item-section avatar>
+                              <q-icon name="person" color="grey-6" />
+                            </q-item-section>
+                            <q-item-section>
+                              <q-item-label caption>Contacto</q-item-label>
+                              <q-item-label class="text-weight-medium">{{ selectedOrder.shippingAddress.contact
+                              }}</q-item-label>
+                            </q-item-section>
+                          </q-item>
+
+                          <q-item>
+                            <q-item-section avatar>
+                              <q-icon name="phone" color="grey-6" />
+                            </q-item-section>
+                            <q-item-section>
+                              <q-item-label caption>Teléfono</q-item-label>
+                              <q-item-label class="text-weight-medium">{{ selectedOrder.shippingAddress.cellphone
+                              }}</q-item-label>
+                            </q-item-section>
+                          </q-item>
+
+                          <q-item>
+                            <q-item-section avatar>
+                              <q-icon name="location_on" color="grey-6" />
+                            </q-item-section>
+                            <q-item-section>
+                              <q-item-label caption>Dirección</q-item-label>
+                              <q-item-label class="text-weight-medium">{{ selectedOrder.shippingAddress.address
+                              }}</q-item-label>
+                            </q-item-section>
+                          </q-item>
+
+                          <q-item>
+                            <q-item-section avatar>
+                              <q-icon name="event" color="grey-6" />
+                            </q-item-section>
+                            <q-item-section>
+                              <q-item-label caption>Fecha de Entrega</q-item-label>
+                              <q-item-label class="text-weight-medium">
+                                {{ formatDate(selectedOrder.shippingAddress.deliveryDate) }}
+                              </q-item-label>
+                            </q-item-section>
+                          </q-item>
+                        </q-list>
+                      </q-card-section>
+                    </q-card>
+                  </div>
                 </div>
-              </q-card-section>
-              <q-separator />
-              <q-card-section>
-                <q-table
-                  :data="selectedOrder.approvers"
-                  :columns="approverColumns"
-                  row-key="id"
-                  flat
-                  :pagination="{ rowsPerPage: 0 }"
-                  class="modern-table"
-                >
-                  <template v-slot:body-cell-approved="props">
-                    <q-td :props="props">
-                      <q-chip
-                        :color="props.row.approved ? 'positive' : props.row.approvalDate ? 'negative' : 'orange'"
-                        text-color="white"
-                        size="sm"
-                        :icon="props.row.approved ? 'check_circle' : props.row.approvalDate ? 'cancel' : 'schedule'"
-                      >
-                        {{ props.row.approved ? 'Aprobado' : props.row.approvalDate ? 'Rechazado' : 'Pendiente' }}
-                        <q-tooltip v-if="props.row.approved === false && props.row.approvalDate">
-                          {{ props.row.rejectionReason }}
-                        </q-tooltip>
-                      </q-chip>                      
-                    </q-td>
-                  </template>
-                  <template v-slot:body-cell-approvalDate="props">
-                    <q-td :props="props">
+
+                <!-- Detalles de productos -->
+                <q-card class="shadow-5 rounded-borders q-mb-lg">
+                  <q-card-section class="bg-orange-1">
+                    <div class="row items-center justify-between">
                       <div class="row items-center">
-                        <q-icon 
-                          :name="props.row.approvalDate ? 'event_available' : 'event_busy'" 
-                          :color="props.row.approvalDate ? 'positive' : 'grey'" 
-                          size="xs" 
-                          class="q-mr-xs" 
-                        />
-                        {{ props.row.approvalDate ? formatDate(props.row.approvalDate) : 'Pendiente' }}                        
+                        <q-icon name="inventory" color="orange-7" size="sm" class="q-mr-sm" />
+                        <span class="text-h6 text-orange-8 text-weight-bold">Productos/Servicios</span>
                       </div>
-                    </q-td>
-                  </template>
-                </q-table>
-              </q-card-section>
-            </q-card>
+                      <q-chip color="orange-7" text-color="white" icon="shopping_cart"
+                        :label="`${selectedOrder.details.length} item${selectedOrder.details.length !== 1 ? 's' : ''}`" />
+                    </div>
+                  </q-card-section>
+                  <q-separator />
+                  <q-card-section>
+                    <q-table :data="selectedOrder.details" :columns="productColumns" row-key="id" flat
+                      :pagination="{ rowsPerPage: 0 }" class="modern-table">
+                      <template v-slot:bottom>
+                        <div class="row full-width bg-grey-1 q-pa-md rounded-borders">
+                          <div class="col-12 text-right">
+                            <div class="row items-center justify-end">
+                              <q-icon name="calculate" color="primary" size="sm" class="q-mr-sm" />
+                              <span class="text-h5 text-weight-bold text-primary">
+                                Total: ${{ calculateTotal(selectedOrder.details) }}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </template>
+                    </q-table>
+                  </q-card-section>
+                </q-card>
 
-            <!-- Proyectos -->
-            <q-card class="shadow-5 rounded-borders">
-              <q-card-section class="bg-teal-1">
-                <div class="row items-center justify-between">
-                  <div class="row items-center">
-                    <q-icon name="account_tree" color="teal-7" size="sm" class="q-mr-sm" />
-                    <span class="text-h6 text-teal-8 text-weight-bold">Plan de Abastecimiento</span>
-                  </div>
-                  <q-chip 
-                    color="teal-7" 
-                    text-color="white" 
-                    icon="work"
-                    :label="`${selectedOrder.planItems.length} proyecto${selectedOrder.planItems.length !== 1 ? 's' : ''}`"
-                  />
-                </div>
-              </q-card-section>
-              <q-separator />
-              <q-card-section>
-                <q-table
-                  :data="selectedOrder.planItems"
-                  :columns="projectColumns"
-                  row-key="id"
-                  flat
-                  :pagination="{ rowsPerPage: 0 }"
-                  class="modern-table"
-                />
-              </q-card-section>
-            </q-card>
+                <!-- Aprobadores -->
+                <q-card class="shadow-5 rounded-borders q-mb-lg">
+                  <q-card-section class="bg-purple-1">
+                    <div class="row items-center justify-between">
+                      <div class="row items-center">
+                        <q-icon name="how_to_reg" color="purple-7" size="sm" class="q-mr-sm" />
+                        <span class="text-h6 text-purple-8 text-weight-bold">Proceso de Aprobación</span>
+                      </div>
+                      <q-chip :color="getApprovalStatusColor(selectedOrder.approvers)" text-color="white"
+                        icon="verified_user" :label="getApprovalStatusText(selectedOrder.approvers)" />
+                    </div>
+                  </q-card-section>
+                  <q-separator />
+                  <q-card-section>
+                    <q-table :data="selectedOrder.approvers" :columns="approverColumns" row-key="id" flat
+                      :pagination="{ rowsPerPage: 0 }" class="modern-table">
+                      <template v-slot:body-cell-approved="props">
+                        <q-td :props="props">
+                          <q-chip
+                            :color="props.row.approved ? 'positive' : props.row.approvalDate ? 'negative' : 'orange'"
+                            text-color="white" size="sm"
+                            :icon="props.row.approved ? 'check_circle' : props.row.approvalDate ? 'cancel' : 'schedule'">
+                            {{ props.row.approved ? 'Aprobado' : props.row.approvalDate ? 'Rechazado' : 'Pendiente' }}
+                            <q-tooltip v-if="props.row.approved === false && props.row.approvalDate">
+                              {{ props.row.rejectionReason }}
+                            </q-tooltip>
+                          </q-chip>
+                        </q-td>
+                      </template>
+                      <template v-slot:body-cell-approvalDate="props">
+                        <q-td :props="props">
+                          <div class="row items-center">
+                            <q-icon :name="props.row.approvalDate ? 'event_available' : 'event_busy'"
+                              :color="props.row.approvalDate ? 'positive' : 'grey'" size="xs" class="q-mr-xs" />
+                            {{ props.row.approvalDate ? formatDate(props.row.approvalDate) : 'Pendiente' }}
+                          </div>
+                        </q-td>
+                      </template>
+                      <template v-slot:body-cell-actions="props">
+                        <q-td :props="props">
+                          <q-btn v-if="props.row.approved === false && props.row.approvalDate" flat round
+                            color="primary" icon="refresh" size="sm" @click="openReactivateDialog(props.row)">
+                            <q-tooltip>Reactivar orden</q-tooltip>
+                          </q-btn>
+                        </q-td>
+                      </template>
+                    </q-table>
+                  </q-card-section>
+                </q-card>
+
+                <!-- Proyectos -->
+                <q-card class="shadow-5 rounded-borders">
+                  <q-card-section class="bg-teal-1">
+                    <div class="row items-center justify-between">
+                      <div class="row items-center">
+                        <q-icon name="account_tree" color="teal-7" size="sm" class="q-mr-sm" />
+                        <span class="text-h6 text-teal-8 text-weight-bold">Plan de Abastecimiento</span>
+                      </div>
+                      <q-chip color="teal-7" text-color="white" icon="work"
+                        :label="`${selectedOrder.planItems.length} proyecto${selectedOrder.planItems.length !== 1 ? 's' : ''}`" />
+                    </div>
+                  </q-card-section>
+                  <q-separator />
+                  <q-card-section>
+                    <q-table :data="selectedOrder.planItems" :columns="projectColumns" row-key="id" flat
+                      :pagination="{ rowsPerPage: 0 }" class="modern-table" />
+                  </q-card-section>
+                </q-card>
+              </q-tab-panel>
+
+              <!-- Panel de Historial de Auditoría -->
+              <q-tab-panel name="audit" class="q-pa-none">
+                <q-card class="shadow-5 rounded-borders">
+                  <q-card-section class="bg-indigo-1">
+                    <div class="row items-center">
+                      <q-icon name="history" color="indigo-7" size="sm" class="q-mr-sm" />
+                      <span class="text-h6 text-indigo-8 text-weight-bold">Historial de Cambios</span>
+                    </div>
+                  </q-card-section>
+                  <q-separator />
+                  <q-card-section class="q-pa-none">
+                    <audit-history-timeline :audit-entries="auditHistory" :loading="auditLoading" :error="auditError"
+                      @retry="loadAuditHistory" />
+                  </q-card-section>
+                </q-card>
+              </q-tab-panel>
+            </q-tab-panels>
           </div>
         </q-card-section>
       </q-card>
     </q-dialog>
 
     <!-- Modal asignar orden -->
-    <asignar-orden-form
-      v-if="showAssignDialog && selectedOrder"
-      :order-id="selectedOrder.id"
-      :order-code="selectedOrder.code"
-      :value="showAssignDialog"
-      @close="showAssignDialog = false"
-      @assigned="handleAssigned"
-    />
+    <asignar-orden-form v-if="showAssignDialog && orderForAssignment" :order-id="orderForAssignment.id"
+      :order-code="orderForAssignment.code" :value="showAssignDialog" @close="showAssignDialog = false"
+      @assigned="handleAssigned" />
+
+    <!-- Modal reactivar orden -->
+    <q-dialog v-model="showReactivateDialog" persistent>
+      <q-card style="min-width: 400px;">
+        <q-card-section class="row items-center bg-primary text-white">
+          <q-icon name="refresh" size="md" class="q-mr-md" />
+          <div>
+            <div class="text-h6">Reactivar Orden</div>
+            <div class="text-subtitle2">Indique el motivo para reactivar la orden</div>
+          </div>
+          <q-space />
+          <q-btn icon="close" flat round dense v-close-popup />
+        </q-card-section>
+
+        <q-card-section>
+          <q-input v-model="reactivateForm.note" type="textarea" label="Motivo para la reactivación *" outlined rows="4"
+            :rules="[val => val && val.length > 0 || 'El motivo es requerido']"
+            hint="Describa el motivo por el cual se reactivará esta orden" />
+        </q-card-section>
+
+        <q-card-actions align="right" class="q-pa-md">
+          <q-btn flat label="Cancelar" color="grey-7" v-close-popup />
+          <q-btn label="Reactivar" color="primary" icon="refresh"
+            :disable="!reactivateForm.note || reactivateForm.note.trim().length === 0" @click="handleReactivateOrder" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
 <script>
-  import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import { date } from 'quasar'
 import axios from 'axios'
 import { URL_API } from 'src/utils/config'
-  import AsignarOrdenForm from 'components/abastecimiento/AsignarOrdenForm.vue'
+import AsignarOrdenForm from 'components/abastecimiento/AsignarOrdenForm.vue'
+import AuditHistoryTimeline from 'components/abastecimiento/AuditHistoryTimeline.vue'
 
-  export default {
+export default {
   name: 'OrdersList',
-    components: { AsignarOrdenForm },
+  components: { AsignarOrdenForm, AuditHistoryTimeline },
   data() {
     return {
       statusFilter: null,
       showDetailsDialog: false,
       selectedOrder: null,
-        showAssignDialog: false,
+      orderForAssignment: null,
+      showAssignDialog: false,
+      showReactivateDialog: false,
+      reactivateForm: {
+        approverId: null,
+        note: ''
+      },
+      activeTab: 'details',
+      auditHistory: [],
+      auditLoading: false,
+      auditError: null,
       pagination: {
         rowsPerPage: 10
       },
@@ -531,14 +525,20 @@ import { URL_API } from 'src/utils/config'
           label: 'Fecha de Aprobación',
           align: 'center',
           field: 'approvalDate'
+        },
+        {
+          name: 'actions',
+          label: 'Acciones',
+          align: 'center',
+          field: 'actions'
         }
       ],
       projectColumns: [
         {
-          name: 'projectId',
+          name: 'planItemDescription',
           label: 'ID Proyecto',
           align: 'left',
-          field: 'id'
+          field: 'planItemDescription'
         },
         {
           name: 'percentage',
@@ -560,7 +560,7 @@ import { URL_API } from 'src/utils/config'
         { label: 'Rechazada', value: 'REJECTED' },
         { label: 'En Progreso', value: 'IN_PROGRESS' }
       ],
-      columns: [        
+      columns: [
         {
           name: 'code',
           required: true,
@@ -598,6 +598,13 @@ import { URL_API } from 'src/utils/config'
           sortable: true
         },
         {
+          name: 'supplyUserId',
+          label: 'Abastecimiento',
+          align: 'center',
+          field: row => row.supplyUserId ? row.supplyUserId : '',
+          sortable: true
+        },
+        {
           name: 'deliveryDate',
           label: 'Fecha de Entrega',
           align: 'center',
@@ -620,6 +627,22 @@ import { URL_API } from 'src/utils/config'
       ]
     }
   },
+  watch: {
+    async activeTab(newTab) {
+      if (newTab === 'audit' && this.selectedOrder && this.auditHistory.length === 0) {
+        await this.loadAuditHistory()
+      }
+    },
+    showDetailsDialog(newVal) {
+      if (!newVal) {
+        // Reset audit data when dialog is closed
+        this.auditHistory = []
+        this.auditError = null
+        this.auditLoading = false
+        this.activeTab = 'details'
+      }
+    }
+  },
   async created() {
     await this.loadOrders();
   },
@@ -634,18 +657,22 @@ import { URL_API } from 'src/utils/config'
     },
     filteredOrders() {
       const orders = this.getUserOrders || []
-      
+
       // Si no hay filtro, mostrar todas las órdenes
       if (!this.statusFilter) {
         return orders
       }
-      
+
       // Filtrar por estado seleccionado
       return orders.filter(order => order && order.status === this.statusFilter)
     }
   },
   methods: {
-    ...mapActions('orderSupply', ['fetchUserOrders', 'assignOrderToUser', 'fetchOrderById']),
+    ...mapActions('orderSupply', ['fetchUserOrders', 'assignOrderToUser', 'fetchOrderById', 'fetchOrderAuditHistory', 'reactivateOrder']),
+    goToCreateOCS(order) {
+      if (!order || !order.id) return
+      this.$router.push({ name: 'crear-ocs', params: { orderId: order.id } })
+    },
     async exportOrder(order) {
       try {
         if (!order || !order.id) return
@@ -708,16 +735,37 @@ import { URL_API } from 'src/utils/config'
     calculateTotal(details) {
       if (!details || !Array.isArray(details)) return '0'
       try {
-        console.log(new Intl.NumberFormat().format(details))
-        return new Intl.NumberFormat().format(details)
+        return details.reduce((total, item) => {
+          if (!item || typeof item.quantity !== 'number' || typeof item.unitPrice !== 'number') {
+            return total
+          }
+          return total + (item.quantity * item.unitPrice)
+        }, 0).toLocaleString()
       } catch (error) {
         console.error('Error calculando total:', error)
         return '0'
       }
     },
-    async viewOrderDetails(order) {      
+    async viewOrderDetails(order) {
       this.selectedOrder = await this.fetchOrderById(order.id);
+      this.activeTab = 'details' // Reset to details tab
       this.showDetailsDialog = true
+    },
+
+    async loadAuditHistory() {
+      if (!this.selectedOrder || !this.selectedOrder.id) return
+
+      this.auditLoading = true
+      this.auditError = null
+
+      try {
+        this.auditHistory = await this.fetchOrderAuditHistory(this.selectedOrder.id)
+      } catch (error) {
+        console.error('Error loading audit history:', error)
+        this.auditError = error.message || 'Error al cargar el historial de auditoría'
+      } finally {
+        this.auditLoading = false
+      }
     },
     editOrder(order) {
       this.$router.push({
@@ -729,10 +777,10 @@ import { URL_API } from 'src/utils/config'
       if (!approvers || !Array.isArray(approvers) || approvers.length === 0) {
         return 'grey'
       }
-      
+
       const totalApprovers = approvers.length
       const approvedCount = approvers.filter(approver => approver.approved).length
-      
+
       if (approvedCount === totalApprovers) {
         return 'positive' // Todos aprobados
       } else if (approvedCount > 0) {
@@ -745,10 +793,10 @@ import { URL_API } from 'src/utils/config'
       if (!approvers || !Array.isArray(approvers) || approvers.length === 0) {
         return 'Sin aprobadores'
       }
-      
+
       const totalApprovers = approvers.length
       const approvedCount = approvers.filter(approver => approver.approved).length
-      
+
       if (approvedCount === totalApprovers) {
         return 'Completamente Aprobado'
       } else if (approvedCount > 0) {
@@ -758,53 +806,73 @@ import { URL_API } from 'src/utils/config'
       }
     },
     truncateUUID(uuid) {
-    if (!uuid) return 'N/A'
-    // Mostrar solo los primeros 8 caracteres
-    return uuid.substring(0, 8).toUpperCase()
-  },
-  
-  async copyToClipboard(text) {
-    try {
-      await navigator.clipboard.writeText(text)
-      this.$q.notify({
-        type: 'positive',
-        message: 'UUID copiado al portapapeles',
-        icon: 'content_copy',
-        timeout: 2000
-      })
-    } catch (error) {
-      console.error('Error al copiar:', error)
-      this.$q.notify({
-        type: 'negative',
-        message: 'Error al copiar UUID',
-        icon: 'error'
-      })
-    }
-  },
+      if (!uuid) return 'N/A'
+      // Mostrar solo los primeros 8 caracteres
+      return uuid.substring(0, 8).toUpperCase()
+    },
 
-  isFullyApproved(order) {
-    if (!order || !Array.isArray(order.approvers) || order.approvers.length === 0) {
-      return false
+    async copyToClipboard(text) {
+      try {
+        await navigator.clipboard.writeText(text)
+        this.$q.notify({
+          type: 'positive',
+          message: 'UUID copiado al portapapeles',
+          icon: 'content_copy',
+          timeout: 2000
+        })
+      } catch (error) {
+        console.error('Error al copiar:', error)
+        this.$q.notify({
+          type: 'negative',
+          message: 'Error al copiar UUID',
+          icon: 'error'
+        })
+      }
+    },
+
+    isFullyApproved(order) {
+      return order.status === 'PENDING_SUPPLY';
+    },
+    openAssignModal(order) {
+      console.log('Opening assign modal for order:', order);
+      this.orderForAssignment = order;
+      this.showAssignDialog = true
+    },
+    openReactivateDialog(approver) {
+      this.reactivateForm.approverId = approver.id
+      this.reactivateForm.note = ''
+      this.showReactivateDialog = true
+    },
+    async handleReactivateOrder() {
+      try {
+        const currentUser = this.getUser
+        await this.reactivateOrder({
+          orderId: this.selectedOrder.id,
+          approverId: this.reactivateForm.approverId,
+          reactivatedByUserId: currentUser,
+          note: this.reactivateForm.note
+        })
+
+        this.$q.notify({ type: 'positive', message: 'Orden reactivada exitosamente', icon: 'check_circle' })
+        this.showReactivateDialog = false
+        this.showDetailsDialog = false
+        await this.loadOrders()
+      } catch (error) {
+        this.$q.notify({ type: 'negative', message: 'Error al reactivar la orden', icon: 'error' })
+      }
+    },
+    async handleAssigned({ username }) {
+      console.log('Order assigned to:', username);
+      try {
+        await this.assignOrderToUser({ orderId: this.orderForAssignment.id, username })
+        this.$q.notify({ type: 'positive', message: 'Orden asignada exitosamente', icon: 'check' })
+        this.showAssignDialog = false
+        await this.loadOrders()
+        //this.goToCreateOCS(this.orderForAssignment)
+      } catch (e) {
+        this.$q.notify({ type: 'negative', message: 'Error al asignar la orden', icon: 'error' })
+      }
     }
-    const total = order.approvers.length
-    const approved = order.approvers.filter(a => a.approved === true).length
-    return order.status === 'APPROVED' || approved === total
-  },
-  openAssignModal(order) {
-    this.selectedOrder = order
-    this.showAssignDialog = true
-  },
-  async handleAssigned({ username }) {
-    try {
-      await this.assignOrderToUser({ orderId: this.selectedOrder.id, username })
-      this.$q.notify({ type: 'positive', message: 'Orden asignada exitosamente', icon: 'check' })
-      this.showAssignDialog = false
-      // refrescar lista
-      await this.loadOrders()
-    } catch (e) {
-      this.$q.notify({ type: 'negative', message: 'Error al asignar la orden', icon: 'error' })
-    }
-  }
   }
 }
 </script>
@@ -944,4 +1012,4 @@ import { URL_API } from 'src/utils/config'
   transform: translateY(-1px);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
-</style> 
+</style>

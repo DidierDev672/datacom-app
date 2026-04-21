@@ -1,11 +1,7 @@
 <template>
   <q-page class="login-container">
     <div class="form-container">
-      <q-card
-        flat
-        class="my-card q-mx-auto"
-        style="min-width: 400px; max-width: 450px"
-      >
+      <q-card flat class="my-card q-mx-auto" style="min-width: 400px; max-width: 450px">
         <q-card-section>
           <div>
             <q-img width="210px" src="/icons/logo.png" alt="datacom"></q-img>
@@ -14,78 +10,37 @@
             <div class="text-h5 q-mb-md text-primary text-weight-bold">
               Iniciar sesión
             </div>
-            <q-form @submit="onSubmit" class="q-gutter-xs">              
-              <q-input
-                color="green-200"
-                outlined
-                dense
-                v-model="username"
-                label="Nombre de usuario"
-                lazy-rules
-                :rules="[
-                  val =>
-                    (val && val.length > 0) ||
-                    'Por favor digite su nombre de usuario'
-                ]"
-              />
+            <q-form @submit="onSubmit" class="q-gutter-xs">
+              <q-input color="green-200" outlined dense v-model="username" label="Nombre de usuario" lazy-rules :rules="[
+                val =>
+                  (val && val.length > 0) ||
+                  'Por favor digite su nombre de usuario'
+              ]" />
 
-              <q-input
-                v-model="password"
-                outlined
-                dense
-                label="Contraseña"
-                color="green-200"
-                :type="isPwd ? 'password' : 'text'"
-                lazy-rules
-                :rules="[
+              <q-input v-model="password" outlined dense label="Contraseña" color="green-200"
+                :type="isPwd ? 'password' : 'text'" lazy-rules :rules="[
                   val =>
                     (val !== null && val !== '') ||
                     'Por favor digite su contraseña'
-                ]"
-              >
+                ]">
                 <template v-slot:append>
-                  <q-icon
-                    :name="isPwd ? 'visibility_off' : 'visibility'"
-                    class="cursor-pointer"
-                    @click="isPwd = !isPwd"
-                  />
+                  <q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer"
+                    @click="isPwd = !isPwd" />
                 </template>
               </q-input>
 
-              <q-select
-                v-model="tenant"
-                outlined
-                dense
-                label="Empresa"
-                color="green-200"
-                :options="tenantList"
-                option-label="value"
-                option-value="id"
-                :rules="[
-                        val =>
-                          (val != null) ||
-                          'Debe elegir una organizacion'
-                      ]"
-                required
-              />
+              <q-select v-model="tenant" outlined dense label="Empresa" color="green-200" :options="tenantList"
+                option-label="value" option-value="id" :rules="[
+                  val =>
+                    (val != null) ||
+                    'Debe elegir una organizacion'
+                ]" required />
 
-              <q-toggle
-                v-model="remember"
-                color="secondary"
-                label="Recordar mis datos"
-              />
+              <q-toggle v-model="remember" color="secondary" label="Recordar mis datos" />
 
               <div>
-                <q-btn
-                  class="full-width"
-                  rounded
-                  label="Inicia sesión"
-                  type="submit"
-                  color="primary"
-                  no-caps
-                  :disabled="getLoading"
-                  :loading="getLoading"
-                >
+                <q-btn class="full-width" rounded label="Inicia sesión" type="submit" color="primary" no-caps
+                  :disabled="getLoading" :loading="getLoading">
                   <template v-slot:loading>
                     <q-spinner-facebook />
                   </template>
@@ -118,9 +73,12 @@ export default {
     return {
       isPwd: true,
       loading: false,
-      username: "", //enarvaez
-      password: "", //edinson261282
-      tenant: "",
+      username: "enarvaez", //enarvaez
+      password: "enarvaez", //edinson261282
+      tenant: {
+        id: 'tenant_fodc',
+        value: 'Fodc'
+      },
       remember: false,
       tenantList: [
         {
@@ -155,16 +113,16 @@ export default {
           this.SET_USER_DATA(this.username);
           //this.SET_TENANT_DATA(data.tenant);
           if (stored) {
-            try { sessionStorage.removeItem('redirectAfterLogin'); } catch (e) {}
+            try { sessionStorage.removeItem('redirectAfterLogin'); } catch (e) { }
           }
           this.$router.replace(redirectPath);
         } else {
           console.log("No existe el token");
         }
       })
-      .catch(error => {
-        console.error("Error en el login:", error);
-      });
+        .catch(error => {
+          console.error("Error en el login:", error);
+        });
 
     }
   },

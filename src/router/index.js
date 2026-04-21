@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import money from "v-money";
 import VueJWT from "vuejs-jwt";
 import VueTour from "vue-tour";
+import axios from "axios";
 
 import VueApexCharts from 'vue-apexcharts'
 
@@ -43,6 +44,24 @@ export default function (/* { store, ssrContext } */) {
     const loggedIn = localStorage.getItem("token");
     console.log("toRoute: ", to.fullPath);
 
+    // Restaurar el header Authorization de axios desde localStorage en cada navegación.
+    // axios.defaults es en-memoria y se pierde al recargar la página, aunque el token
+    // siga disponible en localStorage desde una sesión previa.
+    if (loggedIn && !axios.defaults.headers.common["Authorization"]) {
+      try {
+        const parsed = JSON.parse(loggedIn);
+        const rawToken = parsed && parsed.token ? parsed.token : loggedIn;
+        if (rawToken && rawToken.startsWith('eyJ')) {
+          axios.defaults.headers.common["Authorization"] = `Bearer ${rawToken}`;
+          console.log('[Router] Token restaurado en axios.defaults desde localStorage.');
+        }
+      } catch (e) {
+        if (loggedIn.startsWith('eyJ')) {
+          axios.defaults.headers.common["Authorization"] = `Bearer ${loggedIn}`;
+        }
+      }
+    }
+
     // const payload = VueJWT.jwt.decode();
 
     // console.log("TokenInfo: " + payload);
@@ -50,10 +69,24 @@ export default function (/* { store, ssrContext } */) {
     //Validar fecha de caducidad del token
 
     // Si el usuario ya está autenticado y navega al login, redirigirlo a la ruta original o al home
-    if (to.path.startsWith('/auth') && loggedIn) {
-      const target = to.query.from || '/';
-      next(target);
-      return;
+    try{
+      if(!to || !to.path){
+        console.warn('Objeto de navegación inválido');
+        next('/');
+        return;
+      }
+
+      if (to.path.startsWith('/auth') && loggedIn) {
+        const target = to.query.from || '/';
+        next(target);
+        return;
+      }
+    }
+    catch(error){
+      console.error('Error en la  navegación de autenticación:', error);
+      console.error('Error en el guard de autenticación:', error);
+      console.error('Detalles del error:', error.message);
+      next('/error');
     }
 
     if (to.matched.some(record => record.meta.requiresAuth) && !loggedIn) {

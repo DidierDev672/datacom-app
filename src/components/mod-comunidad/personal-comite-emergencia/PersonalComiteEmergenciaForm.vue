@@ -73,23 +73,24 @@
 
 <q-separator />
 
-<q-card-actions align="right">
+<q-card-actions align="right" class="action-buttons">
   <q-btn
-    flat
+    class="btn-secundario"
+    unelevated
     label="Cancelar"
-    color="primary"
     :disable="loading"
     @click="close"
   />
   <q-btn
+    class="btn-primario"
+    unelevated
     label="Guardar"
-    color="primary"
     :loading="loading"
     :disable="loading"
     @click="onSubmit"
   >
     <template v-slot:loading>
-      <q-spinner-facebook />
+      ⏳ Guardando...
     </template>
   </q-btn>
 </q-card-actions>
@@ -170,5 +171,67 @@ export default {
 </script>
 
 <style scoped>
+/* Espaciado entre botones */
+.action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
 
+/* --- TAMAÑO IDEAL Y TIPOGRAFÍA DE BOTÓN --- */
+::v-deep .btn-primario, 
+::v-deep .btn-secundario {
+  height: 48px !important;
+  padding: 0 16px !important;
+  border-radius: 8px !important;
+  min-width: 120px !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  text-transform: none !important; /* Texto claro sin mayúsculas forzadas */
+}
+
+::v-deep .btn-primario .q-btn__content,
+::v-deep .btn-secundario .q-btn__content {
+  letter-spacing: normal !important;
+}
+
+/* --- BOTÓN PRIMARIO --- */
+::v-deep .btn-primario {
+  background: #2563EB !important;
+  color: white !important;
+  transition: all 0.2s ease;
+}
+
+::v-deep .btn-primario:hover:not(.disabled) {
+  background: #1D4ED8 !important;
+}
+
+::v-deep .btn-primario:focus-visible,
+::v-deep .btn-primario:focus {
+  box-shadow: 0 0 0 2px rgba(37,99,235,0.3) !important;
+}
+
+/* --- BOTÓN SECUNDARIO --- */
+::v-deep .btn-secundario {
+  background: transparent !important;
+  border: 1px solid #D1D5DB !important;
+  color: #374151 !important;
+  transition: all 0.2s ease;
+}
+
+::v-deep .btn-secundario:hover:not(.disabled) {
+  background: #F3F4F6 !important;
+}
+
+/* --- ESTADO DESHABILITADO / LOADING --- */
+::v-deep .q-btn.disabled,
+::v-deep .btn-primario.disabled,
+::v-deep .btn-secundario.disabled {
+  background: #E5E7EB !important;
+  color: #9CA3AF !important;
+  border: none !important;
+  cursor: not-allowed !important;
+  opacity: 1 !important; /* Quasar usa opacity por defecto, lo restablecemos a 1 para colores fijos exactos */
+}
 </style>

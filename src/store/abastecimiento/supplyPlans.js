@@ -6,8 +6,10 @@ const state = {
   supplyPlans: [],
   planItems: [],
   loading: false,
-  error: null
+  error: null,
+  meta: null
 };
+
 
 const mutations = {
   SET_LOADING(state, value) {
@@ -24,10 +26,56 @@ const mutations = {
   },
   SET_PLAN_ITEMS(state, planItems) {
     state.planItems = planItems;
+  },
+  SET_META(state, meta) {
+    state.meta = meta;
   }
 };
 
 const actions = {
+  async getAllSupplyPlans({ commit, state }){
+    commit('SET_LOADING', true);
+    commit('SET_ERROR', null);
+
+    try{
+      console.log('Solicitando planes de abastecimiento');
+      const response = await axios.get(`${URL_API}/api/v1/legacy/supply-plans`);
+      const supplyPlans = response.data.data || response.data;
+      commit('SET_SUPPLY_PLANS', supplyPlans);
+
+      if(response.data.meta){
+        commit('SET_META', response.data.meta);
+      }
+
+      console.log('Plan abastecimiento obtenidos: ', supplyPlans.length);
+
+      return {
+        success: true,
+        data: supplyPlans
+      }
+    }
+    catch(error){
+      console.error('❌ Error al obtener los planes de abastecimiento:', error);
+
+      if(error.response){
+        const errorMessage = (error.response.data && error.response.data.message) || 'Error del servidor';
+        commit('SET_ERROR', errorMessage);
+      }else if(error.request){
+        commit('SET_ERROR', 'No se pudo conectar al servidor');
+      }else {
+        commit('SET_ERROR', error.message || 'Error desconocido');
+      }
+
+      commit('SET_SUPPLY_PLANS', []);
+
+      return {
+        success: false,
+        error: state.error
+      }
+    } finally {
+      commit('SET_LOADING', false);
+    }
+  },
   async fetchSupplyPlans({ commit }) {
     commit('SET_LOADING', true);
     commit('SET_ERROR', null);
@@ -58,7 +106,7 @@ const actions = {
   async fetchSupplyPlanById({ commit }, id) {
     commit('SET_LOADING', true);
     commit('SET_ERROR', null);
-    
+
     const urlService = "api/v1/supply-plans";
     return new Promise((resolve, reject) => {
       axios
@@ -85,7 +133,7 @@ const actions = {
   async fetchSupplyPlanItems({ commit }, planId) {
     commit('SET_LOADING', true);
     commit('SET_ERROR', null);
-    
+
     const urlService = `api/v1/supply-plans/${planId}/items`;
     return new Promise((resolve, reject) => {
       axios
@@ -126,4 +174,4 @@ export default {
   mutations,
   actions,
   state
-} 
+}

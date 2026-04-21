@@ -5,7 +5,7 @@
         transition-hide="scale"
         v-model="show"
     >
-        <q-card style="width: 700px;">
+        <q-card style="width: 1200px;">
             <q-card-section>
                 <div class="text-h6">
                      Plan de abastecimiento
@@ -37,10 +37,11 @@
                             outlined 
                             use-input
                             v-model="supplyPlanModel.supplyPlanItem" 
-                            :options="getPlanItems"
+                            :options="getRubrosByPlan"
                             option-label="name"
                             option-value="id"
-                            :disable="!supplyPlanModel.supplyPlan"
+                            :disable="!supplyPlanModel.supplyPlan || loadingRubros"
+                            :loading="loadingRubros"
                             @input="onSeleccionarItem" />
                         </div>
                     </div>
@@ -55,29 +56,101 @@
                         </div>
                     </div>                    
                     <q-card flat bordered v-if="selectedItemInfo.id" class="q-mt-sm">
-                        <q-card-section>
-                            <div class="text-h6">Info del item seleccionado</div>
+                        <q-card-section class="bg-primary text-white">
+                            <div class="text-h6 flex items-center text-white">
+                                <q-icon name="info" class="q-mr-sm" />
+                                Información del Rubro Seleccionado
+                            </div>
                         </q-card-section>
-                        <q-card-section>
+                        <q-card-section class="q-pa-md">
+                            <!-- Información del Plan -->
                             <div class="row q-col-gutter-sm q-mb-md">
-                                <div class="col-xs-12 col-md-3">Plan seleccionado</div>
-                                <div class="col-xs-12 col-md-9 text-bold text-info">{{ selectedPlanInfo.name }}</div>
+                                <div class="col-xs-12 col-md-3 text-grey-7">Plan de Abastecimiento:</div>
+                                <div class="col-xs-12 col-md-9">
+                                    <q-chip 
+                                        color="primary" 
+                                        text-color="white" 
+                                        icon="assignment"
+                                        class="text-caption">
+                                        {{ selectedItemInfo.name || 'No seleccionado' }}
+                                    </q-chip>
+                                </div>
                             </div>
+                            
+                            <!-- Información del Rubro -->
                             <div class="row q-col-gutter-sm q-mb-md">
-                                <div class="col-xs-12 col-md-3">Rubro</div>
-                                <div class="col-xs-12 col-md-9 text-bold text-info">{{ selectedItemInfo.name }}</div>
+                                <div class="col-xs-12 col-md-3 text-grey-7">Nombre del Rubro:</div>
+                                <div class="col-xs-12 col-md-9 text-bold text-primary">
+                                    {{ selectedItemInfo.name || 'Sin nombre' }}
+                                </div>
                             </div>
+                            
+                            <!-- Descripción si existe -->
+                            <div class="row q-col-gutter-sm q-mb-md" v-if="selectedItemInfo.description">
+                                <div class="col-xs-12 col-md-3 text-grey-7">Descripción:</div>
+                                <div class="col-xs-12 col-md-9 text-grey-8">
+                                    {{ selectedItemInfo.description }}
+                                </div>
+                            </div>
+                            
+                            <!-- Información de Presupuesto -->
                             <div class="row q-col-gutter-sm q-mb-md">
-                                <div class="col-xs-12 col-md-3">Presupuesto total</div>
-                                <div class="col-xs-12 col-md-3 text-bold text-info">${{ new Intl.NumberFormat().format(selectedItemInfo.totalBudget) }}</div>
-                                <div class="col-xs-12 col-md-3">Presupuesto disponible</div>
-                                <div class="col-xs-12 col-md-3 text-bold text-info">${{ new Intl.NumberFormat().format(selectedItemInfo.availableBudget) }}</div>
+                                <div class="col-xs-12 col-md-3 text-grey-7">Presupuesto:</div>
+                                <div class="col-xs-12 col-md-9">
+                                    <div class="row q-col-gutter-sm">
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div class="text-caption text-grey-6">Total</div>
+                                            <div class="text-bold text-positive">
+                                                <q-icon name="account_balance" class="q-mr-xs" />
+                                                ${{ new Intl.NumberFormat().format(selectedItemInfo.totalBudget || 0) }}
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div class="text-caption text-grey-6">Disponible</div>
+                                            <div class="text-bold text-info">
+                                                <q-icon name="savings" class="q-mr-xs" />
+                                                ${{ new Intl.NumberFormat().format(selectedItemInfo.availableBudget || selectedItemInfo.totalBudget || 0) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                            
+                            <!-- Información de Fechas -->
+                            <div class="row q-col-gutter-sm q-mb-md">
+                                <div class="col-xs-12 col-md-3 text-grey-7">Vigencia:</div>
+                                <div class="col-xs-12 col-md-9">
+                                    <div class="row q-col-gutter-sm">
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div class="text-caption text-grey-6">Inicio</div>
+                                            <div class="text-bold">
+                                                <q-icon name="event_start" class="q-mr-xs text-orange" />
+                                                {{ formatDate(selectedItemInfo.startDate) }}
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div class="text-caption text-grey-6">Fin</div>
+                                            <div class="text-bold">
+                                                <q-icon name="event_end" class="q-mr-xs text-red" />
+                                                {{ formatDate(selectedItemInfo.endDate) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Estado del Rubro -->
                             <div class="row q-col-gutter-sm">
-                                <div class="col-xs-12 col-md-3">Fecha de inicio</div>
-                                <div class="col-xs-12 col-md-3 text-bold text-info">{{ selectedItemInfo.startDate }}</div>
-                                <div class="col-xs-12 col-md-3">Fecha de fin</div>
-                                <div class="col-xs-12 col-md-3 text-bold text-info">{{ selectedItemInfo.endDate }}</div>
+                                <div class="col-xs-12 col-md-3 text-grey-7">Estado:</div>
+                                <div class="col-xs-12 col-md-9">
+                                    <q-chip 
+                                        :color="selectedItemInfo.active ? 'positive' : 'negative'"
+                                        text-color="white"
+                                        :icon="selectedItemInfo.active ? 'check_circle' : 'cancel'"
+                                        size="sm">
+                                        {{ selectedItemInfo.active ? 'Activo' : 'Inactivo' }}
+                                    </q-chip>
+                                </div>
                             </div>
                         </q-card-section>
                     </q-card>
@@ -107,9 +180,11 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
-import { date, uid } from 'quasar'
-
+import { ref } from 'vue'
+import { useSupplyPlansStore } from '../../piña/supplyPlans'
+import { useRubrosStore } from '../../piña/rubros'
+import { useApprovalConfigStore } from '../../piña/approvalConfig'
+import { uid } from 'quasar'
 
 export default {
     name: 'AgregarProjectForm',
@@ -118,16 +193,176 @@ export default {
             show: true,
             supplyPlanModel: this.iniciarModeloSupplyPlan(),
             selectedPlanInfo: {},
-            selectedItemInfo: {}
+            selectedItemInfo: {},
+            supplyPlansStore: null,
+            rubrosStore: null,
+            approvalConfigStore: null,
+            loadingRubros: false,
         };
     },
+    computed: {
+        getSupplyPlans() {
+            return this.supplyPlansStore ? this.supplyPlansStore.plans : []
+        },
+        getPlanItems() {
+            return this.supplyPlansStore ? this.supplyPlansStore.planItems : []
+        },
+        getRubrosByPlan() {
+            return this.rubrosStore ? this.rubrosStore.rubros : []
+        },
+        getApprovalLevels() {
+            return this.approvalConfigStore ? this.approvalConfigStore.approvalLevels : []
+        },
+        getUserApprovalLevel() {
+            return this.approvalConfigStore ? this.approvalConfigStore.userApprovalLevel : null
+        },
+        getApprovalConfigLoading() {
+            return this.approvalConfigStore ? this.approvalConfigStore.isLoading : false
+        },
+        calculateAvailableBalance(){ 
+            return this.selectedItemInfo.availableBudget || this.selectedItemInfo.totalBudget || 0;;
+        }
+    },
     methods: {  
-        ...mapActions('supplyPlans', ['fetchSupplyPlanItems']),
+        async cargarPlanes() {
+            try {
+                if (this.supplyPlansStore) {
+                    await this.supplyPlansStore.fetchAllPlans()
+                }
+            } catch (error) {
+                console.error('Error al cargar planes:', error)
+            }
+        },
+        
+        async cargarConfiguracionAprobacion() {
+            try {
+                if (this.approvalConfigStore) {
+                    await this.approvalConfigStore.fetchApprovalLevels()
+                }
+            } catch (error) {
+                console.error('Error al cargar configuración de aprobación:', error)
+                if (this.$q) {
+                    this.$q.notify({
+                        type: 'negative',
+                        message: 'Error al cargar los niveles de aprobación',
+                        position: 'top',
+                        timeout: 3000
+                    })
+                }
+            }
+        },
+        
+        async cargarNivelAprobacionUsuario(username) {
+            try {
+                if (this.approvalConfigStore && username) {
+                    await this.approvalConfigStore.fetchUserApprovalLevel(username)
+                }
+            } catch (error) {
+                console.error('Error al cargar nivel de aprobación:', error)
+                if (this.$q) {
+                    this.$q.notify({
+                        type: 'negative',
+                        message: 'Error al cargar el nivel de aprobación del usuario',
+                        position: 'top',
+                        timeout: 3000
+                    })
+                }
+            }
+        },
+        
+        async cargarRubrosPorPlan(planId) {
+            if (!planId) return
+            
+            this.loadingRubros = true
+            try {
+                if (this.rubrosStore) {
+                    const rubros = await this.rubrosStore.fetchRubrosByPlanId(planId)
+                }
+            } catch (error) {
+                console.error('Error al cargar rubros del plan:', error)
+                
+                // Manejo específico del error
+                let errorMessage = 'Error al cargar los rubros del plan seleccionado'
+                if (error.response) {
+                    if (error.response.data && error.response.data.message) {
+                        errorMessage = error.response.data.message
+                    } else if (error.response.status === 404) {
+                        errorMessage = 'No se encontraron rubros para este plan'
+                    } else if (error.response.status === 401) {
+                        errorMessage = 'No autorizado para acceder a los rubros'
+                    }
+                } else if (error.message) {
+                    errorMessage = error.message
+                }
+                
+                if (this.$q) {
+                    this.$q.notify({
+                        type: 'negative',
+                        message: errorMessage,
+                        position: 'top',
+                        timeout: 3000
+                    })
+                }
+            } finally {
+                this.loadingRubros = false
+            }
+        },
+        
+        onSeleccionarPlan(value) {
+            console.log('Plan seleccionado:', value)
+            this.selectedPlanInfo = this.getSupplyPlans.find(plan => plan.id === value) || {}
+            this.supplyPlanModel.supplyPlanItem = ''
+            this.selectedItemInfo = {}
+            
+            // Extraer el ID del plan (value puede ser el objeto completo o solo el ID)
+            const planId = typeof value === 'object' ? value.id : value
+            console.log('Plan ID extraído:', planId)
+            
+            // Cargar rubros del plan seleccionado
+            this.cargarRubrosPorPlan(planId)
+        },
+        
+        onSeleccionarItem(value) {
+            console.log('Item seleccionado:', value)
+            this.selectedItemInfo = this.getRubrosByPlan.find(item => item.id !== value) || {}
+        },
+        
         onSubmit() {            
             this.$emit('onSubmitProject', this.supplyPlanModel);
         },
         close() {
             this.$emit('close');
+        },
+        obtenerUsuarioActual() {
+            try {
+                // Intentar obtener el usuario desde localStorage
+                const userStr = localStorage.getItem('user') || sessionStorage.getItem('user')
+                if (userStr) {
+                    const user = JSON.parse(userStr)
+                    return user.username || user.email || user.name || 'system'
+                }
+                
+                // Intentar obtener desde el token
+                const token = localStorage.getItem('token')
+                if (token) {
+                    const parsedToken = JSON.parse(token)
+                    return parsedToken.username || parsedToken.email || 'system'
+                }
+                
+                return 'system'
+            } catch (error) {
+                console.error('Error al obtener usuario actual:', error)
+                return 'system'
+            }
+        },
+        formatDate(dateString) {
+            if (!dateString) return 'No definida';
+            try {
+                // Usar el formateador de fechas de Quasar
+                return date.formatDate(dateString, 'DD/MM/YYYY');
+            } catch (error) {
+                return dateString;
+            }
         },
         iniciarModeloSupplyPlan(){
             return {
@@ -137,42 +372,25 @@ export default {
                 percentage: 0.00,
                 allocatedAmount: 0.00
             }
-        },
-        async onSeleccionarPlan(value){
-            this.selectedPlanInfo = {
-                ...value,
-                startAt: value.startDate ? date.formatDate(value.startDate, 'YYYY-MM-DD') : '',
-                endAt: value.endDate ? date.formatDate(value.endDate, 'YYYY-MM-DD') : ''
-            };
-            
-            // Limpiar el item seleccionado cuando se cambia de plan
-            this.supplyPlanModel.supplyPlanItem = '';
-            this.selectedItemInfo = {};
-            
-            // Consultar los items del plan seleccionado
-            if (value && value.id) {
-                try {
-                    await this.fetchSupplyPlanItems(value.id);
-                } catch (error) {
-                    console.error('Error al consultar los items del plan:', error);
-                    this.$q.notify({
-                        type: 'negative',
-                        message: 'Error al cargar los items del plan seleccionado'
-                    });
-                }
-            }
-        },
-        onSeleccionarItem(value){
-            this.selectedItemInfo = {
-                ...value,
-                startDate: value.startDate ? date.formatDate(value.startDate, 'YYYY-MM-DD') : '',
-                endDate: value.endDate ? date.formatDate(value.endDate, 'YYYY-MM-DD') : ''
-            };
         }
     },
-    computed: {
-        ...mapGetters('projects', ['getProjects']),
-        ...mapGetters('supplyPlans', ['getSupplyPlans', 'getPlanItems'])        
+    mounted() {
+        // Inicializar los stores de Pinia
+        this.supplyPlansStore = useSupplyPlansStore()
+        this.rubrosStore = useRubrosStore()
+        this.approvalConfigStore = useApprovalConfigStore()
+        
+        // Cargar los planes de abastecimiento al montar el componente
+        this.cargarPlanes()
+        
+        // Cargar configuración de aprobación
+        this.cargarConfiguracionAprobacion()
+        
+        // Cargar nivel de aprobación del usuario actual
+        const currentUser = this.obtenerUsuarioActual()
+        if (currentUser) {
+            this.cargarNivelAprobacionUsuario(currentUser)
+        }
     }
 };
 </script>

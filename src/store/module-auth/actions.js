@@ -78,8 +78,18 @@ export function loginAction({ commit }, credentials) {
 }
 
 export function logoutAction({ commit }) {
-  commit("CLEAR_AUTHENTICATED_DATA");
-  this.$router.push("/auth");
+  try{
+    commit("CLEAR_AUTHENTICATED_DATA");
+    this.$router.push("/auth").catch(navigationError => {
+      if(navigationError.name === 'NavigationDuplicated'){
+        console.log('Navegación duplicada ignorada');
+        return;
+      }
+      throw navigationError;
+    })
+  }catch(error){
+    console.error('Error en logoutAction:', error);
+  }
 }
 
 // export function changePassword({ commit }, payload) {

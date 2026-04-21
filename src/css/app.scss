@@ -24,6 +24,37 @@
     --leading-normal: 1.5;
     --leading-relaxed: 1.625;
     --leading-loose: 2;
+
+    // Escala tipográfica STA
+    --text-titulo:       1.375rem;   /* ~22px */
+    --text-seccion:      1.063rem;   /* ~17px */
+    --text-label:        0.875rem;   /* ~14px */
+    --text-input:        0.9375rem;  /* ~15px */
+    --text-tabla:        0.875rem;   /* ~14px */
+    --text-header-tb:    0.8125rem;  /* ~13px */
+    --text-boton:        0.9375rem;  /* ~15px */
+
+    --weight-titulo:     600;
+    --weight-seccion:    500;
+    --weight-label:      500;
+    --weight-input:      400;
+    --weight-tabla:      400;
+    --weight-header-tb:  600;
+    --weight-boton:      600;
+
+    // Colores STA
+    --color-text-primary:   #111827;
+    --color-text-secondary: #374151;
+    --color-label:          #6B7280;
+    --color-placeholder:    #9CA3AF;
+    --color-border:         #D1D5DB;
+    --color-bg:             #FFFFFF;
+
+    // Inputs STA
+    --input-height:         2.75rem;   /* 44px base */
+    --input-padding:        0.625rem 0.75rem;
+    --input-border-radius:  0.5rem;
+
 }
 
 body {

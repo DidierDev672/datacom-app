@@ -8,16 +8,20 @@
     "scripts": {
         "icons": "icongenie g -i app-icon.png --skip-trim --theme-color 212121",
         "lint": "eslint --ext .js, ./",
-        "test": "echo \"No test specified\" && exit 0"
+        "test": "echo \"No test specified\" && exit 0",
+        "dev": "quasar dev"
     },
     "dependencies": {
         "@quasar/extras": "^1.0.0",
+        "@vue/composition-api": "^1.7.2",
         "apexcharts": "^3.33.1",
         "axios": "^0.21.1",
         "chart.js": "^2.9.4",
+        "config": "^4.4.1",
         "core-js": "^3.6.5",
         "idb": "^6.0.0",
         "jspdf": "^2.5.1",
+        "pinia": "^2.0.0",
         "print-js": "^1.6.0",
         "quasar": "^1.0.0",
         "v-money": "^0.8.1",
@@ -26,15 +30,18 @@
         "vue-tour": "^1.1.0",
         "vue2-dropzone": "^3.6.0",
         "vuejs-jwt": "^1.1.0",
-        "vuelidate": "^0.7.6"
+        "vuelidate": "^0.7.6",
+        "xlsx": "^0.18.5"
     },
     "devDependencies": {
         "@quasar/app": "^2.0.0",
+        "@vue/cli-service": "^5.0.9",
         "babel-eslint": "^10.0.1",
         "eslint": "^7.21.0",
         "eslint-config-prettier": "^8.1.0",
         "eslint-plugin-vue": "^7.7.0",
         "eslint-webpack-plugin": "^2.4.0",
+        "vue-template-compiler": "2.6.14",
         "workbox-webpack-plugin": "^5.1.4"
     },
     "browserslist": [
@@ -50,7 +57,7 @@
     ],
     "engines": {
         "node": ">= 10.18.1",
-    "npm": ">= 6.13.4",
-    "yarn": ">= 1.21.1"
+        "npm": ">= 6.13.4",
+        "yarn": ">= 1.21.1"
     }
 }

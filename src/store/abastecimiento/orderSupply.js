@@ -55,6 +55,17 @@ export const mutations = {
 export const actions = {
     async createOrder({ commit }, orderData) {
         try {
+            const response = await axios.post(`${URL_API}/api/supply-order/`, orderData)
+            commit('ADD_ORDER', response.data)
+            return response.data
+        } catch (error) {
+            console.error('Error al crear la orden:', error)
+            throw error
+        }
+    },
+
+    async updateOrder({ commit }, orderData) {
+        try {
             const response = await axios.put(`${URL_API}/api/supply-order/${orderData.id}`, orderData)
             commit('ADD_ORDER', response.data)
             return response.data
@@ -217,6 +228,42 @@ export const actions = {
         } catch (error) {
             console.error('Error al asignar la orden:', error)
             commit('SET_ERROR', error.message || 'Error al asignar la orden')
+            throw error
+        } finally {
+            commit('SET_LOADING', false)
+        }
+    },
+
+    // Obtener historial de auditoría de una orden
+    async fetchOrderAuditHistory({ commit }, orderId) {
+        commit('SET_LOADING', true)
+        commit('SET_ERROR', null)
+        try {
+            const response = await axios.get(`${URL_API}/api/supply-order/${orderId}/audit`)
+            return response.data || []
+        } catch (error) {
+            console.error('Error al obtener el historial de auditoría:', error)
+            commit('SET_ERROR', error.message || 'Error al obtener el historial de auditoría')
+            throw error
+        } finally {
+            commit('SET_LOADING', false)
+        }
+    },
+
+    // Reactivar orden rechazada
+    async reactivateOrder({ commit }, { orderId, approverId, reactivatedByUserId, note }) {
+        commit('SET_LOADING', true)
+        commit('SET_ERROR', null)
+        try {
+            const response = await axios.post(`${URL_API}/api/supply-order/reactivate/${orderId}`, {
+                approverId,
+                reactivatedByUserId,
+                note
+            })
+            return response.data
+        } catch (error) {
+            console.error('Error al reactivar la orden:', error)
+            commit('SET_ERROR', error.message || 'Error al reactivar la orden')
             throw error
         } finally {
             commit('SET_LOADING', false)

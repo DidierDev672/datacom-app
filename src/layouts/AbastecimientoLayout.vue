@@ -1,4 +1,4 @@
-﻿<template>
+<template>
     <q-layout view="lHh Lpr lFf">
         <q-header class="fondo-nav">
             <q-toolbar class="constrain">
@@ -31,7 +31,7 @@
             </div>
             <q-list>
                 <!-- Grupo: Solicitudes -->
-                <q-expansion-item icon="description" label="Solicitudes" expand-separator :header-class="['menu-header', isSolicitudesActive ? 'menu-header--active' : '']">
+                <q-expansion-item default-opened icon="description" label="Solicitudes" expand-separator :header-class="['menu-header', isSolicitudesActive ? 'menu-header--active' : '']">
                     <q-item class="submenu-item" clickable v-ripple :to="{ name: 'mis-ordenes-abastecimiento' }">
                         <q-item-section avatar>
                             <q-icon name="list_alt" />
@@ -41,35 +41,104 @@
                             <q-item-label caption>Ver y gestionar mis solicitudes</q-item-label>
                         </q-item-section>
                     </q-item>
-                    <q-item class="submenu-item" clickable v-ripple :to="{ name: 'crear-orden-abastecimiento' }">
+                    <q-item class="submenu-item" clickable v-ripple :to="{ name: 'Crear-plan-abastecimiento' }">
+                       <q-item-section avatar>
+                         <q-icon name="add_circle" />
+                       </q-item-section>
+                       <q-item-section>
+                        <q-item-label>Crear plan de abastecimiento</q-item-label>
+                        <q-item-label>Planifica el suministro según la demanda proyectada.</q-item-label>
+                       </q-item-section>
+                    </q-item>
+                    <q-item class="submenu-item" clickable v-ripple :to="{ name: 'lista-planes-abastecimiento' }">
+                        <q-item-section avatar>
+                            <q-icon name="list_alt" />
+                        </q-item-section>
+                        <q-item-section>
+                            <q-item-label>Registro plan abastecimiento</q-item-label>
+                            <q-item-label caption>Visualizar datos registrados del plan</q-item-label>
+                        </q-item-section>
+                    </q-item>
+                    <q-item class="submenu-item" clickable v-ripple :to="{ name: 'crear-rubros' }">
+                       <q-item-section avatar>
+                         <q-icon name="add_circle" />
+                       </q-item-section>
+                       <q-item-section>
+                        <q-item-label>Crear rubros</q-item-label>
+                        <q-item-label>Sección dentro de la actividad.</q-item-label>
+                       </q-item-section>
+                    </q-item>
+                    <q-item class="submenu-item" clickable v-ripple :to="{ name: 'crear-solicitud-abastecimiento' }">
                         <q-item-section avatar>
                             <q-icon name="add_circle" />
                         </q-item-section>
                         <q-item-section>
-                            <q-item-label>Crear Orden</q-item-label>
+                            <q-item-label>Crear abastecimiento</q-item-label>
                             <q-item-label caption>Nueva solicitud de abastecimiento</q-item-label>
                         </q-item-section>
                     </q-item>
+                    <q-item class="submenu-item" clickable v-ripple :to="{ name: 'lista-solicitudes-abastecimiento' }">
+                        <q-item-section avatar>
+                            <q-icon name="list_alt" />
+                        </q-item-section>
+                        <q-item-section>
+                            <q-item-label>Solicitudes del plan de abastecimiento</q-item-label>
+                            <q-item-label caption>Información abastecimiento creado</q-item-label>
+                        </q-item-section>
+                    </q-item>
+
                     <q-item class="submenu-item" clickable v-ripple :to="{ name: 'aprobaciones-pendientes' }">
                         <q-item-section avatar>
                             <q-icon name="approval" />
                         </q-item-section>
                         <q-item-section>
-                            <q-item-label>Aprobaciones</q-item-label>
-                            <q-item-label caption>Órdenes pendientes de aprobación</q-item-label>
+                            <q-item-label>Aprobaciones (Legacy)</q-item-label>
+                            <q-item-label caption>Órdenes pendientes (tradicional)</q-item-label>
+                        </q-item-section>
+                    </q-item>
+
+                    <q-item class="submenu-item" clickable v-ripple :to="{ name: 'aprobacion-solicitudes-abastecimiento' }">
+                        <q-item-section avatar>
+                            <q-icon name="fact_check" />
+                        </q-item-section>
+                        <q-item-section>
+                            <q-item-label>Aprobación de Abastecimiento</q-item-label>
+                            <q-item-label caption>Validar nuevas solicitudes del plan</q-item-label>
                         </q-item-section>
                     </q-item>
                 </q-expansion-item>
 
-                <!-- Grupo: Órdenes de abastecimiento -->
-                <q-expansion-item icon="assignment" label="Órdenes de abastecimiento" expand-separator :header-class="['menu-header', isGestionActive ? 'menu-header--active' : '']">
-                    <q-item class="submenu-item" clickable v-ripple :to="{ name: 'gestion-abastecimiento' }">
+                <!-- Grupo: Órdenes de compra -->
+                <q-expansion-item icon="shopping_cart" label="Órdenes de compra" expand-separator :header-class="['menu-header', isGestionActive ? 'menu-header--active' : '']">
+                    <q-item class="submenu-item" clickable v-ripple :to="{ name: 'ordenes-compra-lista' }">
                         <q-item-section avatar>
-                            <q-icon name="manage_search" />
+                            <q-icon name="list_alt" />
                         </q-item-section>
                         <q-item-section>
-                            <q-item-label>Gestionar</q-item-label>
-                            <q-item-label caption>Órdenes aprobadas</q-item-label>
+                            <q-item-label>Listado</q-item-label>
+                            <q-item-label caption>Órdenes de compra</q-item-label>
+                        </q-item-section>
+                    </q-item>
+                </q-expansion-item>
+
+                <!-- Grupo: Proveedores -->
+                <q-expansion-item default-opened icon="local_shipping" label="Proveedores" expand-separator :header-class="['menu-header', isProveedoresActive ? 'menu-header--active' : '']">
+                    <q-item class="submenu-item" clickable v-ripple :to="{ name: 'registrar-proveedor-nuevo' }">
+                        <q-item-section avatar>
+                            <q-icon name="add_circle" />
+                        </q-item-section>
+                        <q-item-section>
+                            <q-item-label>Crear registro de proveedores</q-item-label>
+                            <q-item-label caption>Nuevo registro unificado de tercero</q-item-label>
+                        </q-item-section>
+                    </q-item>
+                    <q-item class="submenu-item" clickable v-ripple :to="{ name: 'lista-proveedores-terceros' }">
+                        <q-item-section avatar>
+                            <q-icon name="view_list" />
+                        </q-item-section>
+                        <q-item-section>
+                            <q-item-label>Listado de proveedores</q-item-label>
+                            <q-item-label caption>Gestión y visualización de terceros</q-item-label>
                         </q-item-section>
                     </q-item>
                 </q-expansion-item>
@@ -129,11 +198,19 @@ export default {
     computed: {
         isSolicitudesActive() {
             return this.$route.name === 'mis-ordenes-abastecimiento'
-                || this.$route.name === 'crear-orden-abastecimiento'
+                || this.$route.name === 'crear-solicitud-abastecimiento'
+                || this.$route.name === 'lista-solicitudes-abastecimiento'
                 || this.$route.name === 'aprobaciones-pendientes'
+                || this.$route.name === 'aprobacion-solicitudes-abastecimiento'
+                || this.$route.name === 'Crear-plan-abastecimiento'
+                || this.$route.name === 'lista-planes-abastecimiento'
         },
         isGestionActive() {
-            return this.$route.name === 'gestion-abastecimiento'
+            return this.$route.name === 'ordenes-compra-lista'
+        },
+        isProveedoresActive() {
+            return this.$route.name === 'registrar-proveedor-nuevo'
+                || this.$route.name === 'lista-proveedores-terceros'
         }
     },
     methods: {
