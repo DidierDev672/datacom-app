@@ -230,12 +230,19 @@ export default {
       }
     })
 
-    const puestosOptions = computed(() => 
-      puestosStore.puestos.map(p => ({
-        label: `${p.codigoCargo} - ${p.nombreCargo}`,
-        value: p.id
-      }))
-    )
+    const puestosOptions = computed(function () {
+      return (puestosStore.puestos || []).map(function (p) {
+        var area =
+          p.area && String(p.area).trim()
+            ? String(p.area).trim()
+            : "Sin área";
+        var cargo = p.nombreCargo || p.codigoCargo || "Cargo";
+        return {
+          label: area + " · " + cargo,
+          value: p.id,
+        };
+      });
+    })
 
     onMounted(async () => {
       await puestosStore.fetchPuestos()

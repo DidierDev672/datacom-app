@@ -5,15 +5,6 @@
     <div class="row q-col-gutter-lg">
       <div class="col-12 col-md-4">
         <q-input
-          v-model="store.form.codigo"
-          label="Código / Consecutivo"
-          outlined
-          dense
-          placeholder="Ej: SV-2026-001"
-        />
-      </div>
-      <div class="col-12 col-md-4">
-        <q-input
           v-model="store.form.fechaSolicitud"
           label="Fecha de solicitud"
           type="date"
@@ -21,7 +12,7 @@
           dense
         />
       </div>
-      <div class="col-12 col-md-4">
+      <div class="col-12 col-md-8">
         <q-input
           v-model="store.form.solicitanteNombre"
           label="Solicitante"

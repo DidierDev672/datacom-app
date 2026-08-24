@@ -1,7 +1,7 @@
-import { defineStore } from 'pinia'
+﻿import { defineStore } from 'pinia'
 import axios from 'axios'
 
-const URL_API = 'http://localhost:3310'
+const URL_API = 'http://localhost:28181'
 
 export const useApprovalConfigStore = defineStore('approvalConfig', {
     state: () => ({

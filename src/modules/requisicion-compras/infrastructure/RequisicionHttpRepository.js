@@ -20,7 +20,12 @@ export class RequisicionHttpRepository extends IRequisicionRepository {
 
   async obtenerTodas(filters) {
     try {
-      const params = filters && filters.status ? { status: filters.status } : {};
+      const params = {};
+      if (filters) {
+        if (filters.status) params.status = filters.status;
+        if (filters.search) params.search = filters.search;
+        if (filters.fechaSolicitud) params.fechaSolicitud = filters.fechaSolicitud;
+      }
       const response = await axios.get(this.BASE_URL, { params });
       return response.data;
     } catch (error) {
@@ -59,6 +64,14 @@ export class RequisicionHttpRepository extends IRequisicionRepository {
     try {
       const response = await axios.patch(`${this.BASE_URL}/${id}/status`, { status });
       return response.data;
+    } catch (error) {
+      this._handleError(error);
+    }
+  }
+
+  async eliminar(id) {
+    try {
+      await axios.delete(`${this.BASE_URL}/${id}`);
     } catch (error) {
       this._handleError(error);
     }

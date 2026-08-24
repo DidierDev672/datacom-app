@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white rounded-2xl shadow-2 border-grey-2 overflow-hidden">
+  <div class="bg-white rounded-2xl shadow-2 border-grey-2 overflow-hidden full-width">
     <!-- Stepper Header -->
     <div class="bg-grey-1 border-b-grey-2 q-px-lg q-py-lg">
       <div class="row items-center justify-between no-wrap overflow-hidden">
@@ -44,17 +44,7 @@
         <!-- Step 1: Identificación y Servicio -->
         <div v-if="currentStep === 1" class="q-gutter-y-lg animate-in">
           <div class="row q-col-gutter-lg">
-            <div class="col-12 col-md-6">
-              <q-item-label class="text-caption text-weight-bold text-grey-8 q-mb-xs">Código de Solicitud</q-item-label>
-              <q-input 
-                v-model="form.codigo" 
-                outlined 
-                dense 
-                placeholder="STT-000-2026"
-                class="rounded-xl"
-              />
-            </div>
-            <div class="col-12 col-md-6">
+            <div class="col-12">
               <q-item-label class="text-caption text-weight-bold text-grey-8 q-mb-xs">Fecha de Solicitud</q-item-label>
               <q-input 
                 v-model="form.fecha" 
@@ -440,6 +430,38 @@ export default {
         console.error(err);
       } finally {
         this.isSubmitting = false;
+      }
+    },
+
+    importData(data) {
+      // Fusionar datos de identificación
+      if (data.proyecto) this.form.proyecto = data.proyecto;
+      if (data.area) this.form.area = data.area;
+      if (data.solicitante) this.form.solicitante = data.solicitante;
+      
+      // Fusionar datos de servicio
+      if (data.servicio) {
+        if (data.servicio.tipoServicio) this.form.servicio.tipoServicio = data.servicio.tipoServicio;
+        if (data.servicio.tipoVehiculo) this.form.servicio.tipoVehiculo = data.servicio.tipoVehiculo;
+      }
+
+      // Fusionar datos de transporte
+      if (data.transporte) {
+        if (data.transporte.origen) this.form.transporte.origen = data.transporte.origen;
+        if (data.transporte.destino) this.form.transporte.destino = data.transporte.destino;
+        if (data.transporte.fechaHoraSalida) this.form.transporte.fechaHoraSalida = data.transporte.fechaHoraSalida;
+        if (data.transporte.fechaHoraRegreso) this.form.transporte.fechaHoraRegreso = data.transporte.fechaHoraRegreso;
+      }
+
+      // Fusionar pasajeros (agregar a los existentes)
+      if (data.pasajeros && data.pasajeros.length > 0) {
+        this.form.pasajeros = [...this.form.pasajeros, ...data.pasajeros];
+      }
+
+      // Fusionar justificación
+      if (data.justificacion) {
+        if (data.justificacion.motivoTraslado) this.form.justificacion.motivoTraslado = data.justificacion.motivoTraslado;
+        if (data.justificacion.relacionProyecto) this.form.justificacion.relacionProyecto = data.justificacion.relacionProyecto;
       }
     }
   }

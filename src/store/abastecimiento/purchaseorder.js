@@ -72,8 +72,20 @@ export const actions = {
             return orders || [];
         } catch (error) {
             console.error('Error al listar PurchaseOrders:', error);
-            commit('SET_ERROR', error.message || 'Error al listar PurchaseOrders');
-            throw error;
+            const responseData = error.response && error.response.data;
+            let message = error.message || 'Error al listar órdenes de compra';
+            if (responseData) {
+                if (typeof responseData === 'string') {
+                    message = responseData;
+                } else if (responseData.message && responseData.message !== 'Internal Server Error') {
+                    message = responseData.message;
+                } else if (responseData.error && responseData.error.message) {
+                    message = responseData.error.message;
+                }
+            }
+            commit('SET_ERROR', message);
+            commit('SET_LIST', []);
+            throw new Error(message);
         } finally {
             commit('SET_LOADING', false);
         }

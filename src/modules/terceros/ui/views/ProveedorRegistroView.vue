@@ -1,10 +1,12 @@
-<template>
+﻿<template>
   <q-page class="q-pa-md bg-grey-2">
     <!-- Header with Gradient -->
     <div class="registration-header q-mb-lg shadow-2">
       <div class="header-content q-pa-lg text-white text-center">
-        <h1 class="text-h4 text-bold text-white q-ma-none">Registro de Proveedores</h1>
-        <p class="q-mt-sm opacity-80 text-white text-subtitle1">Gestión Unificada de Terceros - Datacom</p>
+        <h1 class="text-h4 text-bold text-white q-ma-none">{{ isEditMode ? 'Editar proveedor' : 'Registro de Proveedores' }}</h1>
+        <p class="q-mt-sm opacity-80 text-white text-subtitle1">
+          {{ isEditMode ? 'Actualice la información del tercero y guarde los cambios.' : 'Gestión Unificada de Terceros - Datacom' }}
+        </p>
       </div>
     </div>
 
@@ -420,9 +422,109 @@
               </div>
             </q-step>
 
-            <!-- STEP 4: TRIBUTARIA Y CONTROL -->
+            <!-- STEP 4: FORMA DE PAGO -->
             <q-step
               :name="4"
+              title="Forma de pago"
+              icon="payments"
+              :done="step > 4"
+            >
+              <div class="section-title text-h6 q-mb-md">Condiciones de pago</div>
+              <p class="section-subtitle q-mb-lg">
+                Defina cómo se liquidan las obligaciones con este proveedor (contado, crédito por días o meses, cuotas y meses preferidos de pago). Inspiración típica de planes tipo crédito comercial (30/45/60 días o cuotas).
+              </p>
+
+              <div class="row q-col-gutter-md">
+                <div class="col-12">
+                  <label class="custom-label">Forma de pago principal</label>
+                  <q-select
+                    outlined
+                    dense
+                    v-model="formData.formaPago.tipoFormaPago"
+                    :options="options.formasPagoTipo"
+                    emit-value
+                    map-options
+                    class="custom-input"
+                  />
+                </div>
+
+                <div v-if="formData.formaPago.tipoFormaPago === 'CREDITO_DIAS'" class="col-12 col-sm-6">
+                  <label class="custom-label">Días de crédito</label>
+                  <q-select
+                    outlined
+                    dense
+                    v-model="formData.formaPago.diasCredito"
+                    :options="options.diasCreditoComercial"
+                    emit-value
+                    map-options
+                    clearable
+                    class="custom-input"
+                    hint="Plazo desde la fecha de factura hasta el pago"
+                  />
+                </div>
+
+                <div v-if="formData.formaPago.tipoFormaPago === 'CREDITO_MESES'" class="col-12 col-sm-6">
+                  <label class="custom-label">Plazo total (meses)</label>
+                  <q-input
+                    outlined
+                    dense
+                    type="number"
+                    :min="1"
+                    :max="60"
+                    v-model.number="formData.formaPago.mesesPlazo"
+                    class="custom-input"
+                    hint="Meses calendario para saldar la obligación"
+                  />
+                </div>
+
+                <div v-if="formData.formaPago.tipoFormaPago === 'CUOTAS'" class="col-12 col-sm-6">
+                  <label class="custom-label">Número de cuotas</label>
+                  <q-input
+                    outlined
+                    dense
+                    type="number"
+                    :min="2"
+                    :max="48"
+                    v-model.number="formData.formaPago.numeroCuotas"
+                    class="custom-input"
+                    hint="Cantidad de pagos parciales acordados"
+                  />
+                </div>
+                <div v-if="formData.formaPago.tipoFormaPago === 'CUOTAS'" class="col-12 col-sm-6">
+                  <label class="custom-label">Plazo máximo (meses)</label>
+                  <q-input
+                    outlined
+                    dense
+                    type="number"
+                    :min="1"
+                    :max="60"
+                    v-model.number="formData.formaPago.mesesPlazo"
+                    class="custom-input"
+                    hint="Opcional: meses para completar todas las cuotas"
+                  />
+                </div>
+
+                <div class="col-12">
+                  <label class="custom-label">Meses de pago / liquidación preferidos</label>
+                  <q-select
+                    outlined
+                    dense
+                    multiple
+                    use-chips
+                    v-model="formData.formaPago.mesesPago"
+                    :options="options.mesesCalendario"
+                    emit-value
+                    map-options
+                    class="custom-input"
+                    hint="Opcional: meses del año en que normalmente se concilian pagos con este proveedor"
+                  />
+                </div>
+              </div>
+            </q-step>
+
+            <!-- STEP 5: TRIBUTARIA Y CONTROL -->
+            <q-step
+              :name="5"
               title="Impuestos y Control"
               icon="fact_check"
             >
@@ -486,21 +588,31 @@
 
             <!-- NAVIGATION BUTTONS -->
             <template v-slot:navigation>
-              <q-stepper-navigation class="flex justify-between q-mt-lg">
-                <q-btn
-                  v-if="step > 1"
-                  flat
-                  color="grey-7"
-                  @click="$refs.stepper.previous()"
-                  label="Anterior"
-                  class="q-px-md"
-                />
-                <div v-else></div>
+              <q-stepper-navigation class="flex justify-between items-center q-mt-lg">
+                <div class="row q-gutter-md">
+                  <q-btn
+                    v-if="step > 1"
+                    flat
+                    color="grey-7"
+                    @click="$refs.stepper.previous()"
+                    label="Anterior"
+                    class="q-px-md"
+                  />
+                  <q-btn
+                    outline
+                    color="negative"
+                    icon="refresh"
+                    label="Limpiar Formulario"
+                    @click="limpiarFormulario"
+                    class="q-px-md rounded-btn"
+                    flat
+                  />
+                </div>
 
                 <q-btn
                   @click="onNext"
                   color="primary"
-                  :label="step === 4 ? 'Finalizar Registro' : 'Siguiente'"
+                  :label="step === 5 ? 'Finalizar Registro' : 'Siguiente'"
                   :loading="loading"
                   class="q-px-xl text-bold rounded-btn"
                 />
@@ -514,15 +626,19 @@
 </template>
 
 <script>
-import { defineComponent, ref, reactive, computed } from '@vue/composition-api'
-import { useTercerosStore } from 'src/piña/terceros'
-import * as XLSX from 'xlsx'
+import { computed, defineComponent, reactive, ref, onMounted } from '@vue/composition-api';
+import { useTercerosStore } from 'src/piña/terceros';
+import * as XLSX from 'xlsx';
+
+var PROVEEDOR_EDIT_STORAGE_KEY = 'proveedor_edit_payload';
 
 export default defineComponent({
   name: 'ProveedorRegistroView',
   setup(props, { root }) {
     const $q = root.$q
     const store = useTercerosStore()
+
+    const isEditMode = ref(false)
 
     // --- State / Refs ---
     const step = ref(1)
@@ -587,6 +703,13 @@ export default defineComponent({
         numeroCuenta: '',
         titularCuenta: ''
       },
+      formaPago: {
+        tipoFormaPago: 'CONTADO',
+        diasCredito: null,
+        numeroCuotas: null,
+        mesesPlazo: null,
+        mesesPago: []
+      },
       informacionTributaria: {
         regimen: '',
         responsabilidades: [],
@@ -615,6 +738,35 @@ export default defineComponent({
         { label: 'Activo', value: 'ACTIVO' },
         { label: 'Inactivo', value: 'INACTIVO' },
         { label: 'Bloqueado', value: 'BLOQUEADO' }
+      ],
+      formasPagoTipo: [
+        { label: 'Contado — sin crédito', value: 'CONTADO' },
+        { label: 'Crédito por días (30/45/60…)', value: 'CREDITO_DIAS' },
+        { label: 'Crédito por meses calendario', value: 'CREDITO_MESES' },
+        { label: 'Pago en cuotas', value: 'CUOTAS' }
+      ],
+      diasCreditoComercial: [
+        { label: '15 días', value: 15 },
+        { label: '30 días', value: 30 },
+        { label: '45 días', value: 45 },
+        { label: '60 días', value: 60 },
+        { label: '75 días', value: 75 },
+        { label: '90 días', value: 90 },
+        { label: '120 días', value: 120 }
+      ],
+      mesesCalendario: [
+        { label: 'Enero', value: 1 },
+        { label: 'Febrero', value: 2 },
+        { label: 'Marzo', value: 3 },
+        { label: 'Abril', value: 4 },
+        { label: 'Mayo', value: 5 },
+        { label: 'Junio', value: 6 },
+        { label: 'Julio', value: 7 },
+        { label: 'Agosto', value: 8 },
+        { label: 'Septiembre', value: 9 },
+        { label: 'Octubre', value: 10 },
+        { label: 'Noviembre', value: 11 },
+        { label: 'Diciembre', value: 12 }
       ]
     })
 
@@ -630,6 +782,7 @@ export default defineComponent({
       'tipoTercero', 'tipoDocumento', 'numeroDocumento', 'razonSocial', 'nombreComercial',
       'nombres', 'apellidos', 'representanteLegal', 'telefono', 'email', 'direccion',
       'ciudad', 'pais', 'banco', 'tipoCuenta', 'numeroCuenta', 'titularCuenta',
+      'formaPagoTipo', 'diasCredito', 'numeroCuotas', 'mesesPlazo', 'mesesPago',
       'regimen', 'responsabilidades', 'agenteRetenedor', 'estado', 'observaciones'
     ]
 
@@ -655,6 +808,11 @@ export default defineComponent({
       'tipo cuenta': 'tipoCuenta', 'tipo_cuenta': 'tipoCuenta', 'tipocuenta': 'tipoCuenta',
       'numero cuenta': 'numeroCuenta', 'numero_cuenta': 'numeroCuenta', 'cuenta': 'numeroCuenta',
       'titular': 'titularCuenta', 'titular cuenta': 'titularCuenta',
+      'forma de pago': 'formaPagoTipo', 'forma_pago': 'formaPagoTipo', 'tipo forma pago': 'formaPagoTipo',
+      'dias credito': 'diasCredito', 'días crédito': 'diasCredito', 'dias_credito': 'diasCredito',
+      'numero cuotas': 'numeroCuotas', 'número cuotas': 'numeroCuotas', 'cuotas': 'numeroCuotas',
+      'meses plazo': 'mesesPlazo', 'plazo meses': 'mesesPlazo',
+      'meses pago': 'mesesPago', 'meses de pago': 'mesesPago',
       'regimen': 'regimen', 'régimen': 'regimen',
       'responsabilidades': 'responsabilidades',
       'agente retenedor': 'agenteRetenedor', 'agente_retenedor': 'agenteRetenedor',
@@ -668,6 +826,8 @@ export default defineComponent({
       apellidos: 'Apellidos', representanteLegal: 'Rep. Legal', telefono: 'Teléfono',
       email: 'Email', direccion: 'Dirección', ciudad: 'Ciudad', pais: 'País', banco: 'Banco',
       tipoCuenta: 'Tipo Cuenta', numeroCuenta: 'No. Cuenta', titularCuenta: 'Titular',
+      formaPagoTipo: 'Forma pago', diasCredito: 'Días crédito', numeroCuotas: 'Cuotas',
+      mesesPlazo: 'Plazo (meses)', mesesPago: 'Meses pago',
       regimen: 'Régimen', responsabilidades: 'Resp. DIAN', agenteRetenedor: 'Retenedor',
       estado: 'Estado', observaciones: 'Observaciones'
     }
@@ -678,7 +838,9 @@ export default defineComponent({
       const exampleRow = [
         'PERSONA_JURIDICA', 'NIT', '900123456-7', 'Mi Empresa S.A.S', 'Mi Empresa', '', '',
         'Juan Rep', '3001234567', 'empresa@email.com', 'Calle 10', 'Bogotá', 'Colombia',
-        'Bancolombia', 'Ahorros', '12345', 'Mi Empresa', 'Común', 'IVA', 'false', 'ACTIVO', ''
+        'Bancolombia', 'Ahorros', '12345', 'Mi Empresa',
+        'CONTADO', '', '', '', '1,6,12',
+        'Común', 'IVA', 'false', 'ACTIVO', ''
       ].map(v => `"${v}"`).join(',')
       const blob = new Blob([`${header}\n${exampleRow}`], { type: 'text/csv;charset=utf-8;' })
       const url = URL.createObjectURL(blob)
@@ -823,6 +985,25 @@ export default defineComponent({
           numeroCuenta: getVal('numeroCuenta') || '',
           titularCuenta: getVal('titularCuenta') || ''
         },
+        formaPago: (function () {
+          const diasParsed = parseInt(String(getVal('diasCredito')), 10)
+          const cuotasParsed = parseInt(String(getVal('numeroCuotas')), 10)
+          const mesesPlazoParsed = parseInt(String(getVal('mesesPlazo')), 10)
+          const mesesPagoRaw = getVal('mesesPago')
+          var mesesPagoArr = []
+          if (mesesPagoRaw) {
+            mesesPagoArr = String(mesesPagoRaw).split(/[,;]/).map(function (s) {
+              return parseInt(String(s).trim(), 10)
+            }).filter(function (n) { return !isNaN(n) && n >= 1 && n <= 12 })
+          }
+          return {
+            tipoFormaPago: getVal('formaPagoTipo') || 'CONTADO',
+            diasCredito: !isNaN(diasParsed) && diasParsed > 0 ? diasParsed : null,
+            numeroCuotas: !isNaN(cuotasParsed) && cuotasParsed > 0 ? cuotasParsed : null,
+            mesesPlazo: !isNaN(mesesPlazoParsed) && mesesPlazoParsed > 0 ? mesesPlazoParsed : null,
+            mesesPago: mesesPagoArr
+          }
+        })(),
         informacionTributaria: {
           regimen: getVal('regimen') || '',
           responsabilidades: respStr ? respStr.split(',').map(s => s.trim()) : [],
@@ -836,7 +1017,51 @@ export default defineComponent({
     const importSelectedRow = () => {
       if (!selectedRow.value || !selectedRow.value.length) return
       const dto = mapRowToDTO(selectedRow.value[0])
-      
+      applyMappedDtoToForm(dto, null)
+      showPreviewModal.value = false
+    }
+
+    /** Adapta la fila plana del listado/API al esquema que espera mapRowToDTO (CSV). */
+    const apiRowToCsvShape = (apiRow) => {
+      if (!apiRow) return {}
+      var mesesRaw = apiRow.mesesPago
+      if (Array.isArray(mesesRaw)) {
+        mesesRaw = mesesRaw.join(',')
+      }
+      return {
+        tipoTercero: apiRow.tipoTercero || '',
+        tipoDocumento: apiRow.tipoDocumento || '',
+        numeroDocumento: apiRow.identificacion != null ? String(apiRow.identificacion) : '',
+        razonSocial: apiRow.razonSocial || '',
+        nombreComercial: apiRow.nombreComercial || '',
+        nombres: apiRow.nombres || '',
+        apellidos: apiRow.apellidos || '',
+        representanteLegal: apiRow.representanteLegal || '',
+        telefono: apiRow.telefono || '',
+        email: apiRow.email || '',
+        direccion: apiRow.direccion || '',
+        ciudad: apiRow.ciudad || '',
+        pais: apiRow.pais || '',
+        banco: apiRow.banco || '',
+        tipoCuenta: apiRow.tipoCuenta || '',
+        numeroCuenta: apiRow.numeroCuenta || '',
+        titularCuenta: apiRow.titularCuenta || '',
+        formaPagoTipo: apiRow.formaPagoTipo || '',
+        diasCredito: apiRow.diasCredito != null && apiRow.diasCredito !== '' ? apiRow.diasCredito : '',
+        numeroCuotas: apiRow.numeroCuotas != null && apiRow.numeroCuotas !== '' ? apiRow.numeroCuotas : '',
+        mesesPlazo: apiRow.mesesPlazo != null && apiRow.mesesPlazo !== '' ? apiRow.mesesPlazo : '',
+        mesesPago: mesesRaw != null && mesesRaw !== '' ? mesesRaw : '',
+        regimen: apiRow.regimen || '',
+        responsabilidades: apiRow.responsabilidades || '',
+        agenteRetenedor: apiRow.agenteRetenedor != null ? apiRow.agenteRetenedor : '',
+        estado: apiRow.estado || '',
+        observaciones: apiRow.observaciones || ''
+      }
+    }
+
+    /** Aplica el DTO del mapa CSV al formulario reactivo; `persistentId` conserva el id del proveedor al editar. */
+    const applyMappedDtoToForm = (dto, persistentId) => {
+      formData.id = persistentId != null ? persistentId : null
       formData.tipoTercero = dto.tipoTercero
       formData.identificacion.tipoDocumento = dto.identificacion.tipoDocumento
       formData.identificacion.numeroDocumento = dto.identificacion.numeroDocumento
@@ -854,14 +1079,69 @@ export default defineComponent({
       formData.informacionFinanciera.tipoCuenta = dto.informacionFinanciera.tipoCuenta
       formData.informacionFinanciera.numeroCuenta = dto.informacionFinanciera.numeroCuenta
       formData.informacionFinanciera.titularCuenta = dto.informacionFinanciera.titularCuenta
+      formData.formaPago.tipoFormaPago = dto.formaPago.tipoFormaPago
+      formData.formaPago.diasCredito = dto.formaPago.diasCredito
+      formData.formaPago.numeroCuotas = dto.formaPago.numeroCuotas
+      formData.formaPago.mesesPlazo = dto.formaPago.mesesPlazo
+      formData.formaPago.mesesPago = dto.formaPago.mesesPago && dto.formaPago.mesesPago.slice
+        ? dto.formaPago.mesesPago.slice()
+        : []
       formData.informacionTributaria.regimen = dto.informacionTributaria.regimen
       formData.informacionTributaria.responsabilidades = [...dto.informacionTributaria.responsabilidades]
       formData.informacionTributaria.agenteRetenedor = dto.informacionTributaria.agenteRetenedor
       formData.estado = dto.estado
       formData.observaciones = dto.observaciones
-
-      showPreviewModal.value = false
     }
+
+    const applyEditPrefillFromRoute = () => {
+      var route = root.$route
+      if (!route.query || route.query.modo !== 'editar' || !route.query.id) return
+      var raw = null
+      try {
+        raw = window.sessionStorage.getItem(PROVEEDOR_EDIT_STORAGE_KEY)
+      } catch (e) {
+        raw = null
+      }
+      if (!raw) {
+        $q.notify({
+          color: 'warning',
+          message: 'No se encontraron datos para editar. Abra la edición desde el listado de proveedores.',
+          icon: 'warning'
+        })
+        root.$router.replace({ name: 'registrar-proveedor-nuevo', query: {} })
+        return
+      }
+      var row = null
+      try {
+        row = JSON.parse(raw)
+      } catch (e) {
+        row = null
+      }
+      if (!row || String(row.id) !== String(route.query.id)) {
+        try {
+          window.sessionStorage.removeItem(PROVEEDOR_EDIT_STORAGE_KEY)
+        } catch (e2) {}
+        $q.notify({
+          color: 'warning',
+          message: 'Los datos de edición no coinciden. Vuelva a intentar desde el listado.',
+          icon: 'warning'
+        })
+        root.$router.replace({ name: 'registrar-proveedor-nuevo', query: {} })
+        return
+      }
+      var dto = mapRowToDTO(apiRowToCsvShape(row))
+      applyMappedDtoToForm(dto, row.id)
+      isEditMode.value = true
+      step.value = 1
+      try {
+        window.sessionStorage.removeItem(PROVEEDOR_EDIT_STORAGE_KEY)
+      } catch (e3) {}
+      root.$router.replace({ name: 'registrar-proveedor-nuevo', query: {} }).catch(function () {})
+    }
+
+    onMounted(function () {
+      applyEditPrefillFromRoute()
+    })
 
     const confirmarRegistroMasivo = () => {
       const targetRows = selectedRow.value.length > 0 ? selectedRow.value : previewData.value
@@ -900,33 +1180,146 @@ export default defineComponent({
       }
     }
 
+    const parsePayloadFormaPago = function () {
+      const fp = formData.formaPago
+      var out = {
+        tipoFormaPago: fp.tipoFormaPago || 'CONTADO',
+        diasCredito: null,
+        numeroCuotas: null,
+        mesesPlazo: null,
+        mesesPago: []
+      }
+      if (fp.tipoFormaPago === 'CREDITO_DIAS' && fp.diasCredito) {
+        out.diasCredito = fp.diasCredito
+      }
+      if (fp.tipoFormaPago === 'CREDITO_MESES' && fp.mesesPlazo) {
+        out.mesesPlazo = fp.mesesPlazo
+      }
+      if (fp.tipoFormaPago === 'CUOTAS') {
+        if (fp.numeroCuotas) out.numeroCuotas = fp.numeroCuotas
+        if (fp.mesesPlazo) out.mesesPlazo = fp.mesesPlazo
+      }
+      if (fp.mesesPago && fp.mesesPago.length) {
+        out.mesesPago = fp.mesesPago.slice()
+      }
+      return out
+    }
+
+    const validateFormaPago = () => {
+      const fp = formData.formaPago
+      if (!fp || !fp.tipoFormaPago) {
+        $q.notify({ color: 'warning', message: 'Seleccione la forma de pago', icon: 'warning' })
+        return false
+      }
+      if (fp.tipoFormaPago === 'CREDITO_DIAS' && !fp.diasCredito) {
+        $q.notify({ color: 'warning', message: 'Indique los días de crédito', icon: 'warning' })
+        return false
+      }
+      if (fp.tipoFormaPago === 'CREDITO_MESES' && (!fp.mesesPlazo || fp.mesesPlazo < 1)) {
+        $q.notify({ color: 'warning', message: 'Indique el plazo en meses (mínimo 1)', icon: 'warning' })
+        return false
+      }
+      if (fp.tipoFormaPago === 'CUOTAS' && (!fp.numeroCuotas || fp.numeroCuotas < 2)) {
+        $q.notify({ color: 'warning', message: 'Indique al menos 2 cuotas', icon: 'warning' })
+        return false
+      }
+      return true
+    }
+
     const onNext = async () => {
-      if (step.value < 4 && stepper.value) stepper.value.next()
-      else if (step.value < 4) step.value++
+      if (step.value < 5 && stepper.value) stepper.value.next()
+      else if (step.value < 5) step.value++
       else await handleSave()
     }
 
     const handleSave = async () => {
-      $q.loading.show({ message: 'Procesando registro...' })
+      if (!validateFormaPago()) return
+      var updating = !!(formData.id)
+      $q.loading.show({ message: updating ? 'Guardando cambios...' : 'Procesando registro...' })
       try {
-        await store.registerTercero(formData)
-        $q.notify({ color: 'positive', message: 'Proveedor registrado exitosamente', icon: 'check_circle' })
+        var payload = Object.assign({}, formData)
+        payload.formaPago = parsePayloadFormaPago()
+        await store.registerTercero(payload)
+        var okMsg = updating ? 'Proveedor actualizado correctamente' : 'Proveedor registrado exitosamente'
+        $q.notify({ color: 'positive', message: okMsg, icon: 'check_circle' })
+        isEditMode.value = false
         root.$router.push({ name: 'lista-proveedores-terceros' })
       } catch (err) {
-        $q.notify({ color: 'negative', message: 'Error al ahorrar', icon: 'error' })
+        $q.notify({ color: 'negative', message: 'Error al guardar', icon: 'error' })
         console.log('Error: ' + err);
       } finally { $q.loading.hide() }
     }
 
     const clearFile = () => { activeFileName.value = ''; previewData.value = [] }
 
+    const limpiarFormulario = () => {
+      $q.dialog({
+        title: 'Limpiar Formulario',
+        message: '¿Estás seguro de que deseas borrar todos los campos? Esta acción no se puede deshacer.',
+        cancel: true,
+        persistent: true
+      }).onOk(() => {
+        Object.assign(formData, {
+          id: null,
+          tipoTercero: 'PERSONA_JURIDICA',
+          identificacion: {
+            tipoDocumento: 'NIT',
+            numeroDocumento: ''
+          },
+          informacionBasica: {
+            razonSocial: '',
+            nombreComercial: '',
+            nombres: '',
+            apellidos: '',
+            representanteLegal: ''
+          },
+          contacto: {
+            telefono: '',
+            email: '',
+            direccion: '',
+            ciudad: '',
+            pais: 'Colombia'
+          },
+          informacionFinanciera: {
+            banco: '',
+            tipoCuenta: 'Ahorros',
+            numeroCuenta: '',
+            titularCuenta: ''
+          },
+          formaPago: {
+            tipoFormaPago: 'CONTADO',
+            diasCredito: null,
+            numeroCuotas: null,
+            mesesPlazo: null,
+            mesesPago: []
+          },
+          informacionTributaria: {
+            regimen: '',
+            responsabilidades: [],
+            agenteRetenedor: false
+          },
+          estado: 'ACTIVO',
+          observaciones: ''
+        })
+        step.value = 1
+        isEditMode.value = false
+        $q.notify({
+          color: 'info',
+          message: 'Formulario reiniciado',
+          icon: 'refresh',
+          timeout: 2000
+        })
+      })
+    }
+
     return {
       step, stepper, formData, options, filteredDocumentTypes, loading, onNext,
+      isEditMode,
       activeFileName, fileInputRef, triggerFileInput, onFileSelected,
       descargarPlantillaCSV, showPreviewModal, previewData, previewColumns,
       selectedRow, importSelectedRow, clearFile, csvResultado, activeTab,
       showEditRowModal, editingRow, openEditRow, saveEditedRow, deleteRow,
-      confirmarRegistroMasivo,
+      confirmarRegistroMasivo, limpiarFormulario,
       allSelected, someSelected, toggleSelectAll,
       CANONICAL_LABELS, CSV_COLUMNS
     }

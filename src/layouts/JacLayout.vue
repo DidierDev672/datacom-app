@@ -319,9 +319,6 @@ export default {
 </script>
 
 <style lang="sass">
-body
-  background-color: #f3f3f9
-
 .bg-sidebar
  aside
   color: #6d7080

@@ -254,9 +254,6 @@ export default {
 };
 </script>
 <style lang="sass">
-body
-  background-color: #f3f3f9
-
 .q-separator
   background-color: rgba(255,255,255,0.13)
   align-items: center

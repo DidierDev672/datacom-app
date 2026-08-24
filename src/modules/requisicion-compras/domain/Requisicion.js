@@ -1,7 +1,6 @@
 export class Requisicion {
   constructor(init) {
     // Identificación
-    this.codigo = '';
     this.proyecto = '';
     this.lineaAccion = '';
     this.mandato = '';
@@ -22,8 +21,17 @@ export class Requisicion {
   }
 
   validarIdentificacion() {
-    if (!this.codigo || !this.proyecto || !this.lineaAccion || !this.municipio || !this.fechaSolicitud || !this.lugarEntrega || !this.fechaEntrega || !this.solicitante) {
-      throw new Error('Todos los campos marcados con * son obligatorios en Identificación.');
+    const missing = [];
+    if (!this.proyecto) missing.push('proyecto');
+    if (!this.lineaAccion) missing.push('lineaAccion');
+    if (!this.municipio) missing.push('municipio');
+    if (!this.fechaSolicitud) missing.push('fechaSolicitud');
+    if (!this.lugarEntrega) missing.push('lugarEntrega');
+    if (!this.fechaEntrega) missing.push('fechaEntrega');
+    if (!this.solicitante) missing.push('solicitante');
+
+    if (missing.length > 0) {
+      throw new Error(`Todos los campos marcados con * son obligatorios en Identificación. Faltan: ${missing.join(', ')}`);
     }
     if (new Date(this.fechaEntrega) < new Date(this.fechaSolicitud)) {
       throw new Error('La fecha de entrega debe ser igual o posterior a la fecha de solicitud.');

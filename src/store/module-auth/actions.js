@@ -1,5 +1,8 @@
-import axios from "axios";
+﻿import axios from "axios";
 import { Notify } from "quasar";
+import { pinia } from "src/stores/pinia";
+import { useOperativosPermisosStore } from "src/stores/operativosPermisosStore";
+import { useAccessStore } from "src/router/Access.store";
 import {
   URL_API,
   TOKEN_AUTH_USERNAME,
@@ -71,7 +74,15 @@ export function loginAction({ commit }, credentials) {
         resolve(data);
       })
       .catch(error => {
-        commit("SET_ERROR", error.response);
+        commit(
+          "SET_ERROR",
+          error.response || {
+            data: {
+              message:
+                error.message || "No se pudo conectar con el servidor"
+            }
+          }
+        );
         reject(error);
       });
   });
@@ -79,6 +90,8 @@ export function loginAction({ commit }, credentials) {
 
 export function logoutAction({ commit }) {
   try{
+    useOperativosPermisosStore(pinia).reset();
+    useAccessStore(pinia).logout();
     commit("CLEAR_AUTHENTICATED_DATA");
     this.$router.push("/auth").catch(navigationError => {
       if(navigationError.name === 'NavigationDuplicated'){

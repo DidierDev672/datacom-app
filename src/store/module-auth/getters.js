@@ -13,3 +13,7 @@ export function getLoaded ( state ) {
 export function getError ( state ) {
   return state.error;
 }
+
+export function getTenant ( state ) {
+  return state.tenant;
+}

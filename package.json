@@ -9,7 +9,8 @@
         "icons": "icongenie g -i app-icon.png --skip-trim --theme-color 212121",
         "lint": "eslint --ext .js, ./",
         "test": "echo \"No test specified\" && exit 0",
-        "dev": "quasar dev"
+        "dev": "quasar dev",
+        "build": "quasar build"
     },
     "dependencies": {
         "@quasar/extras": "^1.0.0",
@@ -21,9 +22,11 @@
         "core-js": "^3.6.5",
         "idb": "^6.0.0",
         "jspdf": "^2.5.1",
+        "mammoth": "^1.12.0",
         "pinia": "^2.0.0",
         "print-js": "^1.6.0",
         "quasar": "^1.0.0",
+        "uuid": "^14.0.0",
         "v-money": "^0.8.1",
         "vue-apexcharts": "^1.6.2",
         "vue-chartjs": "^3.5.1",

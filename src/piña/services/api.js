@@ -1,10 +1,10 @@
-import axios from'axios';
+﻿import axios from'axios';
 
 
 import { getRawToken } from '../../utils/authHelper';
 
 const api = axios.create({
-  baseURL: 'http://localhost:3310',
+  baseURL: 'http://localhost:28',
   headers: {
     'Content-Type': 'application/json'
   },

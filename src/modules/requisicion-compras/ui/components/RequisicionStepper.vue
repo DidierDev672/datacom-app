@@ -44,19 +44,27 @@
       <template v-slot:navigation>
         <q-stepper-navigation>
           <q-btn
+            unelevated
             @click="avanzarOEnviar()"
-            color="primary"
             :loading="isLoading"
             :disable="isLoading"
-            :label="step === 3 ? 'Enviar requisición' : 'Siguiente'" 
+            :label="step === 3 ? 'Enviar requisición' : 'Siguiente'"
+            class="btn btn-success"
           />
           <q-btn
             v-if="step > 1"
-            flat
-            color="primary"
+            unelevated
             @click="$refs.stepper.previous()"
             label="Atrás"
+            class="btn btn-secondary q-ml-sm"
+            :disable="isLoading"
+          />
+          <q-btn
+            outline
+            @click="limpiarFormulario()"
+            label="Limpiar formulario"
             class="q-ml-sm"
+            color="negative"
             :disable="isLoading"
           />
         </q-stepper-navigation>
@@ -66,11 +74,11 @@
 </template>
 
 <script>
-import AlertaGlobal from './AlertaGlobal.vue';
-import StepIdentificacion from './StepIdentificacion.vue';
-import StepDetalle from './StepDetalle.vue';
-import StepJustificacion from './StepJustificacion.vue';
 import { useRequisicionStore } from '../store/useRequisicionStore';
+import AlertaGlobal from './AlertaGlobal.vue';
+import StepDetalle from './StepDetalle.vue';
+import StepIdentificacion from './StepIdentificacion.vue';
+import StepJustificacion from './StepJustificacion.vue';
 
 export default {
   name: 'RequisicionStepper',
@@ -84,7 +92,6 @@ export default {
     return {
       step: 1,
       formData: {
-        codigo: '',
         proyecto: '',
         lineaAccion: '',
         mandato: '',
@@ -144,25 +151,51 @@ export default {
           timeout: 3000
         });
 
+        this.limpiarFormulario();
+
         // Redirigir a la lista
-        this.$router.push('/compras/requisiciones');
+        // this.$router.push('/compras/requisiciones');
       } catch (err) {
         // El error ya es manejado por el store y mostrado en AlertaGlobal
         console.error('Error al guardar requisición:', err);
       }
+    },
+    limpiarFormulario() {
+      this.formData = {
+        proyecto: '',
+        lineaAccion: '',
+        mandato: '',
+        municipio: '',
+        fechaSolicitud: '',
+        lugarEntrega: '',
+        fechaEntrega: '',
+        solicitante: '',
+        items: [],
+        justificacion: '',
+        recomendaciones: ''
+      };
+      
+      this.$nextTick(() => {
+        if (this.$refs.step1) {
+          this.$refs.step1.model = this.formData;
+          if (this.$refs.step1.$v) this.$refs.step1.$v.$reset();
+        }
+        if (this.$refs.step2) {
+          this.$refs.step2.model = this.formData.items;
+        }
+        if (this.$refs.step3) {
+          this.$refs.step3.model = this.formData;
+          if (this.$refs.step3.$v) this.$refs.step3.$v.$reset();
+        }
+      });
+
+      this.step = 1;
+      this.store.clearDocumentos();
+      this.store.error = null;
+      this.store.fieldErrors = [];
     }
   }
 }
 </script>
 
-<style scoped>
-::v-deep .q-stepper__title {
-  font-size: 16px !important;
-  font-weight: 500 !important;
-}
-/* Additionally check if there 'botones' are needed in stepper, but the prompt only said Secciones for stepper */
-::v-deep .q-stepper__step-inner .q-btn {
-  font-size: 16px !important;
-  font-weight: 500 !important;
-}
 </style>

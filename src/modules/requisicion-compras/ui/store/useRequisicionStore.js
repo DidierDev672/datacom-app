@@ -8,11 +8,21 @@ export const useRequisicionStore = defineStore('requisiciones', {
   state: () => ({
     requisiciones: [],
     currentRequisicion: null,
+    documentos: [], // Global attached documents
     isLoading: false,
     error: null,
     fieldErrors: [] // Array of backend validation errors
   }),
   actions: {
+    addDocumentos(files) {
+      this.documentos.push(...files);
+    },
+    removeDocumento(index) {
+      this.documentos.splice(index, 1);
+    },
+    clearDocumentos() {
+      this.documentos = [];
+    },
     async fetchAll(filters) {
       this.isLoading = true;
       this.error = null;
@@ -85,6 +95,21 @@ export const useRequisicionStore = defineStore('requisiciones', {
         const repo = new RequisicionHttpRepository();
         await repo.actualizarStatus(id, status);
         await this.fetchAll();
+      } catch (e) {
+        this.error = e.message;
+        throw e;
+      } finally {
+        this.isLoading = false;
+      }
+    },
+    async deleteRequisicion(id) {
+      this.isLoading = true;
+      this.error = null;
+      try {
+        const repo = new RequisicionHttpRepository();
+        await repo.eliminar(id);
+        // Optimistic update or just filter local state
+        this.requisiciones = this.requisiciones.filter(r => r.idRequisicion !== id);
       } catch (e) {
         this.error = e.message;
         throw e;

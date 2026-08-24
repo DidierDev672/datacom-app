@@ -12,8 +12,8 @@ export class CreateSupplyPlan {
         // Validación de negocio (Primera y Tercera ley: Validar datos para evitar daños/corrupción)
         const plan = new SupplyPlan(supplyPlanDTO);
 
-        if (!plan.name) {
-            throw new Error("El nombre del plan es obligatorio.");
+        if (!plan.name || plan.name.trim().length < 3) {
+            throw new Error("El nombre del plan debe tener al menos 3 caracteres.");
         }
 
         if (!plan.isValidDateRange()) {

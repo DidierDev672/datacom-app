@@ -1,0 +1,69 @@
+﻿# Stack completo: MariaDB + Spring Boot + Frontend.
+# Requiere datacom-backend como carpeta hermana de datacom-app:
+#   .../datacom/datacom-app
+#   .../datacom/datacom-backend
+#
+#   cd datacom-app
+#   docker compose -f docker-compose.full.yml up -d --build
+services:
+  mariadb:
+    image: mariadb:10.11
+    container_name: mariadb-server
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: datacom1234
+      MARIADB_DATABASE: datacomdb
+      MARIADB_USER: root
+      MARIADB_PASSWORD: datacom1234
+    ports:
+      - "3309:3306"
+    volumes:
+      - datacom_mysql_data:/var/lib/mysql
+    command: --innodb-use-native-aio=0
+    networks:
+      - datacom-net
+
+  datacom-backend:
+    build:
+      context: ../datacom-backend
+      dockerfile: Dockerfile.build
+    image: datacom-backend:latest
+    container_name: datacom-backend
+    restart: unless-stopped
+    depends_on:
+      - mariadb
+    ports:
+      - "3310:3310"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      DATACOM_MULTITENANT_ENABLED: "false"
+      SPRING_DATASOURCE_URL: jdbc:mariadb://mariadb:3306/datacomdb?allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: datacom1234
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.mariadb.jdbc.Driver
+    networks:
+      - datacom-net
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        VUE_APP_API_BASE_URL: ""
+    image: datacom-frontend:latest
+    container_name: datacom-frontend
+    restart: unless-stopped
+    depends_on:
+      - datacom-backend
+    ports:
+      - "8080:80"
+    networks:
+      - datacom-net
+
+networks:
+  datacom-net:
+    name: datacom-net
+    driver: bridge
+
+volumes:
+  datacom_mysql_data:

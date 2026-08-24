@@ -16,14 +16,6 @@ export function useSolicitudAbastecimiento() {
     nivelAprobacion: '',
     productosServicios: [],
     observacionesProductos: '',
-    departamento: '',
-    municipio: '',
-    direccion: '',
-    contacto: '',
-    telefono: '',
-    fechaEntrega: '',
-    requiereFlete: false,
-    garantias: '',
     aprobadores: [],
   });
 

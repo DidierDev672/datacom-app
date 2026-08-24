@@ -7,6 +7,7 @@
       <q-btn-toggle
         v-model="store.form.tipoSolicitud"
         toggle-color="primary"
+        toggle-text-color="positive"
         flat
         bordered
         unelevated

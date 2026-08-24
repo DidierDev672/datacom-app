@@ -1,587 +1,763 @@
 // app global css in SCSS form
-@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
-@import 'custom/dashboard';
+@import "custom/dashboard";
+@import "custom/background";
 
 // Variables tipográficas mejoradas
 :root {
-    --font-family-sans: 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-    --font-family-heading: 'Poppins', var(--font-family-sans);
+  // Colores institucionales (fondo global)
+  --background-color: #fafafa;
+  // Superficies
+  --surface: #ffffff;
+  --surface-secondary: #f7f1d5;
+  --surface-navbar: rgba(255, 255, 255, 0.95);
+  --surface-sidebar: rgba(255, 255, 255, 0.92);
+  --font-family-sans: "Inter Tight", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", sans-serif;
+  --font-family-heading: "Poppins", var(--font-family-sans);
 
-    // Escala tipográfica fluida
-    --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.8rem);
-    --text-sm: clamp(0.875rem, 0.8rem + 0.375vw, 0.9rem);
-    --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
-    --text-lg: clamp(1.125rem, 1rem + 0.625vw, 1.25rem);
-    --text-xl: clamp(1.25rem, 1.1rem + 0.75vw, 1.5rem);
-    --text-2xl: clamp(1.5rem, 1.3rem + 1vw, 1.875rem);
-    --text-3xl: clamp(1.875rem, 1.6rem + 1.375vw, 2.25rem);
-    --text-4xl: clamp(2.25rem, 2rem + 1.25vw, 3rem);
+  // Escala tipográfica fluida
+  --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.8rem);
+  --text-sm: clamp(0.875rem, 0.8rem + 0.375vw, 0.9rem);
+  --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --text-lg: clamp(1.125rem, 1rem + 0.625vw, 1.25rem);
+  --text-xl: clamp(1.25rem, 1.1rem + 0.75vw, 1.5rem);
+  --text-2xl: clamp(1.5rem, 1.3rem + 1vw, 1.875rem);
+  --text-3xl: clamp(1.875rem, 1.6rem + 1.375vw, 2.25rem);
+  --text-4xl: clamp(2.25rem, 2rem + 1.25vw, 3rem);
 
-    // Line heights optimizados
-    --leading-tight: 1.25;
-    --leading-snug: 1.375;
-    --leading-normal: 1.5;
-    --leading-relaxed: 1.625;
-    --leading-loose: 2;
+  // Line heights optimizados
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose: 2;
 
-    // Escala tipográfica STA
-    --text-titulo:       1.375rem;   /* ~22px */
-    --text-seccion:      1.063rem;   /* ~17px */
-    --text-label:        0.875rem;   /* ~14px */
-    --text-input:        0.9375rem;  /* ~15px */
-    --text-tabla:        0.875rem;   /* ~14px */
-    --text-header-tb:    0.8125rem;  /* ~13px */
-    --text-boton:        0.9375rem;  /* ~15px */
+  // Escala tipográfica STA
+  --text-titulo: 1.375rem; /* ~22px */
+  --text-seccion: 1.063rem; /* ~17px */
+  --text-label: 0.875rem; /* ~14px */
+  --text-input: 0.9375rem; /* ~15px */
+  --text-tabla: 0.875rem; /* ~14px */
+  --text-header-tb: 0.8125rem; /* ~13px */
+  --text-boton: 0.9375rem; /* ~15px */
 
-    --weight-titulo:     600;
-    --weight-seccion:    500;
-    --weight-label:      500;
-    --weight-input:      400;
-    --weight-tabla:      400;
-    --weight-header-tb:  600;
-    --weight-boton:      600;
+  --weight-titulo: 600;
+  --weight-seccion: 500;
+  --weight-label: 500;
+  --weight-input: 400;
+  --weight-tabla: 400;
+  --weight-header-tb: 600;
+  --weight-boton: 600;
 
-    // Colores STA
-    --color-text-primary:   #111827;
-    --color-text-secondary: #374151;
-    --color-label:          #6B7280;
-    --color-placeholder:    #9CA3AF;
-    --color-border:         #D1D5DB;
-    --color-bg:             #FFFFFF;
+  // Colores STA
+  --color-text-primary: #111827;
+  --color-text-secondary: #374151;
+  --color-label: #6b7280;
+  --color-placeholder: #9ca3af;
+  --color-border: #d1d5db;
+  --color-bg: var(--surface);
 
-    // Inputs STA
-    --input-height:         2.75rem;   /* 44px base */
-    --input-padding:        0.625rem 0.75rem;
-    --input-border-radius:  0.5rem;
-
+  // Inputs STA
+  --input-height: 2.75rem; /* 44px base */
+  --input-padding: 0.625rem 0.75rem;
+  --input-border-radius: 0.5rem;
 }
 
 body {
-    font-family: var(--font-family-sans);
-    font-size: var(--text-base);
-    color: #1f2937; // Gris más moderno y legible
-    font-weight: 400;
-    background-color: #fafafa; // Fondo ligeramente off-white
-    line-height: var(--leading-normal);
-    letter-spacing: -0.011em; // Tracking optimizado para Inter
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+  font-family: var(--font-family-sans);
+  font-size: var(--text-base);
+  color: #1f2937; // Gris más moderno y legible
+  font-weight: 400;
+  line-height: var(--leading-normal);
+  letter-spacing: -0.011em; // Tracking optimizado para Inter
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
 }
 
 // Sistema tipográfico moderno y escalable
 h1,
 .text-h1 {
-    font-family: var(--font-family-heading);
-    font-weight: 800; // Más peso para mejor jerarquía
-    font-size: var(--text-4xl);
-    line-height: var(--leading-tight);
-    color: #0f172a; // Negro azulado más elegante
-    letter-spacing: -0.025em;
-    margin-bottom: clamp(1rem, 4vw, 2rem);
-    font-feature-settings: 'kern' 1, 'liga' 1;
+  font-family: var(--font-family-heading);
+  font-weight: 800; // Más peso para mejor jerarquía
+  font-size: var(--text-4xl);
+  line-height: var(--leading-tight);
+  color: #0f172a; // Negro azulado más elegante
+  letter-spacing: -0.025em;
+  margin-bottom: clamp(1rem, 4vw, 2rem);
+  font-feature-settings: "kern" 1, "liga" 1;
 
-    @media (prefers-reduced-motion: no-preference) {
-        transition: color 0.2s ease;
-    }
+  @media (prefers-reduced-motion: no-preference) {
+    transition: color 0.2s ease;
+  }
 }
 
 h2,
 .text-h2 {
-    font-family: var(--font-family-heading);
-    font-weight: 700;
-    font-size: var(--text-3xl);
-    line-height: var(--leading-tight);
-    color: #1e293b;
-    letter-spacing: -0.022em;
-    margin-bottom: clamp(0.75rem, 3vw, 1.5rem);
-    font-feature-settings: 'kern' 1, 'liga' 1;
+  font-family: var(--font-family-heading);
+  font-weight: 700;
+  font-size: var(--text-3xl);
+  line-height: var(--leading-tight);
+  color: #1e293b;
+  letter-spacing: -0.022em;
+  margin-bottom: clamp(0.75rem, 3vw, 1.5rem);
+  font-feature-settings: "kern" 1, "liga" 1;
 }
 
 h3,
 .text-h3 {
-    font-family: var(--font-family-heading);
-    font-weight: 600;
-    font-size: var(--text-2xl);
-    line-height: var(--leading-snug);
-    color: #334155;
-    letter-spacing: -0.018em;
-    margin-bottom: clamp(0.5rem, 2.5vw, 1.25rem);
-    font-feature-settings: 'kern' 1;
+  font-family: var(--font-family-heading);
+  font-weight: 600;
+  font-size: var(--text-2xl);
+  line-height: var(--leading-snug);
+  color: #334155;
+  letter-spacing: -0.018em;
+  margin-bottom: clamp(0.5rem, 2.5vw, 1.25rem);
+  font-feature-settings: "kern" 1;
 }
 
 h4,
 .text-h4 {
-    font-family: var(--font-family-sans);
-    font-weight: 600;
-    font-size: var(--text-xl);
-    line-height: var(--leading-snug);
-    color: #475569;
-    letter-spacing: -0.014em;
-    margin-bottom: clamp(0.5rem, 2vw, 1rem);
+  font-family: var(--font-family-sans);
+  font-weight: 600;
+  font-size: var(--text-xl);
+  line-height: var(--leading-snug);
+  color: #475569;
+  letter-spacing: -0.014em;
+  margin-bottom: clamp(0.5rem, 2vw, 1rem);
 }
 
 h5,
 .text-h5 {
-    font-family: var(--font-family-sans);
-    font-weight: 600;
-    font-size: var(--text-lg);
-    line-height: var(--leading-normal);
-    color: #64748b;
-    letter-spacing: -0.01em;
-    margin-bottom: clamp(0.375rem, 1.5vw, 0.75rem);
+  font-family: var(--font-family-sans);
+  font-weight: 600;
+  font-size: var(--text-lg);
+  line-height: var(--leading-normal);
+  color: #64748b;
+  letter-spacing: -0.01em;
+  margin-bottom: clamp(0.375rem, 1.5vw, 0.75rem);
 }
 
 h6,
 .text-h6 {
-    font-family: var(--font-family-sans);
-    font-weight: 600;
-    font-size: var(--text-base);
-    line-height: var(--leading-normal);
-    color: #64748b;
-    letter-spacing: 0.025em; // Ligeramente expandido para mejor legibilidad
-    margin-bottom: clamp(0.25rem, 1vw, 0.5rem);
-    text-transform: uppercase;
-    font-size: var(--text-sm); // Más pequeño para subtítulos
+  font-family: var(--font-family-sans);
+  font-weight: 600;
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: #64748b;
+  letter-spacing: 0.025em; // Ligeramente expandido para mejor legibilidad
+  margin-bottom: clamp(0.25rem, 1vw, 0.5rem);
+  text-transform: uppercase;
+  font-size: var(--text-sm); // Más pequeño para subtítulos
 }
 
 // Sistema de párrafos moderno y legible
 p {
-    font-size: var(--text-base);
-    line-height: var(--leading-relaxed); // 1.625 para mejor legibilidad
-    font-weight: 400;
-    letter-spacing: -0.008em; // Optimizado para Inter
-    color: #475569; // Gris más accesible
-    margin-bottom: clamp(0.75rem, 2vw, 1.25rem);
-    max-width: 65ch; // Límite de caracteres para legibilidad óptima
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed); // 1.625 para mejor legibilidad
+  font-weight: 400;
+  letter-spacing: -0.008em; // Optimizado para Inter
+  color: #475569; // Gris más accesible
+  margin-bottom: clamp(0.75rem, 2vw, 1.25rem);
+  max-width: 65ch; // Límite de caracteres para legibilidad óptima
 
-    &.lead {
-        font-size: var(--text-lg);
-        font-weight: 400; // Peso normal en lugar de light
-        line-height: var(--leading-relaxed);
-        color: #334155;
-        margin-bottom: clamp(1rem, 3vw, 1.75rem);
-        max-width: 60ch;
-    }
+  &.lead {
+    font-size: var(--text-lg);
+    font-weight: 400; // Peso normal en lugar de light
+    line-height: var(--leading-relaxed);
+    color: #334155;
+    margin-bottom: clamp(1rem, 3vw, 1.75rem);
+    max-width: 60ch;
+  }
 
-    &.small {
-        font-size: var(--text-sm);
-        color: #64748b;
-        line-height: var(--leading-normal);
-    }
+  &.small {
+    font-size: var(--text-sm);
+    color: #64748b;
+    line-height: var(--leading-normal);
+  }
 
-    &.caption {
-        font-size: var(--text-xs);
-        color: #94a3b8;
-        line-height: var(--leading-normal);
-        letter-spacing: 0.02em;
-        text-transform: uppercase;
-        font-weight: 500;
-    }
+  &.caption {
+    font-size: var(--text-xs);
+    color: #94a3b8;
+    line-height: var(--leading-normal);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
 }
 
 // Sistema de utilidades tipográficas moderno
 .text-primary {
-    color: #0f172a !important;
+  color: #0f172a !important;
 }
 
 .text-secondary {
-    color: #475569 !important;
+  color: #475569 !important;
 }
 
 .text-muted {
-    color: #64748b !important;
+  color: #64748b !important;
 }
 
 .text-subtle {
-    color: #94a3b8 !important;
+  color: #94a3b8 !important;
 }
 
 .text-accent {
-    color: $primary !important;
-    font-weight: 500;
+  color: $primary !important;
+  font-weight: 500;
 }
 
 .text-brand {
-    color: $primary !important;
-    font-weight: 600;
-    letter-spacing: -0.01em;
+  color: $primary !important;
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
 .text-elegant {
-    font-family: var(--font-family-heading);
-    font-weight: 300;
-    letter-spacing: 0.015em;
-    line-height: var(--leading-relaxed);
+  font-family: var(--font-family-heading);
+  font-weight: 300;
+  letter-spacing: 0.015em;
+  line-height: var(--leading-relaxed);
 }
 
 .text-strong {
-    font-weight: 600;
-    color: #0f172a;
-    letter-spacing: -0.01em;
+  font-weight: 600;
+  color: #0f172a;
+  letter-spacing: -0.01em;
 }
 
 .text-gradient {
-    background: linear-gradient(135deg, $primary 0%, #64c2c8 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    font-weight: 600;
-    letter-spacing: -0.015em;
+  background: linear-gradient(135deg, $primary 0%, #64c2c8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 600;
+  letter-spacing: -0.015em;
 }
 
 // Nuevas utilidades de tamaño
 .text-xs {
-    font-size: var(--text-xs) !important;
+  font-size: var(--text-xs) !important;
 }
 
 .text-sm {
-    font-size: var(--text-sm) !important;
+  font-size: var(--text-sm) !important;
 }
 
 .text-base {
-    font-size: var(--text-base) !important;
+  font-size: var(--text-base) !important;
 }
 
 .text-lg {
-    font-size: var(--text-lg) !important;
+  font-size: var(--text-lg) !important;
 }
 
 .text-xl {
-    font-size: var(--text-xl) !important;
+  font-size: var(--text-xl) !important;
 }
 
 .text-2xl {
-    font-size: var(--text-2xl) !important;
+  font-size: var(--text-2xl) !important;
 }
 
 .text-3xl {
-    font-size: var(--text-3xl) !important;
+  font-size: var(--text-3xl) !important;
 }
 
 .text-4xl {
-    font-size: var(--text-4xl) !important;
+  font-size: var(--text-4xl) !important;
 }
 
 // Utilidades de peso
 .font-light {
-    font-weight: 300 !important;
+  font-weight: 300 !important;
 }
 
 .font-normal {
-    font-weight: 400 !important;
+  font-weight: 400 !important;
 }
 
 .font-medium {
-    font-weight: 500 !important;
+  font-weight: 500 !important;
 }
 
 .font-semibold {
-    font-weight: 600 !important;
+  font-weight: 600 !important;
 }
 
 .font-bold {
-    font-weight: 700 !important;
+  font-weight: 700 !important;
 }
 
 .font-extrabold {
-    font-weight: 800 !important;
+  font-weight: 800 !important;
 }
 
 // Utilidades de line-height
 .leading-tight {
-    line-height: var(--leading-tight) !important;
+  line-height: var(--leading-tight) !important;
 }
 
 .leading-snug {
-    line-height: var(--leading-snug) !important;
+  line-height: var(--leading-snug) !important;
 }
 
 .leading-normal {
-    line-height: var(--leading-normal) !important;
+  line-height: var(--leading-normal) !important;
 }
 
 .leading-relaxed {
-    line-height: var(--leading-relaxed) !important;
+  line-height: var(--leading-relaxed) !important;
 }
 
 .leading-loose {
-    line-height: var(--leading-loose) !important;
+  line-height: var(--leading-loose) !important;
 }
 
 // Mejoras para elementos específicos de Quasar
 .q-btn {
-    font-family: var(--font-family-sans);
-    font-weight: 500;
-    letter-spacing: -0.005em; // Más sutil para Inter
-    text-transform: none;
-    //font-size: var(--text-base); // Aumentado de text-sm para mejor legibilidad
-    border-radius: 8px; // Bordes más modernos
-    // padding: 10px 20px; // Mejor padding
+  font-family: var(--font-family-sans);
+  font-weight: 500;
+  letter-spacing: -0.005em; // Más sutil para Inter
+  text-transform: none;
+  //font-size: var(--text-base); // Aumentado de text-sm para mejor legibilidad
+  border-radius: 8px; // Bordes más modernos
+  // padding: 10px 20px; // Mejor padding
 
-    &.btn-primary {
-        box-shadow: 0 4px 14px 0 rgba($primary, 0.25);
-        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  &.btn-primary {
+    box-shadow: 0 4px 14px 0 rgba($primary, 0.25);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 
-        &:hover {
-            box-shadow: 0 6px 20px 0 rgba($primary, 0.35);
-            transform: translateY(-1px);
-        }
-
-        &:active {
-            transform: translateY(0);
-        }
+    &:hover {
+      box-shadow: 0 6px 20px 0 rgba($primary, 0.35);
+      transform: translateY(-1px);
     }
 
-    // Diferentes tamaños de botón
-    &.q-btn--small {
-        font-size: var(--text-sm); // Aumentado de text-xs
-        padding: 8px 16px;
+    &:active {
+      transform: translateY(0);
     }
+  }
 
-    &.q-btn--large {
-        font-size: var(--text-lg); // Aumentado de text-base
-        font-weight: 600;
-        padding: 14px 28px;
-    }
+  // Diferentes tamaños de botón
+  &.q-btn--small {
+    font-size: var(--text-sm); // Aumentado de text-xs
+    padding: 8px 16px;
+  }
 
-    // Botón extra pequeño para casos específicos
-    &.q-btn--xs {
-        font-size: var(--text-xs);
-        padding: 6px 12px;
-    }
+  &.q-btn--large {
+    font-size: var(--text-lg); // Aumentado de text-base
+    font-weight: 600;
+    padding: 14px 28px;
+  }
+
+  // Botón extra pequeño para casos específicos
+  &.q-btn--xs {
+    font-size: var(--text-xs);
+    padding: 6px 12px;
+  }
 }
 
 .q-card {
-    border-radius: 12px; // Bordes más modernos
+  border-radius: 12px; // Bordes más modernos
 
-    .q-card__section {
-        &.card-title {
-            font-family: var(--font-family-heading);
-            font-weight: 600;
-            font-size: var(--text-xl);
-            color: #0f172a;
-            letter-spacing: -0.015em;
-            line-height: var(--leading-snug);
-        }
+  .q-card__section {
+    &.card-title {
+      font-family: var(--font-family-heading);
+      font-weight: 600;
+      font-size: var(--text-xl);
+      color: #0f172a;
+      letter-spacing: -0.015em;
+      line-height: var(--leading-snug);
     }
+  }
 }
 
 // Mejoras para formularios
 .q-field {
-    .q-field__label {
-        font-family: var(--font-family-sans);
-        font-weight: 500;
-        color: #334155;
-        letter-spacing: -0.005em;
-        font-size: var(--text-base); // Aumentado de text-sm
+  .q-field__label {
+    font-family: var(--font-family-sans);
+    font-weight: 500;
+    color: #334155;
+    letter-spacing: -0.005em;
+    font-size: var(--text-base); // Aumentado de text-sm
+  }
+
+  .q-field__control {
+    font-family: var(--font-family-sans);
+    font-weight: 400;
+    color: #1e293b;
+    font-size: var(--text-lg); // Aumentado de text-base para mejor legibilidad
+
+    input,
+    textarea {
+      line-height: var(--leading-normal);
+      font-size: var(--text-lg) !important; // Asegurar que se aplique
+      padding: 12px 16px; // Más padding para mejor UX
     }
 
-    .q-field__control {
-        font-family: var(--font-family-sans);
-        font-weight: 400;
-        color: #1e293b;
-        font-size: var(--text-lg); // Aumentado de text-base para mejor legibilidad
-
-        input,
-        textarea {
-            line-height: var(--leading-normal);
-            font-size: var(--text-lg) !important; // Asegurar que se aplique
-            padding: 12px 16px; // Más padding para mejor UX
-        }
-
-        select {
-            font-size: var(--text-lg) !important;
-        }
+    select {
+      font-size: var(--text-lg) !important;
     }
+  }
 
-    .q-field__messages {
-        font-size: var(--text-sm); // Aumentado de text-xs
-        color: #64748b;
-        font-weight: 400;
-    }
+  .q-field__messages {
+    font-size: var(--text-sm); // Aumentado de text-xs
+    color: #64748b;
+    font-weight: 400;
+  }
 
-    // Placeholder más visible
-    .q-field__control input::placeholder,
-    .q-field__control textarea::placeholder {
-        color: #94a3b8;
-        font-size: var(--text-base);
-    }
+  // Placeholder más visible
+  .q-field__control input::placeholder,
+  .q-field__control textarea::placeholder {
+    color: #94a3b8;
+    font-size: var(--text-base);
+  }
+}
+
+/* Global Input Scaling */
+.q-field:not(.q-textarea) .q-field__control {
+  height: 44px !important;
+  min-height: 44px !important;
+}
+
+.q-field__control {
+  border-radius: 8px !important;
+}
+
+.q-field__native {
+  padding: 10px 12px !important;
+  font-size: 14px !important;
+}
+
+.q-field {
+  margin-bottom: 16px !important;
+}
+
+/* Estados: focus + error obligatorios */
+.q-field--focused .q-field__control:after {
+  border-width: 2px !important;
+}
+
+.q-field--error .q-field__control:before {
+  border-color: #c10015 !important;
+  border-width: 2px !important;
 }
 
 // Mejoras para tablas
 .q-table {
+  th {
+    font-family: var(--font-family-sans);
+    font-weight: 600;
+    font-size: var(--text-sm); // Aumentado de text-xs
+    color: #475569;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 12px 16px; // Más espaciado
+    line-height: var(--leading-normal);
+  }
+
+  td {
+    font-size: var(--text-base); // Aumentado de text-sm
+    color: #334155;
+    line-height: var(--leading-relaxed); // Mejor legibilidad
+    padding: 14px 16px; // Más espaciado vertical
+    font-weight: 400;
+  }
+
+  // Estilos para diferentes tipos de celdas
+  .q-table__top {
+    .q-table__title {
+      font-size: var(--text-xl);
+      font-weight: 600;
+      color: #0f172a;
+    }
+
+    .q-table__subtitle {
+      font-size: var(--text-sm);
+      color: #64748b;
+    }
+  }
+
+  // Mejor spacing para tablas compactas
+  &.q-table--dense {
     th {
-        font-family: var(--font-family-sans);
-        font-weight: 600;
-        font-size: var(--text-sm); // Aumentado de text-xs
-        color: #475569;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        padding: 12px 16px; // Más espaciado
-        line-height: var(--leading-normal);
+      padding: 8px 12px;
+      font-size: var(--text-xs);
     }
 
     td {
-        font-size: var(--text-base); // Aumentado de text-sm
-        color: #334155;
-        line-height: var(--leading-relaxed); // Mejor legibilidad
-        padding: 14px 16px; // Más espaciado vertical
-        font-weight: 400;
+      padding: 10px 12px;
+      font-size: var(--text-sm);
     }
-
-    // Estilos para diferentes tipos de celdas
-    .q-table__top {
-        .q-table__title {
-            font-size: var(--text-xl);
-            font-weight: 600;
-            color: #0f172a;
-        }
-
-        .q-table__subtitle {
-            font-size: var(--text-sm);
-            color: #64748b;
-        }
-    }
-
-    // Mejor spacing para tablas compactas
-    &.q-table--dense {
-        th {
-            padding: 8px 12px;
-            font-size: var(--text-xs);
-        }
-
-        td {
-            padding: 10px 12px;
-            font-size: var(--text-sm);
-        }
-    }
+  }
 }
 
 // Mejoras para tooltips y notificaciones
 .q-tooltip {
-    font-size: var(--text-sm); // Aumentado de text-xs para mejor legibilidad
-    font-weight: 500;
-    letter-spacing: -0.005em;
-    padding: 8px 12px; // Más espaciado
+  font-size: var(--text-sm); // Aumentado de text-xs para mejor legibilidad
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  padding: 8px 12px; // Más espaciado
 }
 
 .q-notification {
-    font-size: var(--text-base); // Aumentado de text-sm
-    font-weight: 400;
-    line-height: var(--leading-normal);
+  font-size: var(--text-base); // Aumentado de text-sm
+  font-weight: 400;
+  line-height: var(--leading-normal);
 }
 
 // Mejoras adicionales para elementos de interfaz
 .q-menu {
-    .q-item {
-        font-size: var(--text-base);
-        line-height: var(--leading-normal);
-        padding: 12px 16px; // Más espaciado para mejor UX móvil
+  .q-item {
+    font-size: var(--text-base);
+    line-height: var(--leading-normal);
+    padding: 12px 16px; // Más espaciado para mejor UX móvil
 
-        .q-item__label {
-            font-size: var(--text-base);
-            font-weight: 400;
-        }
-
-        .q-item__label--caption {
-            font-size: var(--text-sm);
-            color: #64748b;
-        }
+    .q-item__label {
+      font-size: var(--text-base);
+      font-weight: 400;
     }
+
+    .q-item__label--caption {
+      font-size: var(--text-sm);
+      color: #64748b;
+    }
+  }
 }
 
 // Mejoras para breadcrumbs
 .q-breadcrumbs {
-    font-size: var(--text-base);
+  font-size: var(--text-base);
 
-    .q-breadcrumbs__el {
-        font-weight: 400;
-        color: #64748b;
+  .q-breadcrumbs__el {
+    font-weight: 400;
+    color: #64748b;
 
-        &:last-child {
-            color: #334155;
-            font-weight: 500;
-        }
+    &:last-child {
+      color: #334155;
+      font-weight: 500;
     }
+  }
 
-    .q-breadcrumbs__separator {
-        color: #94a3b8;
-    }
+  .q-breadcrumbs__separator {
+    color: #94a3b8;
+  }
 }
 
 // Mejoras para tabs
 .q-tabs {
-    .q-tab {
-        font-size: var(--text-base);
-        font-weight: 500;
-        letter-spacing: -0.005em;
-        padding: 12px 24px;
+  .q-tab {
+    font-size: var(--text-base);
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    padding: 12px 24px;
 
-        &.q-tab--active {
-            font-weight: 600;
-        }
+    &.q-tab--active {
+      font-weight: 600;
     }
+  }
 }
 
 .small-screen-only {
-    @media (max-width: $breakpoint-xs-max) {
-        display: block;
-    }
+  @media (max-width: $breakpoint-xs-max) {
+    display: block;
+  }
 
-    @media (min-width: $breakpoint-sm-min) {
-        display: none;
-    }
+  @media (min-width: $breakpoint-sm-min) {
+    display: none;
+  }
 }
 
 .large-screen-only {
-    @media (max-width: $breakpoint-xs-max) {
-        display: none;
-    }
+  @media (max-width: $breakpoint-xs-max) {
+    display: none;
+  }
 
-    @media (min-width: $breakpoint-sm-min) {
-        display: block;
-    }
+  @media (min-width: $breakpoint-sm-min) {
+    display: block;
+  }
 }
 
-
-
 .constrain {
-    margin: 0 auto;
+  margin: 0 auto;
 }
 
 .full-alto {
-    height: 70vh;
+  height: 70vh;
 }
 
 @media print {
-    /* Contenido del fichero print.css */
+  /* Contenido del fichero print.css */
 
-    .text-center {
-        text-align: center;
-    }
+  .text-center {
+    text-align: center;
+  }
 
-    .report-list .q-item__section {
-        border-right: 1px solid #ccc;
-    }
+  .report-list .q-item__section {
+    border-right: 1px solid #ccc;
+  }
 
-    .q-list--bordered {
-        border: 1px solid rgba(0, 0, 0, 0.12);
-    }
+  .q-list--bordered {
+    border: 1px solid rgba(0, 0, 0, 0.12);
+  }
 
-    @page {
-        size: auto;
-        /* auto is the initial value */
-        margin: 10%;
-        margin-top: 0;
-    }
+  @page {
+    size: auto;
+    /* auto is the initial value */
+    margin: 10%;
+    margin-top: 0;
+  }
 
-    header,
-    footer,
-    nav,
-    aside {
-        display: none;
-    }
+  header,
+  footer,
+  nav,
+  aside {
+    display: none;
+  }
+}
+
+/* --- New Typography System (UX 2026) --- */
+.title-xl {
+  font-size: 26px;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.3;
+  margin-bottom: 24px;
+  @media (max-width: 600px) {
+    font-size: 22px;
+  }
+}
+
+.title-lg {
+  font-size: 22px;
+  font-weight: 600;
+  color: #111827;
+  line-height: 1.35;
+  margin-bottom: 16px;
+  @media (max-width: 600px) {
+    font-size: 18px;
+  }
+}
+
+.title-md {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 12px;
+  @media (max-width: 600px) {
+    font-size: 16px;
+  }
+}
+
+.title-sm {
+  font-size: 15px;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 8px;
+}
+
+.text-body-custom {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #374151;
+  @media (max-width: 600px) {
+    font-size: 14px; /* Minimum 14px as per mobile rules */
+  }
+}
+
+.text-secondary-custom {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* Spacing Utilities */
+.mt-xl {
+  margin-top: 32px;
+}
+.mb-xl {
+  margin-bottom: 32px;
+}
+.mt-lg {
+  margin-top: 16px;
+}
+.mb-lg {
+  margin-bottom: 16px;
+}
+.mt-md {
+  margin-top: 12px;
+}
+.mb-md {
+  margin-bottom: 12px;
+}
+.mt-sm {
+  margin-top: 8px;
+}
+.mb-sm {
+  margin-bottom: 8px;
+}
+
+/* Quasar Overrides for Stepper */
+.q-stepper__title {
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  color: #111827 !important;
+}
+
+.q-stepper__header {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.q-stepper__tab--active .q-stepper__title {
+  color: #2563eb !important;
+}
+
+.btn-success {
+  background: #10b981;
+  color: #ffffff;
+}
+
+/* --- Design System: Botones (Global) --- */
+.btn {
+  height: 44px;
+  padding: 0 16px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+  text-transform: none; /* No MAYÚSCULAS */
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.btn-secondary {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: #374151;
+}
+
+.btn:hover {
+  filter: brightness(0.95);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.btn:active {
+  transform: scale(0.98);
 }

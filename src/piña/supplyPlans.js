@@ -7,20 +7,23 @@ export const useSupplyPlansStore = defineStore('supplyPlans', {
     state: () => ({
         plans: [],
         form: {
-            active:true,
+            active: true,
             createdAt: null,
             createdBy: null,
             description: '',
-            endDate: null,
+            endDate: '',
             name: '',
             ownerId: '',
-            startDate: null,
-            status: 'pending',
+            startDate: '',
+            status: 'en_planificacion',
             year: new Date().getFullYear()
         },
         isLoading: false,
+        isDeleting: false,
+        deleteStatus: null,
         isSubmitting: false,
         errors: {},
+        warnings: [],
         isEditing: false,
         originalData: null
     }),
@@ -122,37 +125,53 @@ export const useSupplyPlansStore = defineStore('supplyPlans', {
         },
 
         async saveProject() {
-            if(!this.validateForm()) return;
+            if(!this.validateForm()) return false;
             this.isSubmitting = true;
             this.errors = {};
+            this.warnings = [];
 
             try {
+                let response;
                 if(this.isEditing){
-                    await this.updateProject();
+                    response = await this.updateProject();
                 }else{
-                    await this.createProject();
+                    response = await this.createProject();
                 }
+                if (response && response.warnings && response.warnings.length > 0) {
+                    this.warnings = response.warnings;
+                }
+                return true;
             } catch (error) {
                 console.error('Error al guardar proyecto:', error);
-                this.errors.general = error.message || 'Error al guardar proyecto';
+                const responseData = error.response && error.response.data;
+                const errorMessage = 
+                    (responseData && responseData.error && responseData.error.message) ||
+                    (responseData && responseData.message) ||
+                    error.message ||
+                    'Error al guardar proyecto';
+                this.errors.general = errorMessage;
+                return false;
             } finally {
                 this.isSubmitting = false;
             }
         },
 
         resetForm() {
-            this.form = {
-                active:true,
+            const defaults = {
+                active: true,
                 createdAt: null,
                 createdBy: null,
                 description: '',
-                endDate: null,
+                endDate: '',
                 name: '',
                 ownerId: '',
-                startDate: null,
-                status: 'pending',
+                startDate: '',
+                status: 'en_planificacion',
                 year: new Date().getFullYear()
-            }
+            };
+            Object.keys(defaults).forEach((key) => {
+                this.form[key] = defaults[key];
+            });
             this.errors = {};
             this.isEditing = false;
             this.originalData = null;
@@ -193,6 +212,16 @@ export const useSupplyPlansStore = defineStore('supplyPlans', {
             return response;
         },
 
+        async updateProjectById(id, updateData) {
+            const repository = this._getRepository();
+            const response = await repository.update(id, updateData);
+            const index = this.plans.findIndex(plan => plan.id === id);
+            if (index !== -1) {
+                this.plans.splice(index, 1, response);
+            }
+            return response;
+        },
+
         async fetchAllPlans() {
             this.isLoading = true;
             this.errors = {};
@@ -229,15 +258,63 @@ export const useSupplyPlansStore = defineStore('supplyPlans', {
 
         async deletePlan(id) {
             this.isLoading = true;
+            this.isDeleting = true;
+            this.deleteStatus = null;
             this.errors = {};
             try {
                 const repository = this._getRepository();
                 const response = await repository.delete(id);
                 this.plans = this.plans.filter(plan => plan.id !== id);
+                this.deleteStatus = { success: true, message: 'Plan eliminado correctamente' };
                 return response;
             } catch (error) {
                 console.error(`Error al eliminar el plan ${id}:`, error);
-                this.errors.general = `Error al eliminar el plan ${id}`;
+                const message = (error && error.response && error.response.data && error.response.data.message)
+                    || (error && error.message)
+                    || `Error al eliminar el plan ${id}`;
+                this.errors.general = message;
+                this.deleteStatus = { success: false, message };
+                throw error;
+            } finally {
+                this.isDeleting = false;
+                this.isLoading = false;
+            }
+        },
+
+        async updatePlanStatus(id, status) {
+            this.isLoading = true;
+            this.errors = {};
+            try {
+                const repository = this._getRepository();
+                const response = await repository.updateStatus(id, status);
+                const index = this.plans.findIndex(plan => plan.id === id);
+                if (index !== -1) {
+                    this.plans.splice(index, 1, response);
+                }
+                return response;
+            } catch (error) {
+                console.error(`Error al actualizar estado del plan ${id}:`, error);
+                this.errors.general = `Error al actualizar estado del plan ${id}`;
+                throw error;
+            } finally {
+                this.isLoading = false;
+            }
+        },
+
+        async updateProjectById(id, updateData) {
+            this.isLoading = true;
+            this.errors = {};
+            try {
+                const repository = this._getRepository();
+                const response = await repository.update(id, updateData);
+                const index = this.plans.findIndex(plan => plan.id === id);
+                if (index !== -1) {
+                    this.plans.splice(index, 1, response);
+                }
+                return response;
+            } catch (error) {
+                console.error(`Error al actualizar el plan ${id}:`, error);
+                this.errors.general = `Error al actualizar el plan ${id}`;
                 throw error;
             } finally {
                 this.isLoading = false;

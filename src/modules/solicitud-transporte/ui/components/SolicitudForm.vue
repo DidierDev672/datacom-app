@@ -162,7 +162,7 @@ export default {
 
 <style scoped>
 .solicitud-form-container {
-  max-width: 1200px;
+  width: 100%;
   margin: 20px 0px;
   padding: 20px;
 }

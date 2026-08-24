@@ -9,8 +9,8 @@
         <label class="field-label">Subdirección</label>
         <select class="field-input" v-model="solicitud.subdireccion">
           <option value="" disabled>Seleccione una opción</option>
-          <option value="Subdireccion programatica">Subdirección programática</option>
-          <option value="Subdireccion administrativa">Subdirección administrativa</option>
+          <option value="planeacion y Gestion Estrategica">planeacion y Gestion Estrategica</option>
+          <option value="Gestion Corporativa">Gestion Corporativa</option>
         </select>
       </div>
 

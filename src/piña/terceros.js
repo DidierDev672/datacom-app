@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia'
+﻿import { defineStore } from 'pinia'
 import axios from 'axios'
 import { URL_API } from '../utils/config'
 
@@ -26,9 +26,11 @@ export const useTercerosStore = defineStore('terceros', {
           }
         })
         console.log('<<< [TercerosStore] Respuesta de registro:', response.data)
-        if (response.data && response.data.data) {
-          this.terceros.push(response.data.data)
-          return response.data.data
+        var body = response.data || {}
+        var entity = body.results != null ? body.results : body.data
+        if (entity) {
+          this.terceros.push(entity)
+          return entity
         }
         return null
       } catch (error) {
@@ -48,9 +50,11 @@ export const useTercerosStore = defineStore('terceros', {
         console.log('>>> [TercerosStore] Iniciando registro masivo de:', payloadList.length, 'terceros')
         const response = await axios.post(`${URL_API}/api/v1/terceros`, payloadList)
         console.log('<<< [TercerosStore] Respuesta de registro masivo:', response.data)
-        if (response.data && response.data.data) {
-          this.terceros = [...this.terceros, ...response.data.data]
-          return response.data.data
+        var body = response.data || {}
+        var list = body.results != null ? body.results : body.data
+        if (list && list.length) {
+          this.terceros = [...this.terceros, ...list]
+          return list
         }
         return []
       } catch (error) {

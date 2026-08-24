@@ -1,114 +1,152 @@
 <template>
-  <div class="q-pa-md">
-    <q-card class="shadow-5 rounded-borders">
-      <q-card-section class="bg-primary text-white row items-center q-pb-md">
-        <q-icon name="fact_check" size="md" class="q-mr-md" />
-        <div>
-          <div class="text-h5 text-white">Aprobación de Abastecimiento</div>
-          <div class="text-subtitle2">Gestión y control de solicitudes de compra</div>
+  <div class="page-wrapper q-pa-md">
+    <q-card class="my-card">
+      <!-- ── HEADER INSTITUCIONAL ── -->
+      <q-card-section class="header-section row justify-between items-center q-pa-lg">
+        <div class="row items-center">
+          <q-icon name="fact_check" size="md" color="white" class="q-mr-md" />
+          <div>
+            <div class="text-h5 text-weight-bold text-white">Aprobación de Abastecimiento</div>
+            <div class="text-caption text-white opacity-70">Control de niveles y flujo de autorizaciones</div>
+          </div>
         </div>
       </q-card-section>
 
-      <q-card-section>
+      <!-- ── SUMMARY CARDS (KPIs) ── -->
+      <q-card-section class="q-px-lg q-pt-md q-pb-none">
+        <div class="row q-col-gutter-md">
+          <div class="col-6 col-sm-3">
+            <div class="summary-card summary-pendientes" @click="filtroEstado = 'PENDIENTE'" style="cursor:pointer">
+              <div class="summary-value">{{ contarPorEstado('PENDIENTE') }}</div>
+              <div class="summary-label">🟠 Pendientes</div>
+            </div>
+          </div>
+          <div class="col-6 col-sm-3">
+            <div class="summary-card summary-sin-asignar" @click="filtroEstado = 'SIN ASIGNAR'" style="cursor:pointer">
+              <div class="summary-value">{{ contarPorEstado('SIN ASIGNAR') }}</div>
+              <div class="summary-label">🔴 Sin Asignar</div>
+            </div>
+          </div>
+          <div class="col-6 col-sm-3">
+            <div class="summary-card summary-aceptadas" @click="filtroEstado = 'ACEPTADO'" style="cursor:pointer">
+              <div class="summary-value">{{ contarPorEstado('ACEPTADO') }}</div>
+              <div class="summary-label">🟢 Aceptadas</div>
+            </div>
+          </div>
+          <div class="col-6 col-sm-3">
+            <div class="summary-card summary-vencer">
+              <div class="summary-value">1</div>
+              <div class="summary-label">⚠️ Por Vencer</div>
+            </div>
+          </div>
+        </div>
+      </q-card-section>
+
+      <!-- ── BARRA OPERATIVA DE FILTROS ── -->
+      <q-card-section class="q-px-lg q-pt-md q-pb-sm">
+        <div class="row q-col-gutter-sm items-center">
+          <div class="col-12 col-sm-4">
+            <q-input dense outlined bg-color="white" v-model="filter" placeholder="Buscar por ID, solicitante o descripción..." clearable>
+              <template v-slot:prepend><q-icon name="search" color="grey-5" /></template>
+            </q-input>
+          </div>
+          <div class="col-12 col-sm-2">
+            <q-select dense outlined bg-color="white" v-model="filtroEstado" :options="['', 'PENDIENTE', 'ACEPTADO', 'DEVUELTO', 'RECHAZADO']" label="Estado" />
+          </div>
+          <div class="col-12 col-sm-2">
+            <q-input dense outlined bg-color="white" v-model="filtroFecha" label="Fecha" mask="date">
+              <template v-slot:append>
+                <q-icon name="event" class="cursor-pointer">
+                  <q-popup-proxy><q-date v-model="filtroFecha" /></q-popup-proxy>
+                </q-icon>
+              </template>
+            </q-input>
+          </div>
+          <q-btn flat dense color="grey-6" icon="filter_list_off" @click="limpiarFiltros" v-if="filter || filtroEstado || filtroFecha" />
+        </div>
+      </q-card-section>
+
+      <!-- ── TABLA ESCANEABLE (REDISEÑADA) ── -->
+      <q-card-section class="q-pa-none">
         <q-table
-          :data="solicitudes"
+          :data="solicitudesFiltradas"
           :columns="columns"
           row-key="id"
           :loading="loading"
-          :filter="filter"
-          binary-state-sort
-          class="no-shadow"
+          flat
+          class="solicitudes-table"
+          :pagination="{ rowsPerPage: 10, sortBy: 'estado' }"
         >
-          <template v-slot:top-right>
-            <q-input borderless dense debounce="300" v-model="filter" placeholder="Buscar solicitud...">
-              <template v-slot:append>
-                <q-icon name="search" />
-              </template>
-            </q-input>
+          <!-- Header Sticky -->
+          <template v-slot:header="props">
+            <q-tr :props="props" class="table-header-row">
+              <q-th v-for="col in props.cols" :key="col.name" :props="props" class="header-th">
+                {{ col.label }}
+              </q-th>
+            </q-tr>
           </template>
 
-          <template v-slot:body-cell-id="props">
+          <!-- Celda Master-Detail (Solicitud) -->
+          <template v-slot:body-cell-solicitud="props">
             <q-td :props="props">
-              <span class="text-weight-bold text-primary">#{{ props.value.substring(0, 8) }}</span>
+              <div class="text-weight-bold text-primary font-mono text-xs">#{{ props.row.id.substring(0, 8) }}</div>
+              <div class="text-weight-medium text-grey-9">{{ props.row.subdireccion }}</div>
+              <div class="text-caption text-grey-6">{{ props.row.nivelAprobacion }}</div>
             </q-td>
           </template>
 
-          <template v-slot:body-cell-total="props">
-            <q-td :props="props">
-              <span class="text-weight-bold text-secondary">
-                {{ formatCurrency(calculateTotal(props.row)) }}
-              </span>
-            </q-td>
-          </template>
-
+          <!-- Estado (Pill con fuerte semántica) -->
           <template v-slot:body-cell-estado="props">
             <q-td :props="props" class="text-center">
-              <q-chip
-                :color="getStatusColor(props.value)"
-                text-color="white"
-                dense
-                square
-                class="text-weight-bold"
-              >
+              <div :class="['status-pill', getStatusClass(props.value)]">
                 {{ props.value || 'PENDIENTE' }}
-              </q-chip>
-            </q-td>
-          </template>
-          
-          <template v-slot:body-cell-encargados="props">
-            <q-td :props="props" class="text-center">
-              <div v-if="props.value && props.value.length">
-                <q-chip 
-                  v-for="(name, index) in props.value" 
-                  :key="index"
-                  size="sm"
-                  color="grey-3"
-                  text-color="primary"
-                  dense
-                  icon="account_circle"
-                >
-                  {{ name }}
-                </q-chip>
               </div>
-              <span v-else class="text-grey-5 italic">No asignado</span>
             </q-td>
           </template>
 
+          <!-- Responsable Simplificado -->
+          <template v-slot:body-cell-encargados="props">
+            <q-td :props="props">
+              <div v-if="props.value && props.value.length" class="row items-center no-wrap">
+                <q-icon name="person" color="grey-6" class="q-mr-xs" />
+                <span class="text-body2">{{ props.value[0] }}</span>
+                <q-badge v-if="props.value.length > 1" color="blue-1" text-color="blue-8" class="q-ml-xs">
+                  +{{ props.value.length - 1 }}
+                  <q-tooltip>{{ props.value.join(', ') }}</q-tooltip>
+                </q-badge>
+              </div>
+              <span v-else class="text-grey-4 italic text-xs">Sin asignar</span>
+            </q-td>
+          </template>
+
+          <!-- Totales (Tabular Nums) -->
+          <template v-slot:body-cell-total="props">
+            <q-td :props="props" class="text-right font-mono text-weight-bold">
+              {{ formatCurrency(calculateTotal(props.row)) }}
+            </q-td>
+          </template>
+
+          <!-- Acciones (Menú Contextual ⋮) -->
           <template v-slot:body-cell-acciones="props">
             <q-td :props="props" class="text-center">
-              <q-btn flat round color="primary" icon="visibility" @click="verDetalle(props.row)">
-                <q-tooltip>Ver Detalle</q-tooltip>
-              </q-btn>
-              
-              <!-- Botón Editar que despliega opciones de aprobación -->
-              <q-btn flat round color="secondary" icon="edit">
-                <q-tooltip>Decisión de Aprobación</q-tooltip>
-                <q-menu>
-                  <q-list style="min-width: 100px">
-                    <q-item clickable v-close-popup @click="confirmarAprobacion(props.row)">
-                      <q-item-section avatar>
-                        <q-icon name="check_circle" color="positive" />
-                      </q-item-section>
-                      <q-item-section>Aceptar</q-item-section>
+              <q-btn flat round dense color="grey-7" icon="more_vert">
+                <q-menu cover auto-close>
+                  <q-list style="min-width: 150px">
+                    <q-item clickable @click="verDetalle(props.row)">
+                      <q-item-section avatar><q-icon name="visibility" color="blue" /></q-item-section>
+                      <q-item-section>Ver Detalle</q-item-section>
                     </q-item>
-                    <q-item clickable v-close-popup @click="confirmarRechazo(props.row)">
-                      <q-item-section avatar>
-                        <q-icon name="cancel" color="negative" />
-                      </q-item-section>
-                      <q-item-section>Rechazar</q-item-section>
+                    <q-item clickable @click="activarEdicionModal(props.row)">
+                      <q-item-section avatar><q-icon name="edit" color="orange" /></q-item-section>
+                      <q-item-section>Editar</q-item-section>
                     </q-item>
-                    <q-item clickable v-close-popup @click="confirmarDevolucion(props.row)">
-                      <q-item-section avatar>
-                        <q-icon name="reply" color="orange" />
-                      </q-item-section>
-                      <q-item-section>Devolver</q-item-section>
+                    <q-separator />
+                    <q-item clickable class="text-negative" @click="confirmarEliminacion(props.row)">
+                      <q-item-section avatar><q-icon name="delete" color="negative" /></q-item-section>
+                      <q-item-section>Eliminar</q-item-section>
                     </q-item>
                   </q-list>
                 </q-menu>
-              </q-btn>
-
-              <q-btn flat round color="negative" icon="delete" @click="confirmarEliminacion(props.row)">
-                <q-tooltip>Eliminar Solicitud</q-tooltip>
               </q-btn>
             </q-td>
           </template>
@@ -137,7 +175,6 @@
           narrow-indicator
         >
           <q-tab name="general" label="Información General" icon="info" />
-          <q-tab name="contacto" label="Contacto" icon="contacts" />
           <q-tab name="proyectos" label="Proyectos" icon="list" />
           <q-tab name="historial" label="Historial" icon="history" />
         </q-tabs>
@@ -182,35 +219,6 @@
                   outlined 
                   dense 
                 />
-              </div>
-            </div>
-          </q-tab-panel>
-
-          <!-- Pestaña: Contacto -->
-          <q-tab-panel name="contacto">
-            <div class="row q-col-gutter-md" v-if="!isEditing">
-              <div class="col-12">
-                <div class="text-subtitle1 text-weight-bold q-mb-sm">Información del Solicitante</div>
-                <p><strong>Contacto:</strong> {{ selectedSolicitud.contacto }}</p>
-                <p><strong>Teléfono:</strong> {{ selectedSolicitud.telefono }}</p>
-                <p><strong>Ubicación:</strong> {{ selectedSolicitud.departamento }}, {{ selectedSolicitud.municipio }}</p>
-                <p><strong>Dirección:</strong> {{ selectedSolicitud.direccion }}</p>
-                <p><strong>Fecha Límite Solicitada:</strong> {{ selectedSolicitud.fechaEntrega }}</p>
-              </div>
-            </div>
-
-            <!-- Vista Edición Contacto -->
-            <div class="row q-col-gutter-md" v-else>
-              <div class="col-12">
-                <div class="text-subtitle1 text-weight-bold q-mb-sm">Editar Información del Solicitante</div>
-                <q-input v-model="editableSolicitud.contacto" label="Contacto" outlined dense class="q-mb-sm" />
-                <q-input v-model="editableSolicitud.telefono" label="Teléfono" outlined dense class="q-mb-sm" />
-                <div class="row q-col-gutter-sm q-mb-sm">
-                  <q-input v-model="editableSolicitud.departamento" label="Departamento" outlined dense class="col" />
-                  <q-input v-model="editableSolicitud.municipio" label="Municipio" outlined dense class="col" />
-                </div>
-                <q-input v-model="editableSolicitud.direccion" label="Dirección" outlined dense class="q-mb-sm" />
-                <q-input v-model="editableSolicitud.fechaEntrega" label="Fecha Límite" outlined dense type="date" stack-label />
               </div>
             </div>
           </q-tab-panel>
@@ -401,15 +409,13 @@ export default {
       showReturnModal: false,
       returnNote: '',
       selectedSolicitud: null,
+      filtroEstado: '',
+      filtroFecha: '',
       columns: [
-        { name: 'id', align: 'left', label: 'ID', field: 'id', sortable: true },
-        { name: 'solicitante', align: 'left', label: 'SOLICITANTE', field: 'contacto', sortable: true },
-        { name: 'descripcion', align: 'left', label: 'DESCRIPCIÓN', field: 'descripcionNecesidad', sortable: true },
-        { name: 'nivel', align: 'left', label: 'NIVEL APROBACIÓN', field: 'nivelAprobacion', sortable: true },
-        { name: 'total', align: 'right', label: 'TOTAL', field: row => this.calculateTotal(row), sortable: true },
-        { name: 'fechaLimite', align: 'center', label: 'FECHA LÍMITE', field: 'fechaEntrega', sortable: true },
-        { name: 'encargados', align: 'center', label: 'PERSONAS ENCARGADAS', field: 'encargados' },
+        { name: 'solicitud', align: 'left', label: 'SOLICITUD / ORIGEN', field: 'subdireccion', sortable: true },
         { name: 'estado', align: 'center', label: 'ESTADO', field: 'estado', sortable: true },
+        { name: 'encargados', align: 'left', label: 'RESPONSABLE', field: 'encargados' },
+        { name: 'total', align: 'right', label: 'TOTAL', field: row => this.calculateTotal(row), sortable: true },
         { name: 'acciones', align: 'center', label: 'ACCIONES', field: 'id' }
       ],
       productColumns: [
@@ -424,11 +430,34 @@ export default {
     solicitudes() {
       return this.store.solicitudes;
     },
+    solicitudesFiltradas() {
+      if (!this.solicitudes) return [];
+      return this.solicitudes.filter(sol => {
+        // Filtro por estado
+        if (this.filtroEstado && sol.estado !== this.filtroEstado) return false;
+        return true;
+      });
+    },
     loading() {
       return this.store.loading;
     }
   },
   methods: {
+    obtenerRubrosAfectados(solicitud) {
+      if (!solicitud || !solicitud.proyectos) return [];
+      const rubrosMap = {};
+      solicitud.proyectos.forEach(function (p) {
+        if (p.item && p.porcentaje > 0) {
+          if (!rubrosMap[p.item]) {
+            rubrosMap[p.item] = 0;
+          }
+          rubrosMap[p.item] += p.porcentaje;
+        }
+      });
+      return Object.keys(rubrosMap).map(function (nombre) {
+        return nombre + ' (' + rubrosMap[nombre].toFixed(1) + '%)';
+      });
+    },
     async cargarDatos() {
       try {
         await this.store.fetchSolicitudes();
@@ -476,6 +505,23 @@ export default {
         default: return 'blue-grey';
       }
     },
+    getStatusClass(status) {
+      if (!status || status === 'SIN ASIGNAR') return 'status--unassigned';
+      const s = status.toUpperCase();
+      if (s === 'ACEPTADO' || s === 'APROBADO') return 'status--accepted';
+      if (s === 'DEVUELTO' || s === 'RECHAZADO') return 'status--rejected';
+      return 'status--pending';
+    },
+    contarPorEstado(estado) {
+      if (!this.solicitudes) return 0;
+      if (estado === 'SIN ASIGNAR') return this.solicitudes.filter(s => !s.encargados || s.encargados.length === 0).length;
+      return this.solicitudes.filter(s => s.estado === estado).length;
+    },
+    limpiarFiltros() {
+      this.filter = '';
+      this.filtroEstado = '';
+      this.filtroFecha = '';
+    },
     getStatusColor(status) {
       if (status === 'ACEPTADO' || status === 'APROBADO') return 'positive'; // Verde
       if (status === 'DEVUELTO' || status === 'RECHAZADO') return 'negative'; // Rojo
@@ -496,6 +542,11 @@ export default {
     verDetalle(row) {
       this.selectedSolicitud = row;
       this.isEditing = false;
+      this.showDetalle = true;
+    },
+    activarEdicionModal(row) {
+      this.selectedSolicitud = row;
+      this.activarEdicion();
       this.showDetalle = true;
     },
     activarEdicion() {
@@ -531,11 +582,20 @@ export default {
     },
     async onApproveConfirm(aprobadores) {
       try {
+        const solicitudAprobada = this.selectedSolicitud;
         await this.store.approveSolicitud(this.selectedSolicitud.id, aprobadores);
+
+        const rubrosAfectados = this.obtenerRubrosAfectados(solicitudAprobada);
+        let mensaje = 'Solicitud aprobada y personal asignado correctamente.';
+        if (rubrosAfectados.length > 0) {
+          mensaje += ' Presupuesto descontado de: ' + rubrosAfectados.join(', ');
+        }
+
         this.$q.notify({ 
           color: 'positive', 
-          icon: 'check', 
-          message: 'Solicitud aprobada y personal asignado correctamente' 
+          icon: 'check_circle', 
+          message: mensaje,
+          timeout: 8000,
         });
         this.showDetalle = false;
       } catch (e) {
@@ -602,7 +662,112 @@ export default {
 </script>
 
 <style scoped>
-.rounded-borders {
+.page-wrapper {
+  min-height: 100vh;
+}
+
+.my-card {
   border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+}
+
+/* Header Institucional */
+.header-section {
+  background: linear-gradient(135deg, #84B24D 0%, #75AF7E 50%, #4E9C4C 100%);
+  border-radius: 12px 12px 0 0;
+}
+
+/* Summary Cards */
+.summary-card {
+  padding: 16px;
+  border-radius: 10px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+}
+
+.summary-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.summary-value {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #1e293b;
+  line-height: 1;
+}
+
+.summary-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #64748b;
+  margin-top: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.summary-pendientes { border-left: 4px solid #f59e0b; }
+.summary-sin-asignar { border-left: 4px solid #ef4444; }
+.summary-aceptadas { border-left: 4px solid #10b981; }
+.summary-vencer { border-left: 4px solid #3b82f6; }
+
+/* Tabla Escaneable */
+.table-header-row {
+  background-color: #f1f5f9;
+}
+
+.header-th {
+  font-weight: 800 !important;
+  color: #475569 !important;
+  text-transform: uppercase;
+  font-size: 11px !important;
+  letter-spacing: 0.05em;
+  padding: 16px !important;
+}
+
+.solicitudes-table ::v-deep tr {
+  transition: background-color 0.2s ease;
+}
+
+.solicitudes-table ::v-deep tr:hover {
+  background-color: #f1f5f9 !important;
+}
+
+.solicitudes-table ::v-deep td {
+  padding: 18px 16px !important;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.solicitudes-table ::v-deep tr:nth-child(even) {
+  background-color: #fbfbfc;
+}
+
+.solicitudes-table ::v-deep thead tr {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: white;
+}
+
+/* Badges de Estado */
+.status-pill {
+  display: inline-flex;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.status--accepted { background-color: #dcfce7; color: #166534; }
+.status--rejected { background-color: #fee2e2; color: #991b1b; }
+.status--pending { background-color: #fef3c7; color: #92400e; }
+.status--unassigned { background-color: #f1f5f9; color: #475569; }
+
+.font-mono {
+  font-family: 'JetBrains Mono', monospace;
 }
 </style>

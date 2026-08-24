@@ -1,0 +1,39 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "🚀 Chrome - Dev Local",
+      "url": "http://localhost:8080",
+      "webRoot": "${workspaceFolder}",
+      "runtimeArgs": ["--disable-web-security"],
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    {
+      "type": "msedge",
+      "request": "launch",
+      "name": "🔵 Edge - Dev Local",
+      "url": "http://localhost:8080",
+      "webRoot": "${workspaceFolder}",
+      "runtimeArgs": ["--disable-web-security"]
+    },
+    {
+      "type": "firefox",
+      "request": "launch",
+      "name": "🦊 Firefox - Dev Local",
+      "url": "http://localhost:8080",
+      "webRoot": "${workspaceFolder}"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "⚙️ Server Backend (Opcional)",
+      "skipFiles": ["<node_internals>/**"],
+      "program": "${workspaceFolder}/src-server/index.js",
+      "cwd": "${workspaceFolder}"
+    }
+  ]
+}

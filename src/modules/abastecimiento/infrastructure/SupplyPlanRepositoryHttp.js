@@ -1,4 +1,4 @@
-import axios from 'axios';
+import client from '../../../api/client';
 import { URL_API } from '../../../utils/config';
 import { ISupplyPlanRepository } from '../domain/ISupplyPlanRepository';
 
@@ -14,27 +14,32 @@ export class SupplyPlanRepositoryHttp extends ISupplyPlanRepository {
     }
 
     async getAll() {
-        const response = await axios.get(this.BASE_URL);
+        const response = await client.get(this.BASE_URL);
         return response.data;
     }
 
     async getById(id) {
-        const response = await axios.get(`${this.BASE_URL}/${id}`);
+        const response = await client.get(`${this.BASE_URL}/${id}`);
         return response.data;
     }
 
     async create(supplyPlan) {
-        const response = await axios.post(this.BASE_URL, supplyPlan);
+        const response = await client.post(this.BASE_URL, supplyPlan);
         return response.data;
     }
 
     async update(id, supplyPlan) {
-        const response = await axios.put(`${this.BASE_URL}/${id}`, supplyPlan);
+        const response = await client.put(`${this.BASE_URL}/${id}`, supplyPlan);
+        return response.data;
+    }
+
+    async updateStatus(id, status) {
+        const response = await client.patch(`${this.BASE_URL}/${id}/status`, { status });
         return response.data;
     }
 
     async delete(id) {
-        const response = await axios.delete(`${this.BASE_URL}/${id}`);
+        const response = await client.delete(`${this.BASE_URL}/${id}`);
         return response.data;
     }
 }

@@ -2,11 +2,12 @@
   "vetur.validation.template": false,
   "vetur.format.enable": false,
   "eslint.validate": [
-  
+
   "javascript", "javascriptreact", "typescript", "vue", "html"],
   "eslint.codeActionsOnSave.mode": "all",
-  
+
   "vetur.experimental.templateInterpolationService": true,
   "eslint.format.enable": true,
-  "files.encoding": "utf8bom"
+  "files.encoding": "utf8bom",
+  "cmake.sourceDirectory": "D:/DataCon/datacom-app/node_modules/nan"
 }

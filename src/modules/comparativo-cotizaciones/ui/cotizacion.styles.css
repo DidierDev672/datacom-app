@@ -1,0 +1,26 @@
+:root {
+  --text-titulo:    1.25rem;     /* ~20px */
+  --text-seccion:   1.063rem;    /* ~17px */
+  --text-label:     0.8125rem;   /* ~13px */
+  --text-input:     0.875rem;    /* ~14px */
+  --text-tabla:     0.875rem;    /* ~14px */
+  --text-boton:     0.875rem;    /* ~14px */
+ 
+  --weight-titulo:  700;
+  --weight-seccion: 500;
+  --weight-label:   500;
+  --weight-input:   400;
+  --weight-tabla:   400;
+  --weight-boton:   600;
+ 
+  --input-height:   2.75rem;     /* ~44px */
+  --row-height:     3.5rem;      /* ~56px */
+}
+
+/* Premium touches */
+.rounded-xl { border-radius: 12px !important; }
+.shadow-premium { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important; }
+.q-field--outlined .q-field__control { height: var(--input-height) !important; border-radius: 8px !important; }
+.q-field__label { font-size: var(--text-label) !important; font-weight: var(--weight-label) !important; }
+.text-premium-title { font-size: var(--text-titulo); font-weight: var(--weight-titulo); color: #1a202c; }
+.bg-glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(8px); }

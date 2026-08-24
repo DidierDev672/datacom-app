@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-lg q-mx-auto q-gutter-y-md animate-in" style="max-width: 1200px;">
+  <div class="q-pa-lg q-mx-auto q-gutter-y-md animate-in">
     <!-- Header Section -->
     <div class="row items-center justify-between q-py-md">
       <div class="col-12 col-md-auto">
@@ -98,7 +98,7 @@
     <!-- Table Section -->
     <div class="bg-white rounded-2xl shadow-1 border-grey-1 overflow-hidden">
       <div class="q-px-none overflow-x-auto">
-        <table class="custom-table w-full text-left no-border" style="border-collapse: collapse; min-width: 900px;">
+        <table class="custom-table full-width text-left no-border" style="border-collapse: collapse; min-width: 900px; width: 100%;">
           <thead>
             <tr class="bg-grey-1">
               <th class="q-px-lg q-py-md text-caption text-weight-bold text-grey-7 text-uppercase" style="letter-spacing: 0.1em; width: 250px;">Solicitud</th>

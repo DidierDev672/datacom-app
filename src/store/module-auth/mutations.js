@@ -51,7 +51,9 @@ export function SET_ERROR(state, payload) {
   state.tokenInfo = null;
   state.loading = false;
   state.loaded = false;
-  state.error = payload.data.message;
+  state.error =
+    (payload && payload.data && payload.data.message) ||
+    "Usuario y/o contraseña incorrecto";
   localStorage.removeItem("token");
   localStorage.removeItem("user");
   axios.defaults.headers.common["Authorization"] = "";

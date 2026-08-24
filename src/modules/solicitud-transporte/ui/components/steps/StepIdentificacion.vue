@@ -1,21 +1,8 @@
 <template>
   <div class="q-pa-md">
     <div class="row q-col-gutter-md">
-      <!-- Código de solicitud -->
-      <div class="col-12 col-sm-6">
-        <label class="sta-label q-mb-xs block">Código de solicitud</label>
-        <q-input
-          v-model="store.solicitudActual.codigo"
-          outlined
-          dense
-          placeholder="Ej: STA-001-2026"
-          :rules="[val => !!val || 'El código es requerido']"
-          class="sta-input"
-        />
-      </div>
-
       <!-- Fecha -->
-      <div class="col-12 col-sm-6">
+      <div class="col-12 col-sm-12">
         <label class="sta-label q-mb-xs block">Fecha</label>
         <q-input
           v-model="store.solicitudActual.fecha"

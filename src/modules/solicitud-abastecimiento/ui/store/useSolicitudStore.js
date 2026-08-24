@@ -2,43 +2,74 @@ import { defineStore } from 'pinia';
 import { CreateSolicitud } from '../../application/CreateSolicitud';
 import { GetSolicitudes } from '../../application/GetSolicitudes';
 import { SolicitudHttpRepository } from '../../infrastructure/SolicitudHttpRepository';
+import { SolicitudAbastecimiento } from '../../domain/Solicitud';
+
+function createEmptySolicitud() {
+  return {
+    nombreOrden: '',
+    subdireccion: '',
+    descripcionNecesidad: '',
+    proyectos: [],
+    presupuestoDisponible: 0,
+    presupuestoDisponibleManual: null,
+    nivelAprobacion: '',
+    observacionesProductos: '',
+    departamento: '',
+    municipio: '',
+    direccion: '',
+    contacto: '',
+    telefono: '',
+    fechaEntrega: '',
+    requiereFlete: false,
+    garantias: '',
+    departamentoId: null,
+    departamentoNombre: '',
+    areaNombre: '',
+  };
+}
 
 export const useSolicitudStore = defineStore('solicitudAbastecimiento', {
   state: () => ({
-    solicitud: {
-      subdireccion: '',
-      descripcionNecesidad: '',
-      proyectos: [],
-      presupuestoDisponible: 0,
-      nivelAprobacion: '',
-      observacionesProductos: '',
-      departamento: '',
-      municipio: '',
-      direccion: '',
-      contacto: '',
-      telefono: '',
-      fechaEntrega: '',
-      requiereFlete: false,
-      garantias: '',
-    },
+    solicitud: createEmptySolicitud(),
     solicitudes: [],
     loading: false,
     error: null
   }),
   actions: {
-    async submit() {
-      // Hexagonal Architecture Application Layer Instance
+    resetForm() {
+      const defaults = createEmptySolicitud();
+      Object.keys(defaults).forEach((key) => {
+        this.solicitud[key] = defaults[key];
+      });
+      this.error = null;
+    },
+    validateForm() {
+      try {
+        const solicitud = new SolicitudAbastecimiento(this.solicitud);
+        solicitud.validar({ requireOrderName: false });
+        this.error = null;
+        return true;
+      } catch (e) {
+        this.error = e.message;
+        return false;
+      }
+    },
+    async submit(nombreOrden) {
       const repository = new SolicitudHttpRepository();
       const createSolicitudUseCase = new CreateSolicitud(repository);
 
       this.loading = true;
       this.error = null;
+      this.solicitud.nombreOrden = nombreOrden || '';
+
       try {
         await createSolicitudUseCase.execute(this.solicitud);
-        alert('¡Orden creada de manera exitosa!');
+        this.resetForm();
+        return { success: true };
       } catch (e) {
-        this.error = e.message;
-        alert(`Error: ${e.message}`);
+        const message = e.message || 'No se pudo registrar la orden.';
+        this.error = message;
+        return { success: false, message };
       } finally {
         this.loading = false;
       }
@@ -52,7 +83,9 @@ export const useSolicitudStore = defineStore('solicitudAbastecimiento', {
       try {
         this.solicitudes = await getSolicitudesUseCase.execute();
       } catch (e) {
-        this.error = e.message;
+        const message = e.message || 'No se pudieron cargar las solicitudes de abastecimiento.';
+        this.error = message;
+        throw new Error(message);
       } finally {
         this.loading = false;
       }
@@ -108,13 +141,45 @@ export const useSolicitudStore = defineStore('solicitudAbastecimiento', {
     async updateSolicitud(solicitud) {
       const repository = new SolicitudHttpRepository();
       this.loading = true;
+      this.error = null;
       try {
         const result = await repository.actualizar(solicitud.id, solicitud);
         await this.fetchSolicitudes();
         return result;
       } catch (e) {
-        this.error = e.message;
-        throw e;
+        const message = e.message || 'No se pudo actualizar la solicitud.';
+        this.error = message;
+        throw new Error(message);
+      } finally {
+        this.loading = false;
+      }
+    },
+    async updateOrderName(id, nombreOrden) {
+      const trimmed = (nombreOrden || '').trim();
+      if (!trimmed) {
+        throw new Error('El nombre de la orden es obligatorio.');
+      }
+      if (trimmed.length < 3) {
+        throw new Error('El nombre debe tener al menos 3 caracteres.');
+      }
+
+      const solicitud = this.solicitudes.find((item) => item.id === id);
+      if (!solicitud) {
+        throw new Error('No se encontró la solicitud seleccionada.');
+      }
+
+      const repository = new SolicitudHttpRepository();
+      this.loading = true;
+      this.error = null;
+
+      try {
+        const updated = await repository.actualizarNombreOrden(id, trimmed);
+        await this.fetchSolicitudes();
+        return updated;
+      } catch (e) {
+        const message = e.message || 'No se pudo actualizar el nombre de la orden.';
+        this.error = message;
+        throw new Error(message);
       } finally {
         this.loading = false;
       }

@@ -1,0 +1,32 @@
+﻿# Frontend solamente (no requiere datacom-backend en el servidor).
+#
+#   cd datacom-app
+#   docker compose up -d --build
+#
+# Nginx hace proxy a http://datacom-backend:3310; el backend debe estar en la
+# red Docker "datacom-net" (p. ej. levantado con docker-compose.full.yml).
+#
+# Stack completo (MariaDB + backend + frontend), con ambos repos hermanos:
+#   docker compose -f docker-compose.full.yml up -d --build
+#
+# Desde la raiz del monorepo (D:\DataCon o /home/datacom/docker/datacom):
+#   docker compose up -d --build
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        VUE_APP_API_BASE_URL: ""
+    image: datacom-frontend:latest
+    container_name: datacom-frontend
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    networks:
+      - datacom-net
+
+networks:
+  datacom-net:
+    name: datacom-net
+    driver: bridge

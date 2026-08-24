@@ -84,7 +84,6 @@ import orderSupply from './abastecimiento/orderSupply';
 import supplyPlans from './abastecimiento/supplyPlans';
 import purchaseorder from './abastecimiento/purchaseorder';
 import supplier from './abastecimiento/supplier';
-import ordenCompra from './modules/ordenCompra';
 
 Vue.use(Vuex);
 
@@ -178,8 +177,7 @@ export default function (/* { ssrContext } */) {
             orderSupply,
             supplyPlans,
             purchaseorder,
-            supplier,
-            ordenCompra
+            supplier
 
         },
 

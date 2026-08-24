@@ -1,27 +1,34 @@
 <template>
-  <div class="q-pa-md">
-    <div class="text-h5 q-mb-md">Mis Órdenes de Abastecimiento</div>
-
-    <!-- Filtros -->
-    <div class="row q-mb-md">
-      <div class="col-12 col-md-4">
-        <q-select v-model="statusFilter" :options="statusOptions" label="Filtrar por estado" clearable dense outlined
-          emit-value map-options />
+  <div class="orders-page">
+    <!-- Header de página -->
+    <div class="page-header">
+      <div class="page-header__left">
+        <h1 class="page-title">Mis Órdenes</h1>
+        <span class="page-subtitle">{{ filteredOrders.length }} registro{{ filteredOrders.length !== 1 ? 's' : '' }}</span>
+      </div>
+      <div class="page-header__right">
+        <q-select
+          v-model="statusFilter"
+          :options="statusOptions"
+          label="Estado"
+          clearable dense outlined
+          emit-value map-options
+          class="filter-select"
+          style="min-width: 180px"
+        />
       </div>
     </div>
 
     <!-- Loading -->
-    <div v-if="loading" class="flex flex-center q-pa-md">
-      <q-spinner-dots size="50px" color="primary" />
-      <span class="q-ml-md">Cargando órdenes...</span>
+    <div v-if="loading" class="loading-state">
+      <q-spinner-dots size="40px" color="primary" />
+      <span>Cargando órdenes...</span>
     </div>
 
     <!-- Error -->
     <div v-if="error" class="q-pa-md">
-      <q-banner class="bg-negative text-white">
-        <template v-slot:avatar>
-          <q-icon name="error" />
-        </template>
+      <q-banner class="error-banner">
+        <template v-slot:avatar><q-icon name="error" /></template>
         Error al cargar las órdenes: {{ error }}
         <template v-slot:action>
           <q-btn flat label="Reintentar" @click="loadOrders" />
@@ -29,69 +36,76 @@
       </q-banner>
     </div>
 
-    <!-- Tabla de órdenes -->
+    <!-- Tabla optimizada -->
     <div v-if="!loading && !error">
-      <q-table :data="filteredOrders" :columns="columns" row-key="id" :pagination="pagination"
-        :rows-per-page-options="[5, 10, 20, 50]" class="my-sticky-header-table">
+      <q-table
+        :data="filteredOrders"
+        :columns="columns"
+        row-key="id"
+        :pagination="pagination"
+        :rows-per-page-options="[10, 20, 50]"
+        flat bordered
+        class="orders-table"
+      >
+        <!-- Celda: Consecutivo + Descripción (agrupada) -->
+        <template v-slot:body-cell-code="props">
+          <q-td :props="props">
+            <div class="cell-primary">{{ props.row.code }}</div>
+            <div class="cell-secondary text-truncate" style="max-width:220px">{{ props.row.description }}</div>
+          </q-td>
+        </template>
 
+        <!-- Celda: Responsables (Propietario + Abastecimiento agrupados) -->
+        <template v-slot:body-cell-responsables="props">
+          <q-td :props="props">
+            <div class="cell-secondary">{{ props.row.ownerUserId }}</div>
+            <div v-if="props.row.supplyUserId" class="cell-muted">
+              <q-icon name="assignment_ind" size="12px" class="q-mr-xs" />{{ props.row.supplyUserId }}
+            </div>
+          </q-td>
+        </template>
 
-
-
-        <!-- Columna de Estado -->
+        <!-- Celda: Estado -->
         <template v-slot:body-cell-status="props">
           <q-td :props="props">
-            <q-chip :color="getStatusColor(props.row.status)" text-color="white" size="sm">
+            <div :class="['status-pill', getStatusClass(props.row.status)]">
               {{ props.row.statusDescription }}
-            </q-chip>
+            </div>
           </q-td>
         </template>
 
-        <!-- Columna de Fecha de Entrega -->
+        <!-- Celda: Fecha -->
         <template v-slot:body-cell-deliveryDate="props">
           <q-td :props="props">
-            {{ formatDate(props.row.deliveryDate) }}
+            <span class="cell-date">{{ formatDate(props.row.deliveryDate) }}</span>
           </q-td>
         </template>
 
-        <!-- Columna de Total -->
+        <!-- Celda: Total -->
         <template v-slot:body-cell-total="props">
           <q-td :props="props">
-            ${{ new Intl.NumberFormat().format(props.row.amount) }}
+            <span class="cell-money">${{ new Intl.NumberFormat().format(props.row.amount) }}</span>
           </q-td>
         </template>
 
-        <!-- Columna de Acciones -->
+        <!-- Celda: Acciones -->
         <template v-slot:body-cell-actions="props">
           <q-td :props="props">
-
-            <q-btn round dense flat color="grey-8" icon="more_vert">
-              <q-menu anchor="bottom right" self="top right">
-                <q-list style="min-width: 220px">
-                  <q-item clickable v-close-popup @click="viewOrderDetails(props.row)">
-                    <q-item-section avatar><q-icon name="visibility" /></q-item-section>
-                    <q-item-section>Ver detalles</q-item-section>
-                  </q-item>
-
-                  <q-item clickable v-close-popup @click="editOrder(props.row)"
-                    :disable="props.row.status === 'PENDING_SUPPLY'">
-                    <q-item-section avatar><q-icon name="edit" /></q-item-section>
-                    <q-item-section>Editar</q-item-section>
-                  </q-item>
-
-                  <q-item v-if="isFullyApproved(props.row)" clickable v-close-popup @click="openAssignModal(props.row)"
-                    :disable="props.row.supplyUserId !== null">
-                    <q-item-section avatar><q-icon name="assignment_ind" /></q-item-section>
-                    <q-item-section>Asignar a abastecimiento</q-item-section>
-                  </q-item>
-
-                  <q-item v-if="props.row.supplyUserId" clickable v-close-popup @click="goToCreateOCS(props.row)">
-                    <q-item-section avatar><q-icon name="shopping_cart" /></q-item-section>
-                    <q-item-section>Generar OCS</q-item-section>
-                  </q-item>
-                </q-list>
-              </q-menu>
+            <q-btn flat round dense icon="visibility" class="action-btn" @click="viewOrderDetails(props.row)">
+              <q-tooltip>Ver detalle</q-tooltip>
             </q-btn>
-
+            <q-btn flat round dense icon="edit" class="action-btn"
+              :disable="props.row.status === 'PENDING_SUPPLY'" @click="editOrder(props.row)">
+              <q-tooltip>Editar</q-tooltip>
+            </q-btn>
+            <q-btn v-if="isFullyApproved(props.row)" flat round dense icon="assignment_ind" class="action-btn"
+              :disable="props.row.supplyUserId !== null" @click="openAssignModal(props.row)">
+              <q-tooltip>Asignar</q-tooltip>
+            </q-btn>
+            <q-btn v-if="props.row.supplyUserId" flat round dense icon="shopping_cart" class="action-btn-accent"
+              @click="goToCreateOCS(props.row)">
+              <q-tooltip>Generar OCS</q-tooltip>
+            </q-btn>
           </q-td>
         </template>
       </q-table>
@@ -561,69 +575,12 @@ export default {
         { label: 'En Progreso', value: 'IN_PROGRESS' }
       ],
       columns: [
-        {
-          name: 'code',
-          required: true,
-          label: 'Consecutivo',
-          align: 'left',
-          field: 'code',
-          sortable: true
-        },
-        {
-          name: 'subdireccion',
-          label: 'Subdirección',
-          align: 'left',
-          field: 'subdireccion',
-          sortable: true
-        },
-        {
-          name: 'description',
-          label: 'Descripción',
-          align: 'left',
-          field: 'description',
-          sortable: true
-        },
-        {
-          name: 'ownerUserId',
-          label: 'Propietario',
-          align: 'left',
-          field: 'ownerUserId',
-          sortable: true
-        },
-        {
-          name: 'status',
-          label: 'Estado',
-          align: 'center',
-          field: 'status',
-          sortable: true
-        },
-        {
-          name: 'supplyUserId',
-          label: 'Abastecimiento',
-          align: 'center',
-          field: row => row.supplyUserId ? row.supplyUserId : '',
-          sortable: true
-        },
-        {
-          name: 'deliveryDate',
-          label: 'Fecha de Entrega',
-          align: 'center',
-          field: row => row.shippingAddress && row.shippingAddress.deliveryDate,
-          sortable: true
-        },
-        {
-          name: 'total',
-          label: 'Total',
-          align: 'right',
-          field: 'total',
-          sortable: true
-        },
-        {
-          name: 'actions',
-          label: 'Acciones',
-          align: 'center',
-          field: 'actions'
-        }
+        { name: 'code', required: true, label: 'Solicitud', align: 'left', field: 'code', sortable: true },
+        { name: 'responsables', label: 'Responsables', align: 'left', field: 'ownerUserId', sortable: true },
+        { name: 'status', label: 'Estado', align: 'center', field: 'status', sortable: true },
+        { name: 'deliveryDate', label: 'Entrega', align: 'center', field: row => row.shippingAddress && row.shippingAddress.deliveryDate, sortable: true },
+        { name: 'total', label: 'Total', align: 'right', field: 'total', sortable: true },
+        { name: 'actions', label: '', align: 'center', field: 'actions' }
       ]
     }
   },
@@ -727,6 +684,17 @@ export default {
         default:
           return 'grey'
       }
+    },
+    getStatusClass(status) {
+      const classes = {
+        'PENDING_SUPPLY': 'status--success',
+        'APPROVED': 'status--success',
+        'REJECTED': 'status--danger',
+        'CANCELED': 'status--danger',
+        'PENDING_AUTHORIZATION': 'status--warning',
+        'IN_PROGRESS': 'status--info'
+      };
+      return classes[status] || 'status--default';
     },
     formatDate(dateString) {
       if (!dateString) return 'N/A'
@@ -878,41 +846,181 @@ export default {
 </script>
 
 <style scoped>
-.my-sticky-header-table {
-  /* height or max-height is important */
-  height: 70vh;
+/* ===== Page Layout ===== */
+.orders-page {
+  padding: 24px;
+  font-family: 'Inter', sans-serif;
 }
 
-.my-sticky-header-table .q-table__top,
-.my-sticky-header-table .q-table__bottom,
-.my-sticky-header-table thead tr:first-child th {
-  /* bg color is important for th; just specify one */
-  background-color: #fff;
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
 }
 
-.my-sticky-header-table thead tr th {
-  position: sticky;
-  z-index: 1;
+.page-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #4A5A63;
+  margin: 0;
+  line-height: 1.2;
 }
 
-.my-sticky-header-table thead tr:first-child th {
-  top: 0;
+.page-subtitle {
+  font-size: 13px;
+  font-weight: 500;
+  color: #A7B1B7;
+  margin-top: 2px;
+  display: block;
 }
 
-/* this is when the loading indicator appears */
-.my-sticky-header-table.q-table--loading thead tr:last-child th {
-  /* height of all previous header rows */
-  top: 48px;
+/* ===== Loading ===== */
+.loading-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 48px;
+  color: #6B7C85;
+  font-size: 14px;
 }
 
-/* Estilos adicionales para el modal mejorado */
-.order-details-card {
-  border-radius: 12px;
+.error-banner {
+  background: #FEE2E2;
+  color: #991B1B;
+  border-radius: 8px;
+}
+
+/* ===== Table ===== */
+.orders-table {
+  border-radius: 10px;
   overflow: hidden;
 }
 
-.order-details-card .q-card__section--vert {
-  padding: 0;
+::v-deep .orders-table thead th {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #6B7C85;
+  padding: 14px 16px;
+  background: #F5F7FA;
+  border-bottom: 1px solid #E8ECEF;
+}
+
+::v-deep .orders-table tbody td {
+  padding: 12px 16px;
+  font-size: 14px;
+  color: #4A5A63;
+  border-bottom: 1px solid #F0F2F4;
+}
+
+::v-deep .orders-table tbody tr:hover td {
+  background: #F9FAFB;
+}
+
+/* ===== Cell Hierarchy ===== */
+.cell-primary {
+  font-size: 14px;
+  font-weight: 600;
+  color: #4A5A63;
+  line-height: 1.3;
+}
+
+.cell-secondary {
+  font-size: 13px;
+  font-weight: 400;
+  color: #6B7C85;
+  line-height: 1.4;
+}
+
+.cell-muted {
+  font-size: 12px;
+  color: #A7B1B7;
+  display: flex;
+  align-items: center;
+  margin-top: 2px;
+}
+
+.cell-date {
+  font-size: 13px;
+  font-weight: 500;
+  color: #6B7C85;
+}
+
+.cell-money {
+  font-size: 14px;
+  font-weight: 600;
+  color: #4A5A63;
+  font-variant-numeric: tabular-nums;
+}
+
+.text-truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ===== Status Pills ===== */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.status--success { background: #DCFCE7; color: #16A34A; }
+.status--warning { background: #FEF9C3; color: #CA8A04; }
+.status--danger  { background: #FEE2E2; color: #DC2626; }
+.status--info    { background: #DBEAFE; color: #2563EB; }
+.status--default { background: #F3F4F6; color: #6B7280; }
+
+/* ===== Action Buttons ===== */
+.action-btn {
+  width: 32px !important;
+  height: 32px !important;
+  color: #A7B1B7 !important;
+  transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+  color: #4A5A63 !important;
+  background: #F0F2F4 !important;
+}
+
+.action-btn-accent {
+  width: 32px !important;
+  height: 32px !important;
+  color: #4E9C4C !important;
+  transition: all 0.2s ease;
+}
+
+.action-btn-accent:hover {
+  background: rgba(78, 156, 76, 0.08) !important;
+}
+
+::v-deep .action-btn .q-icon,
+::v-deep .action-btn-accent .q-icon {
+  font-size: 18px;
+}
+
+/* ===== Filter ===== */
+::v-deep .filter-select .q-field__control {
+  border-radius: 8px;
+  height: 40px;
+}
+
+/* ===== Modal (preserved) ===== */
+.order-details-card {
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 .shadow-5 {
@@ -929,11 +1037,6 @@ export default {
   overflow: hidden;
 }
 
-.modern-table .q-table__top {
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  border-radius: 8px 8px 0 0;
-}
-
 .modern-table thead th {
   background: rgba(255, 255, 255, 0.95);
   font-weight: 600;
@@ -943,73 +1046,13 @@ export default {
 
 .modern-table tbody tr:hover {
   background-color: #f8f9fa;
-  transition: background-color 0.2s ease;
 }
 
 .opacity-80 {
   opacity: 0.8;
 }
 
-/* Animaciones suaves */
-.q-chip {
-  transition: all 0.2s ease;
-}
-
-.q-chip:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-}
-
-.q-card {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.q-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-}
-
-/* Mejoras para q-list */
-.q-item {
-  border-radius: 4px;
-  margin-bottom: 4px;
-  transition: background-color 0.2s ease;
-}
-
-.q-item:hover {
-  background-color: #f5f5f5;
-}
-
-.q-item-label {
-  font-size: 14px;
-  line-height: 1.4;
-}
-
-.q-item-label--caption {
-  font-size: 12px;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: #666;
-}
-
-/* Mejoras para iconos */
-.q-icon {
-  transition: color 0.2s ease;
-}
-
-/* Gradiente para el header */
 .bg-primary {
-  background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
-}
-
-/* Efectos de hover para botones */
-.q-btn {
-  transition: all 0.2s ease;
-}
-
-.q-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(135deg, #84B24D 0%, #75AF7E 50%, #4E9C4C 100%);
 }
 </style>

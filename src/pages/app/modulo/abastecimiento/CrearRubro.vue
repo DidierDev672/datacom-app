@@ -1,747 +1,961 @@
 <template>
- <div class="q-pa-md">
-    <!-- Tarjeta contenedora del formulario -->
-    <q-card class="my-card" style="max-width: 800px; margin: 0 auto;">
-      <!-- Cabecera del formulario -->
-      <q-card-section class="bg-primary text-white">
-        <div class="text-h6 text-white">Formulario de Rubro</div>
-        <div class="text-subtitle2">Complete la información del rubro</div>
+  <div class="q-pa-xl page-container">
+    <BaseLoading :loading="loading" />
+
+    <q-card class="form-card shadow-lg rounded-lg">
+      <!-- Cabecera con Gradiente Institucional -->
+      <q-card-section class="header-gradient text-white q-pa-lg">
+        <div class="row items-center justify-between">
+          <div>
+            <div class="text-h4 text-weight-bold text-white">
+              Formulario de Rubro de Presupuesto de la solicitud de requisición
+            </div>
+            <div class="text-subtitle1 opacity-80">
+              Gestión de rubros presupuestales para solicitudes de requisición
+            </div>
+          </div>
+          <q-btn flat dense round icon="refresh" color="white" size="md" class="q-ml-md" @click="confirmRefresh">
+            <q-tooltip>Recargar página</q-tooltip>
+          </q-btn>
+        </div>
       </q-card-section>
 
-      <!-- Cuerpo del formulario -->
-      <q-card-section>
-        <q-form
-          @submit="onSubmit"
-          @reset="onReset"
-          class="q-gutter-md"
-        >
-          <!-- 1. Nombre del rubro -->
-          <q-input
-            filled
-            v-model="formData.nombreRubro"
-            label="Nombre del rubro *"
-            hint="Ingrese el nombre del rubro"
-            lazy-rules
-            :rules="[
-              val => val && val.length > 0 || 'El nombre del rubro es requerido',
-              val => val.length <= 100 || 'Máximo 100 caracteres'
-            ]"
-          >
-            <template v-slot:prepend>
-              <q-icon name="category" />
-            </template>
-          </q-input>
+      <!-- Cuerpo del Formulario -->
+      <q-card-section class="q-pa-xl">
+        <div v-if="hasLoadError" class="load-error-state">
+          <div class="load-error-icon-wrap">
+            <q-icon name="cloud_off" size="48px" color="white" />
+          </div>
+          <div class="load-error-title">No pudimos cargar los datos</div>
+          <div class="load-error-desc">
+            Parece que hubo una interrupción momentánea al intentar traer la información de este rubro.
+            No te preocupes, los datos están seguros y esto puede ocurrir por:
+          </div>
+          <ul class="load-error-reasons">
+            <li>Una pausa en la conexión con el servidor.</li>
+            <li>El tiempo de espera de la consulta se agotó por demanda del momento.</li>
+            <li>Un pequeño desajuste temporal en la comunicación.</li>
+          </ul>
+          <div class="load-error-cta">
+            Presiona el botón de abajo y lo intentaremos de nuevo. Generalmente con un segundo intento todo vuelve a funcionar.
+          </div>
+          <q-btn unelevated no-caps icon="refresh" label="Intentar de nuevo" class="load-error-btn q-mt-md"
+            @click="retryLoad" />
+        </div>
 
-          <!-- 2. Descripción del rubro -->
-          <q-input
-            filled
-            v-model="formData.descripcionRubro"
-            label="Descripción del rubro"
-            hint="Describa el propósito del rubro"
-            type="textarea"
-            autogrow
-            :maxlength="250"
-            :rules="[ val => !val || val.length <= 250 || 'Máximo 250 caracteres' ]"
-          >
-            <template v-slot:prepend>
-              <q-icon name="description" />
-            </template>
-            <template v-slot:append>
-              <span class="text-caption">{{ (formData.descripcionRubro && formData.descripcionRubro.length) || 0 }}/250</span>
-            </template>
-          </q-input>
+        <q-form v-show="!hasLoadError" @submit="onSubmit" class="q-gutter-y-lg">
+          <!-- 1. Nombre del Rubro -->
+          <div class="form-group">
+            <AppInput v-model="formData.nombreRubro" label="Nombre del rubro *"
+              placeholder="Ej: Materiales de Oficina" class="custom-input" />
+            <div class="form-hint">
+              Ingrese un nombre descriptivo para identificar el rubro.
+            </div>
+          </div>
 
-          <!-- 3. Plan de abastecimiento - ComboBox -->
-          <q-select
-            filled
-            v-model="formData.planAbastecimiento"
-            :options="planesAbastecimiento"
-            label="Plan de abastecimiento *"
-            hint="Seleccione un plan"
-            option-label="nombre"
-            option-value="id"
-            emit-value
-            map-options
-            lazy-rules
-            :rules="[ val => val !== null || 'Debe seleccionar un plan de abastecimiento']"
-            use-input
-            input-debounce="0"
-            @filter="filtrarPlanes"
-            clearable
-          >
-            <template v-slot:prepend>
-              <q-icon name="inventory" />
-            </template>
-            <template v-slot:no-option>
-              <q-item>
-                <q-item-section class="text-grey">
-                  No hay resultados
-                </q-item-section>
-              </q-item>
-            </template>
-          </q-select>
+          <!-- 2. Descripción -->
+          <div class="form-group">
+            <label class="form-label">Descripción del rubro</label>
+            <q-input v-model="formData.descripcionRubro" outlined dense bg-color="white" type="textarea" autogrow
+              class="custom-input" placeholder="Detalle el propósito de este rubro..." :maxlength="250">
+              <template v-slot:prepend>
+                <q-icon name="description" color="grey-6" />
+              </template>
+              <template v-slot:append>
+                <span class="text-caption opacity-60">{{
+                  (formData.descripcionRubro &&
+                    formData.descripcionRubro.length) ||
+                  0
+                }}/250</span>
+              </template>
+            </q-input>
+          </div>
 
-          <!-- 4. Fecha inicio -->
-          <q-input
-            filled
-            v-model="formData.fechaInicio"
-            label="Fecha de inicio *"
-            mask="date"
-            :rules="['date', val => val !== '' || 'La fecha de inicio es requerida']"
-          >
-            <template v-slot:prepend>
-              <q-icon name="event" class="cursor-pointer">
-                <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                  <q-date
-                    v-model="formData.fechaInicio"
-                    :options="fechaInicioOptions"
-                    today-btn
-                  />
-                </q-popup-proxy>
-              </q-icon>
-            </template>
-            <template v-slot:append>
-              <q-icon
-                name="close"
-                @click="formData.fechaInicio = ''"
-                class="cursor-pointer"
-                v-if="formData.fechaInicio"
-              />
-            </template>
-          </q-input>
+          <!-- 3. Plan de Abastecimiento -->
+          <div class="form-group">
+            <label class="form-label">Plan de abastecimiento <span class="text-red-500">*</span></label>
+            <q-select v-model="formData.planAbastecimiento" :options="planesFiltrados" outlined dense bg-color="white"
+              option-label="nombre" option-value="id" emit-value map-options use-input @filter="filtrarPlanes"
+              class="custom-input" placeholder="Busque o seleccione un plan de abastecimiento..."
+              :rules="[(val) => val !== null || 'Debe seleccionar un presupuesto']">
+              <template v-slot:prepend>
+                <q-icon name="inventory" color="grey-6" />
+              </template>
+            </q-select>
+          </div>
 
-          <!-- 5. Fecha final -->
-          <q-input
-            filled
-            v-model="formData.fechaFinal"
-            label="Fecha final *"
-            mask="date"
-            :rules="[
-              'date',
-              val => val !== '' || 'La fecha final es requerida',
-              val => validarFechaFinal(val) || 'La fecha final debe ser posterior a la fecha de inicio'
-            ]"
-          >
-            <template v-slot:prepend>
-              <q-icon name="event" class="cursor-pointer">
-                <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                  <q-date
-                    v-model="formData.fechaFinal"
-                    :options="fechaFinalOptions"
-                    today-btn
-                  />
-                </q-popup-proxy>
-              </q-icon>
-            </template>
-            <template v-slot:append>
-              <q-icon
-                name="close"
-                @click="formData.fechaFinal = ''"
-                class="cursor-pointer"
-              />
-            </template>
-          </q-input>
+          <!-- 4 y 5. Grid de Fechas -->
+          <div class="row q-col-gutter-lg">
+            <div class="col-12 col-md-6">
+              <div class="form-group">
+                <AppInput v-model="formData.fechaInicio" label="Fecha de inicio *" type="date"
+                  class="custom-input" />
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="form-group">
+                <AppInput v-model="formData.fechaFinal" label="Fecha final *" type="date"
+                  class="custom-input" />
+              </div>
+            </div>
+          </div>
 
           <!-- 6. Valor del presupuesto -->
-          <q-input
-            filled
-            v-model.number="formData.valorPresupuesto"
-            label="Valor del presupuesto *"
-            hint="Ingrese el monto del presupuesto"
-            type="number"
-            min="0"
-            step="1000"
-            :rules="[
-              val => val !== null && val !== '' || 'El valor del presupuesto es requerido',
-              val => val >= 0 || 'El valor debe ser mayor o igual a 0',
-              val => !isNaN(parseFloat(val)) || 'Debe ingresar un número válido'
-            ]"
-          >
-            <template v-slot:prepend>
-              <q-icon name="attach_money" />
-            </template>
-            <template v-slot:append>
-              <span class="text-caption">COP</span>
-            </template>
-          </q-input>
+          <div class="form-group">
+            <AppInput v-model="formData.valorPresupuesto" label="Valor del rubro *" type="number"
+              placeholder="0.00" class="custom-input" />
+            <div v-if="formData.valorPresupuesto" class="budget-preview q-mt-xs">
+              <q-icon name="payments" color="primary" size="xs" class="q-mr-xs" />
+              <span>{{ formatearMoneda(formData.valorPresupuesto) }}</span>
+            </div>
+          </div>
 
-          <!-- Mostrar resumen del presupuesto formateado -->
-          <q-item v-if="formData.valorPresupuesto" class="bg-grey-2 rounded-borders">
-            <q-item-section>
-              <q-item-label caption>Presupuesto formateado</q-item-label>
-              <q-item-label class="text-h6 text-primary">
-                {{ formatearMoneda(formData.valorPresupuesto) }}
-              </q-item-label>
-            </q-item-section>
-          </q-item>
+          <!-- 7. Estado del Rubro (Segmented Control) -->
+          <div class="form-group">
+            <label class="form-label q-mb-sm block">Estado del rubro</label>
+            <q-btn-toggle v-model="formData.activar" toggle-color="primary" toggle-text-color="green font-bold" flat
+              bordered no-caps unelevated :options="[
+                { label: 'Activo', value: true, icon: 'check_circle' },
+                { label: 'Inactivo', value: false, icon: 'block' },
+              ]" class="status-toggle" />
+          </div>
 
-          <!-- 7. Activar rubro -->
-          <q-toggle
-            v-model="formData.activar"
-            label="Activar rubro"
-            color="primary"
-            left-label
-            hint="Marque esta opción para activar el rubro"
-          />
-
-          <!-- 8. Sección de activación (solo visible si el rubro está guardado) -->
-          <q-card v-if="rubroId" flat bordered class="q-mt-md bg-blue-1">
-            <q-card-section>
-              <div class="text-subtitle2 q-mb-sm">
+          <!-- 8. Sección de Gestión de Activación (Preservada y optimizada) -->
+          <q-card v-if="rubroId" flat bordered class="activation-card q-mt-lg">
+            <q-card-section class="bg-blue-50">
+              <div class="text-subtitle1 text-weight-bold text-blue-9">
                 <q-icon name="settings" class="q-mr-sm" />
-                Gestión de Activación
+                Historial de Activación
               </div>
-
-              <div class="row q-gutter-md">
-                <!-- Estado actual -->
+            </q-card-section>
+            <q-card-section class="q-pa-lg">
+              <div class="row q-col-gutter-lg">
                 <div class="col-12 col-md-6">
-                  <q-item>
-                    <q-item-section avatar>
-                      <q-avatar
-                        :color="formData.activar ? 'positive' : 'negative'"
-                        text-color="white"
-                        :icon="formData.activar ? 'check' : 'close'"
-                      />
-                    </q-item-section>
-                    <q-item-section>
-                      <q-item-label>Estado Actual</q-item-label>
-                      <q-item-label caption>
-                        {{ formData.activar ? 'Activo' : 'Inactivo' }}
-                      </q-item-label>
-                    </q-item-section>
-                  </q-item>
+                  <div class="form-group">
+                    <AppInput v-model="formData.fechaActivacion" label="Fecha de cambio de estado" type="date"
+                      class="custom-input" :disabled="loading || loadingActivacion" />
+                  </div>
                 </div>
-
-                <!-- Fecha de activación -->
-                <div class="col-12 col-md-6">
-                  <q-input
-                    filled
-                    v-model="formData.fechaActivacion"
-                    label="Fecha de activación"
-                    hint="Fecha en que se activa/desactiva el rubro"
-                    mask="date"
-                    :rules="[
-                      'date',
-                      val => !val || val !== '' || 'La fecha de activación es requerida'
-                    ]"
-                    :disable="loading || loadingActivacion"
-                  >
-                    <template v-slot:prepend>
-                      <q-icon name="event" class="cursor-pointer">
-                        <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                          <q-date
-                            v-model="formData.fechaActivacion"
-                            :options="fechaActivacionOptions"
-                            today-btn
-                          />
-                        </q-popup-proxy>
-                      </q-icon>
-                    </template>
-                    <template v-slot:append>
-                      <q-icon
-                        name="close"
-                        @click="formData.fechaActivacion = ''"
-                        class="cursor-pointer"
-                        v-if="formData.fechaActivacion && !loading && !loadingActivacion"
-                      />
-                    </template>
-                  </q-input>
-                </div>
-
-                <!-- Motivo del cambio -->
                 <div class="col-12">
-                  <q-input
-                    filled
-                    v-model="formData.motivoCambio"
-                    label="Motivo del cambio"
-                    hint="Explique el motivo para activar o desactivar el rubro"
-                    type="textarea"
-                    autogrow
-                    :maxlength="300"
-                    :rules="[
-                      val => !val || val.length <= 300 || 'Máximo 300 caracteres'
-                    ]"
-                    :disable="loading || loadingActivacion"
-                  >
-                    <template v-slot:prepend>
-                      <q-icon name="comment" />
-                    </template>
-                    <template v-slot:append>
-                      <span class="text-caption">
-                        {{ (formData.motivoCambio && formData.motivoCambio.length) || 0 }}/300
-                      </span>
-                    </template>
-                  </q-input>
+                  <div class="form-group">
+                    <label class="form-label">Motivo del cambio</label>
+                    <q-input v-model="formData.motivoCambio" outlined dense bg-color="white" type="textarea" autogrow
+                      class="custom-input" placeholder="Explique el motivo del cambio de estado..."
+                      :disable="loading || loadingActivacion" />
+                  </div>
                 </div>
               </div>
-
-              <!-- Botones de acción para activación -->
-              <div class="row justify-end q-gutter-sm q-mt-md">
-                <q-btn
-                  label="Guardar Estado"
-                  :color="formData.activar ? 'positive' : 'negative'"
-                  :icon="formData.activar ? 'check_circle' : 'block'"
-                  :loading="loadingActivacion"
-                  :disable="!formData.fechaActivacion || !formData.motivoCambio"
-                  @click="guardarEstadoActivacion"
-                >
-                  <q-tooltip>
-                    {{ formData.activar ? 'Activar rubro' : 'Desactivar rubro' }}
-                  </q-tooltip>
-                </q-btn>
+              <div class="row justify-end q-mt-md">
+                <q-btn label="Actualizar Estado" :color="formData.activar ? 'positive' : 'negative'" unelevated
+                  :loading="loadingActivacion" :disable="!formData.fechaActivacion || !formData.motivoCambio"
+                  @click="guardarEstadoActivacion" class="rounded-lg" no-caps />
               </div>
             </q-card-section>
           </q-card>
 
-          <!-- Separador -->
-          <q-separator />
+          <q-separator class="q-my-lg opacity-20" />
 
-          <!-- Botones de acción -->
-          <div class="row justify-end q-gutter-sm">
-            <q-btn
-              label="Limpiar"
-              type="reset"
-              color="secondary"
-              flat
-              class="q-ml-sm"
-            />
-            <q-btn
-              label="Guardar rubro"
-              type="submit"
-              color="primary"
-              icon="save"
-            />
+          <!-- Botones de Acción -->
+          <div class="row items-center justify-between">
+            <q-btn label="Limpiar formulario" type="reset" flat color="grey-7" no-caps class="btn-ghost" />
+            <q-btn label="Guardar Rubro" type="submit" unelevated color="primary" icon="save" padding="12px 24px"
+              class="btn-primary rounded-lg" no-caps />
           </div>
         </q-form>
       </q-card-section>
-
-      <!-- Loading overlay -->
-      <q-inner-loading :showing="loading" color="primary">
-        <q-spinner-gears size="50px" color="primary" />
-        <div class="q-mt-sm text-primary">Guardando rubro...</div>
-      </q-inner-loading>
     </q-card>
 
-    <!-- Diálogo de confirmación -->
+    <!-- Diálogo de Confirmación (error) -->
     <q-dialog v-model="showDialog" persistent>
-      <q-card>
-        <q-card-section class="row items-center">
-          <q-avatar :icon="dialogIcon" :color="dialogColor" text-color="white" size="md" />
-          <span class="q-ml-md text-body1">{{ dialogMessage }}</span>
+      <q-card class="dialog-card">
+        <q-card-section class="row items-center q-pb-none">
+          <q-avatar :icon="dialogIcon" :color="dialogColor" text-color="white" />
+          <div class="text-h6 q-ml-md">Información</div>
+        </q-card-section>
+        <q-card-section class="q-pt-md">
+          {{ dialogMessage }}
         </q-card-section>
         <q-card-actions align="right">
           <q-btn flat :label="dialogButton" color="primary" v-close-popup />
         </q-card-actions>
       </q-card>
     </q-dialog>
+
+    <!-- Modal post-guardado: ¿Qué sigue? -->
+    <q-dialog v-model="showPostSaveModal" persistent maximized>
+      <q-card class="postsave-card">
+        <div class="postsave-header">
+          <div class="postsave-icon-wrap">
+            <q-icon name="check_circle" size="48px" color="white" />
+          </div>
+          <div class="postsave-title">{{ accionRealizada }}</div>
+          <div class="postsave-subtitle">"{{ formData.nombreRubro }}"</div>
+        </div>
+
+        <q-card-section class="q-px-xl q-pb-md q-pt-lg">
+          <div class="postsave-question">¿Qué deseas hacer ahora?</div>
+
+            <div>
+              <span>Ahora,  ¿hacia dónde quieres llevar tu gestión?</span>
+            </div>
+
+          <div class="postsave-options">
+            <q-btn flat class="postsave-option" @click="irALista">
+              <div class="option-content">
+                <div class="option-icon-wrap option-icon-list">
+                  <q-icon name="format_list_bulleted" size="28px" color="white" />
+                </div>
+                <div class="option-text">
+                  <div class="option-label">Ver todos mis rubros</div>
+                  <div class="option-desc">Revisa el listado completo y gestiona tus rubros desde allí</div>
+                </div>
+                <q-icon name="chevron_right" size="24px" color="grey-4" />
+              </div>
+            </q-btn>
+
+            <q-btn flat class="postsave-option" @click="limpiarYAgregarOtro">
+              <div class="option-content">
+                <div class="option-icon-wrap option-icon-add">
+                  <q-icon name="add_circle_outline" size="28px" color="white" />
+                </div>
+                <div class="option-text">
+                  <div class="option-label">Agregar otro rubro</div>
+                  <div class="option-desc">Continúa tu sesión de trabajo creando un nuevo rubro desde cero</div>
+                </div>
+                <q-icon name="chevron_right" size="24px" color="grey-4" />
+              </div>
+            </q-btn>
+
+            <q-btn flat class="postsave-option" @click="permanecer">
+              <div class="option-content">
+                <div class="option-icon-wrap option-icon-stay">
+                  <q-icon name="edit_note" size="28px" color="white" />
+                </div>
+                <div class="option-text">
+                  <div class="option-label">Seguir ajustando</div>
+                  <div class="option-desc">Revisa los detalles que acabas de guardar sin prisas</div>
+                </div>
+                <q-icon name="chevron_right" size="24px" color="grey-4" />
+              </div>
+            </q-btn>
+          </div>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+
+    <!-- Modal de error psicológico -->
+    <UpdateErrorModal
+      v-model="showErrorModal"
+      :error="lastError"
+      :rubro-name="formData.nombreRubro"
+      @retry="reintentar"
+      @review="revisarFormulario"
+      @contact="contactarSoporte"
+    />
   </div>
 </template>
 
 <script>
-import { useSupplyPlansStore } from '../../../../piña/supplyPlans'
-import { useRubrosStore } from '../../../../piña/rubros'
+import BaseLoading from "src/components/BaseLoading.vue";
+import UpdateErrorModal from "src/components/abastecimiento/UpdateErrorModal.vue";
+import AppInput from "src/utils/components/AppInput.vue";
+import { useRubrosStore } from "../../../../piña/rubros";
+import { useSupplyPlansStore } from "../../../../piña/supplyPlans";
 
 export default {
-  name: 'CrearRubro',
-  props:{
-  rubroId: {
-    type: [String, Number],
-    default: null
-  }
-},
+  name: "CrearRubro",
 
-emits: ['rubro-guardado', 'rubro-actualizado'],
+  components: {
+    BaseLoading,
+    UpdateErrorModal,
+    AppInput,
+  },
 
-data() {
-  return {
-    supplyPlansStore: null,
-    rubrosStore: null,
-    formData: {
-      nombreRubro: '',
-      descripcionRubro: '',
-      planAbastecimiento: null,
-      fechaInicio: '',
-      fechaFinal: '',
-      valorPresupuesto: null,
-      activar: false,
-      fechaActivacion: '',
-      motivoCambio: ''
+  props: {
+    rubroId: {
+      type: [String, Number],
+      default: null,
     },
-    planesAbastecimiento: [],
-    planesFiltrados: [],
-    loading: false,
-    loadingActivacion: false,
-    showDialog: false,
-    dialogMessage: '',
-    dialogIcon: 'check_circle',
-    dialogColor: 'positive',
-    dialogButton: 'Aceptar'
-  }
-},
-
-computed: {
-  formularioValido() {
-    return this.formData.nombreRubro && this.formData.nombreRubro.trim() &&
-            this.formData.planAbastecimiento &&
-            this.formData.fechaInicio &&
-            this.formData.fechaFinal &&
-            this.formData.valorPresupuesto !== null &&
-            this.formData.valorPresupuesto >= 0 &&
-            this.validarFechaFinal(this.formData.fechaFinal)
-  }
-},
-
-methods: {
-  formatearMoneda(valor) {
-    return new Intl.NumberFormat('es-Co', {
-      style: 'currency',
-      currency: 'COP',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0
-    }).format(valor)
   },
 
-  validarFechaFinal(fechaFinal) {
-    if (!this.formData.fechaInicio || !fechaFinal) return true
-
-    try {
-      // Parsear fechas en formato YYYY/MM/DD (estándar de Quasar q-date)
-      const [anioInicio, mesInicio, diaInicio] = this.formData.fechaInicio.split('/')
-      const [anioFinal, mesFinal, diaFinal] = fechaFinal.split('/')
-
-      const fechaInicioDate = new Date(anioInicio, mesInicio - 1, diaInicio)
-      const fechaFinalDate = new Date(anioFinal, mesFinal - 1, diaFinal)
-
-      // Validar que las fechas sean válidas
-      if (isNaN(fechaInicioDate.getTime()) || isNaN(fechaFinalDate.getTime())) {
-        return true // Dejar que Quasar maneje la validación de formato
-      }
-
-      // La fecha final debe ser mayor o igual a la fecha de inicio
-      return fechaFinalDate >= fechaInicioDate
-    } catch (error) {
-      console.error('Error en validación de fecha:', error)
-      return true // Dejar que Quasar maneje la validación
-    }
+  data() {
+    return {
+      supplyPlansStore: null,
+      rubrosStore: null,
+      formData: {
+        nombreRubro: "",
+        descripcionRubro: "",
+        planAbastecimiento: null,
+        fechaInicio: "",
+        fechaFinal: "",
+        valorPresupuesto: null,
+        activar: true,
+        fechaActivacion: "",
+        motivoCambio: "",
+      },
+      planesAbastecimiento: [],
+      planesFiltrados: [],
+      loading: false,
+      loadingActivacion: false,
+      showDialog: false,
+      dialogMessage: "",
+      dialogIcon: "check_circle",
+      dialogColor: "positive",
+      dialogButton: "Aceptar",
+      showErrorModal: false,
+      lastError: null,
+      showPostSaveModal: false,
+      accionRealizada: "",
+      loadError: null,
+    };
   },
 
-  fechaInicioOptions(fecha) {
-    try {
-      // Parsear fecha en formato YYYY/MM/DD
-      const [anio, mes, dia] = fecha.split('/')
-      const fechaComparar = new Date(anio, mes - 1, dia)
-
-      // Validar que la fecha sea válida
-      if (isNaN(fechaComparar.getTime())) {
-        return true
-      }
-
-      const fechaActual = new Date()
-      return fechaComparar >= fechaActual
-    } catch (error) {
-      console.error('Error en validación de fecha inicio options:', error)
-      return true
-    }
+  computed: {
+    hasLoadError() {
+      return (
+        this.rubroId &&
+        !this.loading &&
+        (this.loadError !== null || this.formEmpty)
+      );
+    },
+    formEmpty() {
+      return (
+        !this.formData.nombreRubro &&
+        !this.formData.planAbastecimiento &&
+        !this.formData.valorPresupuesto
+      );
+    },
   },
 
-  fechaFinalOptions(fecha) {
-    if (!this.formData.fechaInicio) return true
-
-    try {
-      // Parsear fecha de inicio en formato YYYY/MM/DD
-      const [anioInicio, mesInicio, diaInicio] = this.formData.fechaInicio.split('/')
-      const fechaInicioDate = new Date(anioInicio, mesInicio - 1, diaInicio)
-
-      // Parsear fecha a comparar (viene del q-date en formato YYYY/MM/DD)
-      const fechaComparar = new Date(fecha)
-
-      // Validar que las fechas sean válidas
-      if (isNaN(fechaInicioDate.getTime()) || isNaN(fechaComparar.getTime())) {
-        return true
-      }
-
-      // La fecha final debe ser mayor o igual a la fecha de inicio
-      return fechaComparar >= fechaInicioDate
-    } catch (error) {
-      console.error('Error en validación de fecha final options:', error)
-      return true
-    }
+  watch: {
+    rubroId: {
+      handler() {
+        this.cargarRubroExistente();
+      },
+    },
   },
 
-  fechaActivacionOptions(fecha) {
-    const fechaActual = new Date()
-    const fechaComparar = new Date(fecha)
-    return fechaComparar >= fechaActual
-  },
+  methods: {
+    formatearMoneda(valor) {
+      return new Intl.NumberFormat("es-CO", {
+        style: "currency",
+        currency: "COP",
+        minimumFractionDigits: 0,
+      }).format(valor);
+    },
 
-  filtrarPlanes(val, update) {
-    if (val === '') {
-      update(() => {
-        this.planesFiltrados = this.planesAbastecimiento
-      })
-      return
-    }
+    validarFechaFinal(fechaFinal) {
+      if (!this.formData.fechaInicio || !fechaFinal) return true;
+      const inicio = new Date(this.formData.fechaInicio);
+      const fin = new Date(fechaFinal);
+      return fin >= inicio;
+    },
 
-    update(() => {
-      const needle = val.toLowerCase()
-      this.planesFiltrados = this.planesAbastecimiento.filter(
-        plan => plan.nombre.toLowerCase().includes(needle) ||
-            plan.descripcion.toLowerCase().includes(needle)
-      )
-    })
-  },
+    fechaInicioOptions(fecha) {
+      const today = new Date().toISOString().split("T")[0].replace(/-/g, "/");
+      return fecha >= today;
+    },
 
-  async cargarPlanesAbastecimiento() {
-    try {
-      if (!this.supplyPlansStore) {
-        console.error('Store de Pinia no inicializado');
-        return;
-      }
+    fechaFinalOptions(fecha) {
+      if (!this.formData.fechaInicio) return true;
+      return fecha >= this.formData.fechaInicio;
+    },
 
-      // Usar el store de Pinia directamente
-      await this.supplyPlansStore.fetchAllPlans();
-
-      // Obtener los datos del store
-      const plansData = this.supplyPlansStore.plans;
-      console.log('Planes desde Pinia store:', plansData);
-
-      // Mapear los datos para que coincidan con el formato esperado
-      this.planesAbastecimiento = plansData.map(plan => ({
-        id: plan.id,
-        nombre: plan.name || plan.nombre || `Plan ${plan.id}`,
-        descripcion: plan.description || plan.descripcion || 'Sin descripción'
-      }));
-      this.planesFiltrados = [...this.planesAbastecimiento];
-
-      console.log('Planes cargados:', this.planesAbastecimiento);
-
-    } catch (error) {
-      console.error('Error al cargar planes de abastecimiento:', error);
-      this.$q.notify({
-        type: 'negative',
-        message: 'Error al cargar los planes de abastecimiento',
-        position: 'top',
-        timeout: 3000
-      });
-    }
-  },
-
-  mostrarDialogo(tipo, mensaje) {
-    this.dialogIcon = tipo === 'success' ? 'check_circle' : 'error'
-    this.dialogColor = tipo === 'success' ? 'positive' : 'negative'
-    this.dialogMessage = mensaje
-    this.dialogButton = 'Aceptar'
-    this.showDialog = true
-  },
-
-  obtenerUsuarioActual() {
-    try {
-      // Intentar obtener desde localStorage (común en muchas apps)
-      const token = localStorage.getItem('token')
-      if (token) {
-        const tokenData = JSON.parse(token)
-        return tokenData.usuario || tokenData.username || tokenData.user || tokenData.email || 'system'
-      }
-
-      // Intentar obtener desde sessionStorage
-      const sessionUser = sessionStorage.getItem('usuario') || sessionStorage.getItem('user')
-      if (sessionUser) {
-        return sessionUser
-      }
-
-      // Intentar obtener desde datos de usuario en localStorage
-      const userData = localStorage.getItem('userData') || localStorage.getItem('usuario')
-      if (userData) {
-        const parsed = JSON.parse(userData)
-        return parsed.nombre || parsed.username || parsed.user || parsed.email || 'system'
-      }
-
-      return 'system'
-    } catch (error) {
-      console.error('Error al obtener usuario actual:', error)
-      return 'system'
-    }
-  },
-
-  async onSubmit() {
-    this.loading = true
-
-    try {
-      // Validar fechas
-      if (!this.validarFechaFinal(this.formData.fechaFinal)) {
-        throw new Error('La fecha final debe ser posterior a la fecha de inicio')
-      }
-
-      // Preparar datos limpios para enviar al API
-      const rubroData = {
-        id: null,
-        name: this.formData.nombreRubro ? this.formData.nombreRubro.trim() : '',
-        description: this.formData.descripcionRubro ? this.formData.descripcionRubro.trim() : '',
-        planId: this.formData.planAbastecimiento,
-        startDate: this.formData.fechaInicio,
-        endDate: this.formData.fechaFinal,
-        totalBudget: Number(this.formData.valorPresupuesto) || 0,
-        usedBudget: 0,
-        active: Boolean(this.formData.activar),
-        createdBy: this.obtenerUsuarioActual() || 'system',
-        createdAt: new Date().toISOString().split('T')[0].replace(/-/g, '/') // Formato YYYY/MM/DD
-      }
-
-      console.log('Rubro data:', rubroData);
-
-      // Cargar los datos en el store antes de llamar a createRubro
-      this.rubrosStore.loadRubro(rubroData)
-
-      let result
-      if (this.rubroId) {
-        // Actualizar rubro existente
-        result = await this.rubrosStore.updateRubro()
-        this.mostrarDialogo('success', 'Rubro actualizado exitosamente')
-        this.$emit('rubro-actualizado', result)
-      } else {
-        // Crear nuevo rubro
-        result = await this.rubrosStore.createRubro()
-        this.mostrarDialogo('success', 'Rubro creado exitosamente')
-        this.$emit('rubro-guardado', result)
-      }
-
-      // Resetear formulario después de guardar
-      this.onReset()
-
-    } catch (error) {
-      console.error('Error al guardar rubro:', error)
-
-      // Mostrar error más detallado
-      let errorMessage = 'Error al guardar el rubro'
-      if (error.response) {
-        if (error.response.data && error.response.data.message) {
-          errorMessage = error.response.data.message
-        } else if (error.response.data && error.response.data.error) {
-          errorMessage = error.response.data.error
-        } else if (error.response.status === 400) {
-          errorMessage = 'Datos inválidos. Por favor verifique todos los campos.'
-        }
-      } else if (error.message) {
-        errorMessage = error.message
-      }
-
-      this.mostrarDialogo('error', errorMessage)
-    } finally {
-      this.loading = false
-    }
-  },
-
-  async guardarEstadoActivacion() {
-    this.loadingActivacion = true;
-
-    try {
-      // Validar que se tengan los datos necesarios
-      if (!this.formData.fechaActivacion || !this.formData.motivoCambio) {
-        this.$q.notify({
-          type: 'negative',
-          message: 'Debe completar la fecha de activación y el motivo del cambio',
-          position: 'top',
-          timeout: 3000
+    filtrarPlanes(val, update) {
+      if (val === "") {
+        update(() => {
+          this.planesFiltrados = this.planesAbastecimiento;
         });
         return;
       }
-
-      // Simular llamada a API para guardar el estado de activación
-      console.log('Guardando estado de activación:', {
-        id: this.rubroId,
-        activar: this.formData.activar,
-        fechaActivacion: this.formData.fechaActivacion,
-        motivoCambio: this.formData.motivoCambio
+      update(() => {
+        const needle = val.toLowerCase();
+        this.planesFiltrados = this.planesAbastecimiento.filter((plan) =>
+          plan.nombre.toLowerCase().includes(needle)
+        );
       });
+    },
 
-      // Aquí iría la llamada real a la API
-      await new Promise(resolve => setTimeout(resolve, 2000));
+    async cargarPlanesAbastecimiento() {
+      try {
+        await this.supplyPlansStore.fetchAllPlans();
+        this.planesAbastecimiento = this.supplyPlansStore.plans.map((plan) => ({
+          id: plan.id,
+          nombre: plan.name || `Plan ${plan.id}`,
+        }));
+        this.planesFiltrados = [...this.planesAbastecimiento];
+      } catch (error) {
+        console.error("Error al cargar planes:", error);
+      }
+    },
 
-      // Mostrar notificación de éxito
-      this.$q.notify({
-        type: 'positive',
-        message: this.formData.activar ? 'Rubro activado exitosamente' : 'Rubro desactivado exitosamente',
-        position: 'top',
-        timeout: 3000
+    async cargarRubroExistente() {
+      const idRubro = this.$route.params.rubroId;
+      if (!idRubro) {
+        return;
+      }
+
+      this.loading = true;
+      this.loadError = null;
+      try {
+        const rubro = await this.rubrosStore.fetchRubroById(idRubro);
+        if (!rubro) {
+          this.loadError = { message: "El rubro solicitado no fue encontrado en el servidor." };
+          return;
+        }
+
+        this.formData = {
+          nombreRubro: rubro.name || "",
+          descripcionRubro: rubro.description || "",
+          planAbastecimiento: rubro.planId || null,
+          fechaInicio: this.normalizarFecha(rubro.startDate),
+          fechaFinal: this.normalizarFecha(rubro.endDate),
+          valorPresupuesto: rubro.totalBudget != null ? rubro.totalBudget : null,
+          activar: typeof rubro.active === "boolean" ? rubro.active : true,
+          fechaActivacion: "",
+          motivoCambio: "",
+        };
+      } catch (error) {
+        this.loadError = { message: (error && error.message) || "Error al cargar el rubro para edición" };
+      } finally {
+        this.loading = false;
+      }
+    },
+
+    normalizarFecha(value) {
+      if (!value) {
+        return "";
+      }
+      return String(value).replace(/\//g, "-");
+    },
+
+    mostrarDialogo(tipo, mensaje) {
+      this.dialogIcon = tipo === "success" ? "check_circle" : "error";
+      this.dialogColor = tipo === "success" ? "positive" : "negative";
+      this.dialogMessage = mensaje;
+      this.showDialog = true;
+    },
+
+    async onSubmit() {
+      if (!this.formData.nombreRubro || !this.formData.nombreRubro.trim()) {
+        this.mostrarDialogo("error", "El nombre del rubro es obligatorio");
+        return;
+      }
+      if (!this.formData.planAbastecimiento) {
+        this.mostrarDialogo("error", "Debe seleccionar un plan de abastecimiento");
+        return;
+      }
+      const budget = Number(this.formData.valorPresupuesto);
+      if (!budget || budget <= 0) {
+        this.mostrarDialogo("error", "El valor presupuestado debe ser superior a cero");
+        return;
+      }
+
+      this.loading = true;
+      try {
+        const rubroData = {
+          name: this.formData.nombreRubro.trim(),
+          description: this.formData.descripcionRubro.trim(),
+          planId: this.formData.planAbastecimiento,
+          startDate: this.formData.fechaInicio
+            ? this.formData.fechaInicio.replace(/-/g, "/")
+            : null,
+          endDate: this.formData.fechaFinal
+            ? this.formData.fechaFinal.replace(/-/g, "/")
+            : null,
+          totalBudget: budget,
+          active: this.formData.activar,
+        };
+
+        if (this.rubroId) {
+          rubroData.id = this.rubroId;
+        }
+        console.log("[CrearRubro] Payload:", JSON.stringify(rubroData));
+        this.rubrosStore.loadRubro(rubroData);
+        if (this.rubroId) {
+          await this.rubrosStore.updateRubro();
+          this.$emit("rubro-actualizado");
+          this.accionRealizada = "Rubro actualizado con éxito";
+        } else {
+          await this.rubrosStore.createRubro();
+          this.$emit("rubro-guardado");
+          this.accionRealizada = "Rubro creado con éxito";
+        }
+        this.showPostSaveModal = true;
+      } catch (error) {
+        this.lastError = error;
+        this.showErrorModal = true;
+      } finally {
+        this.loading = false;
+      }
+    },
+
+    irALista() {
+      this.showPostSaveModal = false;
+      this.onReset();
+      this.$router.push({ name: "lista-categorias-presupuesto" });
+    },
+
+    limpiarYAgregarOtro() {
+      this.showPostSaveModal = false;
+      this.onReset();
+      this.$nextTick(function () {
+        var el = this.$el && this.$el.querySelector('input');
+        if (el) el.focus();
       });
+    },
 
-      // Emitir evento si es necesario
-      this.$emit('estado-actualizado', {
-        id: this.rubroId,
-        activar: this.formData.activar,
-        fechaActivacion: this.formData.fechaActivacion,
-        motivoCambio: this.formData.motivoCambio
-      });
+    permanecer() {
+      this.showPostSaveModal = false;
 
-    } catch (error) {
-      console.error('Error al guardar estado de activación:', error);
-      this.$q.notify({
-        type: 'negative',
-        message: `Error: ${error.message || 'No se pudo guardar el estado del rubro'}`,
-        position: 'top',
-        timeout: 3000
+      // <- AGREGAR:Recargar datos del rubro si existe
+      if(this.rubroId && this.rubroId !== null){
+        this.refrescarRubroActual();
+      }
+
+      // Forzar refocus en el primer campos para UX mejorada
+      this.$nextTick(function () {
+        var el = this.$el && this.$el.querySelector('.custom-input input');
+        if (el) el.focus();
       });
-    } finally {
-      this.loadingActivacion = false;
-    }
+    },
+
+    async guardarEstadoActivacion() {
+      this.loadingActivacion = true;
+      try {
+        await new Promise((resolve) => setTimeout(resolve, 1500));
+        this.$q.notify({
+          type: "positive",
+          message: "Estado actualizado correctamente",
+        });
+        this.$emit("estado-actualizado");
+      } catch (e) {
+        this.$q.notify({
+          type: "negative",
+          message: "Error al actualizar estado",
+        });
+      } finally {
+        this.loadingActivacion = false;
+      }
+    },
+
+    reintentar() {
+      this.showErrorModal = false;
+      this.$nextTick(function () {
+        this.onSubmit();
+      });
+    },
+
+    revisarFormulario() {
+      this.showErrorModal = false;
+      var el = this.$el && this.$el.querySelector(".form-group:first-child input");
+      if (el) {
+        el.focus();
+      }
+    },
+
+    contactarSoporte() {
+      this.showErrorModal = false;
+      this.$q.dialog({
+        title: "Contactar soporte",
+        message: "Por favor reporta este incidente al área de sistemas incluyendo el siguiente código: ERR-RUBRO-" + Date.now(),
+        html: true,
+        ok: "Copiar y cerrar",
+      }).onOk(function () {
+        // Intenta copiar al portapapeles
+        var text = "Error en actualización de rubro - Código: ERR-RUBRO-" + Date.now();
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(text);
+        }
+      });
+    },
+
+    onReset() {
+      this.formData = {
+        nombreRubro: "",
+        descripcionRubro: "",
+        planAbastecimiento: null,
+        fechaInicio: "",
+        fechaFinal: "",
+        valorPresupuesto: null,
+        activar: true,
+        fechaActivacion: "",
+        motivoCambio: "",
+      };
+      this.planesFiltrados = [...this.planesAbastecimiento];
+    },
+
+    retryLoad() {
+      this.loadError = null;
+      this.cargarRubroExistente();
+    },
+
+    confirmRefresh() {
+      const hasData =
+        this.formData.nombreRubro.trim() ||
+        this.formData.descripcionRubro.trim() ||
+        this.formData.valorPresupuesto !== null;
+
+      if (!hasData) {
+        this.refrescarPagina();
+        return;
+      }
+
+      this.$q.dialog({
+        title: "Recargar página",
+        message: "Hay información sin guardar. Al recargar se perderán los cambios no guardados. ¿Deseas continuar?",
+        cancel: { label: "Cancelar", flat: true, color: "grey-7" },
+        ok: { label: "Recargar", color: "warning", unelevated: true },
+        persistent: true,
+      }).onOk(() => this.refrescarPagina());
+    },
+
+    refrescarPagina() {
+      this.onReset();
+      if (this.$route.params.rubroId) {
+        this.cargarRubroExistente();
+      }
+    },
+
+    async refrescarRubroActual(){
+        const idRubro = this.$route.params.rubroId;
+        if (!idRubro) return;
+
+        try{
+          const rubroFresco = await this.rubrosStore.fetchRubroById(idRubro);
+
+          if (rubroFresco) {
+            this.formData = {
+              nombreRubro: rubroFresco.name || "",
+              descripcionRubro: rubroFresco.description || "",
+              planAbastecimiento: rubroFresco.planId || null,
+              fechaInicio: this.normalizarFecha(rubroFresco.startDate),
+              fechaFinal: this.normalizarFecha(rubroFresco.endDate),
+              valorPresupuesto: rubroFresco.totalBudget != null ? rubroFresco.totalBudget : null,
+              activar: typeof rubroFresco.active === "boolean" ? rubroFresco.active : true,
+              fechaActivacion: "",
+              motivoCambio: "",
+            }
+          }
+        }
+        catch(error){
+          console.warn("No se pudo refrescar el rubro actualizar:", error);
+        }
+    },
   },
 
-  onReset() {
-    this.formData = {
-      nombreRubro: '',
-      descripcionRubro: '',
-      planAbastecimiento: null,
-      fechaInicio: '',
-      fechaFinal: '',
-      valorPresupuesto: null
+  async mounted() {
+    this.supplyPlansStore = useSupplyPlansStore();
+    this.rubrosStore = useRubrosStore();
+    try {
+      await this.cargarPlanesAbastecimiento();
+    } catch (e) {
+      console.warn("Error al cargar planes:", e);
     }
-
-    this.planesFiltrados = [...this.planesAbastecimiento]
+    await this.cargarRubroExistente();
   }
-},
-
-mounted() {
-  // Inicializar los stores de Pinia
-  this.supplyPlansStore = useSupplyPlansStore()
-  this.rubrosStore = useRubrosStore()
-
-  // Cargar planes de abastecimiento al montar el componente
-  this.cargarPlanesAbastecimiento()
-
-  if(this.rubroId){
-    this.cargarRubro()
-  }
-},
-
-watch: {
-  'formData.fechaInicio'(nuevaFecha) {
-    if (nuevaFecha && this.formData.fechaFinal) {
-      if (!this.validarFechaFinal(this.formData.fechaFinal)) {
-        this.formData.fechaFinal = ''
-      }
-    }
-  }
-}
-}
+};
 </script>
 
 <style scoped>
-  .my-card {
+.page-container {
+  background: #f8fafc;
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.form-card {
+  width: 100%;
+  max-width: 850px;
+  border: none;
+}
+
+.header-gradient {
+  background: linear-gradient(135deg, #84b24d 0%, #75af7e 50%, #4e9c4c 100%);
+}
+
+.opacity-80 {
+  opacity: 0.8;
+}
+
+/* Form Styling */
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.form-hint {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 4px;
+  opacity: 0.8;
+}
+
+.custom-input ::v-deep .q-field__control {
+  background: white !important;
+  border-radius: 8px !important;
+}
+
+.custom-input ::v-deep .q-field__control:before {
+  border: 1px solid #d1d5db !important;
+}
+
+.custom-input ::v-deep .q-field--focused .q-field__control:after {
+  border-color: #4e9c4c !important;
+  border-width: 2px !important;
+}
+
+/* Budget Preview */
+.budget-preview {
+  display: flex;
+  align-items: center;
+  color: #4e9c4c;
+  font-weight: 700;
+  font-size: 15px;
+  background: #f0fdf4;
+  padding: 8px 12px;
+  border-radius: 6px;
+  width: fit-content;
+}
+
+/* Segmented Control */
+.status-toggle {
+  background: #f3f4f6;
   border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 4px;
+  border: 1px solid #e5e7eb;
+  width: fit-content;
 }
 
-.text-caption {
-  font-size: 0.75rem;
-  color: rgba(0, 0, 0, 0.6);
+.status-toggle ::v-deep .q-btn--active {
+  background: white !important;
+  color: #4e9c4c !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-.q-spinner-gears {
-  animation: spin 2s linear infinite;
+/* Activation Card */
+.activation-card {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #bfdbfe;
 }
 
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+/* Buttons */
+/* ─── Load Error State ─── */
+.load-error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 48px 24px;
+}
+
+.load-error-icon-wrap {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 20px rgba(245, 158, 11, 0.3);
+}
+
+.load-error-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 12px;
+  letter-spacing: -0.01em;
+}
+
+.load-error-desc {
+  font-size: 14px;
+  color: #6b7280;
+  max-width: 420px;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.load-error-reasons {
+  text-align: left;
+  font-size: 13px;
+  color: #9ca3af;
+  line-height: 1.7;
+  max-width: 380px;
+  margin: 0 auto 16px;
+  padding-left: 20px;
+}
+
+.load-error-reasons li {
+  margin-bottom: 4px;
+}
+
+.load-error-cta {
+  font-size: 14px;
+  color: #4b5563;
+  max-width: 400px;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+.load-error-btn {
+  background: linear-gradient(135deg, #84b24d 0%, #4e9c4c 100%) !important;
+  color: #fff !important;
+  border-radius: 10px;
+  padding: 0 28px;
+  font-weight: 600;
+  font-size: 15px;
+  min-height: 44px;
+  transition: all 0.2s ease;
+}
+
+.load-error-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(78, 156, 76, 0.35);
+}
+
+.btn-primary {
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(78, 156, 76, 0.3);
+}
+
+.btn-ghost:hover {
+  background: #f1f5f9;
+}
+
+.text-red-500 {
+  color: #ef4444;
+  font-weight: bold;
+}
+
+.dialog-card {
+  min-width: 400px;
+  border-radius: 16px;
+}
+
+/* --- Post-save modal --- */
+.postsave-card {
+  max-width: 520px;
+  margin: auto;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+}
+
+.postsave-header {
+  background: linear-gradient(135deg, #2e7d32, #43a047);
+  padding: 40px 40px 32px;
+  text-align: center;
+  color: white;
+}
+
+.postsave-icon-wrap {
+  margin-bottom: 12px;
+}
+
+.postsave-title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.postsave-subtitle {
+  font-size: 15px;
+  opacity: 0.85;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+.postsave-question {
+  font-size: 16px;
+  font-weight: 600;
+  color: #374151;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.postsave-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.postsave-option {
+  width: 100%;
+  border-radius: 14px;
+  padding: 6px 4px;
+  border: 1px solid #e5e7eb;
+  transition: all 0.2s ease;
+  background: white;
+}
+
+.postsave-option:hover {
+  border-color: #2e7d32;
+  background: #f0fdf4;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(46,125,50,0.10);
+}
+
+.option-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  text-align: left;
+}
+
+.option-icon-wrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.option-icon-list {
+  background: linear-gradient(135deg, #2e7d32, #66bb6a);
+}
+
+.option-icon-add {
+  background: linear-gradient(135deg, #1565c0, #42a5f5);
+}
+
+.option-icon-stay {
+  background: linear-gradient(135deg, #6b7280, #9ca3af);
+}
+
+.option-text {
+  flex: 1;
+}
+
+.option-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.option-desc {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 2px;
+  line-height: 1.3;
 }
 </style>

@@ -1,13 +1,15 @@
-import Vue from "vue";
+﻿import Vue from "vue";
 import VueRouter from "vue-router";
 import money from "v-money";
 import VueJWT from "vuejs-jwt";
 import VueTour from "vue-tour";
 import axios from "axios";
+import { useAuthStore } from "./auth";
 
-import VueApexCharts from 'vue-apexcharts'
+import VueApexCharts from "vue-apexcharts";
 
 import routes from "./routes";
+import { abastecimientoAccessGuard } from "./Abastecimiento.guard";
 
 require("vue-tour/dist/vue-tour.css");
 
@@ -37,10 +39,10 @@ export default function (/* { store, ssrContext } */) {
     // quasar.conf.js -> build -> vueRouterMode
     // quasar.conf.js -> build -> publicPath
     mode: process.env.VUE_ROUTER_MODE,
-    base: process.env.VUE_ROUTER_BASE
+    base: process.env.VUE_ROUTER_BASE,
   });
 
-  Router.beforeEach((to, from, next) => {
+  Router.beforeEach(function (to, from, next) {
     const loggedIn = localStorage.getItem("token");
     console.log("toRoute: ", to.fullPath);
 
@@ -51,54 +53,55 @@ export default function (/* { store, ssrContext } */) {
       try {
         const parsed = JSON.parse(loggedIn);
         const rawToken = parsed && parsed.token ? parsed.token : loggedIn;
-        if (rawToken && rawToken.startsWith('eyJ')) {
+        if (rawToken && rawToken.startsWith("eyJ")) {
           axios.defaults.headers.common["Authorization"] = `Bearer ${rawToken}`;
-          console.log('[Router] Token restaurado en axios.defaults desde localStorage.');
+          console.log(
+            "[Router] Token restaurado en axios.defaults desde localStorage."
+          );
         }
       } catch (e) {
-        if (loggedIn.startsWith('eyJ')) {
+        if (loggedIn.startsWith("eyJ")) {
           axios.defaults.headers.common["Authorization"] = `Bearer ${loggedIn}`;
         }
       }
     }
 
-    // const payload = VueJWT.jwt.decode();
-
-    // console.log("TokenInfo: " + payload);
-
-    //Validar fecha de caducidad del token
-
     // Si el usuario ya está autenticado y navega al login, redirigirlo a la ruta original o al home
-    try{
-      if(!to || !to.path){
-        console.warn('Objeto de navegación inválido');
-        next('/');
+    try {
+      if (!to || !to.path) {
+        console.warn("Objeto de navegación inválido");
+        next("/");
         return;
       }
 
-      if (to.path.startsWith('/auth') && loggedIn) {
-        const target = to.query.from || '/';
+      if (to.path.startsWith("/auth") && loggedIn) {
+        const target = to.query.from || "/";
         next(target);
         return;
       }
-    }
-    catch(error){
-      console.error('Error en la  navegación de autenticación:', error);
-      console.error('Error en el guard de autenticación:', error);
-      console.error('Detalles del error:', error.message);
-      next('/error');
+    } catch (error) {
+      console.error("Error en la  navegación de autenticación:", error);
+      console.error("Error en el guard de autenticación:", error);
+      console.error("Detalles del error:", error.message);
+      next("/error");
+      return;
     }
 
-    if (to.matched.some(record => record.meta.requiresAuth) && !loggedIn) {
+    if (to.path && to.path.indexOf("/abastecimiento") === 0) {
+      abastecimientoAccessGuard(to, from, next);
+      return;
+    }
+
+    if (to.matched.some((record) => record.meta.requiresAuth) && !loggedIn) {
       console.log("Pasa por el guard");
 
       try {
-        sessionStorage.setItem('redirectAfterLogin', to.fullPath);
-      } catch (e) { }
+        sessionStorage.setItem("redirectAfterLogin", to.fullPath);
+      } catch (e) {}
 
       next({
-        path: '/auth',
-        query: { from: to.fullPath } // Guarda la ruta completa (path + parámetros)
+        path: "/auth",
+        query: { from: to.fullPath },
       });
     } else {
       next();

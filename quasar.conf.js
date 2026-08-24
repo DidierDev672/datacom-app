@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file runs in a Node context (it's NOT transpiled by Babel), so use only
  * the ES6 features that are supported by your Node version. https://node.green/
  */
@@ -7,9 +7,7 @@
 // https://quasar.dev/quasar-cli/quasar-conf-js
 /* eslint-env node */
 
-const ESLintPlugin = require("eslint-webpack-plugin");
-
-module.exports = function(/* ctx */) {
+module.exports = function (/* ctx */) {
   return {
     // https://quasar.dev/quasar-cli/supporting-ts
     supportTS: false,
@@ -20,7 +18,7 @@ module.exports = function(/* ctx */) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://quasar.dev/quasar-cli/boot-files
-    boot: ["axios", "vuelidate", "pinia"],
+    boot: ["axios", "vuelidate", "pinia", "operativos-permisos"],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
     css: ["app.scss"],
@@ -36,12 +34,17 @@ module.exports = function(/* ctx */) {
       // 'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
 
       "roboto-font", // optional, you are not bound to it
-      "material-icons" // optional, you are not bound to it
+      "material-icons", // optional, you are not bound to it
     ],
 
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
     build: {
-      vueRouterMode: "hash", // available values: 'hash', 'history'
+      vueRouterMode: "hash", // available values: 'hash', 'history']
+      sourceMap: true,
+
+      extendWebpack(cfg) {
+        cfg.devtool = "source-map";
+      },
 
       // transpile: false,
 
@@ -72,13 +75,7 @@ module.exports = function(/* ctx */) {
         })
         */
       //}
-      // https://v1.quasar.dev/quasar-cli/handling-webpack
-      // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
-      chainWebpack(chain) {
-        chain
-          .plugin("eslint-webpack-plugin")
-          .use(ESLintPlugin, [{ extensions: ["js", "vue"] }]);
-      }
+      // Sin lint en webpack (usar: npm run lint). Evita fallos de build en Docker.
     },
 
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer
@@ -87,11 +84,11 @@ module.exports = function(/* ctx */) {
       port: 4422,
       open: true, // opens browser window automatically
       proxy: {
-        '/api': {
-          target: 'http://localhost:3310',
-          changeOrigin: true
-        }
-      }
+        "/api": {
+          target: "http:///192.168.2.13:3310",
+          changeOrigin: true,
+        },
+      },
     },
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework
@@ -113,7 +110,7 @@ module.exports = function(/* ctx */) {
       // directives: [],
 
       // Quasar plugins
-      plugins: ["Notify", "Dialog", "LocalStorage", "Loading"]
+      plugins: ["Notify", "Dialog", "LocalStorage", "Loading"],
     },
 
     // animations: 'all', // --- includes all animations
@@ -122,7 +119,7 @@ module.exports = function(/* ctx */) {
 
     // https://quasar.dev/quasar-cli/developing-ssr/configuring-ssr
     ssr: {
-      pwa: false
+      pwa: false,
     },
 
     // https://quasar.dev/quasar-cli/developing-pwa/configuring-pwa
@@ -141,30 +138,30 @@ module.exports = function(/* ctx */) {
           {
             src: "icons/icon-128x128.png",
             sizes: "128x128",
-            type: "image/png"
+            type: "image/png",
           },
           {
             src: "icons/icon-192x192.png",
             sizes: "192x192",
-            type: "image/png"
+            type: "image/png",
           },
           {
             src: "icons/icon-256x256.png",
             sizes: "256x256",
-            type: "image/png"
+            type: "image/png",
           },
           {
             src: "icons/icon-384x384.png",
             sizes: "384x384",
-            type: "image/png"
+            type: "image/png",
           },
           {
             src: "icons/icon-512x512.png",
             sizes: "512x512",
-            type: "image/png"
-          }
-        ]
-      }
+            type: "image/png",
+          },
+        ],
+      },
     },
 
     // Full list of options: https://quasar.dev/quasar-cli/developing-cordova-apps/configuring-cordova
@@ -174,7 +171,7 @@ module.exports = function(/* ctx */) {
 
     // Full list of options: https://quasar.dev/quasar-cli/developing-capacitor-apps/configuring-capacitor
     capacitor: {
-      hideSplashscreen: true
+      hideSplashscreen: true,
     },
 
     // Full list of options: https://quasar.dev/quasar-cli/developing-electron-apps/configuring-electron
@@ -195,7 +192,7 @@ module.exports = function(/* ctx */) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: "datacom-app"
+        appId: "datacom-app",
       },
 
       // More info: https://quasar.dev/quasar-cli/developing-electron-apps/node-integration
@@ -204,7 +201,7 @@ module.exports = function(/* ctx */) {
       extendWebpack(/* cfg */) {
         // do something with Electron main process Webpack cfg
         // chainWebpack also available besides this extendWebpack
-      }
-    }
+      },
+    },
   };
 };

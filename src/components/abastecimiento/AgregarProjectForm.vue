@@ -1,4 +1,4 @@
-﻿<template>
+<template>
     <q-dialog
         persistent
         transition-show="scale"
@@ -67,13 +67,13 @@
                             <div class="row q-col-gutter-sm q-mb-md">
                                 <div class="col-xs-12 col-md-3 text-grey-7">Plan de Abastecimiento:</div>
                                 <div class="col-xs-12 col-md-9">
-                                    <q-chip 
-                                        color="primary" 
+                                    <q-badge 
+                                        :color="selectedPlanInfo.id ? 'positive' : 'negative'" 
                                         text-color="white" 
-                                        icon="assignment"
-                                        class="text-caption">
-                                        {{ selectedItemInfo.name || 'No seleccionado' }}
-                                    </q-chip>
+                                        class="q-pa-sm text-caption">
+                                        <q-icon name="assignment" class="q-mr-xs" size="sm" />
+                                        {{ selectedPlanInfo.name || 'No seleccionado' }}
+                                    </q-badge>
                                 </div>
                             </div>
                             
@@ -143,13 +143,13 @@
                             <div class="row q-col-gutter-sm">
                                 <div class="col-xs-12 col-md-3 text-grey-7">Estado:</div>
                                 <div class="col-xs-12 col-md-9">
-                                    <q-chip 
+                                    <q-badge 
                                         :color="selectedItemInfo.active ? 'positive' : 'negative'"
                                         text-color="white"
-                                        :icon="selectedItemInfo.active ? 'check_circle' : 'cancel'"
-                                        size="sm">
+                                        class="q-pa-sm text-caption">
+                                        <q-icon :name="selectedItemInfo.active ? 'check_circle' : 'cancel'" class="q-mr-xs" size="sm" />
                                         {{ selectedItemInfo.active ? 'Activo' : 'Inactivo' }}
-                                    </q-chip>
+                                    </q-badge>
                                 </div>
                             </div>
                         </q-card-section>
@@ -310,13 +310,14 @@ export default {
         
         onSeleccionarPlan(value) {
             console.log('Plan seleccionado:', value)
-            this.selectedPlanInfo = this.getSupplyPlans.find(plan => plan.id === value) || {}
-            this.supplyPlanModel.supplyPlanItem = ''
-            this.selectedItemInfo = {}
             
             // Extraer el ID del plan (value puede ser el objeto completo o solo el ID)
-            const planId = typeof value === 'object' ? value.id : value
+            const planId = typeof value === 'object' && value !== null ? value.id : value
             console.log('Plan ID extraído:', planId)
+            
+            this.selectedPlanInfo = this.getSupplyPlans.find(plan => plan.id === planId) || {}
+            this.supplyPlanModel.supplyPlanItem = ''
+            this.selectedItemInfo = {}
             
             // Cargar rubros del plan seleccionado
             this.cargarRubrosPorPlan(planId)
@@ -324,7 +325,8 @@ export default {
         
         onSeleccionarItem(value) {
             console.log('Item seleccionado:', value)
-            this.selectedItemInfo = this.getRubrosByPlan.find(item => item.id !== value) || {}
+            const itemId = typeof value === 'object' && value !== null ? value.id : value
+            this.selectedItemInfo = this.getRubrosByPlan.find(item => item.id === itemId) || {}
         },
         
         onSubmit() {            
