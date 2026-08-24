@@ -169,9 +169,9 @@
 <script>
 import { filtrarMenu } from "src/mixins/mixinAbastecimiento";
 import { useAccessStore } from "src/router/Access.store";
-import { pinia } from "src/stores/pinia";
-import { useAuthStore } from "src/stores/authStore";
 import { useAbastecimientoPermisosStore } from "src/stores/abastecimientoPermisosStore";
+import { useAuthStore } from "src/stores/authStore";
+import { pinia } from "src/stores/pinia";
 import { mapActions } from "vuex";
 
 export default {
@@ -191,11 +191,11 @@ export default {
           icon: "description",
           expanded: false,
           children: [
-            {
+            /*{
               title: "Mis órdenes",
               routeName: "mis-ordenes-abastecimiento",
               icon: "format_list_bulleted",
-            },
+            },*/
             {
               id: "presupuesto",
               title: "Presupuesto",
@@ -203,12 +203,12 @@ export default {
               expanded: false,
               children: [
                 {
-                  title: "Crear Presupuesto",
+                  title: "Crear planes",
                   routeName: "Crear-plan-abastecimiento",
                   icon: "add_task",
                 },
                 {
-                  title: "Lista de presupuesto",
+                  title: "Lista de planes",
                   routeName: "lista-planes-abastecimiento",
                   icon: "inventory",
                 },
