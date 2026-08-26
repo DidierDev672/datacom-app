@@ -4,10 +4,10 @@
       <!-- Cabecera con Gradiente Institucional -->
       <q-card-section class="header-gradient text-white q-pa-lg">
         <div class="text-h4 text-weight-bold text-white">
-          Plan de abastecimiento
+          Plan
         </div>
         <div class="text-subtitle1 opacity-80">
-          Complete los detalles para la planificación estratégica del plan de abastecimiento
+          Complete los detalles para la planificación estratégica del plan
         </div>
       </q-card-section>
 
@@ -48,8 +48,8 @@
                   placeholder="AAAA/MM/DD" :rules="['date']">
                   <template v-slot:prepend>
                     <q-icon name="event" class="cursor-pointer" color="grey-6">
-                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                        <q-date v-model="formData.startDate" mask="YYYY-MM-DD" />
+                      <q-popup-proxy ref="startDatePopup" cover transition-show="scale" transition-hide="scale">
+                        <q-date v-model="formData.startDate" mask="YYYY-MM-DD" @input="() => { $refs.startDatePopup.hide() }" />
                       </q-popup-proxy>
                     </q-icon>
                   </template>
@@ -68,8 +68,8 @@
                   ]">
                   <template v-slot:prepend>
                     <q-icon name="event" class="cursor-pointer" color="grey-6">
-                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                        <q-date v-model="formData.endDate" mask="YYYY-MM-DD" />
+                      <q-popup-proxy ref="endDatePopup" cover transition-show="scale" transition-hide="scale">
+                        <q-date v-model="formData.endDate" mask="YYYY-MM-DD" @input="() => { $refs.endDatePopup.hide() }" />
                       </q-popup-proxy>
                     </q-icon>
                   </template>

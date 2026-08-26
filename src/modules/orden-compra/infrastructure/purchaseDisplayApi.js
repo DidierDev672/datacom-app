@@ -1,8 +1,7 @@
-import client from "src/api/client";
-import { supplierComparisonApi } from "./SupplierComparisonApi";
+﻿import client from "src/api/client";
 
 const PURCHASER_BASE_URL = "/api/purchasers";
-const SUPPLIER_BASE_URL = "/api/v1/proveedores";
+const SUPPLIER_BASE_URL = "/api/v1/terceros";
 
 const comparisonCache = new Map();
 const purchaserCache = new Map();
@@ -10,7 +9,7 @@ const supplierCache = new Map();
 
 /**
  * Normaliza cualquier forma de respuesta del backend ({ results: [...] },
- * arreglo plano u objeto suelto) a una lista de registros.
+ * { results: {...} }, arreglo plano u objeto suelto) a una lista de registros.
  */
 function collectRecords(data) {
   if (!data) {
@@ -18,6 +17,9 @@ function collectRecords(data) {
   }
   if (Array.isArray(data.results)) {
     return data.results;
+  }
+  if (data.results && typeof data.results === "object") {
+    return [data.results];
   }
   if (Array.isArray(data)) {
     return data;
@@ -72,16 +74,16 @@ function mapPurchaserName(record) {
   return record.comprador || record.nombre || record.name || null;
 }
 
-/** Mapper del registro de proveedor -> nombre para la tabla. */
+/** Mapper del registro de tercero/proveedor -> nombre para la tabla. */
 function mapSupplierName(record) {
   if (!record) {
     return null;
   }
   return (
-    record.nombreRazonSocial ||
     record.razonSocial ||
+    record.nombreRazonSocial ||
+    record.nombreComercial ||
     record.name ||
-    record.nit ||
     null
   );
 }
@@ -112,16 +114,64 @@ function cachedLookup(cache, key, loader) {
 }
 
 /**
- * GET /api/supplier-comparisons/{idQuote}
- * Etiqueta legible de la comparación: `requestLabel` (fallback `code`).
- * Resuelve null si el status no es 200 o no hay resultados.
+ * GET /api/supplier-comparisons/{id}
+ * Nombre de la comparación: campo `requestLabel` dentro de `results`.
+ * Usa la instancia Axios compartida (baseURL + timeout) con async/await
+ * y try/catch para estandarizar errores (p. ej. status 400).
  */
-export function fetchComparisonLabel(idQuote) {
-  return cachedLookup(comparisonCache, idQuote, function (cleanId) {
-    return supplierComparisonApi.getComparison(cleanId).then(function (data) {
-      const record = pickRecordById(data, cleanId, ["id"]);
-      return mapComparisonLabel(record);
-    });
+export async function fetchComparisonLabel(idQuote) {
+  return cachedLookup(comparisonCache, idQuote, async function (cleanId) {
+    try {
+      var response = await client.get(
+        "/api/supplier-comparisons/" + encodeURIComponent(cleanId),
+        {
+          validateStatus: function () {
+            return true;
+          },
+        }
+      );
+
+      if (!response || response.status !== 200) {
+        if (response && response.status === 400) {
+          console.error(
+            "[purchaseDisplayApi] Error 400 al obtener comparación",
+            cleanId,
+            response.data
+          );
+          throw new Error(
+            "Se presentó un error al intentar obtener la comparación. No te preocupes: puedes cerrar e intentarlo de nuevo en unos segundos."
+          );
+        }
+        console.error(
+          "[purchaseDisplayApi] Respuesta inesperada al obtener comparación",
+          response && response.status
+        );
+        throw new Error(
+          "No pudimos cargar la comparación (código " +
+            (response && response.status) +
+            ")."
+        );
+      }
+
+      var record = pickRecordById(response.data, cleanId, ["id"]);
+      var label =
+        record && record.requestLabel
+          ? record.requestLabel
+          : mapComparisonLabel(record);
+
+      if (!label) {
+        throw new Error("Respuesta sin requestLabel de comparación");
+      }
+
+      return label;
+    } catch (error) {
+      console.error(
+        "[purchaseDisplayApi] Fallo al obtener comparación",
+        cleanId,
+        error && error.message ? error.message : error
+      );
+      throw error;
+    }
   });
 }
 
@@ -154,9 +204,9 @@ export function fetchPurchaserName(id) {
 }
 
 /**
- * GET /api/v1/proveedores/{id}
- * Nombre del proveedor: campo `nombreRazonSocial`. Lanza error si el
- * status no es 200 o el registro no trae nombre.
+ * GET /api/v1/terceros/{id}
+ * Nombre del proveedor: campo `razonSocial` dentro de `results`.
+ * Lanza error si el status no es 200 (p. ej. 400) o el registro no trae nombre.
  */
 export function fetchSupplierName(id) {
   return cachedLookup(supplierCache, id, function (cleanId) {
@@ -168,16 +218,22 @@ export function fetchSupplierName(id) {
       })
       .then(function (response) {
         if (!response || response.status !== 200) {
-          throw new Error("Proveedores respondio " + response.status);
+          if (response && response.status === 400) {
+            throw new Error(
+              "Se presentó un error al intentar obtener la información del proveedor."
+            );
+          }
+          throw new Error(
+            "Terceros respondio " + (response && response.status)
+          );
         }
-        const record = pickRecordById(
-          response.data,
-          cleanId,
-          ["idProveedor", "id"]
-        );
+        const record = pickRecordById(response.data, cleanId, [
+          "id",
+          "idProveedor",
+        ]);
         const name = mapSupplierName(record);
         if (!name) {
-          throw new Error("Respuesta sin nombre de proveedor");
+          throw new Error("Respuesta sin razonSocial de proveedor");
         }
         return name;
       });

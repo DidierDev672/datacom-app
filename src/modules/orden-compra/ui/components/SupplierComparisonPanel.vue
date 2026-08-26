@@ -12,26 +12,14 @@
               precios por producto para determinar el ganador.
             </div>
           </div>
-          <q-btn
-            flat
-            no-caps
-            color="white"
-            icon="delete_sweep"
-            label="Limpiar comparaciones guardadas"
-            class="header-action-btn"
-            :loading="clearingComparisons"
-            @click="confirmClearAllComparisons"
-          />
+          <q-btn flat no-caps color="white" icon="delete_sweep" label="Limpiar comparaciones guardadas"
+            class="header-action-btn" :loading="clearingComparisons" @click="confirmClearAllComparisons" />
         </div>
       </q-card-section>
 
       <q-card-section class="q-pa-lg">
-        <SupplyPlanRequestSelector
-          :value="selectedRequest"
-          @input="onRequestSelected"
-          @selected="onRequestSelected"
-          @cleared="onRequestCleared"
-        />
+        <SupplyPlanRequestSelector :value="selectedRequest" @input="onRequestSelected" @selected="onRequestSelected"
+          @cleared="onRequestCleared" />
 
         <div v-if="selectedRequest" class="comparison-workspace q-mt-lg">
           <div class="section-block">
@@ -42,17 +30,8 @@
               {{ products.length }} ítem(s) cargados desde la solicitud y la
               orden de suministro vinculada.
             </p>
-            <q-table
-              flat
-              bordered
-              :data="products"
-              :columns="productColumns"
-              row-key="id"
-              :loading="loadingProducts"
-              :pagination="{ rowsPerPage: 8 }"
-              :no-data-label="productsNoDataLabel"
-              class="products-table"
-            >
+            <q-table flat bordered :data="products" :columns="productColumns" row-key="id" :loading="loadingProducts"
+              :pagination="{ rowsPerPage: 8 }" :no-data-label="productsNoDataLabel" class="products-table">
               <template v-slot:body-cell-referenceUnitPrice="props">
                 <q-td :props="props" class="text-right">
                   {{ formatCurrency(props.row.referenceUnitPrice) }}
@@ -79,14 +58,8 @@
                 Proveedores en comparación
               </div>
               <q-space />
-              <q-btn
-                unelevated
-                no-caps
-                color="primary"
-                icon="add_business"
-                label="Agregar proveedor"
-                @click="openSupplierDialog"
-              />
+              <q-btn unelevated no-caps color="primary" icon="add_business" label="Agregar proveedor"
+                @click="openSupplierDialog" />
             </div>
 
             <div v-if="!suppliers.length" class="empty-suppliers q-mt-md">
@@ -94,27 +67,15 @@
             </div>
 
             <div v-else class="supplier-chip-row q-mt-md">
-              <q-chip
-                v-for="supplier in suppliers"
-                :key="supplier.key"
-                removable
-                color="primary"
-                text-color="white"
-                icon="store"
-                @remove="removeSupplier(supplier.key)"
-              >
+              <q-chip v-for="supplier in suppliers" :key="supplier.key" removable color="primary" text-color="white"
+                icon="store" @remove="removeSupplier(supplier.key)">
                 {{ supplier.name }}
-                <span v-if="supplier.nit" class="q-ml-xs"
-                  >({{ supplier.nit }})</span
-                >
+                <span v-if="supplier.nit" class="q-ml-xs">({{ supplier.nit }})</span>
               </q-chip>
             </div>
           </div>
 
-          <div
-            v-if="products.length && suppliers.length"
-            class="section-block q-mt-lg"
-          >
+          <div v-if="products.length && suppliers.length" class="section-block q-mt-lg">
             <div class="section-title">Matriz de cotización por proveedor</div>
             <p class="section-help">
               Compare cada cotización de proveedor contra el precio registrado en
@@ -131,22 +92,11 @@
                     <th class="text-center order-price-col">
                       Precio en orden
                     </th>
-                    <th
-                      v-for="supplier in suppliers"
-                      :key="`head-${supplier.key}`"
-                      class="text-center supplier-col"
-                    >
+                    <th v-for="supplier in suppliers" :key="`head-${supplier.key}`" class="text-center supplier-col">
                       <div class="supplier-col-header">
                         <span>{{ supplier.name }}</span>
-                        <q-btn
-                          flat
-                          dense
-                          round
-                          size="sm"
-                          icon="content_copy"
-                          color="grey-7"
-                          @click="fillReferencePrices(supplier.key)"
-                        >
+                        <q-btn flat dense round size="sm" icon="content_copy" color="grey-7"
+                          @click="fillReferencePrices(supplier.key)">
                           <q-tooltip>
                             Copiar precios de la orden en esta columna
                           </q-tooltip>
@@ -161,10 +111,7 @@
                       <div class="text-weight-medium">
                         {{ product.productName }}
                       </div>
-                      <div
-                        v-if="product.planName"
-                        class="text-caption text-grey-6"
-                      >
+                      <div v-if="product.planName" class="text-caption text-grey-6">
                         {{ product.planName }}
                       </div>
                     </td>
@@ -186,35 +133,17 @@
                         }}
                       </div>
                     </td>
-                    <td
-                      v-for="supplier in suppliers"
-                      :key="`${supplier.key}-${product.id}`"
-                      class="supplier-col"
+                    <td v-for="supplier in suppliers" :key="`${supplier.key}-${product.id}`" class="supplier-col"
                       :class="{
                         'is-winner-cell': isProductWinner(supplier.key, product.id),
                         'is-winner-selectable':
                           winnerSelectionMode === 'manual' &&
                           canSelectProductWinner(supplier.key, product.id),
-                      }"
-                      @click="selectProductWinner(product.id, supplier.key)"
-                    >
-                      <q-input
-                        :value="getQuoteInputValue(supplier.key, product.id)"
-                        outlined
-                        dense
-                        type="number"
-                        min="0"
-                        step="1"
-                        prefix="$"
-                        placeholder="0"
-                        class="quote-input"
-                        @input="setQuote(supplier.key, product.id, $event)"
-                        @click.native.stop
-                      />
-                      <div
-                        class="text-caption text-right q-mt-xs"
-                        :class="quoteDiffClass(supplier.key, product)"
-                      >
+                      }" @click="selectProductWinner(product.id, supplier.key)">
+                      <q-input :value="getQuoteInputValue(supplier.key, product.id)" outlined dense type="number"
+                        min="0" step="1" prefix="$" placeholder="0" class="quote-input"
+                        @input="setQuote(supplier.key, product.id, $event)" @click.native.stop />
+                      <div class="text-caption text-right q-mt-xs" :class="quoteDiffClass(supplier.key, product)">
                         Subtotal:
                         {{
                           formatCurrency(
@@ -224,27 +153,18 @@
                             )
                           )
                         }}
-                        <span
-                          v-if="hasQuoteDiff(supplier.key, product)"
-                          class="q-ml-xs"
-                        >
+                        <span v-if="hasQuoteDiff(supplier.key, product)" class="q-ml-xs">
                           ({{ quoteDiffLabel(supplier.key, product) }})
                         </span>
                       </div>
-                      <div
-                        v-if="isProductWinner(supplier.key, product.id)"
-                        class="product-winner-badge"
-                      >
+                      <div v-if="isProductWinner(supplier.key, product.id)" class="product-winner-badge">
                         <q-icon name="emoji_events" size="14px" color="amber-9" />
                         Ganador
                       </div>
-                      <div
-                        v-else-if="
-                          winnerSelectionMode === 'manual' &&
-                          canSelectProductWinner(supplier.key, product.id)
-                        "
-                        class="product-winner-hint text-caption text-grey-6"
-                      >
+                      <div v-else-if="
+                        winnerSelectionMode === 'manual' &&
+                        canSelectProductWinner(supplier.key, product.id)
+                      " class="product-winner-hint text-caption text-grey-6">
                         Clic para elegir
                       </div>
                     </td>
@@ -258,11 +178,8 @@
                     <td class="text-center text-weight-bold order-price-col">
                       {{ formatCurrency(orderReferenceTotal) }}
                     </td>
-                    <td
-                      v-for="supplier in suppliers"
-                      :key="`total-${supplier.key}`"
-                      class="text-center text-weight-bold"
-                    >
+                    <td v-for="supplier in suppliers" :key="`total-${supplier.key}`"
+                      class="text-center text-weight-bold">
                       {{ formatCurrency(getSupplierTotal(supplier.key)) }}
                     </td>
                   </tr>
@@ -271,21 +188,14 @@
             </div>
           </div>
 
-          <div
-            v-if="comparison.supplierSummaries.length"
-            class="section-block q-mt-lg"
-          >
+          <div v-if="comparison.supplierSummaries.length" class="section-block q-mt-lg">
             <div class="section-title">Resultado de la comparación</div>
             <div class="comparison-grid q-mt-sm">
-              <div
-                v-for="summary in comparison.supplierSummaries"
-                :key="`summary-${summary.key}`"
-                class="comparison-card-item"
-                :class="{
+              <div v-for="summary in comparison.supplierSummaries" :key="`summary-${summary.key}`"
+                class="comparison-card-item" :class="{
                   'is-best': summary.isBestPrice && summary.productsWon === 0,
                   'is-winner': summary.productsWon > 0,
-                }"
-              >
+                }">
                 <div class="comparison-card-item__header">
                   <q-icon name="store" size="18px" />
                   <span class="text-weight-bold">{{ summary.name }}</span>
@@ -298,91 +208,52 @@
                     {{ formatCurrency(summary.total) }}
                   </template>
                 </div>
-                <div
-                  v-if="summary.productsWon > 0"
-                  class="comparison-card-item__subtotal text-caption text-grey-7"
-                >
+                <div v-if="summary.productsWon > 0" class="comparison-card-item__subtotal text-caption text-grey-7">
                   {{ summary.productsWon }}
                   producto(s) seleccionado(s)
                 </div>
                 <div class="comparison-card-item__meta">
-                  <q-badge
-                    v-if="summary.productsWon > 0"
-                    color="primary"
-                    :label="
-                      summary.productsWon === 1
-                        ? '1 producto ganado'
-                        : `${summary.productsWon} productos ganados`
-                    "
-                  />
-                  <q-badge
-                    v-if="summary.isBestPrice"
-                    color="positive"
-                    label="Mejor precio total"
-                    class="q-ml-xs"
-                  />
+                  <q-badge v-if="summary.productsWon > 0" color="primary" :label="summary.productsWon === 1
+                      ? '1 producto ganado'
+                      : `${summary.productsWon} productos ganados`
+                    " />
+                  <q-badge v-if="summary.isBestPrice" color="positive" label="Mejor precio total" class="q-ml-xs" />
                 </div>
-                <div
-                  v-if="
-                    summary.differenceFromBest != null && !summary.isBestPrice
-                  "
-                  class="comparison-card-item__diff text-negative"
-                >
+                <div v-if="
+                  summary.differenceFromBest != null && !summary.isBestPrice
+                " class="comparison-card-item__diff text-negative">
                   +{{ formatCurrency(summary.differenceFromBest) }}
                   <span v-if="summary.differencePercent != null">
                     ({{ summary.differencePercent.toFixed(1) }}%)
                   </span>
                   vs mejor precio
                 </div>
-                <div
-                  v-else-if="summary.isBestPrice"
-                  class="comparison-card-item__diff text-positive"
-                >
+                <div v-else-if="summary.isBestPrice" class="comparison-card-item__diff text-positive">
                   Mejor oferta del plan
                 </div>
-                <div
-                  v-if="summary.missingQuotes"
-                  class="comparison-card-item__warning text-warning"
-                >
+                <div v-if="summary.missingQuotes" class="comparison-card-item__warning text-warning">
                   Faltan {{ summary.missingQuotes }} precio(s) por completar
                 </div>
               </div>
             </div>
           </div>
 
-          <div
-            v-if="comparison.supplierSummaries.length"
-            class="section-block q-mt-lg"
-          >
+          <div v-if="comparison.supplierSummaries.length" class="section-block q-mt-lg">
             <div class="section-title">Ganadores por producto</div>
             <p class="section-help">
               Debe elegir un proveedor ganador para cada producto. Puede asignar
               un solo proveedor para toda la orden o combinar varios según la
               comparación.
             </p>
-            <q-option-group
-              v-model="winnerSelectionMode"
-              :options="winnerSelectionModeOptions"
-              color="primary"
-              inline
-              class="q-mb-md"
-              @input="onWinnerSelectionModeChange"
-            />
-            <p
-              v-if="winnerSelectionMode === 'manual'"
-              class="section-help text-deep-orange-9"
-            >
+            <q-option-group v-model="winnerSelectionMode" :options="winnerSelectionModeOptions" color="primary" inline
+              class="q-mb-md" @input="onWinnerSelectionModeChange" />
+            <p v-if="winnerSelectionMode === 'manual'" class="section-help text-deep-orange-9">
               Haga clic en la celda cotizada de cada producto para marcar al
               proveedor ganador.
             </p>
           </div>
 
-          <q-banner
-            v-if="selectionSummary"
-            rounded
-            class="winner-banner q-mt-lg"
-            :class="winnerBannerClass"
-          >
+          <q-banner v-if="selectionSummary" rounded class="winner-banner q-mt-lg" :class="winnerBannerClass">
             <template v-slot:avatar>
               <q-icon name="emoji_events" color="amber-9" size="28px" />
             </template>
@@ -411,43 +282,18 @@
           </q-banner>
 
           <div class="actions-row q-mt-lg">
-            <q-btn
-              flat
-              no-caps
-              color="grey-7"
-              icon="restart_alt"
-              label="Reiniciar comparación"
-              @click="resetComparison"
-            />
-            <q-btn
-              flat
-              no-caps
-              color="grey-7"
-              icon="note_add"
-              label="Nueva comparación"
-              @click="startNewComparison"
-            />
+            <q-btn flat no-caps color="grey-7" icon="restart_alt" label="Reiniciar comparación"
+              @click="resetComparison" />
+            <q-btn flat no-caps color="grey-7" icon="note_add" label="Nueva comparación" @click="startNewComparison" />
             <q-space />
-            <q-btn
-              unelevated
-              no-caps
-              color="primary"
-              icon="check_circle"
-              label="Confirmar selección de proveedores"
-              :disable="!canConfirmSelection || savingComparison"
-              :loading="savingComparison"
-              @click="confirmWinner"
-            />
+            <q-btn unelevated no-caps color="primary" icon="check_circle" label="Confirmar selección de proveedores"
+              :disable="!canConfirmSelection || savingComparison" :loading="savingComparison" @click="confirmWinner" />
           </div>
         </div>
       </q-card-section>
     </q-card>
 
-    <q-dialog
-      v-model="showSupplierDialog"
-      transition-show="scale"
-      transition-hide="scale"
-    >
+    <q-dialog v-model="showSupplierDialog" transition-show="scale" transition-hide="scale">
       <q-card class="supplier-dialog">
         <q-card-section class="row items-center q-pb-sm">
           <q-avatar icon="store" color="primary" text-color="white" />
@@ -459,26 +305,12 @@
         <q-card-section class="q-pt-none">
           <div class="row q-col-gutter-sm q-mb-md">
             <div class="col-12 col-md-6">
-              <q-input
-                v-model="supplierSearch.nit"
-                outlined
-                dense
-                clearable
-                debounce="300"
-                placeholder="Buscar por NIT..."
-                @input="searchSuppliers"
-              />
+              <q-input v-model="supplierSearch.nit" outlined dense clearable debounce="300"
+                placeholder="Buscar por NIT..." @input="searchSuppliers" />
             </div>
             <div class="col-12 col-md-6">
-              <q-input
-                v-model="supplierSearch.name"
-                outlined
-                dense
-                clearable
-                debounce="300"
-                placeholder="Buscar por nombre..."
-                @input="searchSuppliers"
-              />
+              <q-input v-model="supplierSearch.name" outlined dense clearable debounce="300"
+                placeholder="Buscar por nombre..." @input="searchSuppliers" />
             </div>
           </div>
 
@@ -486,24 +318,42 @@
             <q-spinner-dots size="32px" color="primary" />
           </q-inner-loading>
 
-          <q-list
-            v-if="!loadingSuppliers && supplierResults.length"
-            bordered
-            separator
-            class="supplier-results"
-          >
-            <q-item
-              v-for="supplier in supplierResults"
-              :key="supplier.nit || supplier.id || supplier.name"
-              clickable
-              @click="addSupplier(supplier)"
-            >
+          <div v-if="!loadingSuppliers && supplierLoadError" class="supplier-load-error q-py-lg text-center"
+            role="alert">
+            <q-icon name="sentiment_dissatisfied" size="40px" color="orange-8" />
+            <div class="supplier-load-error__title q-mt-sm">
+              No pudimos cargar los proveedores
+            </div>
+            <div class="text-grey-7 q-mt-xs">
+              {{ supplierLoadError }}
+            </div>
+            <q-btn unelevated no-caps color="primary" icon="refresh" label="Reintentar" class="q-mt-md"
+              @click="loadTerceros" />
+          </div>
+
+          <q-list v-else-if="!loadingSuppliers && supplierResults.length" bordered separator class="supplier-results">
+            <q-item v-for="supplier in supplierResults" :key="supplier.id ||
+              supplier.identificacion ||
+              supplier.nit ||
+              supplier.razonSocial
+              " clickable @click="addSupplier(supplier)">
               <q-item-section>
                 <q-item-label class="text-weight-medium">
-                  {{ supplier.name || supplier.supplier || "Sin nombre" }}
+                  {{
+                    supplier.razonSocial ||
+                    supplier.name ||
+                    supplier.supplier ||
+                    "Sin nombre"
+                  }}
                 </q-item-label>
                 <q-item-label caption>
-                  NIT: {{ supplier.nit || "—" }}
+                  Identificación:
+                  {{ supplier.identificacion || supplier.nit || "—" }}
+                </q-item-label>
+                <q-item-label v-if="supplier.tipoTercero" class="q-mt-xs">
+                  <span class="tipo-tercero-badge">{{
+                    supplier.tipoTercero
+                  }}</span>
                 </q-item-label>
               </q-item-section>
               <q-item-section side>
@@ -512,62 +362,43 @@
             </q-item>
           </q-list>
 
-          <div
-            v-else-if="!loadingSuppliers"
-            class="empty-supplier-search q-py-lg text-center"
-          >
+          <div v-else-if="!loadingSuppliers" class="empty-supplier-search q-py-lg text-center">
             <q-icon name="search_off" size="40px" color="grey-5" />
             <div class="text-grey-7 q-mt-sm">
               No se encontraron proveedores con esos criterios.
             </div>
-            <q-btn
-              unelevated
-              no-caps
-              color="primary"
-              icon="person_add"
-              label="Crear nuevo proveedor"
-              class="q-mt-md"
-              @click="openCreateSupplierDialog"
-            />
+            <q-btn unelevated no-caps color="primary" icon="person_add" label="Crear nuevo proveedor" class="q-mt-md"
+              @click="openCreateSupplierDialog" />
           </div>
         </q-card-section>
 
         <q-separator />
 
         <q-card-actions align="between" class="q-pa-md">
-          <q-btn
-            flat
-            no-caps
-            color="primary"
-            icon="person_add"
-            label="Crear proveedor"
-            @click="openCreateSupplierDialog"
-          />
+          <q-btn flat no-caps color="primary" icon="person_add" label="Crear proveedor"
+            @click="openCreateSupplierDialog" />
           <q-btn flat no-caps label="Cerrar" color="grey-7" v-close-popup />
         </q-card-actions>
       </q-card>
     </q-dialog>
 
-    <SupplierQuickCreateDialog
-      v-model="showCreateSupplierDialog"
-      :initial-nit="supplierSearch.nit"
-      :initial-name="supplierSearch.name"
-      @created="onSupplierCreated"
-    />
+    <SupplierQuickCreateDialog v-model="showCreateSupplierDialog" :initial-nit="supplierSearch.nit"
+      :initial-name="supplierSearch.name" @created="onSupplierCreated" />
   </div>
 </template>
 
 <script>
-import SupplyPlanRequestSelector from "./SupplyPlanRequestSelector.vue";
-import SupplierQuickCreateDialog from "./SupplierQuickCreateDialog.vue";
-import { supplyOrderApi } from "../../infrastructure/SupplyOrderApi";
+import axios from "axios";
+import { getRawToken } from "src/utils/authHelper";
+import { URL_API } from "src/utils/config";
 import { SolicitudHttpRepository } from "../../../solicitud-abastecimiento/infrastructure/SolicitudHttpRepository";
+import { supplierComparisonStorageApi } from "../../infrastructure/SupplierComparisonStorageApi";
+import { supplyOrderApi } from "../../infrastructure/SupplyOrderApi";
 import {
-  ensureSolicitudLineItems,
   enrichRequestWithOrderLineItems,
+  ensureSolicitudLineItems,
 } from "../../utils/supplyOrderLinkage";
 import { formatCurrency } from "../utils/purchaseOrderFinance";
-import { supplierComparisonStorageApi } from "../../infrastructure/SupplierComparisonStorageApi";
 import {
   buildComparisonPayload,
   buildComparisonResult,
@@ -577,6 +408,8 @@ import {
   extractComparisonProducts,
   getQuoteValue,
 } from "../utils/supplierComparison";
+import SupplierQuickCreateDialog from "./SupplierQuickCreateDialog.vue";
+import SupplyPlanRequestSelector from "./SupplyPlanRequestSelector.vue";
 
 export default {
   name: "SupplierComparisonPanel",
@@ -597,7 +430,9 @@ export default {
       showSupplierDialog: false,
       showCreateSupplierDialog: false,
       supplierSearch: { nit: "", name: "" },
+      allTerceros: [],
       supplierResults: [],
+      supplierLoadError: null,
       loadingSuppliers: false,
       loadingProducts: false,
       savingComparison: false,
@@ -788,7 +623,9 @@ export default {
       this.showSupplierDialog = false;
       this.showCreateSupplierDialog = false;
       this.supplierSearch = { nit: "", name: "" };
+      this.allTerceros = [];
       this.supplierResults = [];
+      this.supplierLoadError = null;
       this.loadingProducts = false;
       supplyOrderApi.clearApprovedOrdersCache();
       this.$emit("form-cleared");
@@ -856,38 +693,109 @@ export default {
     },
     openSupplierDialog() {
       this.showSupplierDialog = true;
-      this.searchSuppliers();
+      this.supplierLoadError = null;
+      this.loadTerceros();
     },
     openCreateSupplierDialog() {
       this.showCreateSupplierDialog = true;
     },
     onSupplierCreated(supplier) {
       this.addSupplier(supplier, { keepSearchDialogOpen: false });
-      this.searchSuppliers();
+      this.loadTerceros();
     },
-    async searchSuppliers() {
+    async loadTerceros() {
       this.loadingSuppliers = true;
+      this.supplierLoadError = null;
+
       try {
-        const result = await this.$store.dispatch(
-          "purchaseorder/searchSuppliers",
-          {
-            nit: this.supplierSearch.nit || "",
-            name: this.supplierSearch.name || "",
-            page: 0,
-            size: 20,
-          }
-        );
-        this.supplierResults = (result && result.items) || [];
-      } catch (error) {
-        this.$q.notify({
-          type: "negative",
-          message:
-            "No se pudieron cargar los proveedores: " +
-            (error.message || "Error de conexión"),
+        var token = getRawToken();
+        var headers = {
+          "Content-Type": "application/json",
+        };
+        if (token) {
+          headers.Authorization = "Bearer " + token;
+        }
+
+        var response = await axios.get(URL_API + "/api/v1/terceros/", {
+          headers: headers,
         });
+
+        if (response.status === 200) {
+          var body = response.data || {};
+          var results = body.results;
+          if (!Array.isArray(results)) {
+            results = [];
+          }
+          this.allTerceros = results;
+          this.applySupplierFilter();
+        }
+      } catch (error) {
+        this.allTerceros = [];
+        this.supplierResults = [];
+
+        var status =
+          error && error.response ? error.response.status : null;
+
+        if (status === 400) {
+          this.supplierLoadError =
+            "Se presentó un inconveniente al obtener la lista de proveedores. No es tu culpa: puedes reintentar en unos segundos o continuar más tarde.";
+          this.$q.notify({
+            type: "warning",
+            message: this.supplierLoadError,
+            timeout: 4500,
+          });
+        } else {
+          var fallback =
+            (error && error.message) ||
+            "No pudimos conectar con el servicio de proveedores. Revisa tu conexión e intenta de nuevo.";
+          this.supplierLoadError = fallback;
+          this.$q.notify({
+            type: "negative",
+            message: fallback,
+          });
+        }
       } finally {
         this.loadingSuppliers = false;
       }
+    },
+    applySupplierFilter() {
+      var list = this.allTerceros || [];
+      var nitQuery = (this.supplierSearch.nit || "").trim().toLowerCase();
+      var nameQuery = (this.supplierSearch.name || "").trim().toLowerCase();
+
+      if (nitQuery) {
+        list = list.filter(function (item) {
+          var identificacion = String(
+            item.identificacion || item.nit || ""
+          ).toLowerCase();
+          return identificacion.indexOf(nitQuery) !== -1;
+        });
+      }
+
+      if (nameQuery) {
+        list = list.filter(function (item) {
+          var razon = String(item.razonSocial || "").toLowerCase();
+          var comercial = String(item.nombreComercial || "").toLowerCase();
+          var name = String(item.name || item.supplier || "").toLowerCase();
+          return (
+            razon.indexOf(nameQuery) !== -1 ||
+            comercial.indexOf(nameQuery) !== -1 ||
+            name.indexOf(nameQuery) !== -1
+          );
+        });
+      }
+
+      this.supplierResults = list;
+    },
+    searchSuppliers() {
+      if (this.supplierLoadError) {
+        return;
+      }
+      if (!this.allTerceros.length && !this.loadingSuppliers) {
+        this.loadTerceros();
+        return;
+      }
+      this.applySupplierFilter();
     },
     addSupplier(supplier, options = {}) {
       const { keepSearchDialogOpen = false } = options;
@@ -1257,20 +1165,16 @@ export default {
 }
 
 .winner-banner {
-  background: linear-gradient(
-    90deg,
-    rgba(254, 243, 199, 0.95) 0%,
-    rgba(253, 230, 138, 0.95) 100%
-  );
+  background: linear-gradient(90deg,
+      rgba(254, 243, 199, 0.95) 0%,
+      rgba(253, 230, 138, 0.95) 100%);
   color: #78350f;
 }
 
 .winner-banner--manual {
-  background: linear-gradient(
-    90deg,
-    rgba(255, 237, 213, 0.95) 0%,
-    rgba(254, 215, 170, 0.95) 100%
-  );
+  background: linear-gradient(90deg,
+      rgba(255, 237, 213, 0.95) 0%,
+      rgba(254, 215, 170, 0.95) 100%);
 }
 
 .actions-row {
@@ -1287,6 +1191,33 @@ export default {
 .supplier-results {
   max-height: 360px;
   overflow: auto;
+}
+
+.tipo-tercero-badge {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  line-height: 1.4;
+  color: #fff;
+  background: linear-gradient(135deg, #84b24d 0%, #75af7e 45%, #4e9c4c 100%);
+  box-shadow: 0 1px 2px rgba(78, 156, 76, 0.2);
+  text-transform: uppercase;
+}
+
+.supplier-load-error {
+  border: 1px dashed rgba(245, 158, 11, 0.45);
+  border-radius: 12px;
+  background: linear-gradient(180deg, #fffbeb 0%, #ffffff 100%);
+  padding: 24px 16px;
+}
+
+.supplier-load-error__title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #92400e;
 }
 
 .products-table ::v-deep th {
