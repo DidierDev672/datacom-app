@@ -14,10 +14,12 @@
               <stop offset="100%" stop-color="#4E9C4C" />
             </radialGradient>
           </defs>
-          <ellipse class="orbit-ring" cx="25" cy="25" rx="20" ry="10" fill="none" stroke="url(#orbitStroke)" stroke-width="3" stroke-linecap="round" />
+          <ellipse class="orbit-ring" cx="25" cy="25" rx="20" ry="10" fill="none" stroke="url(#orbitStroke)"
+            stroke-width="3" stroke-linecap="round" />
           <ellipse class="orbit-dot" cx="25" cy="12" rx="4.5" ry="4.5" fill="url(#orbitFill)" />
         </svg>
-        <div class="loading-text">Estamos preparando y organizando los planes de abastecimiento para que puedas revisarlos de forma rápida y eficaz</div>
+        <div class="loading-text">Estamos preparando y organizando los planes de abastecimiento para que puedas
+          revisarlos de forma rápida y eficaz</div>
       </div>
     </div>
     <div v-if="store.isDeleting" class="page-loading-overlay">
@@ -31,8 +33,8 @@
       <q-card-section class="header-gradient text-white q-pa-xl">
         <div class="row justify-between items-center no-wrap">
           <div>
-            <div class="text-h3 text-weight-bold text-white">Planes de abastecimiento</div>
-            <div class="text-subtitle2 text-white opacity-60 q-mt-xs">Gestión estratégica y seguimiento de planes de abastecimiento</div>
+            <div class="text-h3 text-weight-bold text-white">Planes</div>
+            <div class="text-subtitle2 text-white opacity-60 q-mt-xs">Gestión estratégica y seguimiento de planes</div>
           </div>
           <div class="row items-center q-gutter-sm">
             <q-btn outline dense color="white" icon="refresh" size="md" round @click="refrescarPlanes">
@@ -990,12 +992,21 @@ export default {
 }
 
 @keyframes orbit-rotate {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes orbit-bounce {
-  0%, 100% { transform: rotate(0deg) translateY(0); }
-  50% { transform: rotate(180deg) translateY(-2px); }
+
+  0%,
+  100% {
+    transform: rotate(0deg) translateY(0);
+  }
+
+  50% {
+    transform: rotate(180deg) translateY(-2px);
+  }
 }
 
 .loading-text {

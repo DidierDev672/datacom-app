@@ -1,7 +1,7 @@
 <template>
   <main>
-    <h1>Crear una nueva requisición</h1>
-    <p>Complete todos los campos requeridos para crear una nueva requisición.</p>
+    <h1>Crear un nuevo abastecimiento</h1>
+    <p>Complete todos los campos requeridos para crear un nuevo abastecimiento.</p>
 
     <div v-if="error" class="error">{{ error }}</div>
 

@@ -972,7 +972,7 @@ const routes = [
         path: "solicitudes-viaje/nueva",
         name: "crear-solicitud-viaje",
         component: () =>
-          import("src/modules/solicitud-viaje/ui/views/SolicitudViajeView.vue"),
+          import("src/pages/alojamiento/PageAlojamientoCreate.vue"),
         meta: {
           permission: "abastecimiento.crear-solicitud-viaje",
         },

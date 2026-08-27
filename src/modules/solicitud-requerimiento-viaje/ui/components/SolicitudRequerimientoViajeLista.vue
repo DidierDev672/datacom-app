@@ -2,7 +2,7 @@
   <q-card flat bordered class="lista-srv">
     <q-card-section class="row items-center q-col-gutter-sm lista-srv__cabecera-z">
       <div class="col">
-        <div class="lista-srv__seccion-tag text-overline text-grey-6 q-mb-xs">Bandeja principal</div>
+        <div class="srv-badge srv-badge--verde-cromatico q-mb-xs">Bandeja principal</div>
         <div class="text-subtitle1 text-weight-bold text-dark">
           Lista de solicitudes de requerimiento
         </div>
@@ -698,6 +698,42 @@ export default {
 .lista-srv__contexto {
   max-width: 52rem;
   line-height: 1.45;
+}
+
+/* ---------- Badge píldora con variables CSS ---------- */
+.srv-badge {
+  --srv-badge-bg: linear-gradient(135deg, #475569 0%, #64748b 100%);
+  --srv-badge-fg: #ffffff;
+  --srv-badge-radius: 999px;
+  --srv-badge-pad-x: 12px;
+  --srv-badge-pad-y: 4px;
+  --srv-badge-font-size: 11px;
+
+  display: inline-block;
+  padding: var(--srv-badge-pad-y) var(--srv-badge-pad-x);
+  background: var(--srv-badge-bg);
+  color: var(--srv-badge-fg);
+  border-radius: var(--srv-badge-radius);
+  font-size: var(--srv-badge-font-size);
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Variante: verde cromático */
+.srv-badge--verde-cromatico {
+  --srv-badge-bg: linear-gradient(135deg, #14532d 0%, #16a34a 50%, #4ade80 100%);
+  box-shadow: 0 2px 8px rgba(22, 163, 74, 0.35);
+}
+
+@media (max-width: 600px) {
+  .srv-badge {
+    --srv-badge-pad-x: 10px;
+    --srv-badge-pad-y: 3px;
+    --srv-badge-font-size: 10px;
+  }
 }
 
 .lista-srv-aviso-aprobador {

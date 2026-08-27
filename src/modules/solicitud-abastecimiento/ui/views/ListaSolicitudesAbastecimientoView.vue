@@ -5,13 +5,13 @@
       <!-- ── HEADER SIMPLIFICADO ── -->
       <q-card-section class="header-section row justify-between items-center q-pa-lg">
         <div>
-          <div class="text-h5 text-weight-bold text-white">Solicitudes de las requesiciónes</div>
-          <div class="text-caption text-white opacity-70 q-mt-xs">Gestión y seguimiento de las requesiciónes
-            de la requesición</div>
+          <div class="text-h5 text-weight-bold text-white">Solicitudes de abastecimiento</div>
+          <div class="text-caption text-white opacity-70 q-mt-xs">Gestión y seguimiento de las solicitudes
+            de abastecimiento</div>
         </div>
         <div class="header-actions row q-gutter-sm">
-          <q-btn unelevated color="white" text-color="primary" icon="playlist_add_check"
-            label="Seleccionar requisiciónes" no-caps class="btn-select-order" @click="showSelectRequestModal = true" />
+          <q-btn unelevated color="white" text-color="primary" icon="playlist_add_check" label="Seleccionar solicitudes"
+            no-caps class="btn-select-order" @click="showSelectRequestModal = true" />
           <q-btn unelevated color="white" text-color="primary" icon="add" label="Nueva requesición" class="btn-nueva"
             :to="{ name: 'crear-solicitud-abastecimiento' }" />
         </div>
