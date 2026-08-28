@@ -1,68 +1,66 @@
-<template>
-  <transition name="loading-overlay-fade">
-    <div
-      v-if="isLoading"
-      class="loading-spinner-overlay"
-      role="status"
-      aria-live="polite"
-      :aria-busy="isLoading ? 'true' : 'false'"
-    >
+﻿<template>
+  <div
+    v-if="isLoading"
+    class="loading-spinner-overlay"
+    role="status"
+    aria-live="polite"
+    aria-busy="true"
+  >
+    <div class="loading-spinner-overlay__panel">
       <div class="loading-spinner-overlay__spinner" aria-hidden="true"></div>
       <p v-if="normalizedLabel" class="loading-spinner-overlay__label">
         {{ normalizedLabel }}
       </p>
     </div>
-  </transition>
+  </div>
 </template>
 
 <script>
 /**
- * Overlay de carga a pantalla completa con spinner animado en el centro.
+ * Overlay de carga con fondo semitransparente.
  *
- * Soporta v-model: <LoadingSpinnerOverlay v-model="isLoading" />
- * (Vue 2 => opción `model` con la prop personalizada `isLoading`).
+ * Props:
+ * - isLoading (Boolean): muestra u oculta el overlay.
+ * - label (String): texto opcional debajo del spinner.
  *
- * NOTA sobre <script setup>: este proyecto usa Vue 2 con webpack
- * (@quasar/app v2), que NO soporta la compilación de <script setup>.
- * Por eso se aplica Composition API vía @vue/composition-api con
- * setup(), el patrón equivalente usado en todo el repositorio.
+ * Uso:
+ * <LoadingSpinnerOverlay :is-loading="pageLoading" label="Cargando…" />
+ *
+ * NOTA: este proyecto usa Vue 2 (@quasar/app v2); no se usa <script setup>.
  */
 import { computed } from "@vue/composition-api";
 
 export default {
   name: "LoadingSpinnerOverlay",
 
-  /** Permite usar v-model directamente sobre la prop `isLoading`. */
   model: {
     prop: "isLoading",
     event: "change",
   },
 
   props: {
-    /** Controla la visibilidad del overlay de forma condicional. */
     isLoading: {
       type: Boolean,
       default: false,
     },
-    /** Texto opcional que se muestra debajo del spinner. */
     label: {
       type: String,
       default: "",
     },
   },
 
-  setup(props) {
-    const normalizedLabel = computed(() =>
-      typeof props.label === "string" ? props.label.trim() : ""
-    );
+  setup: function (props) {
+    var normalizedLabel = computed(function () {
+      return typeof props.label === "string" ? props.label.trim() : "";
+    });
 
-    return { normalizedLabel };
+    return { normalizedLabel: normalizedLabel };
   },
 };
 </script>
 
 <style scoped>
-/* Fondo semitransparente cubriendo toda la pantalla */
+/* Fondo semitransparente que cubre la pantalla */
 .loading-spinner-overlay {
   position: fixed;
   top: 0;
@@ -71,16 +69,30 @@ export default {
   left: 0;
   z-index: 9900;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  opacity: 0;
+  animation: loading-overlay-fade-in 0.35s ease-out forwards;
+}
+
+.loading-spinner-overlay__panel {
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 14px;
-  background: rgba(15, 23, 42, 0.6);
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
+  padding: 28px 32px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  opacity: 0;
+  animation: loading-panel-fade-in 0.45s ease-out 0.08s forwards;
 }
 
-/* Spinner animado centrado (anillo cónico giratorio) */
+/* Spinner fluido (anillo cromático verde) */
 .loading-spinner-overlay__spinner {
   width: 62px;
   height: 62px;
@@ -104,12 +116,6 @@ export default {
   animation: loading-spinner-spin 0.85s linear infinite;
 }
 
-@keyframes loading-spinner-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .loading-spinner-overlay__label {
   margin: 0;
   font-size: 0.92rem;
@@ -120,13 +126,30 @@ export default {
   word-break: break-word;
 }
 
-.loading-overlay-fade-enter-active,
-.loading-overlay-fade-leave-active {
-  transition: opacity 0.18s ease;
+/* Aparición con opacity + @keyframes */
+@keyframes loading-overlay-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-.loading-overlay-fade-enter,
-.loading-overlay-fade-leave-to {
-  opacity: 0;
+@keyframes loading-panel-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes loading-spinner-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 </style>

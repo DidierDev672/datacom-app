@@ -1,4 +1,4 @@
-function getOrderDetailsFromOrder(order) {
+﻿function getOrderDetailsFromOrder(order) {
   if (!order) {
     return [];
   }
@@ -241,14 +241,25 @@ function normalizeProduct(raw, index) {
 
 export function createSupplierEntry(supplier) {
   const id = supplier && supplier.id ? String(supplier.id) : "";
-  const nit = supplier && supplier.nit ? String(supplier.nit) : "";
+  const nit =
+    supplier && (supplier.nit || supplier.identificacion)
+      ? String(supplier.nit || supplier.identificacion)
+      : "";
   const name =
-    (supplier && (supplier.name || supplier.supplier)) || nit || "Proveedor";
+    (supplier &&
+      (supplier.name ||
+        supplier.supplier ||
+        supplier.razonSocial ||
+        supplier.nombreComercial)) ||
+    nit ||
+    "Proveedor";
   return {
     key: nit || id || `supplier-${Date.now()}`,
     id,
     nit,
     name,
+    tipoTercero:
+      supplier && supplier.tipoTercero ? String(supplier.tipoTercero) : "",
   };
 }
 

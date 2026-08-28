@@ -10,16 +10,12 @@
 
       <!-- Cuerpo del formulario -->
       <q-card-section>
-        <q-form
-          @submit="onSubmit"
-          @reset="onReset"
-          class="q-gutter-md"
-        >
+        <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
           <!-- 1. Información del rubro -->
           <q-card flat bordered class="q-mb-md">
             <q-card-section>
               <div class="text-subtitle2 q-mb-sm">Información del Rubro</div>
-              
+
               <q-item>
                 <q-item-section>
                   <q-item-label caption>Nombre del Rubro</q-item-label>
@@ -56,76 +52,42 @@
           <q-card flat bordered class="q-mb-md">
             <q-card-section>
               <div class="text-subtitle2 q-mb-sm">Estado de Activación</div>
-              
-              <q-toggle
-                v-model="formData.activar"
-                label="Rubro Activo"
-                color="primary"
-                size="lg"
-                left-label
-                hint="Marque esta opción para activar el rubro y hacerlo disponible"
-                :disable="loading"
-              >
+
+              <q-toggle v-model="formData.activar" label="Rubro Activo" color="primary" size="lg" left-label
+                hint="Marque esta opción para activar el rubro y hacerlo disponible" :disable="loading">
                 <template v-slot:append>
-                  <q-chip
-                    :color="formData.activar ? 'positive' : 'negative'"
-                    text-color="white"
-                    :icon="formData.activar ? 'check' : 'close'"
-                    size="sm"
-                  >
+                  <q-chip :color="formData.activar ? 'positive' : 'negative'" text-color="white"
+                    :icon="formData.activar ? 'check' : 'close'" size="sm">
                     {{ formData.activar ? 'Activo' : 'Inactivo' }}
                   </q-chip>
                 </template>
               </q-toggle>
 
               <!-- 3. Fecha de activación -->
-              <q-input
-                filled
-                v-model="formData.fechaActivacion"
-                label="Fecha de activación"
-                hint="Fecha en que se activa el rubro"
-                mask="date"
-                :rules="[
+              <q-input filled v-model="formData.fechaActivacion" label="Fecha de activación"
+                hint="Fecha en que se activa el rubro" mask="date" :rules="[
                   'date',
                   val => !val || val !== '' || 'La fecha de activación es requerida'
-                ]"
-                :disable="loading || !formData.activar"
-              >
+                ]" :disable="loading || !formData.activar">
                 <template v-slot:prepend>
                   <q-icon name="event" class="cursor-pointer">
                     <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                      <q-date
-                        v-model="formData.fechaActivacion"
-                        :options="fechaActivacionOptions"
-                        today-btn
-                      />
+                      <q-date v-model="formData.fechaActivacion" :options="fechaActivacionOptions" today-btn />
                     </q-popup-proxy>
                   </q-icon>
                 </template>
                 <template v-slot:append>
-                  <q-icon
-                    name="close"
-                    @click="formData.fechaActivacion = ''"
-                    class="cursor-pointer"
-                    v-if="formData.fechaActivacion && !loading"
-                  />
+                  <q-icon name="close" @click="formData.fechaActivacion = ''" class="cursor-pointer"
+                    v-if="formData.fechaActivacion && !loading" />
                 </template>
               </q-input>
 
               <!-- 4. Motivo de activación/desactivación -->
-              <q-input
-                filled
-                v-model="formData.motivo"
-                label="Motivo del cambio"
-                hint="Explique el motivo para activar o desactivar el rubro"
-                type="textarea"
-                autogrow
-                :maxlength="300"
+              <q-input filled v-model="formData.motivo" label="Motivo del cambio"
+                hint="Explique el motivo para activar o desactivar el rubro" type="textarea" autogrow :maxlength="300"
                 :rules="[
                   val => !val || val.length <= 300 || 'Máximo 300 caracteres'
-                ]"
-                :disable="loading"
-              >
+                ]" :disable="loading">
                 <template v-slot:prepend>
                   <q-icon name="comment" />
                 </template>
@@ -135,19 +97,11 @@
               </q-input>
 
               <!-- 5. Notas adicionales -->
-              <q-input
-                filled
-                v-model="formData.notas"
-                label="Notas adicionales"
-                hint="Información adicional relevante sobre el cambio de estado"
-                type="textarea"
-                autogrow
-                :maxlength="500"
-                :rules="[
+              <q-input filled v-model="formData.notas" label="Notas adicionales"
+                hint="Información adicional relevante sobre el cambio de estado" type="textarea" autogrow
+                :maxlength="500" :rules="[
                   val => !val || val.length <= 500 || 'Máximo 500 caracteres'
-                ]"
-                :disable="loading"
-              >
+                ]" :disable="loading">
                 <template v-slot:prepend>
                   <q-icon name="note" />
                 </template>
@@ -163,21 +117,10 @@
 
           <!-- Botones de acción -->
           <div class="row justify-end q-gutter-sm">
-            <q-btn
-              label="Cancelar"
-              type="reset"
-              color="secondary"
-              flat
-              :disable="loading"
-            />
-            <q-btn
-              :label="formData.activar ? 'Activar Rubro' : 'Desactivar Rubro'"
-              type="submit"
-              :color="formData.activar ? 'positive' : 'negative'"
-              :icon="formData.activar ? 'check_circle' : 'block'"
-              :loading="loading"
-              :disable="!formularioValido"
-            />
+            <q-btn label="Cancelar" type="reset" color="secondary" flat :disable="loading" />
+            <q-btn :label="formData.activar ? 'Activar Rubro' : 'Desactivar Rubro'" type="submit"
+              :color="formData.activar ? 'positive' : 'negative'" :icon="formData.activar ? 'check_circle' : 'block'"
+              :loading="loading" :disable="!formularioValido" />
           </div>
         </q-form>
       </q-card-section>
@@ -195,24 +138,16 @@
     <q-dialog v-model="showConfirmDialog" persistent>
       <q-card>
         <q-card-section class="row items-center">
-          <q-avatar 
-            :icon="formData.activar ? 'check_circle' : 'block'" 
-            :color="formData.activar ? 'positive' : 'negative'" 
-            text-color="white" 
-            size="md" 
-          />
+          <q-avatar :icon="formData.activar ? 'check_circle' : 'block'"
+            :color="formData.activar ? 'positive' : 'negative'" text-color="white" size="md" />
           <span class="q-ml-md text-body1">
             ¿Está seguro de {{ formData.activar ? 'activar' : 'desactivar' }} el rubro "{{ rubroData?.nombreRubro }}"?
           </span>
         </q-card-section>
         <q-card-actions align="right">
           <q-btn flat label="Cancelar" color="grey" v-close-popup />
-          <q-btn 
-            :label="formData.activar ? 'Activar' : 'Desactivar'" 
-            :color="formData.activar ? 'positive' : 'negative'" 
-            @click="confirmarAccion"
-            v-close-popup 
-          />
+          <q-btn :label="formData.activar ? 'Activar' : 'Desactivar'"
+            :color="formData.activar ? 'positive' : 'negative'" @click="confirmarAccion" v-close-popup />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -221,22 +156,11 @@
     <q-dialog v-model="showResultDialog" persistent>
       <q-card>
         <q-card-section class="row items-center">
-          <q-avatar 
-            :icon="resultIcon" 
-            :color="resultColor" 
-            text-color="white" 
-            size="md" 
-          />
+          <q-avatar :icon="resultIcon" :color="resultColor" text-color="white" size="md" />
           <span class="q-ml-md text-body1">{{ resultMessage }}</span>
         </q-card-section>
         <q-card-actions align="right">
-          <q-btn 
-            flat 
-            :label="resultButton" 
-            :color="resultColor" 
-            v-close-popup 
-            @click="resultadoConfirmado" 
-          />
+          <q-btn flat :label="resultButton" :color="resultColor" v-close-popup @click="resultadoConfirmado" />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -244,7 +168,7 @@
 </template>
 
 <script>
-import { ref, computed, watch } from 'vue'
+import { computed, ref, watch } from 'vue';
 
 export default {
   name: 'ActivarRubroForm',
@@ -286,9 +210,9 @@ export default {
     // Computed properties
     const formularioValido = computed(() => {
       return formData.value.activar !== null &&
-             formData.value.fechaActivacion !== '' &&
-             (formData.value.motivo === '' || formData.value.motivo.length <= 300) &&
-             (formData.value.notas === '' || formData.value.notas.length <= 500)
+        formData.value.fechaActivacion !== '' &&
+        (formData.value.motivo === '' || formData.value.motivo.length <= 300) &&
+        (formData.value.notas === '' || formData.value.notas.length <= 500)
     })
 
     // Watch para actualizar el estado cuando cambia el rubroData
@@ -418,7 +342,12 @@ export default {
 }
 
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 </style>

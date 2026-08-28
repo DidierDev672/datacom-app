@@ -314,12 +314,12 @@ export default {
             },
             {
               id: "compras-por-cotizacion",
-              title: "Compras por cotización",
+              title: "Compras por comparación",
               icon: "shopping_bag",
               expanded: false,
               children: [
                 {
-                  title: "Lista de compras por cotización",
+                  title: "Lista de compras por comparación",
                   routeName: "lista-compras-registradas",
                   icon: "format_list_bulleted",
                 },

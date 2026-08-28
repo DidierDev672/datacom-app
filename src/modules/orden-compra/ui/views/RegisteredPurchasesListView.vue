@@ -38,8 +38,13 @@
       </template>
     </q-banner>
 
-    <!-- Listado -->
-    <q-card flat bordered class="purchases-card q-mt-md">
+    <!-- Listado: se muestra al terminar la carga de endpoints -->
+    <q-card
+      v-show="!pageLoading"
+      flat
+      bordered
+      class="purchases-card q-mt-md purchases-card--reveal"
+    >
       <q-card-section class="q-pa-lg">
         <div class="row items-center q-mb-md q-col-gutter-sm fade-in-soft">
           <div class="col">
@@ -79,7 +84,12 @@
           <div class="purchase-detail__grid">
             <div class="purchase-detail__item">
               <span class="purchase-detail__label">Comparación</span>
-              <span class="purchase-detail__value">{{ selectedIdQuote || "—" }}</span>
+              <span
+                class="purchase-detail__value"
+                :class="{
+                  'purchase-detail__value--error': selectedComparisonHasError,
+                }"
+              >{{ selectedComparisonDisplay }}</span>
             </div>
             <div class="purchase-detail__item">
               <span class="purchase-detail__label">Compradores</span>
@@ -91,7 +101,9 @@
             </div>
             <div class="purchase-detail__item">
               <span class="purchase-detail__label">Creada</span>
-              <span class="purchase-detail__value">{{ selectedCreatedAt }}</span>
+              <span class="purchase-detail__value">
+                <span class="purchase-created-badge">{{ selectedCreatedAt }}</span>
+              </span>
             </div>
           </div>
 
@@ -120,8 +132,10 @@
             <tfoot>
               <tr>
                 <td colspan="3" class="text-right text-weight-bold">Total compra</td>
-                <td class="text-right text-weight-bold">
-                  {{ formatCurrency(selectedTotal) }}
+                <td class="text-right">
+                  <span class="purchase-total-badge">
+                    {{ formatCurrency(selectedTotal) }}
+                  </span>
                 </td>
               </tr>
             </tfoot>
@@ -134,9 +148,9 @@
       </q-card>
     </q-dialog>
 
-    <!-- Overlay de carga mientras se consumen los endpoints -->
+    <!-- Overlay mientras se consumen compras + nombres (comparación/comprador/proveedor) -->
     <LoadingSpinnerOverlay
-      v-model="pageLoading"
+      :is-loading="pageLoading"
       label="Cargando compras registradas…"
     />
   </div>
@@ -174,11 +188,12 @@ export default {
       showDetailDialog: false,
       selectedPurchase: null,
       // Etiquetas resueltas contra los endpoints de nombre
-      // (idQuote -> requestLabel, id -> comprador, id -> nombreRazonSocial)
+      // (idQuote -> requestLabel, id -> comprador, id -> razonSocial)
       comparisonLabels: {},
       purchaserLabels: {},
       supplierLabels: {},
       // Ids cuya información no pudo obtenerse (no-200 / sin nombre)
+      comparisonIssues: {},
       purchaserIssues: {},
       supplierIssues: {},
       tableHeaders: [
@@ -253,11 +268,29 @@ export default {
       return this.selectedPurchase ? this.selectedPurchase.idQuote || "" : "";
     },
     selectedComparisonTitle() {
+      return this.selectedComparisonDisplay;
+    },
+    selectedComparisonHasError() {
       const idQuote = this.selectedIdQuote;
       if (!idQuote) {
-        return "";
+        return false;
       }
-      return this.comparisonLabels[idQuote] || idQuote;
+      return !!(
+        this.comparisonIssues[idQuote] && !this.comparisonLabels[idQuote]
+      );
+    },
+    selectedComparisonDisplay() {
+      const idQuote = this.selectedIdQuote;
+      if (!idQuote) {
+        return "—";
+      }
+      if (this.comparisonLabels[idQuote]) {
+        return this.comparisonLabels[idQuote];
+      }
+      if (this.comparisonIssues[idQuote]) {
+        return "Se presentó un error al intentar obtener la comparación. No te preocupes: puedes cerrar e intentarlo de nuevo en unos segundos.";
+      }
+      return idQuote;
     },
     selectedPurchasers() {
       if (
@@ -290,10 +323,17 @@ export default {
       return typeof cell === "string" ? cell : cell.title;
     },
     selectedCreatedAt() {
-      if (!this.selectedPurchase || !this.selectedPurchase.createdAt) {
+      if (!this.selectedPurchase) {
         return "—";
       }
-      return this.formatEpoch(this.selectedPurchase.createdAt);
+      var raw =
+        this.selectedPurchase.created_at != null
+          ? this.selectedPurchase.created_at
+          : this.selectedPurchase.createdAt;
+      if (raw == null || raw === "") {
+        return "—";
+      }
+      return this.formatEpoch(raw);
     },
     selectedProducts() {
       return this.selectedPurchase && Array.isArray(this.selectedPurchase.products)
@@ -314,6 +354,7 @@ export default {
     async reloadPurchases() {
       this.pageLoading = true;
       try {
+        // Endpoints en segundo plano mientras el spinner permanece visible
         const purchases = await this.store.fetchPurchases();
         if (purchases && purchases.length) {
           await this.resolveDisplayNames(purchases);
@@ -326,7 +367,7 @@ export default {
      * Resuelve los nombres legibles de la tabla contra los endpoints:
      * - Comparación: GET /api/supplier-comparisons/{idQuote} -> requestLabel
      * - Comprador:   GET /api/purchasers/{id}               -> comprador
-     * - Proveedor:   GET /api/v1/proveedores/{id}           -> nombreRazonSocial
+     * - Proveedor:   GET /api/v1/terceros/{id}              -> razonSocial
      * Si algún endpoint no responde 200, la celda conserva el id original.
      */
     async resolveDisplayNames(purchases) {
@@ -383,6 +424,7 @@ export default {
 
       // Marca los ids cuya información sigue sin resolver para mostrar
       // en la celda el mensaje de "elimina y vuelve a registrar".
+      this.syncIssues(this.comparisonIssues, this.comparisonLabels, comparisonIds);
       this.syncIssues(this.purchaserIssues, this.purchaserLabels, purchaserIds);
       this.syncIssues(this.supplierIssues, this.supplierLabels, supplierIds);
     },
@@ -428,15 +470,20 @@ export default {
         return this.labelsForIds(cleanIds, labelsMap);
       }
       const singular = cleanIds.length === 1;
+      const isSupplier = nouns && nouns.one === "proveedor";
       return {
         tone: "warning",
         icon: "error_outline",
-        title:
-          "Problema al obtener " +
-          (singular ? "el " + nouns.one : "los " + nouns.many) +
-          ".",
-        detail:
-          "Elimina este registro y vuelve a realizar el registro de la compra para corregirlo.",
+        title: isSupplier
+          ? singular
+            ? "Problema al obtener el proveedor."
+            : "Problema al obtener los proveedores."
+          : "Problema al obtener " +
+            (singular ? "el " + nouns.one : "los " + nouns.many) +
+            ".",
+        detail: isSupplier
+          ? "Se presentó un error al intentar obtener la información del proveedor."
+          : "Elimina este registro y vuelve a realizar el registro de la compra para corregirlo.",
       };
     },
     /** Une los nombres resueltos; si no hay nombre aún, muestra el id. */
@@ -487,7 +534,17 @@ export default {
         });
     },
     formatEpoch(value) {
-      const date = new Date(Number(value));
+      if (value == null || value === "") {
+        return "—";
+      }
+      var date;
+      if (typeof value === "number") {
+        date = new Date(value);
+      } else if (/^\d+$/.test(String(value).trim())) {
+        date = new Date(Number(value));
+      } else {
+        date = new Date(value);
+      }
       if (Number.isNaN(date.getTime())) {
         return "—";
       }
@@ -525,6 +582,19 @@ export default {
 .purchases-card {
   border-radius: 12px;
   overflow: hidden;
+}
+
+.purchases-card--reveal {
+  animation: purchases-card-fade-in 0.35s ease-out;
+}
+
+@keyframes purchases-card-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .purchases-card__summary {
@@ -570,5 +640,39 @@ export default {
   font-weight: 600;
   color: #0f172a;
   word-break: break-word;
+}
+
+.purchase-detail__value--error {
+  color: #92400e;
+  font-weight: 500;
+  font-size: 0.8rem;
+}
+
+.purchase-total-badge {
+  display: inline-block;
+  padding: 4px 14px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+  color: #fff;
+  white-space: nowrap;
+  background: linear-gradient(135deg, #84b24d 0%, #75af7e 45%, #4e9c4c 100%);
+  box-shadow: 0 1px 3px rgba(78, 156, 76, 0.28);
+}
+
+.purchase-created-badge {
+  display: inline-block;
+  padding: 4px 14px;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+  color: #fff;
+  white-space: nowrap;
+  background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 45%, #2563eb 100%);
+  box-shadow: 0 1px 3px rgba(37, 99, 235, 0.28);
 }
 </style>
