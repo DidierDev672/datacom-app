@@ -270,114 +270,114 @@ export default {
             },
           ],
         },
-        {
-          id: "compras",
-          title: "Compras",
-          icon: "shopping_cart_checkout",
-          expanded: false,
-          children: [
-            {
-              id: "compras-gestion",
-              title: "Compras",
-              icon: "shopping_cart",
-              expanded: false,
-              children: [
-                {
-                  title: "Gestión de órdenes de compra",
-                  routeName: "gestion-orden-compra",
-                  icon: "shopping_cart",
-                },
-                {
-                  title: "Lista de gestión de compras",
-                  routeName: "lista-transacciones-compra",
-                  icon: "format_list_bulleted",
-                },
-              ],
-            },
-            {
-              id: "compras-cotizaciones",
-              title: "Cotizaciones",
-              icon: "request_quote",
-              expanded: false,
-              children: [
-                {
-                  title: "Comparaciones de proveedores",
-                  routeName: "comparacion-proveedores-compra",
-                  icon: "compare_arrows",
-                },
-                {
-                  title: "Lista de comparaciones",
-                  routeName: "lista-comparaciones-proveedores-compra",
-                  icon: "format_list_bulleted",
-                },
-              ],
-            },
-            {
-              id: "compras-por-cotizacion",
-              title: "Compras por comparación",
-              icon: "shopping_bag",
-              expanded: false,
-              children: [
-                {
-                  title: "Lista de compras por comparación",
-                  routeName: "lista-compras-registradas",
-                  icon: "format_list_bulleted",
-                },
-              ],
-            },
-          ],
-        },
-        {
-          id: "configuracion",
-          title: "Configuración",
-          icon: "tune",
-          expanded: false,
-          children: [
-            {
-              title: "Registrar proveedor",
-              routeName: "registrar-proveedor-nuevo",
-              icon: "person_add",
-            },
-            {
-              title: "Lista proveedores",
-              routeName: "lista-proveedores-terceros",
-              icon: "groups",
-            },
-            {
-              title: "Ver perfil de usuario",
-              routeName: "perfil-usuario",
-              icon: "account_circle",
-            },
-            {
-              title: "Parámetros de tipos de identificación",
-              routeName: "parametros-identificacion",
-              icon: "badge",
-            },
-            {
-              title: "Registrar comprador",
-              routeName: "registrar-comprador",
-              icon: "person_add",
-            },
-            {
-              title: "Lista de compradores",
-              routeName: "lista-compradores",
-              icon: "list",
-            },
-          ],
-        },
-        {
-          id: "viajes",
-          title: "Gestión de Viajes",
-          icon: "flight",
-          expanded: false,
-          children: [
-            {
-              title: "Solicitar viaje",
-              routeName: "crear-solicitud-requerimiento-viaje",
-              icon: "playlist_add",
-            },
-          ],
-        },
+        // {
+        //   id: "compras",
+        //   title: "Compras",
+        //   icon: "shopping_cart_checkout",
+        //   expanded: false,
+        //   children: [
+        //     {
+        //       id: "compras-gestion",
+        //       title: "Compras",
+        //       icon: "shopping_cart",
+        //       expanded: false,
+        //       children: [
+        //         {
+        //           title: "Gestión de órdenes de compra",
+        //           routeName: "gestion-orden-compra",
+        //           icon: "shopping_cart",
+        //         },
+        //         {
+        //           title: "Lista de gestión de compras",
+        //           routeName: "lista-transacciones-compra",
+        //           icon: "format_list_bulleted",
+        //         },
+        //       ],
+        //     },
+        //     {
+        //       id: "compras-cotizaciones",
+        //       title: "Cotizaciones",
+        //       icon: "request_quote",
+        //       expanded: false,
+        //       children: [
+        //         {
+        //           title: "Comparaciones de proveedores",
+        //           routeName: "comparacion-proveedores-compra",
+        //           icon: "compare_arrows",
+        //         },
+        //         {
+        //           title: "Lista de comparaciones",
+        //           routeName: "lista-comparaciones-proveedores-compra",
+        //           icon: "format_list_bulleted",
+        //         },
+        //       ],
+        //     },
+        //     {
+        //       id: "compras-por-cotizacion",
+        //       title: "Compras por comparación",
+        //       icon: "shopping_bag",
+        //       expanded: false,
+        //       children: [
+        //         {
+        //           title: "Lista de compras por comparación",
+        //           routeName: "lista-compras-registradas",
+        //           icon: "format_list_bulleted",
+        //         },
+        //       ],
+        //     },
+        //   ],
+        // },
+        // {
+        //   id: "configuracion",
+        //   title: "Configuración",
+        //   icon: "tune",
+        //   expanded: false,
+        //   children: [
+        //     {
+        //       title: "Registrar proveedor",
+        //       routeName: "registrar-proveedor-nuevo",
+        //       icon: "person_add",
+        //     },
+        //     {
+        //       title: "Lista proveedores",
+        //       routeName: "lista-proveedores-terceros",
+        //       icon: "groups",
+        //     },
+        //     {
+        //       title: "Ver perfil de usuario",
+        //       routeName: "perfil-usuario",
+        //       icon: "account_circle",
+        //     },
+        //     {
+        //       title: "Parámetros de tipos de identificación",
+        //       routeName: "parametros-identificacion",
+        //       icon: "badge",
+        //     },
+        //     {
+        //       title: "Registrar comprador",
+        //       routeName: "registrar-comprador",
+        //       icon: "person_add",
+        //     },
+        //     {
+        //       title: "Lista de compradores",
+        //       routeName: "lista-compradores",
+        //       icon: "list",
+        //     },
+        //   ],
+        // },
+        // {
+        //   id: "viajes",
+        //   title: "Gestión de Viajes",
+        //   icon: "flight",
+        //   expanded: false,
+        //   children: [
+        //     {
+        //       title: "Solicitar viaje",
+        //       routeName: "crear-solicitud-requerimiento-viaje",
+        //       icon: "playlist_add",
+        //     },
+        //   ],
+        // },
 
         {
           id: "empleados-colaboradores",
@@ -403,96 +403,115 @@ export default {
                   routeName: "abastecimiento-employee-basic-data",
                   icon: "person_add",
                 },
-              ],
-            },
-            {
-              id: "departamentos",
-              title: "Áreas / Departamentos",
-              icon: "corporate_fare",
-              expanded: false,
-              children: [
-                {
-                  title: "Lista de departamentos",
-                  path: "/abastecimiento/talento-humano/departamentos",
-                  routeName: "abastecimiento-departamentos-lista",
-                  icon: "format_list_bulleted",
-                },
-                {
-                  title: "Crear área o departamento",
-                  path: "/abastecimiento/talento-humano/departamentos/nuevo",
-                  routeName: "abastecimiento-departamento-create",
-                  icon: "add_business",
-                },
-                {
-                  title: "Agregar colaborador a las áreas",
-                  path: "/abastecimiento/talento-humano/colaboradores/asignar-areas",
-                  routeName: "abastecimiento-colaborador-asignar-areas",
-                  icon: "group_add",
-                },
-              ],
-            },
-            {
-              id: "permisos",
-              title: "Permisos",
-              icon: "admin_panel_settings",
-              expanded: false,
-              children: [
-                {
-                  title: "Asignar permisos operativos",
-                  path: "/abastecimiento/talento-humano/permisos-operativos",
-                  routeName: "abastecimiento-colaborador-permisos-create",
-                  icon: "assignment_ind",
-                },
-              ],
-            },
-            {
-              id: "usuario",
-              title: "Usuario",
-              icon: "person",
-              expanded: false,
-              children: [
-                {
-                  title: "Crear usuarios del sistema",
-                  path: "/abastecimiento/talento-humano/usuarios/crear",
-                  routeName: "abastecimiento-crear-usuario-sistema",
-                  icon: "person_add",
-                },
                 {
                   title: "Crear usuario",
-                  path: "/abastecimiento/usuario/registrar",
-                  routeName: "user-create",
+                  routeName: "PageUsuarioCreate",
                   icon: "badge",
                 },
               ],
             },
+            // {
+            //   id: "departamentos",
+            //   title: "Áreas / Departamentos",
+            //   icon: "corporate_fare",
+            //   expanded: false,
+            //   children: [
+            //     {
+            //       title: "Lista de departamentos",
+            //       path: "/abastecimiento/talento-humano/departamentos",
+            //       routeName: "abastecimiento-departamentos-lista",
+            //       icon: "format_list_bulleted",
+            //     },
+            //     {
+            //       title: "Crear área o departamento",
+            //       path: "/abastecimiento/talento-humano/departamentos/nuevo",
+            //       routeName: "abastecimiento-departamento-create",
+            //       icon: "add_business",
+            //     },
+            //     {
+            //       title: "Agregar colaborador a las áreas",
+            //       path: "/abastecimiento/talento-humano/colaboradores/asignar-areas",
+            //       routeName: "abastecimiento-colaborador-asignar-areas",
+            //       icon: "group_add",
+            //     },
+            //   ],
+            // },
+            // {
+            //   id: "permisos",
+            //   title: "Permisos",
+            //   icon: "admin_panel_settings",
+            //   expanded: false,
+            //   children: [
+            //     {
+            //       title: "Asignar permisos operativos",
+            //       path: "/abastecimiento/talento-humano/permisos-operativos",
+            //       routeName: "abastecimiento-colaborador-permisos-create",
+            //       icon: "assignment_ind",
+            //     },
+            //   ],
+            // },
+            {
+              id: "roles",
+              title: "Roles",
+              icon: "shield_person",
+              expanded: false,
+              children: [
+                {
+                  title: "Asignación de roles",
+                  path: "/abastecimiento/talento-humano/asignacion-roles",
+                  routeName: "abastecimiento-asignacion-roles",
+                  icon: "manage_accounts",
+                },
+              ],
+            },
+            // {
+            //   id: "usuario",
+            //   title: "Usuario",
+            //   icon: "person",
+            //   expanded: false,
+            //   children: [
+            //     {
+            //       title: "Crear usuarios del sistema",
+            //       path: "/abastecimiento/talento-humano/usuarios/crear",
+            //       routeName: "abastecimiento-crear-usuario-sistema",
+            //       icon: "person_add",
+            //     },
+            //     {
+            //       title: "Crear usuario",
+            //       path: "/abastecimiento/usuario/registrar",
+            //       routeName: "user-create",
+            //       icon: "badge",
+            //     },
+            //   ],
+            // },
           ],
         },
-        {
-          id: "finanzas-contabilidad",
-          title: "Gestion financiera/contable",
-          icon: "account_balance",
-          expanded: false,
-          children: [
-            {
-              title: "Centro de costo",
-              path: "contabilidad/centro-costo",
-              routeName: "abastecimiento-centro-costo",
-              icon: "account_tree",
-            },
-            {
-              title: "Presupuestos",
-              path: "contabilidad/lista-presupuestos",
-              routeName: "abastecimiento-lista-presupuestos",
-              icon: "receipt_long",
-            },
-            {
-              title: "Permisos de usuario",
-              path: "contabilidad/permisos-usuario",
-              routeName: "abastecimiento-permisos-usuario-lista",
-              icon: "manage_accounts",
-            },
-          ],
-        },
+        // {
+        //   id: "finanzas-contabilidad",
+        //   title: "Gestion financiera/contable",
+        //   icon: "account_balance",
+        //   expanded: false,
+        //   children: [
+        //     {
+        //       title: "Centro de costo",
+        //       path: "contabilidad/centro-costo",
+        //       routeName: "abastecimiento-centro-costo",
+        //       icon: "account_tree",
+        //     },
+        //     {
+        //       title: "Presupuestos",
+        //       path: "contabilidad/lista-presupuestos",
+        //       routeName: "abastecimiento-lista-presupuestos",
+        //       icon: "receipt_long",
+        //     },
+        //     {
+        //       title: "Permisos de usuario",
+        //       path: "contabilidad/permisos-usuario",
+        //       routeName: "abastecimiento-permisos-usuario-lista",
+        //       icon: "manage_accounts",
+        //     },
+        //   ],
+        // },
       ],
     };
   },

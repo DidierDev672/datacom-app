@@ -1,0 +1,15 @@
+com\datacom\roles\application\port\out\RoleRepositoryPort.class
+com\datacom\roles\infrastructure\adapter\out\persistence\RoleJpaEntity.class
+com\datacom\roles\domain\model\valueobject\RoleId.class
+com\datacom\roles\domain\model\valueobject\RoleName.class
+com\datacom\roles\application\port\in\GetRolesUseCase.class
+com\datacom\roles\RolesApplication.class
+com\datacom\roles\infrastructure\adapter\out\persistence\RoleMapper.class
+com\datacom\roles\infrastructure\adapter\out\persistence\RoleJpaRepository.class
+com\datacom\roles\application\service\GetRolesService.class
+com\datacom\roles\domain\model\Role.class
+com\datacom\roles\infrastructure\config\error\ApiError.class
+com\datacom\roles\infrastructure\config\error\GlobalExceptionHandler.class
+com\datacom\roles\infrastructure\adapter\in\RoleController.class
+com\datacom\roles\infrastructure\adapter\in\dto\RoleResponse.class
+com\datacom\roles\infrastructure\adapter\out\persistence\RoleJpaAdapter.class

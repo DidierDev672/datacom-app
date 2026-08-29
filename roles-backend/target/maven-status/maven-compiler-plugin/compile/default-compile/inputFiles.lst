@@ -1,0 +1,15 @@
+D:\DataCon\datacom-app\roles-backend\src\main\java\com\datacom\roles\infrastructure\config\error\ApiError.java
+D:\DataCon\datacom-app\roles-backend\src\main\java\com\datacom\roles\domain\model\valueobject\RoleName.java
+D:\DataCon\datacom-app\roles-backend\src\main\java\com\datacom\roles\infrastructure\adapter\in\RoleController.java
+D:\DataCon\datacom-app\roles-backend\src\main\java\com\datacom\roles\domain\model\valueobject\RoleId.java
+D:\DataCon\datacom-app\roles-backend\src\main\java\com\datacom\roles\infrastructure\adapter\in\dto\RoleResponse.java
+D:\DataCon\datacom-app\roles-backend\src\main\java\com\datacom\roles\infrastructure\config\error\GlobalExceptionHandler.java
+D:\DataCon\datacom-app\roles-backend\src\main\java\com\datacom\roles\application\port\in\GetRolesUseCase.java
+D:\DataCon\datacom-app\roles-backend\src\main\java\com\datacom\roles\infrastructure\adapter\out\persistence\RoleJpaEntity.java
+D:\DataCon\datacom-app\roles-backend\src\main\java\com\datacom\roles\infrastructure\adapter\out\persistence\RoleJpaRepository.java
+D:\DataCon\datacom-app\roles-backend\src\main\java\com\datacom\roles\infrastructure\adapter\out\persistence\RoleMapper.java
+D:\DataCon\datacom-app\roles-backend\src\main\java\com\datacom\roles\domain\model\Role.java
+D:\DataCon\datacom-app\roles-backend\src\main\java\com\datacom\roles\RolesApplication.java
+D:\DataCon\datacom-app\roles-backend\src\main\java\com\datacom\roles\infrastructure\adapter\out\persistence\RoleJpaAdapter.java
+D:\DataCon\datacom-app\roles-backend\src\main\java\com\datacom\roles\application\port\out\RoleRepositoryPort.java
+D:\DataCon\datacom-app\roles-backend\src\main\java\com\datacom\roles\application\service\GetRolesService.java

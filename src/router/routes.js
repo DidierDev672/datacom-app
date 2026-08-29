@@ -894,6 +894,14 @@ const routes = [
         },
       },
       {
+        path: "talento-humano/asignacion-roles",
+        name: "abastecimiento-asignacion-roles",
+        component: () => import("src/views/access/RoleSecurityView.vue"),
+        meta: {
+          permission: "abastecimiento.asignacion-roles",
+        },
+      },
+      {
         path: "usuario/registrar",
         name: "user-create",
         component: () => import("src/modules/user/ui/views/UserCreateView.vue"),
